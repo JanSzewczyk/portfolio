@@ -10,7 +10,7 @@ export const QUICK_START_STEPS: QuickStartStep[] = [
     step: 1,
     title: "Use Template",
     description: "Create a new repository from this template",
-    command: "gh repo create my-app --template JanSzewczyk/nextjs-szumplate"
+    command: "gh repo create my-app --template JanSzewczyk/portfolio"
   },
   {
     step: 2,

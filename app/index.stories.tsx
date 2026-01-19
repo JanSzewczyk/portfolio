@@ -53,11 +53,11 @@ export const HeroSection = meta.story({
       const useTemplateButtons = canvas.getAllByRole("button", { name: /use this template/i });
       await expect(useTemplateButtons.length).toBeGreaterThanOrEqual(1);
       for (const button of useTemplateButtons) {
-        await expect(button).toHaveAttribute("href", "https://github.com/JanSzewczyk/nextjs-szumplate/generate");
+        await expect(button).toHaveAttribute("href", "https://github.com/JanSzewczyk/portfolio/generate");
       }
 
       const viewOnGitHubButton = canvas.getByRole("button", { name: /view on github/i });
-      await expect(viewOnGitHubButton).toHaveAttribute("href", "https://github.com/JanSzewczyk/nextjs-szumplate");
+      await expect(viewOnGitHubButton).toHaveAttribute("href", "https://github.com/JanSzewczyk/portfolio");
     });
   }
 });
@@ -334,7 +334,7 @@ export const CTASection = meta.story({
 
       const exploreCodeButton = canvas.getByRole("button", { name: /explore the code/i });
       await expect(exploreCodeButton).toBeVisible();
-      await expect(exploreCodeButton).toHaveAttribute("href", "https://github.com/JanSzewczyk/nextjs-szumplate");
+      await expect(exploreCodeButton).toHaveAttribute("href", "https://github.com/JanSzewczyk/portfolio");
     });
   }
 });
@@ -366,7 +366,7 @@ export const FooterSection = meta.story({
     await step("Verify source code link", async () => {
       const sourceLink = canvas.getByRole("link", { name: /source/i });
       await expect(sourceLink).toBeVisible();
-      await expect(sourceLink).toHaveAttribute("href", "https://github.com/JanSzewczyk/nextjs-szumplate");
+      await expect(sourceLink).toHaveAttribute("href", "https://github.com/JanSzewczyk/portfolio");
     });
   }
 });

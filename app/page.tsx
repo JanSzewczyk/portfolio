@@ -78,7 +78,7 @@ export default function Home() {
             <Button asChild variant="outline" size="sm" endIcon={<GithubIcon />}>
               <a
                 target="_blank"
-                href="https://github.com/JanSzewczyk/nextjs-szumplate"
+                href="https://github.com/JanSzewczyk/portfolio"
                 rel="noreferrer"
                 aria-label="View GitHub repository"
               >
@@ -105,12 +105,12 @@ export default function Home() {
             </p>
             <div className="flex flex-col gap-4 sm:flex-row">
               <Button asChild size="lg" startIcon={<RocketIcon />}>
-                <a href="https://github.com/JanSzewczyk/nextjs-szumplate/generate" target="_blank" rel="noreferrer">
+                <a href="https://github.com/JanSzewczyk/portfolio/generate" target="_blank" rel="noreferrer">
                   Use This Template
                 </a>
               </Button>
               <Button asChild variant="outline" size="lg" endIcon={<GithubIcon />}>
-                <a href="https://github.com/JanSzewczyk/nextjs-szumplate" target="_blank" rel="noreferrer">
+                <a href="https://github.com/JanSzewczyk/portfolio" target="_blank" rel="noreferrer">
                   View on GitHub
                 </a>
               </Button>
@@ -380,12 +380,12 @@ export default function Home() {
               </p>
               <div className="flex flex-col gap-4 sm:flex-row">
                 <Button asChild size="lg" startIcon={<RocketIcon className="size-4" />}>
-                  <a href="https://github.com/JanSzewczyk/nextjs-szumplate/generate" target="_blank" rel="noreferrer">
+                  <a href="https://github.com/JanSzewczyk/portfolio/generate" target="_blank" rel="noreferrer">
                     Use This Template
                   </a>
                 </Button>
                 <Button asChild variant="outline" size="lg" startIcon={<CodeIcon className="size-4" />}>
-                  <a href="https://github.com/JanSzewczyk/nextjs-szumplate" target="_blank" rel="noreferrer">
+                  <a href="https://github.com/JanSzewczyk/portfolio" target="_blank" rel="noreferrer">
                     Explore the Code
                   </a>
                 </Button>
@@ -415,7 +415,7 @@ export default function Home() {
             </a>
             <span className="text-muted-foreground/40">|</span>
             <a
-              href="https://github.com/JanSzewczyk/nextjs-szumplate"
+              href="https://github.com/JanSzewczyk/portfolio"
               target="_blank"
               rel="noreferrer"
               className="text-muted-foreground hover:text-primary flex items-center gap-1 transition-colors"

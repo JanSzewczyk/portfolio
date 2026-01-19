@@ -4,8 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Next.js Szumplate is an enterprise-ready Next.js 16 template with TypeScript, Tailwind CSS, React Compiler, and
-comprehensive testing infrastructure.
+Portfolio is a personal portfolio website built with Next.js 16, TypeScript, Tailwind CSS v4, React Compiler, and comprehensive testing infrastructure.
 
 ## Commands
 
@@ -55,7 +54,7 @@ npm run storybook:build       # Build static Storybook
 ### Analysis
 
 ```bash
-npm run analyze               # Bundle analyzer
+npm run analyze               # Bundle analyzer (sets ANALYZE=true)
 ```
 
 ## Architecture
@@ -137,7 +136,7 @@ Built-in health endpoint at `/api/health` with multiple URL aliases: `/healthz`,
 ### Next.js Configuration
 
 - React Compiler enabled (`reactCompiler: true`)
-- Pino externalized for server-side logging
+- Pino externalized for server-side logging via `serverExternalPackages`
 - Bundle analyzer available via `ANALYZE=true`
 
 ## Conventions
@@ -146,3 +145,5 @@ Built-in health endpoint at `/api/health` with multiple URL aliases: `/healthz`,
 - ESLint: Uses `@szum-tech/eslint-config`
 - Prettier: Uses `@szum-tech/prettier-config`
 - Semantic Release: Uses `@szum-tech/semantic-release-config`
+- React Compiler handles memoization automatically - avoid unnecessary `useMemo`/`useCallback`
+- Default to Server Components; only add `"use client"` when hooks or interactivity are needed

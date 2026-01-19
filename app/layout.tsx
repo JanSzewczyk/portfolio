@@ -7,8 +7,8 @@ import { ThemeProvider } from "~/components/providers/theme-provider";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Szumplate Next App",
-  description: "Template for Next App by Szum-Tech"
+  title: "Portfolio",
+  description: "Personal portfolio by Jan Szewczyk"
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
