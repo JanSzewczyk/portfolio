@@ -13,7 +13,7 @@ import {
 test("has title", async ({ page }) => {
   await page.goto("/");
 
-  await expect(page).toHaveTitle(/Szumplate Next App/);
+  await expect(page).toHaveTitle(/Portfolio/);
 });
 
 test("has hero section content", async ({ page }) => {
@@ -149,7 +149,7 @@ test("open GitHub repo in new tab", async ({ page, context }) => {
   const newPage = await pagePromise;
   await newPage.waitForLoadState();
 
-  expect(await newPage.title()).toMatch(/GitHub.*JanSzewczyk.*nextjs-szumplate/i);
+  expect(await newPage.title()).toMatch(/GitHub.*JanSzewczyk.*portfolio/i);
   expect(newPage.url()).toMatch(/^https:\/\/github\.com\//);
 });
 

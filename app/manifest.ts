@@ -2,8 +2,8 @@ import { type MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Next.js Szumplate",
-    short_name: "Szumplate.js",
+    name: "Portfolio",
+    short_name: "Portfolio",
     description: "A Next.js application with Tailwind CSS and optimized setup.",
     start_url: "/",
     display: "standalone",
