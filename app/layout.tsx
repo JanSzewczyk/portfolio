@@ -7,8 +7,9 @@ import { ThemeProvider } from "~/components/providers/theme-provider";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Portfolio",
-  description: "Personal portfolio by Jan Szewczyk"
+  title: "Jan Szewczyk | Frontend Developer",
+  description:
+    "Frontend Developer from Cracow, Poland specializing in React, Next.js, TypeScript, and React Native. Creator of @szum-tech/design-system and open source tools."
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
