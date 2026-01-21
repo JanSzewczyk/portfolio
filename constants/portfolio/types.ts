@@ -84,3 +84,25 @@ export interface NavItem {
   label: string;
   href: string;
 }
+
+export type DegreeType = "bachelor" | "master" | "phd";
+
+export interface Education {
+  id: string;
+  institution: string;
+  institutionUrl?: string;
+  location: string;
+  degree: DegreeType;
+  fieldOfStudy: string;
+  startDate: string;
+  endDate?: string;
+  grade?: string;
+  thesis?: {
+    title: string;
+    description: string;
+    technologies: string[];
+    url?: string;
+  };
+  achievements?: string[];
+  coursework?: string[];
+}

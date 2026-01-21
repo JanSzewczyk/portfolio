@@ -3,6 +3,7 @@ import { Footer, Navigation } from "~/components/layout";
 import {
   AboutSection,
   ContactSection,
+  EducationSection,
   ExperienceSection,
   HeroSection,
   ProjectsSection,
@@ -19,6 +20,7 @@ export default function HomePage() {
         <SkillsSection />
         <ProjectsSection />
         <ExperienceSection />
+        <EducationSection />
         <ContactSection />
       </main>
       <Footer />
