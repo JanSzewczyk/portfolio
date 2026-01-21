@@ -1,7 +1,21 @@
-import { Badge, Card, CardContent, CardDescription, CardHeader, CardTitle } from "@szum-tech/design-system";
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "~/components/ui/accordion";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+  Badge,
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+  Timeline,
+  TimelineConnector,
+  TimelineContent,
+  TimelineDot,
+  TimelineItem
+} from "@szum-tech/design-system";
 import { SectionHeading } from "~/components/ui/section-heading";
-import { Timeline, TimelineContent, TimelineIndicator, TimelineItem } from "~/components/ui/timeline";
 import { EXPERIENCES } from "~/constants/portfolio";
 
 function formatDate(dateString: string): string {
@@ -25,7 +39,8 @@ export function ExperienceSection() {
           <Timeline>
             {EXPERIENCES.map((exp, index) => (
               <TimelineItem key={exp.id}>
-                <TimelineIndicator active={index === 0} />
+                <TimelineDot className={index === 0 ? "border-primary bg-primary" : undefined} />
+                <TimelineConnector />
                 <TimelineContent>
                   <Card>
                     <CardHeader>

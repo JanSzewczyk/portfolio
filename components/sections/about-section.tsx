@@ -1,5 +1,6 @@
-import { Card, CardContent } from "@szum-tech/design-system";
-import { CountingNumber } from "~/components/ui/counting-number";
+"use client";
+
+import { Card, CardContent, CountingNumber } from "@szum-tech/design-system";
 import { SectionHeading } from "~/components/ui/section-heading";
 import { PERSONAL_INFO, STATS } from "~/constants/portfolio";
 
@@ -23,7 +24,13 @@ export function AboutSection() {
               <Card key={stat.label} className="text-center">
                 <CardContent className="pt-6">
                   <div className="text-display-sm text-primary font-bold">
-                    <CountingNumber end={stat.value} suffix={stat.suffix} duration={2000} />
+                    <CountingNumber
+                      from={0}
+                      to={stat.value}
+                      duration={2}
+                      format={(value) => `${Math.round(value)}${stat.suffix ?? ""}`}
+                      once
+                    />
                   </div>
                   <p className="text-muted-foreground mt-2 text-sm">{stat.label}</p>
                 </CardContent>

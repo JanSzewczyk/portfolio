@@ -13,7 +13,7 @@ export default function HomePage() {
   return (
     <>
       <Navigation />
-      <main className="pt-16">
+      <main>
         <HeroSection />
         <AboutSection />
         <SkillsSection />

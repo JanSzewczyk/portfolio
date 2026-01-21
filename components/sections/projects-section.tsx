@@ -10,12 +10,15 @@ import {
   CardDescription,
   CardFooter,
   CardHeader,
-  CardTitle
+  CardTitle,
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger
 } from "@szum-tech/design-system";
 import { cn } from "@szum-tech/design-system/utils";
 import { GitHubIcon } from "~/components/ui/icons";
 import { SectionHeading } from "~/components/ui/section-heading";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "~/components/ui/tabs";
 import { PROJECT_CATEGORIES, PROJECTS, type Project } from "~/constants/portfolio";
 
 function ProjectCard({ project }: { project: Project }) {

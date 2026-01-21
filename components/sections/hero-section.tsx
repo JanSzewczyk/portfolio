@@ -2,11 +2,18 @@
 
 import { ArrowDownIcon } from "lucide-react";
 
-import { Avatar, AvatarFallback, AvatarImage, Button } from "@szum-tech/design-system";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+  Button,
+  Status,
+  StatusIndicator,
+  StatusLabel,
+  TypingText,
+  WordRotate
+} from "@szum-tech/design-system";
 import { GridBackground } from "~/components/ui/grid-background";
-import { Status } from "~/components/ui/status";
-import { TypingText } from "~/components/ui/typing-text";
-import { WordRotate } from "~/components/ui/word-rotate";
 import { PERSONAL_INFO } from "~/constants/portfolio";
 
 export function HeroSection() {
@@ -26,7 +33,7 @@ export function HeroSection() {
     .join("");
 
   return (
-    <section id="hero" className="relative min-h-[calc(100vh-4rem)] overflow-hidden">
+    <section id="hero" className="relative min-h-[calc(100vh-4rem)] scroll-m-16 overflow-hidden">
       <GridBackground />
 
       <div className="container flex min-h-[calc(100vh-4rem)] items-center py-20">
@@ -37,14 +44,16 @@ export function HeroSection() {
           </Avatar>
 
           <div className="mb-4">
-            <Status
-              status={PERSONAL_INFO.isAvailable ? "available" : "busy"}
-              label={PERSONAL_INFO.isAvailable ? "Available for opportunities" : "Currently unavailable"}
-            />
+            <Status variant={PERSONAL_INFO.isAvailable ? "success" : "error"}>
+              <StatusIndicator />
+              <StatusLabel>
+                {PERSONAL_INFO.isAvailable ? "Available for opportunities" : "Currently unavailable"}
+              </StatusLabel>
+            </Status>
           </div>
 
           <h1 className="text-display-md md:text-display-lg mb-4 font-bold tracking-tight">
-            <TypingText text={`Hi, I'm ${PERSONAL_INFO.name}`} typingSpeed={80} />
+            <TypingText text={`Hi, I'm ${PERSONAL_INFO.name}`} speed={80} />
           </h1>
 
           <div className="text-primary mb-6 h-12 text-2xl font-medium md:text-3xl">

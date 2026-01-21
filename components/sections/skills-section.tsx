@@ -3,12 +3,12 @@ import {
   Card,
   CardContent,
   CardHeader,
+  Marquee,
   Progress,
   Tooltip,
   TooltipContent,
   TooltipTrigger
 } from "@szum-tech/design-system";
-import { Marquee } from "~/components/ui/marquee";
 import { SectionHeading } from "~/components/ui/section-heading";
 import { SKILL_GROUPS, TECH_LOGOS } from "~/constants/portfolio";
 
@@ -32,7 +32,7 @@ export function SkillsSection() {
 
         {/* Tech logos marquee */}
         <div className="-mx-4 mb-16 overflow-hidden sm:-mx-6 lg:-mx-8">
-          <Marquee pauseOnHover speed="slow" gap="1.5rem">
+          <Marquee pauseOnHover className="gap-6">
             {TECH_LOGOS.map((tech) => (
               <TechLogo key={tech.name} name={tech.name} />
             ))}
