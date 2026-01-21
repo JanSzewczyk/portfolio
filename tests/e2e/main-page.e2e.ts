@@ -1,171 +1,181 @@
 import { expect, test } from "@playwright/test";
 import {
-  FEATURE_TITLES,
-  QUICK_START_STEPS,
-  SCRIPTS,
-  SZUM_TECH_PACKAGE_COUNT,
-  SZUM_TECH_PACKAGES,
-  TECH_STACK_CATEGORIES,
-  TECH_STACK_COUNT,
-  TECH_STACK_ITEMS
+  EXPERIENCES,
+  NAVIGATION_ITEMS,
+  PERSONAL_INFO,
+  PROJECT_CATEGORIES,
+  PROJECTS,
+  SECTION_IDS,
+  SKILL_GROUPS,
+  SOCIAL_LINKS
 } from "~/constants";
 
-test("has title", async ({ page }) => {
+test("has correct title and meta description", async ({ page }) => {
   await page.goto("/");
 
-  await expect(page).toHaveTitle(/Portfolio/);
+  await expect(page).toHaveTitle(/Jan Szewczyk.*Frontend Developer/i);
 });
 
-test("has hero section content", async ({ page }) => {
+test("has hero section with personal info", async ({ page }) => {
   await page.goto("/");
 
-  // Main heading - h1 contains span with "Szum-Tech" and text "Next.js Template"
-  const h1 = page.getByRole("heading", { level: 1 });
-  await expect(h1).toBeVisible();
-  await expect(h1).toContainText("Szum-Tech");
-  await expect(h1).toContainText("Next.js Template");
+  const heroSection = page.locator("#hero");
 
-  // Hero description
-  await expect(page.getByText(/Enterprise-ready Next\.js starter template/i)).toBeVisible();
+  // Avatar should be visible
+  await expect(heroSection.getByRole("img", { name: PERSONAL_INFO.name })).toBeVisible();
 
-  // CTA buttons - Button asChild renders as role="button" with href
-  await expect(page.getByRole("button", { name: /Use This Template/i }).first()).toBeVisible();
-  await expect(page.getByRole("button", { name: /View on GitHub/i }).first()).toBeVisible();
+  // Availability status
+  if (PERSONAL_INFO.isAvailable) {
+    await expect(heroSection.getByText(/available for opportunities/i)).toBeVisible();
+  }
+
+  // Name greeting
+  await expect(heroSection.getByRole("heading", { level: 1 })).toContainText(PERSONAL_INFO.name);
+
+  // Tagline
+  await expect(heroSection.getByText(PERSONAL_INFO.tagline)).toBeVisible();
+
+  // CTA buttons
+  await expect(heroSection.getByRole("button", { name: /get in touch/i })).toBeVisible();
+  await expect(heroSection.getByRole("button", { name: /view projects/i })).toBeVisible();
 });
 
-test("has features section", async ({ page }) => {
+test("has about section with bio and stats", async ({ page }) => {
   await page.goto("/");
 
-  const featuresSection = page.locator("#features");
+  const aboutSection = page.locator("#about");
 
-  await expect(featuresSection.getByRole("heading", { level: 2, name: /Why Choose This Template/i })).toBeVisible();
+  await expect(aboutSection.getByRole("heading", { level: 2, name: /about me/i })).toBeVisible();
 
-  // Check all feature cards using constants
-  // CardTitle renders as div, not h3, so we search by text within section
-  for (const title of FEATURE_TITLES) {
-    await expect(featuresSection.getByText(title, { exact: true })).toBeVisible();
+  // Bio text should be visible (first paragraph)
+  const firstParagraph = PERSONAL_INFO.bio.split("\n\n")[0];
+  if (firstParagraph) {
+    await expect(aboutSection.getByText(firstParagraph.slice(0, 50), { exact: false })).toBeVisible();
   }
 });
 
-test("has szum-tech ecosystem section", async ({ page }) => {
+test("has skills section with all skill groups", async ({ page }) => {
   await page.goto("/");
 
-  const ecosystemSection = page.locator("#ecosystem");
+  const skillsSection = page.locator("#skills");
 
-  // Verify section heading
-  await expect(ecosystemSection.getByRole("heading", { level: 2, name: /Szum-Tech Ecosystem/i })).toBeVisible();
+  await expect(skillsSection.getByRole("heading", { level: 2, name: /skills.*technologies/i })).toBeVisible();
 
-  // Verify Open Source badge
-  await expect(ecosystemSection.getByText("Open Source")).toBeVisible();
-
-  // Verify section description
-  await expect(ecosystemSection.getByText(/powered by a suite of open-source packages/i)).toBeVisible();
-
-  // Verify all package cards are present (4 packages)
-  for (const pkg of SZUM_TECH_PACKAGES) {
-    // Verify package name
-    await expect(ecosystemSection.getByText(pkg.name, { exact: true })).toBeVisible();
-
-    // Verify npm package name
-    await expect(ecosystemSection.getByText(pkg.packageName)).toBeVisible();
-  }
-
-  // Verify the correct number of GitHub buttons (one per package)
-  const githubButtons = ecosystemSection.getByRole("button", { name: /view .* on github/i });
-  await expect(githubButtons).toHaveCount(SZUM_TECH_PACKAGE_COUNT);
-
-  // Verify Explore All Packages button
-  await expect(ecosystemSection.getByRole("button", { name: /Explore All Packages/i })).toBeVisible();
-});
-
-test("has tech stack section", async ({ page }) => {
-  await page.goto("/");
-
-  const techStackSection = page.locator("#tech-stack");
-
-  await expect(techStackSection.getByRole("heading", { level: 2, name: /Tech Stack/i })).toBeVisible();
-
-  // Tech stack categories from constants - use Badge elements
-  for (const category of TECH_STACK_CATEGORIES) {
-    await expect(techStackSection.getByText(category, { exact: true })).toBeVisible();
-  }
-
-  // Tech stack items count from constants
-  const techItems = techStackSection.getByRole("listitem");
-  await expect(techItems).toHaveCount(TECH_STACK_COUNT);
-
-  // Verify all technology images from constants
-  for (const tech of TECH_STACK_ITEMS) {
-    await expect(techStackSection.getByRole("img", { name: tech.name })).toBeVisible();
+  // Check all skill group labels
+  for (const group of SKILL_GROUPS) {
+    await expect(skillsSection.getByText(group.label, { exact: true })).toBeVisible();
   }
 });
 
-test("has quick start section", async ({ page }) => {
+test("has projects section with featured projects", async ({ page }) => {
   await page.goto("/");
 
-  const quickStartSection = page.locator("#quick-start");
+  const projectsSection = page.locator("#projects");
 
-  await expect(quickStartSection.getByRole("heading", { level: 2, name: /Quick Start/i })).toBeVisible();
+  await expect(projectsSection.getByRole("heading", { level: 2, name: /featured projects/i })).toBeVisible();
 
-  // Quick start steps from constants
-  // CardTitle contains step number + title, so don't use exact match for title
-  for (const step of QUICK_START_STEPS) {
-    // Check that step title exists within the section (title is part of larger text with step number)
-    await expect(quickStartSection.getByText(step.title)).toBeVisible();
-    // Check that command exists within the section
-    await expect(quickStartSection.getByText(step.command)).toBeVisible();
+  // Check project category tabs
+  for (const category of PROJECT_CATEGORIES) {
+    await expect(projectsSection.getByRole("tab", { name: category.label })).toBeVisible();
+  }
+
+  // Check that featured projects are visible
+  const featuredProjects = PROJECTS.filter((p) => p.featured);
+  for (const project of featuredProjects.slice(0, 3)) {
+    // Project title
+    await expect(projectsSection.getByText(project.title, { exact: true }).first()).toBeVisible();
   }
 });
 
-test("has scripts section", async ({ page }) => {
+test("has experience section with timeline", async ({ page }) => {
   await page.goto("/");
 
-  const scriptsSection = page.locator("#scripts");
+  const experienceSection = page.locator("#experience");
 
-  await expect(scriptsSection.getByRole("heading", { level: 2, name: /Built-in Scripts/i })).toBeVisible();
+  await expect(experienceSection.getByRole("heading", { level: 2, name: /experience/i })).toBeVisible();
 
-  // Check all script commands from constants within the scripts section
-  for (const script of SCRIPTS) {
-    await expect(scriptsSection.getByText(script.command, { exact: true })).toBeVisible();
+  // Check first experience entry
+  const firstExperience = EXPERIENCES[0];
+  if (firstExperience) {
+    await expect(experienceSection.getByText(firstExperience.role, { exact: true })).toBeVisible();
+    await expect(experienceSection.getByText(firstExperience.company, { exact: false })).toBeVisible();
   }
 });
 
-test("has footer", async ({ page }) => {
+test("has contact section with form and social links", async ({ page }) => {
+  await page.goto("/");
+
+  const contactSection = page.locator("#contact");
+
+  await expect(contactSection.getByRole("heading", { level: 2, name: /get in touch/i })).toBeVisible();
+
+  // Contact form fields
+  await expect(contactSection.getByLabel(/name/i)).toBeVisible();
+  await expect(contactSection.getByLabel(/email/i)).toBeVisible();
+  await expect(contactSection.getByLabel(/message/i)).toBeVisible();
+  await expect(contactSection.getByRole("button", { name: /send message/i })).toBeVisible();
+
+  // Social links - verify correct count
+  const socialButtons = contactSection.locator('a[target="_blank"]');
+  await expect(socialButtons).toHaveCount(SOCIAL_LINKS.length);
+});
+
+test("has footer with author info", async ({ page }) => {
   await page.goto("/");
 
   const footer = page.getByRole("contentinfo");
 
-  await expect(footer.getByText("Szum-Tech Next.js Template")).toBeVisible();
-  await expect(footer.getByRole("link", { name: "Jan Szewczyk" })).toBeVisible();
-  await expect(footer.getByRole("link", { name: /Source/i })).toBeVisible();
+  await expect(footer.getByText(PERSONAL_INFO.name)).toBeVisible();
+  await expect(footer.getByText(new Date().getFullYear().toString())).toBeVisible();
 });
 
-test("open GitHub repo in new tab", async ({ page, context }) => {
+test("navigation links scroll to sections", async ({ page }) => {
   await page.goto("/");
 
-  // Click GitHub link in header - find by aria-label
-  const pagePromise = context.waitForEvent("page");
-  await page.getByLabel(/View GitHub repository/i).click();
-  const newPage = await pagePromise;
-  await newPage.waitForLoadState();
+  const navigation = page.getByRole("navigation");
 
-  expect(await newPage.title()).toMatch(/GitHub.*JanSzewczyk.*portfolio/i);
-  expect(newPage.url()).toMatch(/^https:\/\/github\.com\//);
+  // Check all navigation items exist
+  for (const item of NAVIGATION_ITEMS) {
+    await expect(navigation.getByRole("link", { name: item.label })).toBeVisible();
+  }
 });
 
-test("tech stack links open in new tab", async ({ page, context }) => {
+test("all sections are present on page", async ({ page }) => {
   await page.goto("/");
 
-  const techStackSection = page.locator("#tech-stack");
+  for (const sectionId of SECTION_IDS) {
+    const section = page.locator(`#${sectionId}`);
+    await expect(section).toBeVisible();
+  }
+});
 
-  // Click on first tech link (from constants)
-  const firstTech = TECH_STACK_ITEMS[0];
-  const escapedName = firstTech?.name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+test("project GitHub links open correctly", async ({ page, context }) => {
+  await page.goto("/");
 
-  const pagePromise = context.waitForEvent("page");
-  await techStackSection.getByRole("link", { name: new RegExp(`Learn more about ${escapedName}`, "i") }).click();
-  const newPage = await pagePromise;
-  await newPage.waitForLoadState();
+  const projectsSection = page.locator("#projects");
 
-  expect(newPage.url()).toMatch(new RegExp(`^${firstTech?.href.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}`));
+  // Find first project with GitHub link
+  const firstGitHubButton = projectsSection.getByRole("button", { name: /code/i }).first();
+
+  if ((await firstGitHubButton.count()) > 0) {
+    const pagePromise = context.waitForEvent("page");
+    await firstGitHubButton.click();
+    const newPage = await pagePromise;
+    await newPage.waitForLoadState();
+
+    expect(newPage.url()).toMatch(/github\.com/);
+  }
+});
+
+test("theme toggle is visible and clickable", async ({ page }) => {
+  await page.goto("/");
+
+  const themeToggle = page.getByRole("button", { name: /toggle theme/i });
+  await expect(themeToggle).toBeVisible();
+
+  // Click theme toggle
+  await themeToggle.click();
+
+  // Verify button is still visible after click
+  await expect(themeToggle).toBeVisible();
 });

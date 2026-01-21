@@ -3,9 +3,9 @@ import { type SocialLink } from "./types";
 export const SOCIAL_LINKS: SocialLink[] = [
   {
     platform: "GitHub",
-    url: "https://github.com/janszewczyk",
+    url: "https://github.com/JanSzewczyk",
     icon: "github",
-    username: "@janszewczyk"
+    username: "@JanSzewczyk"
   },
   {
     platform: "LinkedIn",
@@ -15,8 +15,8 @@ export const SOCIAL_LINKS: SocialLink[] = [
   },
   {
     platform: "Twitter",
-    url: "https://twitter.com/janszewczyk",
+    url: "https://twitter.com/DzikiSzumrak",
     icon: "twitter",
-    username: "@janszewczyk"
+    username: "@DzikiSzumrak"
   }
 ];

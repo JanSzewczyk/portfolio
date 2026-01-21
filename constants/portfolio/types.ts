@@ -16,7 +16,7 @@ export interface Stat {
   suffix?: string;
 }
 
-export type SkillCategory = "frontend" | "backend" | "devops" | "tools";
+export type SkillCategory = "frontend" | "backend" | "mobile" | "devops" | "tools";
 
 export interface Skill {
   name: string;
@@ -37,7 +37,7 @@ export interface TechLogo {
   icon: string;
 }
 
-export type ProjectCategory = "web" | "oss" | "other";
+export type ProjectCategory = "web" | "mobile" | "oss" | "ai";
 
 export interface Project {
   id: string;
