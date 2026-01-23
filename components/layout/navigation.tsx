@@ -7,24 +7,18 @@ import { MenuIcon, XIcon } from "lucide-react";
 import { Button, Header } from "@szum-tech/design-system";
 import Link from "next/link";
 import { ThemeToggle } from "~/components/ui/theme-toggle";
-import { NAV_ITEMS, PERSONAL_INFO } from "~/constants/portfolio";
+import { NAV_ITEMS } from "~/constants/navigation";
+import { PERSONAL_INFO } from "~/constants/portfolio";
+import { scrollToSection } from "~/lib/scroll-to-section";
 
 export function Navigation() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
-  const scrollToSection = (href: string) => {
-    const element = document.querySelector(href);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth", block: "start" });
-      setIsMobileMenuOpen(false);
-    }
-  };
-
   return (
     <>
       <Header>
-        <div className="flex w-full justify-between">
-          <Link href="/" className="hover:text-primary text-lg font-semibold tracking-tight transition-colors">
+        <div className="flex w-full items-center justify-between">
+          <Link href="/" className="hover:text-primary text-heading-h3 transition-colors">
             {PERSONAL_INFO.name}
           </Link>
 
@@ -32,7 +26,16 @@ export function Navigation() {
             {/* Desktop Navigation */}
             <div className="hidden items-center gap-1 md:flex">
               {NAV_ITEMS.map((item) => (
-                <Button key={item.href} variant="ghost" size="sm" onClick={() => scrollToSection(item.href)}>
+                <Button
+                  key={item.section}
+                  variant="ghost"
+                  size="sm"
+                  onClick={() =>
+                    scrollToSection(item.section, {
+                      onAfterScroll: () => setIsMobileMenuOpen(false)
+                    })
+                  }
+                >
                   {item.label}
                 </Button>
               ))}
@@ -58,22 +61,26 @@ export function Navigation() {
       </Header>
 
       {/* Mobile Menu */}
-      {isMobileMenuOpen && (
+      {isMobileMenuOpen ? (
         <div className="bg-background fixed top-16 right-0 left-0 z-40 border-b md:hidden">
           <nav className="container flex flex-col gap-2 py-4">
             {NAV_ITEMS.map((item) => (
               <Button
-                key={item.href}
+                key={item.section}
                 variant="ghost"
                 className="justify-start"
-                onClick={() => scrollToSection(item.href)}
+                onClick={() =>
+                  scrollToSection(item.section, {
+                    onAfterScroll: () => setIsMobileMenuOpen(false)
+                  })
+                }
               >
                 {item.label}
               </Button>
             ))}
           </nav>
         </div>
-      )}
+      ) : null}
     </>
   );
 }
