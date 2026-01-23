@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import { SendIcon } from "lucide-react";
+import { Mail, SendIcon } from "lucide-react";
 import { z } from "zod";
 
 import {
@@ -18,7 +18,7 @@ import {
   toast
 } from "@szum-tech/design-system";
 import { cn } from "@szum-tech/design-system/utils";
-import { GitHubIcon, LinkedInIcon, MailIcon, TwitterIcon } from "~/components/ui/icons";
+import { ReactIcon, type IconName } from "~/components/ui/react-icon";
 import { SectionHeading } from "~/components/ui/section-heading";
 import { PERSONAL_INFO, SOCIAL_LINKS } from "~/constants/portfolio";
 
@@ -30,10 +30,10 @@ const contactSchema = z.object({
 
 type ContactFormData = z.infer<typeof contactSchema>;
 
-const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
-  github: GitHubIcon,
-  linkedin: LinkedInIcon,
-  twitter: TwitterIcon
+const iconMap: Record<string, IconName> = {
+  github: "Github",
+  linkedin: "Linkedin",
+  twitter: "X"
 };
 
 export function ContactSection() {
@@ -154,7 +154,7 @@ export function ContactSection() {
             <Card>
               <CardContent className="flex items-center gap-4 pt-6">
                 <div className="bg-primary/10 flex size-12 items-center justify-center rounded-full">
-                  <MailIcon className="text-primary size-6" />
+                  <Mail className="text-primary size-6" />
                 </div>
                 <div>
                   <p className="font-medium">Email</p>
@@ -172,11 +172,11 @@ export function ContactSection() {
               <CardContent>
                 <div className="flex gap-3">
                   {SOCIAL_LINKS.map((link) => {
-                    const Icon = iconMap[link.icon];
+                    const iconName = iconMap[link.icon];
                     return (
                       <Button key={link.platform} variant="outline" size="lg" asChild>
                         <a href={link.url} target="_blank" rel="noopener noreferrer" aria-label={link.platform}>
-                          {Icon && <Icon className="size-5" />}
+                          {iconName && <ReactIcon name={iconName} className="size-5" />}
                         </a>
                       </Button>
                     );
