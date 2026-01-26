@@ -3,6 +3,9 @@ import {
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
   Badge,
   Card,
   CardContent,
@@ -15,6 +18,7 @@ import {
   TimelineDot,
   TimelineItem
 } from "@szum-tech/design-system";
+
 import { SectionHeading } from "~/components/ui/section-heading";
 import { type Experience } from "~/constants/portfolio";
 import { Section } from "~/constants/sections";
@@ -55,20 +59,31 @@ export function ExperienceSection({ experiences }: ExperienceSectionProps) {
                       </div>
                       <CardTitle className="mt-2">{exp.role}</CardTitle>
                       <CardDescription>
-                        {exp.companyUrl ? (
-                          <a
-                            href={exp.companyUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="hover:text-primary hover:underline"
-                          >
-                            {exp.company}
-                          </a>
-                        ) : (
-                          exp.company
-                        )}
-                        {" · "}
-                        {exp.location}
+                        <div className="flex items-center gap-3">
+                          <Avatar className="size-10 rounded-lg">
+                            <AvatarImage src={exp.companyLogo} alt={`${exp.company} logo`} />
+                            <AvatarFallback className="rounded-lg">
+                              {exp.company.charAt(0).toUpperCase()}
+                            </AvatarFallback>
+                          </Avatar>
+                          <div className="flex flex-col">
+                            <div>
+                              {exp.companyUrl ? (
+                                <a
+                                  href={exp.companyUrl}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="hover:text-primary hover:underline"
+                                >
+                                  {exp.company}
+                                </a>
+                              ) : (
+                                exp.company
+                              )}
+                            </div>
+                            <div className="text-sm">{exp.location}</div>
+                          </div>
+                        </div>
                       </CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-4">
