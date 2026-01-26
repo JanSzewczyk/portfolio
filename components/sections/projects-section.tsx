@@ -25,50 +25,45 @@ import { Section } from "~/constants/sections";
 function ProjectCard({ project }: { project: Project }) {
   return (
     <Card className="group flex h-full flex-col transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
-      <CardHeader className="pb-4">
-        <div className="bg-muted mb-4 aspect-video overflow-hidden rounded-md">
+      <CardHeader>
+        <div className="bg-muted mb-4 aspect-video overflow-hidden rounded">
+          {/* TODO add image */}
           <div
             className={cn(
               "flex h-full w-full items-center justify-center",
-              "from-primary/10 to-primary/5 bg-gradient-to-br",
+              "from-primary/10 to-primary/5 ∂bg-linear-to-br",
               "text-primary/20 text-4xl font-bold"
             )}
           >
             {project.title.charAt(0)}
           </div>
         </div>
-        <CardTitle className="line-clamp-1">{project.title}</CardTitle>
-        <CardDescription className="line-clamp-2">{project.description}</CardDescription>
+        <CardTitle>{project.title}</CardTitle>
+        <CardDescription>{project.description}</CardDescription>
       </CardHeader>
 
       <CardContent className="flex-1">
         <div className="flex flex-wrap gap-1.5">
           {project.technologies.slice(0, 4).map((tech) => (
-            <Badge key={tech} variant="secondary" className="text-xs">
+            <Badge key={tech} variant="secondary">
               {tech}
             </Badge>
           ))}
-          {project.technologies.length > 4 && (
-            <Badge variant="secondary" className="text-xs">
-              +{project.technologies.length - 4}
-            </Badge>
-          )}
+          {project.technologies.length > 4 && <Badge variant="secondary">+{project.technologies.length - 4}</Badge>}
         </div>
       </CardContent>
 
-      <CardFooter className="gap-2 pt-4">
+      <CardFooter className="gap-2">
         {project.links.live && (
-          <Button size="sm" asChild>
+          <Button size="sm" startIcon={<ExternalLinkIcon />} asChild>
             <a href={project.links.live} target="_blank" rel="noopener noreferrer">
-              <ExternalLinkIcon className="mr-2 size-4" />
               Live
             </a>
           </Button>
         )}
         {project.links.github && (
-          <Button size="sm" variant="outline" asChild>
+          <Button startIcon={<ReactIcon name="SiGithub" />} size="sm" variant="outline" asChild>
             <a href={project.links.github} target="_blank" rel="noopener noreferrer">
-              <ReactIcon name={"SiGithub"} className="mr-2 size-4" />
               Code
             </a>
           </Button>
@@ -84,8 +79,8 @@ type ProjectCategoryTab = {
 };
 
 type ProjectsSectionProps = {
-  projects: Project[];
-  projectCategories: ReadonlyArray<ProjectCategoryTab>;
+  projects: Array<Project>;
+  projectCategories: Array<ProjectCategoryTab>;
 };
 
 export function ProjectsSection({ projects, projectCategories }: ProjectsSectionProps) {
@@ -105,15 +100,13 @@ export function ProjectsSection({ projects, projectCategories }: ProjectsSection
         />
 
         <Tabs defaultValue="all" className="w-full">
-          <div className="mb-8 flex justify-center">
-            <TabsList>
-              {projectCategories.map((category) => (
-                <TabsTrigger key={category.value} value={category.value}>
-                  {category.label}
-                </TabsTrigger>
-              ))}
-            </TabsList>
-          </div>
+          <TabsList className="mx-auto mb-8">
+            {projectCategories.map((category) => (
+              <TabsTrigger key={category.value} value={category.value}>
+                {category.label}
+              </TabsTrigger>
+            ))}
+          </TabsList>
 
           {projectCategories.map((category) => (
             <TabsContent key={category.value} value={category.value}>
