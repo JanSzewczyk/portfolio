@@ -1,7 +1,8 @@
 "use client";
 
-import { cn } from "@szum-tech/design-system/utils";
 import * as React from "react";
+
+import { cn } from "@szum-tech/design-system/utils";
 
 interface GridBackgroundProps {
   className?: string;

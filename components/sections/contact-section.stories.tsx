@@ -1,6 +1,7 @@
+import { PERSONAL_INFO, SOCIAL_LINKS } from "~/constants/portfolio";
+
 import { ContactSection } from "./contact-section";
 
-import { PERSONAL_INFO, SOCIAL_LINKS } from "~/constants/portfolio";
 import preview from "~/.storybook/preview";
 
 const meta = preview.meta({

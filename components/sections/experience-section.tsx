@@ -18,7 +18,6 @@ import {
   TimelineDot,
   TimelineItem
 } from "@szum-tech/design-system";
-
 import { SectionHeading } from "~/components/ui/section-heading";
 import { type Experience } from "~/constants/portfolio";
 import { Section } from "~/constants/sections";
