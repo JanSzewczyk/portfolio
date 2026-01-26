@@ -1,4 +1,5 @@
 import { expect, waitFor } from "storybook/test";
+import { EDUCATION } from "~/constants/portfolio";
 
 import { EducationSection } from "./education-section";
 
@@ -7,6 +8,9 @@ import preview from "~/.storybook/preview";
 const meta = preview.meta({
   title: "Components/Sections/Education Section",
   component: EducationSection,
+  args: {
+    education: EDUCATION
+  },
   parameters: {
     layout: "fullscreen"
   }

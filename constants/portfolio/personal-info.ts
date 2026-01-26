@@ -2,7 +2,8 @@ import { type PersonalInfo, type Stat } from "./types";
 
 export const PERSONAL_INFO: PersonalInfo = {
   name: "Jan Szewczyk",
-  title: "Frontend Developer",
+  title: "Frontend Engineer",
+  company: "Szum-Tech",
   alternativeTitles: [
     "Frontend Developer",
     "React Specialist",
@@ -12,7 +13,7 @@ export const PERSONAL_INFO: PersonalInfo = {
   ],
   tagline:
     "Building scalable web and mobile applications with a focus on code quality, architecture, and developer experience",
-  bio: `I'm a Frontend Developer from Cracow, Poland, specializing in modern web and mobile technologies.
+  bio: `I'm a Frontend Engineer from Cracow, Poland, specializing in modern web and mobile technologies.
 My passion lies in building scalable applications with emphasis on code quality, clean architecture,
 and exceptional developer experience.
 

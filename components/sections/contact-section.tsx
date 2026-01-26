@@ -20,7 +20,8 @@ import {
 import { cn } from "@szum-tech/design-system/utils";
 import { ReactIcon, type IconName } from "~/components/ui/react-icon";
 import { SectionHeading } from "~/components/ui/section-heading";
-import { PERSONAL_INFO, SOCIAL_LINKS } from "~/constants/portfolio";
+import { type PersonalInfo, type SocialLink } from "~/constants/portfolio";
+import { Section } from "~/constants/sections";
 
 const contactSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -31,12 +32,17 @@ const contactSchema = z.object({
 type ContactFormData = z.infer<typeof contactSchema>;
 
 const iconMap: Record<string, IconName> = {
-  github: "Github",
-  linkedin: "Linkedin",
-  twitter: "X"
+  github: "SiGithub",
+  linkedin: "SiLinkedin",
+  twitter: "SiX"
 };
 
-export function ContactSection() {
+type ContactSectionProps = {
+  personalInfo: PersonalInfo;
+  socialLinks: SocialLink[];
+};
+
+export function ContactSection({ personalInfo, socialLinks }: ContactSectionProps) {
   const [formData, setFormData] = useState<ContactFormData>({
     name: "",
     email: "",
@@ -84,7 +90,7 @@ export function ContactSection() {
   };
 
   return (
-    <section id="contact" className="py-24">
+    <section id={Section.CONTACT} className="py-24">
       <div className="container">
         <SectionHeading
           title="Get in Touch"
@@ -158,8 +164,8 @@ export function ContactSection() {
                 </div>
                 <div>
                   <p className="font-medium">Email</p>
-                  <a href={`mailto:${PERSONAL_INFO.email}`} className="text-muted-foreground hover:text-primary">
-                    {PERSONAL_INFO.email}
+                  <a href={`mailto:${personalInfo.email}`} className="text-muted-foreground hover:text-primary">
+                    {personalInfo.email}
                   </a>
                 </div>
               </CardContent>
@@ -171,7 +177,7 @@ export function ContactSection() {
               </CardHeader>
               <CardContent>
                 <div className="flex gap-3">
-                  {SOCIAL_LINKS.map((link) => {
+                  {socialLinks.map((link) => {
                     const iconName = iconMap[link.icon];
                     return (
                       <Button key={link.platform} variant="outline" size="lg" asChild>

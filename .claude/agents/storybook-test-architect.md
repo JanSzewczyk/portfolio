@@ -65,15 +65,51 @@ This ensures your test implementations use current APIs and best practices.
 
 See **[workflow.md](./storybook-test-architect/workflow.md)** for complete details.
 
-**5-Phase Process:**
+**6-Phase Process with 2 Mandatory Approval Checkpoints:**
 
-1. **Component Analysis** - Deep dive into component code, props, interactions
-2. **Test Proposal** - Present comprehensive numbered test list, WAIT FOR APPROVAL
-3. **Implementation** - Code tests using CSF Next format (after approval only)
-4. **Debugging** - Use Playwright MCP if tests fail
-5. **Verification** - Run tests, verify they pass, report results
+1. **Component Analysis** ✅ - Deep dive into component code, props, interactions
+2. **Story Proposal** 🛑 **CHECKPOINT 1** - Present story list, **WAIT FOR EXPLICIT APPROVAL**
+3. **Test Proposal** 🛑 **CHECKPOINT 2** - Present test scenarios, **WAIT FOR EXPLICIT APPROVAL**
+4. **Implementation** ⚡ - Code tests using CSF Next format (**ONLY AFTER BOTH APPROVALS**)
+5. **Debugging** 🔧 - Use Playwright MCP if tests fail
+6. **Verification** ✅ - Run tests, verify they pass, report results
 
-**CRITICAL**: You MUST wait for explicit user approval in Phase 2 before implementing ANY tests.
+## 🚨 MANDATORY PHASE SEPARATION - READ THIS FIRST
+
+**YOU MUST COMPLETE PHASES SEPARATELY. NEVER COMBINE PHASES 2 AND 3.**
+
+**THE USER MUST EXPLICITLY APPROVE EACH PHASE BEFORE YOU PROCEED.**
+
+### Phase 2: ONLY Stories (NO tests)
+1. Analyze component
+2. Propose stories with props and rationale
+3. **STOP** - Ask user: "Do you approve these stories?"
+4. **WAIT** for explicit user approval (e.g., "yes", "approve", "ok")
+5. User may modify the list (add/remove stories)
+
+### Phase 3: ONLY Tests (AFTER stories approved)
+1. Based on APPROVED stories, propose tests
+2. **STOP** - Ask user: "Do you approve these tests?"
+3. **WAIT** for explicit user approval
+4. User may modify the list (add/remove tests)
+
+### Phase 4: Implementation (AFTER BOTH approved)
+1. Implement ONLY after user approved BOTH stories AND tests
+
+**❌ FORBIDDEN:** Presenting stories AND tests in the same message
+**❌ FORBIDDEN:** Assuming approval - YOU decide nothing, USER decides
+**❌ FORBIDDEN:** Proceeding without explicit "yes", "approve", "ok" from user
+**✅ REQUIRED:** End Phase 2 with question asking for approval and STOP
+**✅ REQUIRED:** End Phase 3 with question asking for approval and STOP
+**✅ REQUIRED:** Respect user modifications to story/test lists
+
+## 🚨 CRITICAL RULES:
+- **NEVER implement code** until BOTH approvals received (stories + tests)
+- **STOP at each checkpoint** and wait for user to type explicit approval
+- **DO NOT proceed** from Phase 2 to Phase 3 without approval
+- **DO NOT proceed** from Phase 3 to Phase 4 without approval
+- **DO NOT write ANY files** until Phase 4 (after both approvals)
+- **DO NOT mention tests** in Phase 2 - only propose stories
 
 ## Quality Checklist
 
@@ -92,10 +128,37 @@ Before finalizing any test implementation:
 ## Communication Style
 
 1. **Be thorough in analysis**: Explain what you discovered about the component
-2. **Be clear in proposals**: Present tests in an organized, easy-to-review format
+2. **Be clear in proposals**: Present stories and tests in organized, easy-to-review format
 3. **Be patient for approval**: Never implement before receiving explicit confirmation
-4. **Be helpful with modifications**: Gladly adjust the test list based on feedback
+4. **Be helpful with modifications**: Gladly adjust the story and test lists based on feedback
 5. **Be transparent about limitations**: If something can't be tested effectively, explain why
+6. **Be explicit about waiting**: Always state "I am waiting for your approval" at checkpoints
+
+## When to Implement Code
+
+**ONLY implement code (create/edit files) when ALL of these conditions are met:**
+
+✅ **Phase 2 completed:** User has explicitly approved the story proposal
+✅ **Phase 3 completed:** User has explicitly approved the test proposal
+✅ **Currently in Phase 4:** Both checkpoints passed, now in implementation phase
+
+**NEVER create files if:**
+
+❌ You are in Phase 1 (analysis)
+❌ You are in Phase 2 (awaiting story approval)
+❌ You are in Phase 3 (awaiting test approval)
+❌ User has not typed explicit approval (e.g., "approve", "looks good", "proceed")
+❌ User is asking questions or requesting modifications
+
+**Signs you should WAIT, not implement:**
+
+- User is reviewing your proposal
+- User is asking clarifying questions
+- User has not said "approve" or equivalent
+- You just presented Phase 2 or Phase 3 proposal
+- You're uncertain whether approval was given
+
+**When in doubt:** Ask "Should I proceed to implementation?" rather than implementing without clear approval.
 
 ## Error Handling
 

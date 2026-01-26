@@ -17,9 +17,10 @@ import {
   TabsTrigger
 } from "@szum-tech/design-system";
 import { cn } from "@szum-tech/design-system/utils";
-import { GitHubIcon } from "~/components/ui/icons";
+import { ReactIcon } from "~/components/ui/react-icon";
 import { SectionHeading } from "~/components/ui/section-heading";
-import { PROJECT_CATEGORIES, PROJECTS, type Project } from "~/constants/portfolio";
+import { type Project } from "~/constants/portfolio";
+import { Section } from "~/constants/sections";
 
 function ProjectCard({ project }: { project: Project }) {
   return (
@@ -67,7 +68,7 @@ function ProjectCard({ project }: { project: Project }) {
         {project.links.github && (
           <Button size="sm" variant="outline" asChild>
             <a href={project.links.github} target="_blank" rel="noopener noreferrer">
-              <GitHubIcon className="mr-2 size-4" />
+              <ReactIcon name={"SiGithub"} className="mr-2 size-4" />
               Code
             </a>
           </Button>
@@ -77,16 +78,26 @@ function ProjectCard({ project }: { project: Project }) {
   );
 }
 
-export function ProjectsSection() {
+type ProjectCategoryTab = {
+  value: string;
+  label: string;
+};
+
+type ProjectsSectionProps = {
+  projects: Project[];
+  projectCategories: ReadonlyArray<ProjectCategoryTab>;
+};
+
+export function ProjectsSection({ projects, projectCategories }: ProjectsSectionProps) {
   const filterProjects = (category: string): Project[] => {
     if (category === "all") {
-      return PROJECTS.filter((p) => p.featured);
+      return projects.filter((p) => p.featured);
     }
-    return PROJECTS.filter((p) => p.category === category);
+    return projects.filter((p) => p.category === category);
   };
 
   return (
-    <section id="projects" className="py-24">
+    <section id={Section.PROJECTS} className="py-24">
       <div className="container">
         <SectionHeading
           title="Featured Projects"
@@ -96,7 +107,7 @@ export function ProjectsSection() {
         <Tabs defaultValue="all" className="w-full">
           <div className="mb-8 flex justify-center">
             <TabsList>
-              {PROJECT_CATEGORIES.map((category) => (
+              {projectCategories.map((category) => (
                 <TabsTrigger key={category.value} value={category.value}>
                   {category.label}
                 </TabsTrigger>
@@ -104,7 +115,7 @@ export function ProjectsSection() {
             </TabsList>
           </div>
 
-          {PROJECT_CATEGORIES.map((category) => (
+          {projectCategories.map((category) => (
             <TabsContent key={category.value} value={category.value}>
               <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {filterProjects(category.value).map((project) => (

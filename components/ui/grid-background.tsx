@@ -1,10 +1,7 @@
 "use client";
 
-// TODO: [DESIGN-SYSTEM] Add GridBackground component from ReUI
-// Source: https://reui.io/docs
-// Temporary implementation - replace with @szum-tech/design-system/GridBackground
-
 import { cn } from "@szum-tech/design-system/utils";
+import * as React from "react";
 
 interface GridBackgroundProps {
   className?: string;
@@ -21,6 +18,7 @@ export function GridBackground({
 }: GridBackgroundProps) {
   return (
     <div
+      data-testid="grid-background-container"
       className={cn("pointer-events-none absolute inset-0 -z-10", className)}
       style={
         {
@@ -39,7 +37,7 @@ export function GridBackground({
           backgroundSize: "var(--grid-size) var(--grid-size)"
         }}
       />
-      {fade && <div className="from-background to-background absolute inset-0 bg-gradient-to-b via-transparent" />}
+      {fade ? <div className="from-background to-background absolute inset-0 bg-linear-to-b via-transparent" /> : null}
     </div>
   );
 }
