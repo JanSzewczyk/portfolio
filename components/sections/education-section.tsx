@@ -53,7 +53,7 @@ export function EducationSection({ education }: EducationSectionProps) {
         />
 
         <div className="mx-auto max-w-3xl">
-          <Timeline activeIndex={0}>
+          <Timeline activeIndex={2}>
             {education.map((edu) => (
               <TimelineItem key={edu.id}>
                 <TimelineDot />
@@ -61,12 +61,12 @@ export function EducationSection({ education }: EducationSectionProps) {
                 <TimelineContent>
                   <Card>
                     <CardHeader>
-                      <div className="flex flex-wrap items-center gap-2">
+                      <div className="mb-2 flex flex-wrap items-center gap-2">
                         <Badge variant="outline">{formatPeriod(edu.startDate, edu.endDate)}</Badge>
                         <Badge variant="secondary">{formatDegree(edu.degree)}</Badge>
                         {edu.grade && <Badge variant="secondary">GPA: {edu.grade}</Badge>}
                       </div>
-                      <CardTitle className="mt-2">{edu.fieldOfStudy}</CardTitle>
+                      <CardTitle>{edu.fieldOfStudy}</CardTitle>
                       <CardDescription>
                         {edu.institutionUrl ? (
                           <a
@@ -85,25 +85,25 @@ export function EducationSection({ education }: EducationSectionProps) {
                       </CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-4">
-                      {edu.thesis && (
-                        <div className="bg-muted/50 rounded-lg border p-4">
-                          <h4 className="mb-2 font-semibold">Master&apos;s Thesis</h4>
-                          <p className="text-primary mb-1 font-medium">{edu.thesis.title}</p>
-                          <p className="text-muted-foreground mb-3 text-sm">{edu.thesis.description}</p>
+                      {edu.thesis ? (
+                        <div className="bg-muted/50 rounded border p-4">
+                          <h4 className="text-body-lg mb-2 font-semibold">Master&apos;s Thesis</h4>
+                          <p className="text-body-md text-primary mb-1 font-medium">{edu.thesis.title}</p>
+                          <p className="text-body-sm text-muted-foreground mb-3">{edu.thesis.description}</p>
                           <div className="flex flex-wrap gap-1.5">
                             {edu.thesis.technologies.map((tech) => (
-                              <Badge key={tech} variant="outline" className="text-xs">
+                              <Badge key={tech} variant="outline" className="text-body-xs">
                                 {tech}
                               </Badge>
                             ))}
                           </div>
                         </div>
-                      )}
+                      ) : null}
 
                       <Accordion type="single" collapsible>
-                        {edu.achievements && edu.achievements.length > 0 && (
-                          <AccordionItem value="achievements" className="border-none">
-                            <AccordionTrigger className="py-2 text-sm">Key Achievements</AccordionTrigger>
+                        {edu.achievements && edu.achievements.length > 0 ? (
+                          <AccordionItem value="achievements">
+                            <AccordionTrigger>Key Achievements</AccordionTrigger>
                             <AccordionContent>
                               <ul className="text-muted-foreground ml-4 list-disc space-y-1">
                                 {edu.achievements.map((achievement, i) => (
@@ -112,11 +112,11 @@ export function EducationSection({ education }: EducationSectionProps) {
                               </ul>
                             </AccordionContent>
                           </AccordionItem>
-                        )}
+                        ) : null}
 
-                        {edu.coursework && edu.coursework.length > 0 && (
-                          <AccordionItem value="coursework" className="border-none">
-                            <AccordionTrigger className="py-2 text-sm">Relevant Coursework</AccordionTrigger>
+                        {edu.coursework && edu.coursework.length > 0 ? (
+                          <AccordionItem value="coursework">
+                            <AccordionTrigger>Relevant Coursework</AccordionTrigger>
                             <AccordionContent>
                               <ul className="text-muted-foreground ml-4 list-disc space-y-1">
                                 {edu.coursework.map((course, i) => (
@@ -125,7 +125,7 @@ export function EducationSection({ education }: EducationSectionProps) {
                               </ul>
                             </AccordionContent>
                           </AccordionItem>
-                        )}
+                        ) : null}
                       </Accordion>
                     </CardContent>
                   </Card>
