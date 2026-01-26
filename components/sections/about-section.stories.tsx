@@ -1,4 +1,5 @@
-import { PERSONAL_INFO, STATS } from "~/constants/portfolio";
+import { PERSONAL_INFO, SECTION_HEADINGS, STATS } from "~/constants/portfolio";
+import { Section } from "~/constants/sections";
 
 import { AboutSection } from "./about-section";
 
@@ -9,7 +10,8 @@ const meta = preview.meta({
   component: AboutSection,
   args: {
     personalInfo: PERSONAL_INFO,
-    stats: STATS
+    stats: STATS,
+    heading: SECTION_HEADINGS[Section.ABOUT]
   },
   parameters: {
     layout: "fullscreen"

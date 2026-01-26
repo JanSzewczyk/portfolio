@@ -16,11 +16,12 @@ import {
   TimelineItem
 } from "@szum-tech/design-system";
 import { SectionHeading } from "~/components/ui/section-heading";
-import { type DegreeType, type Education } from "~/constants/portfolio";
+import { type DegreeType, type Education, type SectionHeadingContent } from "~/constants/portfolio";
 import { Section } from "~/constants/sections";
 
 type EducationSectionProps = {
   education: Education[];
+  heading: SectionHeadingContent;
 };
 
 function formatDate(dateString: string): string {
@@ -43,14 +44,11 @@ function formatDegree(degree: DegreeType): string {
   return degreeMap[degree];
 }
 
-export function EducationSection({ education }: EducationSectionProps) {
+export function EducationSection({ education, heading }: EducationSectionProps) {
   return (
     <section id={Section.EDUCATION} className="py-24">
       <div className="container">
-        <SectionHeading
-          title="Education"
-          description="My academic journey and the knowledge that built my foundation."
-        />
+        <SectionHeading title={heading.title} description={heading.description} />
 
         <div className="mx-auto max-w-3xl">
           <Timeline activeIndex={2}>

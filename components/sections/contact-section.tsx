@@ -22,12 +22,12 @@ import {
 } from "@szum-tech/design-system";
 import { ReactIcon, type IconName } from "~/components/ui/react-icon";
 import { SectionHeading } from "~/components/ui/section-heading";
-import { type PersonalInfo, type SocialLink } from "~/constants/portfolio";
+import { type PersonalInfo, type SectionHeadingContent, type SocialLink } from "~/constants/portfolio";
 import { Section } from "~/constants/sections";
 
 const contactSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
-  email: z.email("Please enter a valid email address"),
+  email: z.string().email("Please enter a valid email address"),
   message: z.string().min(10, "Message must be at least 10 characters")
 });
 
@@ -42,9 +42,10 @@ const iconMap: Record<string, IconName> = {
 type ContactSectionProps = {
   personalInfo: PersonalInfo;
   socialLinks: SocialLink[];
+  heading: SectionHeadingContent;
 };
 
-export function ContactSection({ personalInfo, socialLinks }: ContactSectionProps) {
+export function ContactSection({ personalInfo, socialLinks, heading }: ContactSectionProps) {
   const form = useForm<ContactFormData>({
     resolver: zodResolver(contactSchema),
     defaultValues: {
@@ -69,10 +70,7 @@ export function ContactSection({ personalInfo, socialLinks }: ContactSectionProp
   return (
     <section id={Section.CONTACT} className="py-24">
       <div className="container">
-        <SectionHeading
-          title="Get in Touch"
-          description="Have a project in mind or just want to say hello? I'd love to hear from you."
-        />
+        <SectionHeading title={heading.title} description={heading.description} />
 
         <div className="mx-auto grid max-w-4xl gap-8 lg:grid-cols-2">
           {/* Contact Form */}

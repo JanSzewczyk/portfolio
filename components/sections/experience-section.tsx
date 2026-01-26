@@ -19,11 +19,12 @@ import {
   TimelineItem
 } from "@szum-tech/design-system";
 import { SectionHeading } from "~/components/ui/section-heading";
-import { type Experience } from "~/constants/portfolio";
+import { type Experience, type SectionHeadingContent } from "~/constants/portfolio";
 import { Section } from "~/constants/sections";
 
 type ExperienceSectionProps = {
   experiences: Experience[];
+  heading: SectionHeadingContent;
 };
 
 function formatDate(dateString: string): string {
@@ -37,11 +38,11 @@ function formatPeriod(startDate: string, endDate?: string): string {
   return `${start} - ${end}`;
 }
 
-export function ExperienceSection({ experiences }: ExperienceSectionProps) {
+export function ExperienceSection({ experiences, heading }: ExperienceSectionProps) {
   return (
     <section id={Section.EXPERIENCE} className="bg-muted/30 py-24">
       <div className="container">
-        <SectionHeading title="Experience" description="My professional journey and the roles that shaped my career." />
+        <SectionHeading title={heading.title} description={heading.description} />
 
         <div className="mx-auto max-w-3xl">
           <Timeline>

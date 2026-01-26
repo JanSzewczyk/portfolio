@@ -6,7 +6,7 @@ import { Badge, Card, CardHeader, Marquee, Tooltip, TooltipContent, TooltipTrigg
 import { cn } from "@szum-tech/design-system/utils";
 import { ReactIcon, type IconName } from "~/components/ui/react-icon";
 import { SectionHeading } from "~/components/ui/section-heading";
-import { type Skill, type SkillGroup } from "~/constants/portfolio";
+import { type SectionHeadingContent, type Skill, type SkillGroup } from "~/constants/portfolio";
 import { Section } from "~/constants/sections";
 
 function TechLogo({ tech }: { tech: Skill }) {
@@ -112,16 +112,14 @@ function SkillCard({
 type SkillsSectionProps = {
   skillGroups: Array<SkillGroup>;
   techLogos: Array<Skill>;
+  heading: SectionHeadingContent;
 };
 
-export function SkillsSection({ skillGroups, techLogos }: SkillsSectionProps) {
+export function SkillsSection({ skillGroups, techLogos, heading }: SkillsSectionProps) {
   return (
     <section id={Section.SKILLS} className="py-24">
       <div className="container">
-        <SectionHeading
-          title="Skills & Technologies"
-          description="The tools and technologies I work with to bring ideas to life."
-        />
+        <SectionHeading title={heading.title} description={heading.description} />
 
         {/* Tech logos marquee with enhanced styling */}
         <div className="relative -mx-4 mb-20 sm:-mx-6 lg:-mx-8">

@@ -5,3 +5,4 @@ export * from "./projects";
 export * from "./experience";
 export * from "./education";
 export * from "./social-links";
+export * from "./section-content";

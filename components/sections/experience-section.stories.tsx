@@ -1,5 +1,6 @@
 import { expect, waitFor } from "storybook/test";
-import { EXPERIENCES } from "~/constants/portfolio";
+import { EXPERIENCES, SECTION_HEADINGS } from "~/constants/portfolio";
+import { Section } from "~/constants/sections";
 
 import { ExperienceSection } from "./experience-section";
 
@@ -9,7 +10,8 @@ const meta = preview.meta({
   title: "Components/Sections/Experience Section",
   component: ExperienceSection,
   args: {
-    experiences: EXPERIENCES
+    experiences: EXPERIENCES,
+    heading: SECTION_HEADINGS[Section.EXPERIENCE]
   },
   parameters: {
     layout: "fullscreen"
@@ -96,9 +98,9 @@ ExperienceSectionDefault.test("Expands responsibilities accordion", async ({ can
   await userEvent.click(firstButton);
 
   // Wait for accordion to expand and content to become visible
-  await waitFor(() => {
+  await waitFor(async () => {
     const firstResponsibility = canvas.getByText(/architecting scalable react/i);
-    expect(firstResponsibility).toBeVisible();
+    await expect(firstResponsibility).toBeVisible();
   });
 });
 
@@ -130,7 +132,8 @@ export const WithCompanyLogos = meta.story({
     experiences: EXPERIENCES.map((exp) => ({
       ...exp,
       companyLogo: "https://via.placeholder.com/40"
-    }))
+    })),
+    heading: SECTION_HEADINGS[Section.EXPERIENCE]
   }
 });
 
@@ -153,7 +156,8 @@ export const MixedLogos = meta.story({
     experiences: EXPERIENCES.map((exp, index) => ({
       ...exp,
       companyLogo: index % 2 === 0 ? "https://via.placeholder.com/40" : undefined
-    }))
+    })),
+    heading: SECTION_HEADINGS[Section.EXPERIENCE]
   }
 });
 

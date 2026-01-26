@@ -165,4 +165,4 @@ export const PROJECT_CATEGORIES = [
   { value: "mobile", label: "Mobile" },
   { value: "oss", label: "Open Source" },
   { value: "ai", label: "AI / ML" }
-] as const;
+];

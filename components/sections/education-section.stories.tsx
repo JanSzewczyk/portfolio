@@ -1,5 +1,6 @@
 import { expect, waitFor } from "storybook/test";
-import { EDUCATION } from "~/constants/portfolio";
+import { EDUCATION, SECTION_HEADINGS } from "~/constants/portfolio";
+import { Section } from "~/constants/sections";
 
 import { EducationSection } from "./education-section";
 
@@ -9,7 +10,8 @@ const meta = preview.meta({
   title: "Components/Sections/Education Section",
   component: EducationSection,
   args: {
-    education: EDUCATION
+    education: EDUCATION,
+    heading: SECTION_HEADINGS[Section.EDUCATION]
   },
   parameters: {
     layout: "fullscreen"

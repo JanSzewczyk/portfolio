@@ -1,4 +1,5 @@
-import { PROJECT_CATEGORIES, PROJECTS } from "~/constants/portfolio";
+import { PROJECT_CATEGORIES, PROJECTS, SECTION_HEADINGS } from "~/constants/portfolio";
+import { Section } from "~/constants/sections";
 
 import { ProjectsSection } from "./projects-section";
 
@@ -9,7 +10,8 @@ const meta = preview.meta({
   component: ProjectsSection,
   args: {
     projects: PROJECTS,
-    projectCategories: PROJECT_CATEGORIES
+    projectCategories: PROJECT_CATEGORIES,
+    heading: SECTION_HEADINGS[Section.PROJECTS]
   },
   parameters: {
     layout: "fullscreen"
