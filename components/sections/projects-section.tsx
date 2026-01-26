@@ -19,7 +19,7 @@ import {
 import { cn } from "@szum-tech/design-system/utils";
 import { ReactIcon } from "~/components/ui/react-icon";
 import { SectionHeading } from "~/components/ui/section-heading";
-import { type Project } from "~/constants/portfolio";
+import { type SectionHeadingContent, type Project } from "~/constants/portfolio";
 import { Section } from "~/constants/sections";
 
 function ProjectCard({ project }: { project: Project }) {
@@ -80,10 +80,11 @@ type ProjectCategoryTab = {
 
 type ProjectsSectionProps = {
   projects: Array<Project>;
-  projectCategories: Array<ProjectCategoryTab>;
+  projectCategories: ProjectCategoryTab[];
+  heading: SectionHeadingContent;
 };
 
-export function ProjectsSection({ projects, projectCategories }: ProjectsSectionProps) {
+export function ProjectsSection({ projects, projectCategories, heading }: ProjectsSectionProps) {
   const filterProjects = (category: string): Project[] => {
     if (category === "all") {
       return projects.filter((p) => p.featured);
@@ -94,10 +95,7 @@ export function ProjectsSection({ projects, projectCategories }: ProjectsSection
   return (
     <section id={Section.PROJECTS} className="py-24">
       <div className="container">
-        <SectionHeading
-          title="Featured Projects"
-          description="A selection of projects I've worked on, from open source libraries to full-stack applications."
-        />
+        <SectionHeading title={heading.title} description={heading.description} />
 
         <Tabs defaultValue="all" className="w-full">
           <TabsList className="mx-auto mb-8">

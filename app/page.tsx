@@ -15,11 +15,13 @@ import {
   PERSONAL_INFO,
   PROJECT_CATEGORIES,
   PROJECTS,
+  SECTION_HEADINGS,
   SKILL_GROUPS,
   SOCIAL_LINKS,
   STATS,
   TECH_LOGOS
 } from "~/constants/portfolio";
+import { Section } from "~/constants/sections";
 
 export default function HomePage() {
   return (
@@ -27,12 +29,20 @@ export default function HomePage() {
       <Navigation />
       <main>
         <HeroSection personalInfo={PERSONAL_INFO} />
-        <AboutSection personalInfo={PERSONAL_INFO} stats={STATS} />
-        <SkillsSection skillGroups={SKILL_GROUPS} techLogos={TECH_LOGOS} />
-        <ProjectsSection projects={PROJECTS} projectCategories={PROJECT_CATEGORIES} />
-        <ExperienceSection experiences={EXPERIENCES} />
-        <EducationSection education={EDUCATION} />
-        <ContactSection personalInfo={PERSONAL_INFO} socialLinks={SOCIAL_LINKS} />
+        <AboutSection personalInfo={PERSONAL_INFO} stats={STATS} heading={SECTION_HEADINGS[Section.ABOUT]} />
+        <SkillsSection skillGroups={SKILL_GROUPS} techLogos={TECH_LOGOS} heading={SECTION_HEADINGS[Section.SKILLS]} />
+        <ProjectsSection
+          projects={PROJECTS}
+          projectCategories={PROJECT_CATEGORIES}
+          heading={SECTION_HEADINGS[Section.PROJECTS]}
+        />
+        <ExperienceSection experiences={EXPERIENCES} heading={SECTION_HEADINGS[Section.EXPERIENCE]} />
+        <EducationSection education={EDUCATION} heading={SECTION_HEADINGS[Section.EDUCATION]} />
+        <ContactSection
+          personalInfo={PERSONAL_INFO}
+          socialLinks={SOCIAL_LINKS}
+          heading={SECTION_HEADINGS[Section.CONTACT]}
+        />
       </main>
       <Footer />
       <Toaster />

@@ -1,5 +1,6 @@
 import { expect, waitFor, within } from "storybook/test";
-import { SKILL_GROUPS, TECH_LOGOS } from "~/constants/portfolio";
+import { SECTION_HEADINGS, SKILL_GROUPS, TECH_LOGOS } from "~/constants/portfolio";
+import { Section } from "~/constants/sections";
 
 import { SkillsSection } from "./skills-section";
 
@@ -10,7 +11,8 @@ const meta = preview.meta({
   component: SkillsSection,
   args: {
     skillGroups: SKILL_GROUPS,
-    techLogos: TECH_LOGOS
+    techLogos: TECH_LOGOS,
+    heading: SECTION_HEADINGS[Section.SKILLS]
   },
   parameters: {
     layout: "fullscreen"

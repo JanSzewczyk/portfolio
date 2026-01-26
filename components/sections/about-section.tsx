@@ -2,19 +2,20 @@
 
 import { Card, CardContent, CountingNumber } from "@szum-tech/design-system";
 import { SectionHeading } from "~/components/ui/section-heading";
-import { type PersonalInfo, type Stat } from "~/constants/portfolio";
+import { type PersonalInfo, type SectionHeadingContent, type Stat } from "~/constants/portfolio";
 import { Section } from "~/constants/sections";
 
 type AboutSectionProps = {
   personalInfo: PersonalInfo;
   stats: Array<Stat>;
+  heading: SectionHeadingContent;
 };
 
-export function AboutSection({ personalInfo, stats }: AboutSectionProps) {
+export function AboutSection({ personalInfo, stats, heading }: AboutSectionProps) {
   return (
     <section id={Section.ABOUT} className="bg-muted/30 py-24">
       <div className="container">
-        <SectionHeading title="About Me" description="Get to know me a little better." />
+        <SectionHeading title={heading.title} description={heading.description} />
 
         <div className="grid gap-12 lg:grid-cols-2">
           <div className="space-y-6">
