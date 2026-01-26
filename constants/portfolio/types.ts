@@ -1,6 +1,10 @@
+import { type IconName } from "~/components/ui/react-icon";
+import { type Section } from "~/constants/sections";
+
 export interface PersonalInfo {
   name: string;
   title: string;
+  company: string;
   alternativeTitles: string[];
   tagline: string;
   bio: string;
@@ -20,8 +24,7 @@ export type SkillCategory = "frontend" | "backend" | "mobile" | "devops" | "tool
 
 export interface Skill {
   name: string;
-  icon: string;
-  proficiency: number;
+  icon: IconName;
   category: SkillCategory;
   description?: string;
 }
@@ -30,11 +33,6 @@ export interface SkillGroup {
   category: SkillCategory;
   label: string;
   skills: Skill[];
-}
-
-export interface TechLogo {
-  name: string;
-  icon: string;
 }
 
 export type ProjectCategory = "web" | "mobile" | "oss" | "ai";
@@ -82,7 +80,7 @@ export interface SocialLink {
 
 export interface NavItem {
   label: string;
-  href: string;
+  section: Section;
 }
 
 export type DegreeType = "bachelor" | "master" | "phd";

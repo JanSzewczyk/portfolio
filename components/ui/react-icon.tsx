@@ -3,8 +3,12 @@
 import { type IconType } from "react-icons";
 
 import * as SimpleIcons from "react-icons/si";
+import * as TablerIcons from "react-icons/tb";
+import * as VSCodeIcons from "react-icons/vsc";
 
-export type IconName = keyof typeof SimpleIcons extends `Si${infer Name}` ? Name : never;
+const ICONS = { ...SimpleIcons, ...TablerIcons, ...VSCodeIcons } as const;
+
+export type IconName = keyof typeof ICONS;
 
 export type DynamicIconProps = {
   name: IconName;
@@ -13,15 +17,10 @@ export type DynamicIconProps = {
 };
 
 export function ReactIcon({ name, className, size }: DynamicIconProps) {
-  const iconName = `Si${name}` as keyof typeof SimpleIcons;
-
-  // eslint-disable-next-line import/namespace
-  const Icon = SimpleIcons[iconName] as IconType | undefined;
-
+  const Icon = ICONS[name] as IconType | undefined;
   if (!Icon) {
-    console.warn(`Icon "Si${name}" not found in react-icons/si`);
+    console.warn(`Icon "${name}" not found in react-icons`);
     return null;
   }
-
   return <Icon className={className} size={size} />;
 }

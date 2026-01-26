@@ -3,9 +3,9 @@ import { ReactIcon, type IconName } from "~/components/ui/react-icon";
 import { PERSONAL_INFO, SOCIAL_LINKS } from "~/constants/portfolio";
 
 const iconMap: Record<string, IconName> = {
-  github: "Github",
-  linkedin: "Linkedin",
-  twitter: "X"
+  github: "SiGithub",
+  linkedin: "SiLinkedin",
+  twitter: "SiX"
 };
 
 export function Footer() {

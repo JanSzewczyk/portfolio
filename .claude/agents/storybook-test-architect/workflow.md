@@ -2,39 +2,83 @@
 
 > **KEY PRINCIPLE:** Use `.test()` method to add multiple tests to a single story instead of creating separate test stories. This reduces story count by 60-80% while maintaining comprehensive coverage.
 
+## 🚨 CRITICAL: PHASE SEPARATION IS MANDATORY
+
+**YOU MUST NEVER COMBINE PHASE 2 (STORIES) AND PHASE 3 (TESTS) IN ONE MESSAGE.**
+
+Each phase MUST be a separate interaction with the user:
+1. Phase 2 → Present stories → STOP → Wait for approval
+2. Phase 3 → Present tests → STOP → Wait for approval
+3. Phase 4 → Implement (only after BOTH approvals)
+
+**If you present stories AND tests together, you have FAILED the workflow.**
+
 ## Workflow Overview
 
-This agent follows a **3-phase approval process** to ensure user has full control over story and test creation:
+This agent follows a **strict 6-phase workflow with 2 mandatory approval checkpoints**:
 
-### ✅ Phase 1: Component Analysis
+### Phase 1: Component Analysis ✅
 - Analyze component source code
 - Understand props, interactions, and complexity
 - **No approval needed** - information gathering only
+- **DO NOT PROPOSE** anything yet - just gather information
 
-### 🛑 Phase 2: Story Proposal (FIRST CHECKPOINT)
-- Propose minimal set of stories (1-3 typically)
-- Explain rationale for each story
-- **WAIT for user approval before proceeding**
-- User can add, remove, or modify stories
+### Phase 2: Story Proposal 🛑 FIRST CHECKPOINT - WAIT FOR APPROVAL
 
-### 🛑 Phase 3: Test Proposal (SECOND CHECKPOINT)
-- Based on approved stories, propose comprehensive tests
-- List all test scenarios with descriptions
-- **WAIT for user approval before proceeding**
-- User can select which tests to implement
+**OUTPUT ONLY:**
+- Component complexity assessment
+- Proposed stories with args and rationale
+- "AWAITING APPROVAL" message
 
-### ⚡ Phase 4: Implementation
-- **Only after BOTH approvals received**
+**DO NOT OUTPUT:**
+- ❌ Test scenarios
+- ❌ Test implementation examples
+- ❌ Anything about Phase 3
+
+**THEN STOP AND WAIT.** Do not continue until user explicitly approves.
+
+### Phase 3: Test Proposal 🛑 SECOND CHECKPOINT - WAIT FOR APPROVAL
+
+**PRECONDITION:** User has explicitly approved Phase 2 (said "approve", "yes", "proceed", "looks good", etc.)
+
+**OUTPUT ONLY:**
+- Test scenarios for each approved story
+- Test descriptions with expected behavior
+- "AWAITING APPROVAL" message
+
+**DO NOT OUTPUT:**
+- ❌ Implementation code
+- ❌ Anything about Phase 4
+
+**THEN STOP AND WAIT.** Do not continue until user explicitly approves.
+
+### Phase 4: Implementation ⚡ (ONLY AFTER BOTH APPROVALS)
+- **CRITICAL:** Only proceed AFTER receiving BOTH approvals:
+  - ✅ Stories approved in Phase 2
+  - ✅ Tests approved in Phase 3
+- **DO NOT write ANY code** until BOTH checkpoints passed
 - Implement stories with `.test()` methods
 - Create complete Storybook test file
 
-### 🔧 Phase 5: Debugging (if needed)
+### Phase 5: Debugging 🔧 (if needed)
 - Use Playwright MCP to debug failures
 - Inspect component behavior in browser
 
-### ✅ Phase 6: Verification
+### Phase 6: Verification ✅
 - Run tests and report results
 - Fix any failures
+
+## Phase Transition Checklist
+
+Before moving from Phase 2 to Phase 3, verify:
+- [ ] User said "approve", "yes", "proceed", "looks good", or similar
+- [ ] You have NOT mentioned tests yet
+- [ ] You are starting a NEW message for Phase 3
+
+Before moving from Phase 3 to Phase 4, verify:
+- [ ] User approved stories in Phase 2
+- [ ] User approved tests in Phase 3
+- [ ] You are starting a NEW message for Phase 4
 
 ---
 
@@ -216,7 +260,9 @@ These represent different component states. Each will be a visual story in Story
 
 ---
 
-## ⚠️ AWAITING USER APPROVAL
+## ⚠️ AWAITING USER APPROVAL - CHECKPOINT 1
+
+**I am now WAITING at Phase 2 checkpoint. I will NOT proceed to Phase 3 (test proposal) until you explicitly approve.**
 
 **Please review the story proposal:**
 
@@ -228,9 +274,15 @@ These represent different component states. Each will be a visual story in Story
 
 3. **Should I add or remove any stories?**
 
-**Once you approve the stories, I will proceed to Phase 3 to propose comprehensive tests for each story.**
+**To proceed to Phase 3 (test proposal), please respond with:**
+- "approve" or "looks good" or "proceed" or "yes" - to approve all stories
+- "add [story name]" - to request additional stories
+- "remove [story name]" - to remove stories
+- "modify [story name] to [new description]" - to change stories
 
-**DO NOT proceed to test proposal until user explicitly approves these stories.**
+**Once you approve, I will proceed to Phase 3 to propose comprehensive tests for each approved story.**
+
+**CRITICAL: I will NOT write ANY code or create ANY files until BOTH checkpoints (stories + tests) are approved.**
 ```
 
 ---
@@ -416,7 +468,9 @@ Based on the approved stories from Phase 2, here are the comprehensive tests I p
 
 ---
 
-## ⚠️ AWAITING USER APPROVAL
+## ⚠️ AWAITING USER APPROVAL - CHECKPOINT 2
+
+**I am now WAITING at Phase 3 checkpoint. I will NOT proceed to Phase 4 (implementation) until you explicitly approve.**
 
 **Please review the test proposal:**
 
@@ -431,16 +485,32 @@ Based on the approved stories from Phase 2, here are the comprehensive tests I p
 3. **Should I remove any unnecessary tests?**
    - Specify which tests to skip
 
-**Once you approve the tests, I will proceed to Phase 4 to implement the complete Storybook test file.**
+**To proceed to Phase 4 (implementation), please respond with:**
+- "approve all" or "implement all tests" or "looks good" - to approve all tests
+- "implement tests 1-15, 19-22" - to select specific tests by number
+- "add test for [scenario]" - to request additional tests
+- "skip test [number]" - to remove specific tests
 
-**DO NOT proceed to implementation until user explicitly approves which tests to implement.**
+**Once you approve, I will proceed to Phase 4 to implement the complete Storybook test file with approved stories and tests.**
+
+**CRITICAL: This is the FINAL checkpoint before code implementation. After your approval here, I will create the actual test files.**
 ```
 
 ---
 
 ## Phase 4: Implementation (After BOTH Approvals Only)
 
-Once approved, **INVOKE THE `/storybook-testing` SKILL** to implement the tests. The skill contains comprehensive patterns for `.test()` method.
+**⚠️ PRE-IMPLEMENTATION CHECKLIST - VERIFY BEFORE WRITING ANY CODE:**
+
+Before proceeding to implementation, VERIFY that you have received:
+- ✅ **Phase 2 approval:** User explicitly approved the story proposal
+- ✅ **Phase 3 approval:** User explicitly approved the test proposal
+
+**If either approval is missing, STOP and return to the appropriate checkpoint.**
+
+**If BOTH approvals confirmed, proceed with implementation:**
+
+**INVOKE THE `/storybook-testing` SKILL** to implement the tests. The skill contains comprehensive patterns for `.test()` method.
 
 **CRITICAL: Use the Skill tool to invoke `/storybook-testing` skill:**
 

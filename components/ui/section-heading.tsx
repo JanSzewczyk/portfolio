@@ -16,7 +16,7 @@ export function SectionHeading({ title, description, children, className, align 
       className={cn("mb-12 space-y-4", align === "center" && "text-center", align === "left" && "text-left", className)}
     >
       <h2 className="text-heading-h2">{title}</h2>
-      {description && <p className="text-body-lg text-muted-foreground mx-auto max-w-2xl">{description}</p>}
+      {description ? <p className="text-body-lg text-muted-foreground mx-auto max-w-2xl">{description}</p> : null}
       {children}
     </div>
   );
