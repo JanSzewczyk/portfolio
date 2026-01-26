@@ -1,6 +1,7 @@
+import { PROJECT_CATEGORIES, PROJECTS } from "~/constants/portfolio";
+
 import { ProjectsSection } from "./projects-section";
 
-import { PROJECT_CATEGORIES, PROJECTS } from "~/constants/portfolio";
 import preview from "~/.storybook/preview";
 
 const meta = preview.meta({

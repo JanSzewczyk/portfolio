@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
-
 import { Mail, SendIcon } from "lucide-react";
+import { useForm } from "react-hook-form";
 import { z } from "zod";
 
+import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Button,
   Card,
@@ -12,12 +12,14 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
+  Field,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
   Input,
-  Label,
   Textarea,
   toast
 } from "@szum-tech/design-system";
-import { cn } from "@szum-tech/design-system/utils";
 import { ReactIcon, type IconName } from "~/components/ui/react-icon";
 import { SectionHeading } from "~/components/ui/section-heading";
 import { type PersonalInfo, type SocialLink } from "~/constants/portfolio";
@@ -43,40 +45,16 @@ type ContactSectionProps = {
 };
 
 export function ContactSection({ personalInfo, socialLinks }: ContactSectionProps) {
-  const [formData, setFormData] = useState<ContactFormData>({
-    name: "",
-    email: "",
-    message: ""
+  const form = useForm<ContactFormData>({
+    resolver: zodResolver(contactSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      message: ""
+    }
   });
-  const [errors, setErrors] = useState<Partial<Record<keyof ContactFormData, string>>>({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-    if (errors[name as keyof ContactFormData]) {
-      setErrors((prev) => ({ ...prev, [name]: undefined }));
-    }
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setErrors({});
-
-    const result = contactSchema.safeParse(formData);
-    if (!result.success) {
-      const fieldErrors: Partial<Record<keyof ContactFormData, string>> = {};
-      result.error.issues.forEach((issue) => {
-        if (issue.path[0]) {
-          fieldErrors[issue.path[0] as keyof ContactFormData] = issue.message;
-        }
-      });
-      setErrors(fieldErrors);
-      return;
-    }
-
-    setIsSubmitting(true);
-
+  async function onSubmit(_data: ContactFormData) {
     // TODO: Implement actual form submission
     // This is a placeholder - simulate form submission
     await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -85,9 +63,8 @@ export function ContactSection({ personalInfo, socialLinks }: ContactSectionProp
       description: "Thank you for reaching out. I'll get back to you soon."
     });
 
-    setFormData({ name: "", email: "", message: "" });
-    setIsSubmitting(false);
-  };
+    form.reset();
+  }
 
   return (
     <section id={Section.CONTACT} className="py-24">
@@ -105,52 +82,51 @@ export function ContactSection({ personalInfo, socialLinks }: ContactSectionProp
               <CardDescription>Fill out the form and I&apos;ll get back to you as soon as possible.</CardDescription>
             </CardHeader>
             <CardContent>
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="space-y-2">
-                  <Label htmlFor="name">Name</Label>
-                  <Input
-                    id="name"
-                    name="name"
-                    placeholder="Your name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    invalid={!!errors.name}
-                  />
-                  {errors.name && <p className="text-error text-sm">{errors.name}</p>}
-                </div>
+              <form onSubmit={form.handleSubmit(onSubmit)}>
+                <FieldGroup>
+                  <Field data-invalid={!!form.formState.errors.name}>
+                    <FieldLabel htmlFor="username">Username</FieldLabel>
+                    <Input
+                      id="username"
+                      placeholder="Your name"
+                      invalid={!!form.formState.errors.name}
+                      {...form.register("name")}
+                    />
+                    <FieldError errors={[form.formState.errors.name]} />
+                  </Field>
+                  <Field data-invalid={!!form.formState.errors.email}>
+                    <FieldLabel htmlFor="email">Email</FieldLabel>
+                    <Input
+                      id="email"
+                      placeholder="your@email.com"
+                      invalid={!!form.formState.errors.email}
+                      type="email"
+                      {...form.register("email")}
+                    />
+                    <FieldError errors={[form.formState.errors.email]} />
+                  </Field>
+                  <Field data-invalid={!!form.formState.errors.message}>
+                    <FieldLabel htmlFor="message">Message</FieldLabel>
+                    <Textarea
+                      id="message"
+                      placeholder="Your message..."
+                      rows={5}
+                      invalid={!!form.formState.errors.message}
+                      {...form.register("message")}
+                    />
+                    <FieldError errors={[form.formState.errors.message]} />
+                  </Field>
 
-                <div className="space-y-2">
-                  <Label htmlFor="email">Email</Label>
-                  <Input
-                    id="email"
-                    name="email"
-                    type="email"
-                    placeholder="your@email.com"
-                    value={formData.email}
-                    onChange={handleChange}
-                    invalid={!!errors.email}
-                  />
-                  {errors.email && <p className="text-error text-sm">{errors.email}</p>}
-                </div>
-
-                <div className="space-y-2">
-                  <Label htmlFor="message">Message</Label>
-                  <Textarea
-                    id="message"
-                    name="message"
-                    placeholder="Your message..."
-                    rows={5}
-                    value={formData.message}
-                    onChange={handleChange}
-                    className={cn(errors.message && "border-error")}
-                  />
-                  {errors.message && <p className="text-error text-sm">{errors.message}</p>}
-                </div>
-
-                <Button type="submit" className="w-full" disabled={isSubmitting} loading={isSubmitting}>
-                  {!isSubmitting && <SendIcon className="mr-2 size-4" />}
-                  Send Message
-                </Button>
+                  <Button
+                    type="submit"
+                    fullWidth
+                    disabled={form.formState.isSubmitting}
+                    loading={form.formState.isSubmitting}
+                    startIcon={<SendIcon />}
+                  >
+                    Send Message
+                  </Button>
+                </FieldGroup>
               </form>
             </CardContent>
           </Card>
@@ -158,7 +134,7 @@ export function ContactSection({ personalInfo, socialLinks }: ContactSectionProp
           {/* Contact Info */}
           <div className="space-y-6">
             <Card>
-              <CardContent className="flex items-center gap-4 pt-6">
+              <CardContent className="flex gap-4">
                 <div className="bg-primary/10 flex size-12 items-center justify-center rounded-full">
                   <Mail className="text-primary size-6" />
                 </div>
@@ -173,16 +149,16 @@ export function ContactSection({ personalInfo, socialLinks }: ContactSectionProp
 
             <Card>
               <CardHeader>
-                <CardTitle className="text-lg">Connect with me</CardTitle>
+                <CardTitle>Connect with me</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="flex gap-3">
+                <div className="flex gap-4">
                   {socialLinks.map((link) => {
                     const iconName = iconMap[link.icon];
                     return (
-                      <Button key={link.platform} variant="outline" size="lg" asChild>
+                      <Button key={link.platform} variant="outline" size="icon" asChild>
                         <a href={link.url} target="_blank" rel="noopener noreferrer" aria-label={link.platform}>
-                          {iconName && <ReactIcon name={iconName} className="size-5" />}
+                          {iconName ? <ReactIcon name={iconName} className="size-5" /> : null}
                         </a>
                       </Button>
                     );
@@ -192,8 +168,8 @@ export function ContactSection({ personalInfo, socialLinks }: ContactSectionProp
             </Card>
 
             <Card className="bg-primary/5 border-primary/20">
-              <CardContent className="pt-6">
-                <p className="text-muted-foreground text-sm">
+              <CardContent>
+                <p className="text-muted-foreground text-body-sm">
                   <strong className="text-foreground">Prefer a quick chat?</strong>
                   <br />
                   Feel free to reach out on LinkedIn or Twitter for a faster response.
