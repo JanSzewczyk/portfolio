@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Portfolio is a personal portfolio website built with Next.js 16, TypeScript, Tailwind CSS v4, React Compiler, and comprehensive testing infrastructure.
+Portfolio is a personal portfolio website built with Next.js 16, TypeScript, Tailwind CSS v4, React Compiler, Sanity CMS, and comprehensive testing infrastructure.
 
 ## Commands
 
@@ -51,6 +51,15 @@ npm run storybook:dev         # Start Storybook (port 6006)
 npm run storybook:build       # Build static Storybook
 ```
 
+### Sanity
+
+```bash
+npm run sanity:dev            # Start Sanity Studio in dev mode
+npm run sanity:deploy         # Deploy Sanity Studio to Sanity hosting
+npm run sanity:extract        # Extract schema to JSON file
+npm run sanity:typegen        # Generate TypeScript types from schema
+```
+
 ### Analysis
 
 ```bash
@@ -71,6 +80,8 @@ import { env } from "~/data/env/server";
 ### Key Directories
 
 - **app/**: Next.js App Router pages, layouts, and API routes
+- **app/studio/**: Embedded Sanity Studio route
+- **sanity-studio/**: Sanity Studio configuration and schema types
 - **features/**: Feature-based modules (see structure below)
 - **components/**: Shared reusable components (ui/, layout/, providers/)
 - **lib/**: Utilities and configurations (logger)

@@ -120,3 +120,4 @@ src/styles
 
 # Ignore Next files
 .next
+.sanity
