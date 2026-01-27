@@ -1,10 +1,13 @@
 import { type SchemaTypeDefinition } from "sanity";
 
-import { authorType } from "./authorType";
-import { blockContentType } from "./blockContentType";
-import { categoryType } from "./categoryType";
-import { postType } from "./postType";
+import { education } from "./education";
+import { experience } from "./experience";
+import { project } from "./project";
+import { technology } from "./technology";
+import { technologyGroup } from "./technology-group";
 
-export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [blockContentType, categoryType, postType, authorType]
+type SanitySchema = { types: Array<SchemaTypeDefinition> };
+
+export const schema: SanitySchema = {
+  types: [technology, technologyGroup, project, experience, education]
 };
