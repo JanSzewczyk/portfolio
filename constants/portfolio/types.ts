@@ -29,14 +29,17 @@ export interface Skill {
   description?: string;
 }
 
+///
 export interface SkillGroup {
   category: SkillCategory;
   label: string;
   skills: Skill[];
 }
 
+///
 export type ProjectCategory = "web" | "mobile" | "oss" | "ai";
 
+///
 export interface Project {
   id: string;
   title: string;
@@ -52,9 +55,9 @@ export interface Project {
   featured: boolean;
   year: number;
 }
-
+//
 export type EmploymentType = "full-time" | "part-time" | "contract" | "freelance";
-
+//
 export interface Experience {
   id: string;
   role: string;
