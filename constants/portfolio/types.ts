@@ -19,9 +19,9 @@ export interface Stat {
   value: number;
   suffix?: string;
 }
-
+//
 export type SkillCategory = "frontend" | "backend" | "mobile" | "devops" | "tools";
-
+//
 export interface Skill {
   name: string;
   icon: IconName;
@@ -85,9 +85,9 @@ export interface NavItem {
   label: string;
   section: Section;
 }
-
+///
 export type DegreeType = "bachelor" | "master" | "phd";
-
+///
 export interface Education {
   id: string;
   institution: string;
