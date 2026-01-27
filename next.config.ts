@@ -18,6 +18,10 @@ const config: NextConfig = {
       {
         protocol: "https",
         hostname: "avatars.githubusercontent.com"
+      },
+      {
+        protocol: "https",
+        hostname: "cdn.sanity.io"
       }
     ],
     formats: ["image/avif", "image/webp"]
