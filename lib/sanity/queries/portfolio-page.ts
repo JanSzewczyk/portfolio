@@ -2,7 +2,7 @@ import "server-only";
 
 import { defineQuery } from "next-sanity";
 
-export const getPortfolioPageQuery = defineQuery(`
+export const portfolioPageQuery = defineQuery(`
   *[_type == "portfolioPage"][0] {
     _id,
     _type,
@@ -16,14 +16,8 @@ export const getPortfolioPageQuery = defineQuery(`
       alternativeTitles,
       tagline,
       avatar {
-        asset-> {
-          _id,
-          url,
-          metadata {
-            dimensions,
-            lqip
-          }
-        }
+        ...,
+        asset-> 
       },
       isAvailable
     },

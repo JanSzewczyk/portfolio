@@ -14,17 +14,23 @@ import {
   WordRotate
 } from "@szum-tech/design-system";
 import { GridBackground } from "~/components/ui/grid-background";
-import { type PersonalInfo } from "~/constants/portfolio";
 import { Section } from "~/constants/sections";
+import { urlFor } from "~/lib/sanity/image";
+import { buildSanityAttribute } from "~/lib/sanity/live";
+import { type PortfolioPageQueryResult } from "~/lib/sanity/types";
 import { scrollToSection } from "~/lib/scroll-to-section";
 
 type HeroSectionProps = {
-  personalInfo: PersonalInfo;
+  hero: NonNullable<PortfolioPageQueryResult>["hero"];
+  documentId: string;
+  documentType: string;
 };
 
-export function HeroSection({ personalInfo }: HeroSectionProps) {
-  const initials = personalInfo.name
-    .split(" ")
+export function HeroSection({ hero, documentId, documentType }: HeroSectionProps) {
+  const { createSanityAttribute } = buildSanityAttribute({ documentId, documentType });
+
+  const initials = hero?.name
+    ?.split(" ")
     .map((n) => n[0])
     .join("");
 
@@ -35,28 +41,33 @@ export function HeroSection({ personalInfo }: HeroSectionProps) {
       <div className="container flex min-h-[calc(100vh-4rem)] items-center py-20">
         <div className="mx-auto flex max-w-4xl flex-col items-center text-center">
           <Avatar className="size-32">
-            <AvatarImage src={personalInfo.avatar} alt={personalInfo.name} />
+            {hero?.avatar ? (
+              <AvatarImage src={urlFor(hero.avatar).auto("format").url()} alt={hero?.avatar?.alt} />
+            ) : null}
             <AvatarFallback className="text-3xl">{initials}</AvatarFallback>
           </Avatar>
 
           <div className="mt-2 mb-4">
-            <Status variant={personalInfo.isAvailable ? "success" : "error"}>
+            <Status
+              variant={hero?.isAvailable ? "success" : "error"}
+              data-sanity={createSanityAttribute("hero.isAvailable")}
+            >
               <StatusIndicator />
-              <StatusLabel>
-                {personalInfo.isAvailable ? "Available for opportunities" : "Currently unavailable"}
-              </StatusLabel>
+              <StatusLabel>{hero?.isAvailable ? "Available for opportunities" : "Currently unavailable"}</StatusLabel>
             </Status>
           </div>
 
-          <h1 className="text-display-lg mb-4">
-            <TypingText text={`Hi, I'm ${personalInfo.name}`} speed={80} />
+          <h1 className="text-display-lg mb-4" data-sanity={createSanityAttribute("hero.name")}>
+            <TypingText text={`Hi Im ${hero?.name}`} speed={80} />
           </h1>
 
-          <div className="text-primary text-heading-h1 mb-6">
-            <WordRotate words={personalInfo.alternativeTitles} duration={3000} animationStyle={"slide-up"} />
-          </div>
+          {hero?.alternativeTitles && hero.alternativeTitles.length > 0 && (
+            <div className="text-primary text-heading-h1 mb-6">
+              <WordRotate words={hero.alternativeTitles} duration={3000} animationStyle={"slide-up"} />
+            </div>
+          )}
 
-          <p className="text-body-lg text-muted-foreground mb-8 max-w-2xl">{personalInfo.tagline}</p>
+          <p className="text-body-lg text-muted-foreground mb-8 max-w-2xl">{hero?.tagline}</p>
 
           <div className="flex flex-col gap-4 sm:flex-row">
             <Button size="lg" onClick={() => scrollToSection(Section.CONTACT)}>

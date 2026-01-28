@@ -1,4 +1,5 @@
 import { Toaster } from "@szum-tech/design-system";
+import { notFound } from "next/navigation";
 import { Footer, Navigation } from "~/components/layout";
 import {
   AboutSection,
@@ -22,16 +23,27 @@ import {
   TECH_LOGOS
 } from "~/constants/portfolio";
 import { Section } from "~/constants/sections";
-import { getPortfolioPage } from "~/lib/sanity/api";
+import { sanityFetch } from "~/lib/sanity/live";
+import { portfolioPageQuery } from "~/lib/sanity/queries/portfolio-page";
+
+async function loadData() {
+  const { data: portfolioPage } = await sanityFetch({ query: portfolioPageQuery });
+
+  if (!portfolioPage) {
+    notFound();
+  }
+
+  return { portfolioPage };
+}
 
 export default async function HomePage() {
-  const x = await getPortfolioPage();
+  const { portfolioPage } = await loadData();
 
   return (
     <>
       <Navigation />
       <main>
-        <HeroSection personalInfo={PERSONAL_INFO} />
+        <HeroSection hero={portfolioPage?.hero} documentId={portfolioPage._id} documentType={portfolioPage._type} />
         <AboutSection personalInfo={PERSONAL_INFO} stats={STATS} heading={SECTION_HEADINGS[Section.ABOUT]} />
         <SkillsSection skillGroups={SKILL_GROUPS} techLogos={TECH_LOGOS} heading={SECTION_HEADINGS[Section.SKILLS]} />
         <ProjectsSection

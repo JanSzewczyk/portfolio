@@ -1,3 +1,5 @@
+import { createDataAttribute } from "next-sanity";
+
 import { defineLive } from "next-sanity/live";
 
 import { client } from "./client";
@@ -15,3 +17,15 @@ export const { sanityFetch, SanityLive } = defineLive({
   serverToken: token,
   browserToken: token
 });
+
+export function buildSanityAttribute({ documentId, documentType }: { documentId: string; documentType: string }) {
+  return {
+    createSanityAttribute(path: string) {
+      return createDataAttribute({
+        id: documentId,
+        type: documentType,
+        path
+      }).toString();
+    }
+  };
+}
