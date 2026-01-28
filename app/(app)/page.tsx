@@ -22,8 +22,11 @@ import {
   TECH_LOGOS
 } from "~/constants/portfolio";
 import { Section } from "~/constants/sections";
+import { getPortfolioPage } from "~/lib/sanity/api";
 
-export default function HomePage() {
+export default async function HomePage() {
+  const x = await getPortfolioPage();
+
   return (
     <>
       <Navigation />

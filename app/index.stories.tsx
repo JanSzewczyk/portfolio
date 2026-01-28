@@ -1,5 +1,5 @@
 import { expect, userEvent, within } from "storybook/test";
-import Page from "~/app/page";
+import Page from "~/app/(app)/page";
 import {
   EXPERIENCES,
   NAVIGATION_ITEMS,

@@ -2,13 +2,9 @@ import * as React from "react";
 
 import { type Metadata, type Viewport } from "next";
 
-import { draftMode } from "next/headers";
-import { VisualEditing } from "next-sanity/visual-editing";
 import { ThemeProvider } from "~/components/providers/theme-provider";
 import { StructuredData } from "~/components/seo/structured-data";
-import { DisableDraftMode } from "~/components/ui/disable-draft-mode";
 import { env } from "~/data/env/client";
-import { SanityLive } from "~/lib/sanity/live";
 
 import "./globals.css";
 
@@ -101,8 +97,6 @@ export const viewport: Viewport = {
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const { isEnabled: isDraftMode } = await draftMode();
-
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
@@ -115,17 +109,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           {children}
         </ThemeProvider>
-
-        {/* Sanity Live Content API - enables real-time updates */}
-        <SanityLive />
-
-        {/* Visual Editing overlays - only in draft mode */}
-        {isDraftMode && (
-          <>
-            <DisableDraftMode />
-            <VisualEditing />
-          </>
-        )}
       </body>
     </html>
   );
