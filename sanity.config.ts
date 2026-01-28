@@ -1,21 +1,22 @@
+"use client";
+
 import { defineConfig } from "sanity";
 
 import { visionTool } from "@sanity/vision";
 import { structureTool } from "sanity/structure";
+import { env } from "~/data/env/client";
 
-import { apiVersion, dataset, projectId } from "./sanity-studio/env";
-import { schema } from "./sanity-studio/schemaTypes";
-import { structure } from "./sanity-studio/structure";
+import { schema, structure } from "./lib/sanity/configuration";
 
 export default defineConfig({
   basePath: "/studio",
-  projectId,
-  dataset,
+  projectId: env.NEXT_PUBLIC_SANITY_PROJECT_ID,
+  dataset: env.NEXT_PUBLIC_SANITY_DATASET,
   schema,
   plugins: [
     structureTool({ structure }),
     // Vision is for querying with GROQ from inside the Studio
     // https://www.sanity.io/docs/the-vision-plugin
-    visionTool({ defaultApiVersion: apiVersion })
+    visionTool({ defaultApiVersion: env.NEXT_PUBLIC_SANITY_API_VERSION })
   ]
 });
