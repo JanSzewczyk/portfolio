@@ -1,17 +1,17 @@
 import { getPortfolioPageQuery } from "~/lib/sanity/queries/portfolio-page";
 
-import { client } from "./client";
-import { type PortfolioPage } from "./types";
+import { sanityFetch } from "./live";
+import { type GetPortfolioPageQueryResult } from "./types";
 
-export async function getPortfolioPage(): Promise<PortfolioPage> {
-  return client.fetch(
-    getPortfolioPageQuery,
-    {},
-    {
-      // Add caching tags for ISR
-      next: {
-        tags: ["portfolioPage"]
-      }
-    }
-  );
+/**
+ * Fetches the portfolio page data from Sanity with Live Content API support
+ *
+ * @returns Portfolio page data with all references resolved, or null if not found
+ */
+export async function getPortfolioPage() {
+  const { data } = await sanityFetch({
+    query: getPortfolioPageQuery
+  });
+
+  return data as GetPortfolioPageQueryResult;
 }
