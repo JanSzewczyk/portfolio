@@ -1,8 +1,9 @@
 import { defineField, defineType } from "sanity";
 
 import { CodeIcon } from "@sanity/icons";
-import { ReactIcon } from "~/components/ui/react-icon";
-import { IconSearchInput } from "~/sanity-studio/schemaTypes/components/icon-search-input";
+
+import { ReactIcon } from "../../components/ui/react-icon";
+import { IconSearchInput } from "./components/icon-search-input";
 
 export const technology = defineType({
   name: "technology",

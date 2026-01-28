@@ -7,4 +7,14 @@ import { defineCliConfig } from "sanity/cli";
 const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
 const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET;
 
-export default defineCliConfig({ api: { projectId, dataset } });
+export default defineCliConfig({
+  api: { projectId, dataset },
+  deployment: {
+    appId: "juuyslopxpq4fl70pr55ual9"
+  },
+  typegen: {
+    path: "./**/*.{ts,tsx,js,jsx}",
+    schema: "schema.json",
+    generates: "../day-one-with-sanity-nextjs/src/sanity/types.ts"
+  }
+});
