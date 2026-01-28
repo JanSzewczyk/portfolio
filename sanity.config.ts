@@ -1,5 +1,3 @@
-"use client";
-
 import { defineConfig } from "sanity";
 
 import { visionTool } from "@sanity/vision";
