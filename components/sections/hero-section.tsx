@@ -2,6 +2,8 @@
 
 import { ArrowDownIcon } from "lucide-react";
 
+import { stegaClean } from "next-sanity";
+
 import {
   Avatar,
   AvatarFallback,
@@ -16,8 +18,8 @@ import {
 import { GridBackground } from "~/components/ui/grid-background";
 import { Section } from "~/constants/sections";
 import { urlFor } from "~/lib/sanity/image";
-import { buildSanityAttribute } from "~/lib/sanity/live";
 import { type PortfolioPageQueryResult } from "~/lib/sanity/types";
+import { buildSanityAttribute } from "~/lib/sanity/utils";
 import { scrollToSection } from "~/lib/scroll-to-section";
 
 type HeroSectionProps = {
@@ -58,7 +60,7 @@ export function HeroSection({ hero, documentId, documentType }: HeroSectionProps
           </div>
 
           <h1 className="text-display-lg mb-4" data-sanity={createSanityAttribute("hero.name")}>
-            <TypingText text={`Hi Im ${hero?.name}`} speed={80} />
+            <TypingText text={`Hi I'm ${stegaClean(hero?.name)}`} speed={80} />
           </h1>
 
           {hero?.alternativeTitles && hero.alternativeTitles.length > 0 && (

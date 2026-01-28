@@ -1,10 +1,9 @@
-import { createDataAttribute } from "next-sanity";
-
 import { defineLive } from "next-sanity/live";
+import { env } from "~/data/env/server";
 
 import { client } from "./client";
 
-const token = process.env.SANITY_API_READ_TOKEN;
+const token = env.SANITY_API_READ_TOKEN;
 
 if (!token) {
   throw new Error("Missing SANITY_API_READ_TOKEN environment variable");
@@ -17,15 +16,3 @@ export const { sanityFetch, SanityLive } = defineLive({
   serverToken: token,
   browserToken: token
 });
-
-export function buildSanityAttribute({ documentId, documentType }: { documentId: string; documentType: string }) {
-  return {
-    createSanityAttribute(path: string) {
-      return createDataAttribute({
-        id: documentId,
-        type: documentType,
-        path
-      }).toString();
-    }
-  };
-}
