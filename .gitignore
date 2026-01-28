@@ -120,4 +120,7 @@ src/styles
 
 # Ignore Next files
 .next
+
+# Ignore Sanity files
 .sanity
+/lib/sanity/schema.json

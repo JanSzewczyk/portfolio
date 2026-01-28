@@ -12,9 +12,13 @@ export default defineCliConfig({
   deployment: {
     appId: "juuyslopxpq4fl70pr55ual9"
   },
+  schemaExtraction: {
+    path: "lib/sanity/schema.json"
+  },
   typegen: {
-    path: "./**/*.{ts,tsx,js,jsx}",
-    schema: "schema.json",
-    generates: "../day-one-with-sanity-nextjs/src/sanity/types.ts"
+    path: "lib/sanity/**/*.{ts,tsx,js,jsx}",
+    schema: "lib/sanity/schema.json",
+    generates: "lib/sanity/types.ts",
+    overloadClientMethods: true
   }
 });

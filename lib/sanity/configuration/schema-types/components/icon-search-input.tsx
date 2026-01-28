@@ -1,4 +1,6 @@
-import { useCallback, useState } from "react";
+"use client";
+
+import * as React from "react";
 
 import { type IconType } from "react-icons";
 import { set, unset, type StringInputProps } from "sanity";
@@ -15,16 +17,16 @@ type IconName = keyof typeof ICONS;
 
 export function IconSearchInput(props: StringInputProps) {
   const { onChange, value = "" } = props;
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = React.useState("");
 
-  const handleChange = useCallback(
+  const handleChange = React.useCallback(
     (newValue: string) => {
       onChange(newValue ? set(newValue) : unset());
     },
     [onChange]
   );
 
-  const handleQueryChange = useCallback((query: string | null) => {
+  const handleQueryChange = React.useCallback((query: string | null) => {
     setSearchQuery(query ?? "");
   }, []);
 
@@ -39,7 +41,7 @@ export function IconSearchInput(props: StringInputProps) {
 
   const IconComponent = value ? (ICONS[value as IconName] as IconType) : null;
 
-  const renderOption = useCallback((option: { value: string }) => {
+  const renderOption = React.useCallback((option: { value: string }) => {
     const Icon = ICONS[option.value as IconName] as IconType;
     return (
       <Card as="button" padding={2}>
@@ -53,7 +55,7 @@ export function IconSearchInput(props: StringInputProps) {
     );
   }, []);
 
-  const renderValue = useCallback(
+  const renderValue = React.useCallback(
     (_value: string, option?: { value: string }) => {
       return option?.value || value || "";
     },
