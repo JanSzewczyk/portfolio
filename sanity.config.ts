@@ -3,10 +3,11 @@
 import { defineConfig } from "sanity";
 
 import { visionTool } from "@sanity/vision";
+import { presentationTool } from "sanity/presentation";
 import { structureTool } from "sanity/structure";
 import { env } from "~/data/env/client";
-
-import { schema, structure } from "./lib/sanity/configuration";
+import { schema, structure } from "~/lib/sanity/configuration";
+import { resolve } from "~/lib/sanity/configuration/presentation/resolve";
 
 export default defineConfig({
   basePath: "/studio",
@@ -15,8 +16,14 @@ export default defineConfig({
   schema,
   plugins: [
     structureTool({ structure }),
-    // Vision is for querying with GROQ from inside the Studio
-    // https://www.sanity.io/docs/the-vision-plugin
-    visionTool({ defaultApiVersion: env.NEXT_PUBLIC_SANITY_API_VERSION })
+    visionTool({ defaultApiVersion: env.NEXT_PUBLIC_SANITY_API_VERSION }),
+    presentationTool({
+      resolve,
+      previewUrl: {
+        previewMode: {
+          enable: "/api/draft-mode/enable"
+        }
+      }
+    })
   ]
 });
