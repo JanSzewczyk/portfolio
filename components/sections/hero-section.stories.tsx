@@ -1,15 +1,38 @@
 import { expect, waitFor } from "storybook/test";
-import { PERSONAL_INFO } from "~/constants/portfolio";
+import { type HeroData } from "~/lib/sanity/api";
 
 import { HeroSection } from "./hero-section";
 
 import preview from "~/.storybook/preview";
 
+/**
+ * Mock hero data for Storybook testing
+ */
+const MOCK_HERO_DATA: HeroData = {
+  name: "Jan Szewczyk",
+  title: "Frontend Engineer",
+  company: "Szum-Tech",
+  alternativeTitles: ["Frontend Engineer", "React Specialist", "TypeScript Enthusiast", "Open Source Creator"],
+  tagline:
+    "I'm a Frontend Engineer from Cracow, Poland, crafting exceptional digital experiences with React, Next.js, and TypeScript.",
+  avatar: {
+    asset: {
+      _id: "image-123",
+      url: "https://avatars.githubusercontent.com/u/46969251",
+      metadata: {
+        dimensions: { _type: "sanity.imageDimensions", width: 400, height: 400, aspectRatio: 1 },
+        lqip: null
+      }
+    }
+  },
+  isAvailable: true
+};
+
 const meta = preview.meta({
   title: "Components/Sections/Hero Section",
   component: HeroSection,
   args: {
-    personalInfo: PERSONAL_INFO
+    hero: MOCK_HERO_DATA
   },
   parameters: {
     layout: "fullscreen"
@@ -30,9 +53,9 @@ Available.test("Renders avatar with correct image and alt text", async ({ canvas
 
     if (images.length > 0) {
       // If images loaded, verify alt text
-      const avatar = Array.from(images).find((img) => img.alt === PERSONAL_INFO.name);
+      const avatar = Array.from(images).find((img) => img.alt === MOCK_HERO_DATA.name);
       if (avatar) {
-        await expect(avatar).toHaveAttribute("alt", PERSONAL_INFO.name);
+        await expect(avatar).toHaveAttribute("alt", MOCK_HERO_DATA.name);
       } else {
         // Image present but might be loading
         await expect(images.length).toBeGreaterThan(0);
@@ -53,7 +76,8 @@ Available.test("Renders avatar fallback with correct initials", async ({ canvasE
   });
 
   await step("Verify fallback initials would be correct if image fails", async () => {
-    const expectedInitials = PERSONAL_INFO.name
+    const name = MOCK_HERO_DATA.name ?? "";
+    const expectedInitials = name
       .split(" ")
       .map((n) => n[0])
       .join("");
@@ -83,7 +107,7 @@ Available.test("Renders heading with TypingText animation", async ({ canvas, ste
 
 Available.test("Renders tagline text correctly", async ({ canvas, step }) => {
   await step("Verify tagline is visible", async () => {
-    const tagline = canvas.getByText(PERSONAL_INFO.tagline);
+    const tagline = canvas.getByText(MOCK_HERO_DATA.tagline!);
     await expect(tagline).toBeVisible();
   });
 });
@@ -113,7 +137,7 @@ Available.test("Displays available status with success variant", async ({ canvas
 
 /**
  * Note: To test the unavailable state, override the story args:
- * - args: { personalInfo: { ...PERSONAL_INFO, isAvailable: false } }
+ * - args: { hero: { ...MOCK_HERO_DATA, isAvailable: false } }
  * Then verify "Currently unavailable" appears with the error variant.
  */
 
@@ -182,10 +206,11 @@ Available.test("WordRotate component receives correct alternative titles", async
     await expect(wordRotateContainer).toBeInTheDocument();
 
     // At least one alternative title should appear
+    const alternativeTitles = MOCK_HERO_DATA.alternativeTitles ?? [];
     await waitFor(
       async () => {
         const containerText = wordRotateContainer?.textContent || "";
-        const hasMatchingTitle = PERSONAL_INFO.alternativeTitles.some((title) => containerText.includes(title));
+        const hasMatchingTitle = alternativeTitles.some((title) => containerText.includes(title));
         await expect(hasMatchingTitle).toBe(true);
       },
       { timeout: 5000 }
@@ -224,14 +249,14 @@ Available.test("Avatar image has meaningful alt text", async ({ canvas, step }) 
     // Wait for image to load
     await waitFor(
       async () => {
-        const avatar = canvas.queryByRole("img", { name: PERSONAL_INFO.name });
+        const avatar = canvas.queryByRole("img", { name: MOCK_HERO_DATA.name! });
         await expect(avatar).toBeInTheDocument();
       },
       { timeout: 2000 }
     );
 
-    const avatar = canvas.getByRole("img", { name: PERSONAL_INFO.name });
-    await expect(avatar).toHaveAttribute("alt", PERSONAL_INFO.name);
+    const avatar = canvas.getByRole("img", { name: MOCK_HERO_DATA.name! });
+    await expect(avatar).toHaveAttribute("alt", MOCK_HERO_DATA.name!);
   });
 });
 
@@ -260,7 +285,7 @@ Available.test("Heading hierarchy is correct", async ({ canvas, step }) => {
     await waitFor(
       async () => {
         const headingText = h1.textContent || "";
-        await expect(headingText).toContain(PERSONAL_INFO.name);
+        await expect(headingText).toContain(MOCK_HERO_DATA.name!);
       },
       { timeout: 3000 }
     );
@@ -297,5 +322,27 @@ Available.test("Buttons stack on mobile and display inline on desktop", async ({
     } else {
       await expect(buttonContainer).toBeInTheDocument();
     }
+  });
+});
+
+// ===== Unavailable Status Story =====
+
+/**
+ * Story showing the HeroSection with unavailable status.
+ */
+export const Unavailable = meta.story({
+  name: "Hero Section - Unavailable",
+  args: {
+    hero: {
+      ...MOCK_HERO_DATA,
+      isAvailable: false
+    }
+  }
+});
+
+Unavailable.test("Displays unavailable status with error variant", async ({ canvas, step }) => {
+  await step("Verify status label shows unavailable message", async () => {
+    const statusLabel = canvas.getByText("Currently unavailable");
+    await expect(statusLabel).toBeVisible();
   });
 });
