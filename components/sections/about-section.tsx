@@ -2,24 +2,31 @@
 
 import { Card, CardContent, CountingNumber } from "@szum-tech/design-system";
 import { SectionHeading } from "~/components/ui/section-heading";
-import { type PersonalInfo, type SectionHeadingContent, type Stat } from "~/constants/portfolio";
 import { Section } from "~/constants/sections";
+import { type PortfolioPageQueryResult } from "~/lib/sanity/types";
+import { buildSanityAttribute } from "~/lib/sanity/utils";
 
 type AboutSectionProps = {
-  personalInfo: PersonalInfo;
-  stats: Array<Stat>;
-  heading: SectionHeadingContent;
+  about: NonNullable<PortfolioPageQueryResult>["about"];
+  documentId: string;
+  documentType: string;
 };
 
-export function AboutSection({ personalInfo, stats, heading }: AboutSectionProps) {
+export function AboutSection({ about, documentId, documentType }: AboutSectionProps) {
+  const { createSanityAttribute } = buildSanityAttribute({ documentId, documentType });
+
   return (
     <section id={Section.ABOUT} className="bg-muted/30 py-24">
       <div className="container">
-        <SectionHeading title={heading.title} description={heading.description} />
+        <SectionHeading
+          title={about?.heading?.title ?? ""}
+          description={about?.heading?.description ?? ""}
+          data-sanity={createSanityAttribute("about.heading")}
+        />
 
         <div className="grid gap-12 lg:grid-cols-2">
-          <div className="space-y-6">
-            {personalInfo.bio.split("\n\n").map((paragraph, index) => (
+          <div className="space-y-6" data-sanity={createSanityAttribute("about.bio")}>
+            {about?.bio?.split("\n\n").map((paragraph, index) => (
               <p key={index} className="text-muted-foreground">
                 {paragraph}
               </p>
@@ -27,12 +34,12 @@ export function AboutSection({ personalInfo, stats, heading }: AboutSectionProps
           </div>
 
           <div className="grid grid-cols-2 gap-4">
-            {stats.map((stat) => (
-              <Card key={stat.label}>
+            {about?.stats?.map((stat, index) => (
+              <Card key={stat._key} data-sanity={createSanityAttribute(`about.stats[${index}]`)}>
                 <CardContent className="flex flex-1 flex-col items-center justify-center text-center">
                   <div className="text-display-sm text-primary">
                     <CountingNumber
-                      to={stat.value}
+                      to={stat.value ?? 0}
                       duration={2}
                       format={(value) => `${Math.round(value)}${stat.suffix ?? ""}`}
                       once

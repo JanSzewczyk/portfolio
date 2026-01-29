@@ -58,6 +58,8 @@
   },
   "devDependencies": {
     "@chromatic-com/storybook": "^5.0.0",
+    "@faker-js/faker": "^10.2.0",
+    "@jackfranklin/test-data-bot": "^2.1.0",
     "@playwright/test": "^1.58.0",
     "@storybook-community/storybook-dark-mode": "^7.1.0",
     "@storybook/addon-a11y": "^10.2.0",

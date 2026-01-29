@@ -1,7 +1,6 @@
 "use client";
 
 import { ArrowDownIcon } from "lucide-react";
-
 import { stegaClean } from "next-sanity";
 
 import {

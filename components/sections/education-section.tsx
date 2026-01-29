@@ -16,12 +16,13 @@ import {
   TimelineItem
 } from "@szum-tech/design-system";
 import { SectionHeading } from "~/components/ui/section-heading";
-import { type DegreeType, type Education, type SectionHeadingContent } from "~/constants/portfolio";
 import { Section } from "~/constants/sections";
+import { type PortfolioPageQueryResult } from "~/lib/sanity/types";
 
 type EducationSectionProps = {
-  education: Education[];
-  heading: SectionHeadingContent;
+  education: NonNullable<PortfolioPageQueryResult>["education"];
+  documentId: string;
+  documentType: string;
 };
 
 function formatDate(dateString: string): string {
@@ -35,34 +36,28 @@ function formatPeriod(startDate: string, endDate?: string): string {
   return `${start} - ${end}`;
 }
 
-function formatDegree(degree: DegreeType): string {
-  const degreeMap: Record<DegreeType, string> = {
-    bachelor: "Bachelor's Degree",
-    master: "Master's Degree",
-    phd: "Ph.D."
-  };
-  return degreeMap[degree];
-}
-
-export function EducationSection({ education, heading }: EducationSectionProps) {
+export function EducationSection({ education }: EducationSectionProps) {
   return (
     <section id={Section.EDUCATION} className="py-24">
       <div className="container">
-        <SectionHeading title={heading.title} description={heading.description} />
+        <SectionHeading
+          title={education?.heading?.title ?? "Education"}
+          description={education?.heading?.description ?? ""}
+        />
 
         <div className="mx-auto max-w-3xl">
           <Timeline activeIndex={2}>
-            {education.map((edu) => (
-              <TimelineItem key={edu.id}>
+            {education?.education?.map((edu) => (
+              <TimelineItem key={edu._id}>
                 <TimelineDot />
                 <TimelineConnector />
                 <TimelineContent>
                   <Card>
                     <CardHeader>
                       <div className="mb-2 flex flex-wrap items-center gap-2">
-                        <Badge variant="outline">{formatPeriod(edu.startDate, edu.endDate)}</Badge>
-                        <Badge variant="secondary">{formatDegree(edu.degree)}</Badge>
-                        {edu.grade && <Badge variant="secondary">GPA: {edu.grade}</Badge>}
+                        <Badge variant="outline">{formatPeriod(edu.startDate ?? "", edu.endDate ?? undefined)}</Badge>
+                        <Badge variant="secondary">{edu.degree}</Badge>
+                        <Badge variant="secondary">GPA: {edu.grade}</Badge>
                       </div>
                       <CardTitle>{edu.fieldOfStudy}</CardTitle>
                       <CardDescription>
@@ -78,8 +73,12 @@ export function EducationSection({ education, heading }: EducationSectionProps) 
                         ) : (
                           edu.institution
                         )}
-                        {" · "}
-                        {edu.location}
+                        {edu.location && (
+                          <>
+                            {" · "}
+                            {edu.location}
+                          </>
+                        )}
                       </CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-4">
@@ -88,13 +87,15 @@ export function EducationSection({ education, heading }: EducationSectionProps) 
                           <h4 className="text-body-lg mb-2 font-semibold">Master&apos;s Thesis</h4>
                           <p className="text-body-md text-primary mb-1 font-medium">{edu.thesis.title}</p>
                           <p className="text-body-sm text-muted-foreground mb-3">{edu.thesis.description}</p>
-                          <div className="flex flex-wrap gap-1.5">
-                            {edu.thesis.technologies.map((tech) => (
-                              <Badge key={tech} variant="outline" className="text-body-xs">
-                                {tech}
-                              </Badge>
-                            ))}
-                          </div>
+                          {edu.thesis.technologies && (
+                            <div className="flex flex-wrap gap-1.5">
+                              {edu.thesis.technologies.map((tech) => (
+                                <Badge key={tech._id} variant="outline" className="text-body-xs">
+                                  {tech.name}
+                                </Badge>
+                              ))}
+                            </div>
+                          )}
                         </div>
                       ) : null}
 

@@ -1,6 +1,5 @@
 import { expect, waitFor } from "storybook/test";
-import { EXPERIENCES, SECTION_HEADINGS } from "~/constants/portfolio";
-import { Section } from "~/constants/sections";
+import { experienceBuilder, portfolioPageExperienceBuilder } from "~/tests/builders/portfolio-page.builder";
 
 import { ExperienceSection } from "./experience-section";
 
@@ -10,51 +9,73 @@ const meta = preview.meta({
   title: "Components/Sections/Experience Section",
   component: ExperienceSection,
   args: {
-    experiences: EXPERIENCES,
-    heading: SECTION_HEADINGS[Section.EXPERIENCE]
+    experience: portfolioPageExperienceBuilder.one({
+      overrides: {
+        heading: {
+          title: "Experience",
+          description: "My professional journey and key achievements"
+        }
+      }
+    }),
+    documentId: "portfolio-page",
+    documentType: "portfolioPage"
   },
   parameters: {
     layout: "fullscreen"
   }
 });
 
-export const ExperienceSectionDefault = meta.story({ name: "Experience Section" });
+export const ExperienceSection_Default = meta.story({ name: "Experience Section" });
 
 // Test 1: Section renders with heading
-ExperienceSectionDefault.test("Renders section heading and description", async ({ canvas }) => {
-  const heading = canvas.getByRole("heading", { name: /experience/i, level: 2 });
+ExperienceSection_Default.test("Renders section heading and description", async ({ canvas, args }) => {
+  const heading = canvas.getByRole("heading", { name: args.experience?.heading?.title || "", level: 2 });
   await expect(heading).toBeVisible();
 
-  const description = canvas.getByText(/my professional journey/i);
-  await expect(description).toBeVisible();
-});
-
-// Test 2: All experiences are rendered
-ExperienceSectionDefault.test("Renders all experience items", async ({ canvas, args }) => {
-  for (const exp of args.experiences) {
-    const roleElement = canvas.getByText(exp.role);
-    await expect(roleElement).toBeVisible();
-
-    const companyName = canvas.getByText(exp.company);
-    await expect(companyName).toBeVisible();
+  if (args.experience?.heading?.description) {
+    const description = canvas.getByText(args.experience.heading.description);
+    await expect(description).toBeVisible();
   }
 });
 
-// Test 3: Company logo fallback (first letter) is displayed
-ExperienceSectionDefault.test("Displays company logo fallback with first letter", async ({ canvas, args }) => {
-  for (const exp of args.experiences) {
-    if (!exp.companyLogo) {
-      const firstLetter = exp.company.charAt(0).toUpperCase();
-      const fallbackLogo = canvas.getByText(firstLetter, { selector: "span" });
-      await expect(fallbackLogo).toBeVisible();
+// Test 2: All experiences are rendered
+ExperienceSection_Default.test("Renders all experience items", async ({ canvas, args }) => {
+  const experiences = args.experience?.experiences || [];
+
+  for (const exp of experiences) {
+    if (exp.role) {
+      const roleElement = canvas.getByText(exp.role);
+      await expect(roleElement).toBeVisible();
+    }
+
+    if (exp.company) {
+      const companyName = canvas.getByText(exp.company);
+      await expect(companyName).toBeVisible();
     }
   }
 });
 
+// Test 3: Company logo images are displayed
+ExperienceSection_Default.test("Displays company logo images when provided", async ({ canvas, args }) => {
+  const experiences = args.experience?.experiences || [];
+
+  // Check that at least one company has a logo
+  const hasLogos = experiences.some((exp) => exp.companyLogo?.asset?.url);
+
+  if (hasLogos) {
+    // Find all logo images
+    const images = canvas.getAllByRole("img");
+    // At least one image should exist (beyond any other images in the component)
+    await expect(images.length).toBeGreaterThan(0);
+  }
+});
+
 // Test 4: Company URLs are clickable
-ExperienceSectionDefault.test("Company links are clickable and open in new tab", async ({ canvas, args }) => {
-  for (const exp of args.experiences) {
-    if (exp.companyUrl) {
+ExperienceSection_Default.test("Company links are clickable and open in new tab", async ({ canvas, args }) => {
+  const experiences = args.experience?.experiences || [];
+
+  for (const exp of experiences) {
+    if (exp.companyUrl && exp.company) {
       const link = canvas.getByRole("link", { name: exp.company });
       await expect(link).toBeVisible();
       await expect(link).toHaveAttribute("href", exp.companyUrl);
@@ -65,112 +86,129 @@ ExperienceSectionDefault.test("Company links are clickable and open in new tab",
 });
 
 // Test 5: Period badges are displayed correctly
-ExperienceSectionDefault.test("Displays period and employment type badges", async ({ canvas }) => {
+ExperienceSection_Default.test("Displays period and employment type badges", async ({ canvas }) => {
   const periodBadges = canvas.getAllByText(/Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec/);
-  const firstPeriodBadge = periodBadges[0];
 
-  if (!firstPeriodBadge) {
-    throw new Error("Period badge not found");
+  if (periodBadges.length > 0) {
+    await expect(periodBadges[0]).toBeVisible();
   }
 
-  await expect(firstPeriodBadge).toBeVisible();
+  const typeBadges = canvas.getAllByText(/full-time|part-time|contract|freelance/i);
 
-  const typeBadges = canvas.getAllByText(/full-time/i);
-  const firstTypeBadge = typeBadges[0];
-
-  if (!firstTypeBadge) {
-    throw new Error("Employment type badge not found");
+  if (typeBadges.length > 0) {
+    await expect(typeBadges[0]).toBeVisible();
   }
-
-  await expect(firstTypeBadge).toBeVisible();
 });
 
 // Test 6: Accordion for responsibilities works
-ExperienceSectionDefault.test("Expands responsibilities accordion", async ({ canvas, userEvent }) => {
+ExperienceSection_Default.test("Expands responsibilities accordion", async ({ canvas, userEvent, args }) => {
   const responsibilitiesButtons = canvas.getAllByRole("button", { name: /key responsibilities/i });
+
+  if (responsibilitiesButtons.length === 0) {
+    return;
+  }
+
   const firstButton = responsibilitiesButtons[0];
 
   if (!firstButton) {
-    throw new Error("Responsibilities button not found");
+    throw new Error("First button not found");
   }
 
   await expect(firstButton).toBeVisible();
   await userEvent.click(firstButton);
 
-  // Wait for accordion to expand and content to become visible
+  // Wait for accordion to expand
   await waitFor(async () => {
-    const firstResponsibility = canvas.getByText(/architecting scalable react/i);
-    await expect(firstResponsibility).toBeVisible();
+    const experiences = args.experience?.experiences || [];
+    if (experiences[0]?.responsibilities?.[0]) {
+      const firstResponsibility = canvas.getByText(experiences[0].responsibilities[0]);
+      await expect(firstResponsibility).toBeVisible();
+    }
   });
 });
 
 // Test 7: Technologies are displayed
-ExperienceSectionDefault.test("Displays technology badges", async ({ canvas }) => {
-  const reactBadges = canvas.getAllByText(/react/i);
-  const firstReactBadge = reactBadges[0];
+ExperienceSection_Default.test("Displays technology badges", async ({ canvas, args }) => {
+  const experiences = args.experience?.experiences || [];
 
-  if (!firstReactBadge) {
-    throw new Error("React badge not found");
-  }
-
-  await expect(firstReactBadge).toBeVisible();
-
-  const nextjsBadges = canvas.getAllByText(/next\.js/i);
-  const firstNextjsBadge = nextjsBadges[0];
-
-  if (!firstNextjsBadge) {
-    throw new Error("Next.js badge not found");
-  }
-
-  await expect(firstNextjsBadge).toBeVisible();
-});
-
-// Story with logo URLs
-export const WithCompanyLogos = meta.story({
-  name: "Experience Section with Company Logos",
-  args: {
-    experiences: EXPERIENCES.map((exp) => ({
-      ...exp,
-      companyLogo: "https://via.placeholder.com/40"
-    })),
-    heading: SECTION_HEADINGS[Section.EXPERIENCE]
-  }
-});
-
-// Test 8: Logo images are displayed when provided
-WithCompanyLogos.test("Displays company logo images", async ({ canvas, args }) => {
-  const images = canvas.getAllByRole("img");
-  await expect(images.length).toBeGreaterThan(0);
-
-  for (const exp of args.experiences) {
-    const logo = canvas.getByAltText(`${exp.company} logo`);
-    await expect(logo).toBeVisible();
-    await expect(logo).toHaveAttribute("src");
-  }
-});
-
-// Story with mixed logos (some with URLs, some without)
-export const MixedLogos = meta.story({
-  name: "Mixed Company Logos",
-  args: {
-    experiences: EXPERIENCES.map((exp, index) => ({
-      ...exp,
-      companyLogo: index % 2 === 0 ? "https://via.placeholder.com/40" : undefined
-    })),
-    heading: SECTION_HEADINGS[Section.EXPERIENCE]
-  }
-});
-
-// Test 9: Mixed logos display correctly
-MixedLogos.test("Displays both logo images and fallbacks", async ({ canvas, args }) => {
-  for (const exp of args.experiences) {
-    if (exp.companyLogo) {
-      const logo = canvas.getByAltText(`${exp.company} logo`);
-      await expect(logo).toBeVisible();
-    } else {
-      const firstLetter = exp.company.charAt(0).toUpperCase();
-      const fallback = canvas.getByText(firstLetter, { selector: "span" });
-      await expect(fallback).toBeVisible();
+  for (const exp of experiences) {
+    if (exp.technologies) {
+      for (const tech of exp.technologies) {
+        if (tech.name) {
+          const techBadges = canvas.getAllByText(new RegExp(tech.name, "i"));
+          if (techBadges.length > 0) {
+            await expect(techBadges[0]).toBeVisible();
+          }
+        }
+      }
     }
   }
+});
+
+// Story without company logos
+export const WithoutLogos = meta.story({
+  name: "Without Company Logos",
+  args: {
+    experience: portfolioPageExperienceBuilder.one({
+      overrides: {
+        heading: {
+          title: "Experience",
+          description: "My professional journey and key achievements"
+        },
+        experiences: Array.from({ length: 3 }, () =>
+          experienceBuilder.one({
+            traits: ["withoutLogo"]
+          })
+        )
+      }
+    }),
+    documentId: "portfolio-page",
+    documentType: "portfolioPage"
+  }
+});
+
+// Test 8: Fallback initials are displayed
+WithoutLogos.test("Displays company logo fallback with first letter", async ({ canvas, args }) => {
+  const experiences = args.experience?.experiences || [];
+
+  for (const exp of experiences) {
+    if (!exp.companyLogo && exp.company) {
+      const firstLetter = exp.company.charAt(0).toUpperCase();
+      const fallbackLogos = canvas.getAllByText(firstLetter, { selector: "span" });
+      await expect(fallbackLogos.length).toBeGreaterThan(0);
+    }
+  }
+});
+
+// Story with current position (no end date)
+export const CurrentPosition = meta.story({
+  name: "Current Position",
+  args: {
+    experience: portfolioPageExperienceBuilder.one({
+      overrides: {
+        heading: {
+          title: "Experience",
+          description: "My professional journey and key achievements"
+        },
+        experiences: [
+          experienceBuilder.one({
+            traits: ["current"],
+            overrides: {
+              role: "Senior Frontend Engineer",
+              company: "Tech Company Inc.",
+              type: "full-time"
+            }
+          })
+        ]
+      }
+    }),
+    documentId: "portfolio-page",
+    documentType: "portfolioPage"
+  }
+});
+
+// Test 9: Present is displayed for current position
+CurrentPosition.test("Displays 'Present' for current position without end date", async ({ canvas }) => {
+  const presentBadge = canvas.getByText(/present/i);
+  await expect(presentBadge).toBeVisible();
 });

@@ -15,7 +15,7 @@ export const SOCIAL_LINKS: SocialLink[] = [
   },
   {
     platform: "Twitter",
-    url: "https://twitter.com/DzikiSzumrak",
+    url: "https://x.com/DzikiSzumrak",
     icon: "twitter",
     username: "@DzikiSzumrak"
   }

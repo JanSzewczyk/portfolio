@@ -22,8 +22,8 @@ import {
 } from "@szum-tech/design-system";
 import { ReactIcon, type IconName } from "~/components/ui/react-icon";
 import { SectionHeading } from "~/components/ui/section-heading";
-import { type PersonalInfo, type SectionHeadingContent, type SocialLink } from "~/constants/portfolio";
 import { Section } from "~/constants/sections";
+import { type PortfolioPageQueryResult } from "~/lib/sanity/types";
 
 const contactSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -40,12 +40,12 @@ const iconMap: Record<string, IconName> = {
 };
 
 type ContactSectionProps = {
-  personalInfo: PersonalInfo;
-  socialLinks: SocialLink[];
-  heading: SectionHeadingContent;
+  contact: NonNullable<PortfolioPageQueryResult>["contact"];
+  documentId: string;
+  documentType: string;
 };
 
-export function ContactSection({ personalInfo, socialLinks, heading }: ContactSectionProps) {
+export function ContactSection({ contact }: ContactSectionProps) {
   const form = useForm<ContactFormData>({
     resolver: zodResolver(contactSchema),
     defaultValues: {
@@ -70,7 +70,7 @@ export function ContactSection({ personalInfo, socialLinks, heading }: ContactSe
   return (
     <section id={Section.CONTACT} className="py-24">
       <div className="container">
-        <SectionHeading title={heading.title} description={heading.description} />
+        <SectionHeading title={contact?.heading?.title ?? ""} description={contact?.heading?.description ?? ""} />
 
         <div className="mx-auto grid max-w-4xl gap-8 lg:grid-cols-2">
           {/* Contact Form */}
@@ -138,8 +138,8 @@ export function ContactSection({ personalInfo, socialLinks, heading }: ContactSe
                 </div>
                 <div>
                   <p className="font-medium">Email</p>
-                  <a href={`mailto:${personalInfo.email}`} className="text-muted-foreground hover:text-primary">
-                    {personalInfo.email}
+                  <a href={`mailto:${contact?.email}`} className="text-muted-foreground hover:text-primary">
+                    {contact?.email}
                   </a>
                 </div>
               </CardContent>
@@ -151,11 +151,16 @@ export function ContactSection({ personalInfo, socialLinks, heading }: ContactSe
               </CardHeader>
               <CardContent>
                 <div className="flex gap-4">
-                  {socialLinks.map((link) => {
-                    const iconName = iconMap[link.icon];
+                  {contact?.socialLinks?.map((link) => {
+                    const iconName = link.icon ? iconMap[link.icon] : undefined;
                     return (
-                      <Button key={link.platform} variant="outline" size="icon" asChild>
-                        <a href={link.url} target="_blank" rel="noopener noreferrer" aria-label={link.platform}>
+                      <Button key={link._key} variant="outline" size="icon" asChild>
+                        <a
+                          href={link.url ?? "#"}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label={link.platform ?? ""}
+                        >
                           {iconName ? <ReactIcon name={iconName} className="size-5" /> : null}
                         </a>
                       </Button>
@@ -165,15 +170,21 @@ export function ContactSection({ personalInfo, socialLinks, heading }: ContactSe
               </CardContent>
             </Card>
 
-            <Card className="bg-primary/5 border-primary/20">
-              <CardContent>
-                <p className="text-muted-foreground text-body-sm">
-                  <strong className="text-foreground">Prefer a quick chat?</strong>
-                  <br />
-                  Feel free to reach out on LinkedIn or Twitter for a faster response.
-                </p>
-              </CardContent>
-            </Card>
+            {(contact?.quickChatTitle || contact?.quickChatDescription) && (
+              <Card className="bg-primary/5 border-primary/20">
+                <CardContent>
+                  <p className="text-muted-foreground text-body-sm">
+                    {contact?.quickChatTitle && (
+                      <>
+                        <strong className="text-foreground">{contact.quickChatTitle}</strong>
+                        <br />
+                      </>
+                    )}
+                    {contact?.quickChatDescription}
+                  </p>
+                </CardContent>
+              </Card>
+            )}
           </div>
         </div>
       </div>

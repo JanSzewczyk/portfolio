@@ -3,6 +3,7 @@ import { defineField, defineType } from "sanity";
 import { CodeIcon } from "@sanity/icons";
 
 import { ReactIcon } from "../../../../components/ui/react-icon";
+
 import { IconSearchInput } from "./components/icon-search-input";
 
 export const technology = defineType({
