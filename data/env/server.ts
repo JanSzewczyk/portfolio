@@ -16,7 +16,11 @@ export const env = createEnv({
     VERCEL_URL: z.string().optional(),
     LOG_LEVEL: z.enum(["fatal", "error", "warn", "info", "debug", "trace"]).optional().default("info"),
     // Sanity
-    SANITY_API_READ_TOKEN: z.string().min(1)
+    SANITY_API_READ_TOKEN: z.string().min(1),
+    // Resend
+    RESEND_API_KEY: z.string().min(1),
+    RESEND_FROM_EMAIL: z.email(),
+    RESEND_TO_EMAIL: z.email()
   },
   experimental__runtimeEnv: process.env,
   /**

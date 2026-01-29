@@ -1,38 +1,16 @@
 "use client";
 
-import { Mail, SendIcon } from "lucide-react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { Mail } from "lucide-react";
 
-import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  Button,
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-  Field,
-  FieldError,
-  FieldGroup,
-  FieldLabel,
-  Input,
-  Textarea,
-  toast
-} from "@szum-tech/design-system";
+import { Button, Card, CardContent, CardHeader, CardTitle, toast } from "@szum-tech/design-system";
 import { cn } from "@szum-tech/design-system/utils";
 import { ReactIcon, type IconName } from "~/components/ui/react-icon";
 import { SectionHeading } from "~/components/ui/section-heading";
 import { Section } from "~/constants/sections";
+import { ContactForm } from "~/features/contact/components/contact-form";
+import { type ContactFormData } from "~/features/contact/schemas/contact.schema";
+import { sendContactEmail } from "~/features/contact/server/actions/send-contact-email";
 import { type PortfolioPageQueryResult } from "~/lib/sanity/types";
-
-const contactSchema = z.object({
-  name: z.string().min(2, "Name must be at least 2 characters"),
-  email: z.string().email("Please enter a valid email address"),
-  message: z.string().min(10, "Message must be at least 10 characters")
-});
-
-type ContactFormData = z.infer<typeof contactSchema>;
 
 const iconMap: Record<string, IconName> = {
   github: "SiGithub",
@@ -47,25 +25,22 @@ type ContactSectionProps = {
 };
 
 export function ContactSection({ contact }: ContactSectionProps) {
-  const form = useForm<ContactFormData>({
-    resolver: zodResolver(contactSchema),
-    defaultValues: {
-      name: "",
-      email: "",
-      message: ""
+  async function handleSubmit(formData: ContactFormData) {
+    const result = await sendContactEmail(formData);
+
+    if (!result.success) {
+      // Show error toast
+      toast.error("Failed to send message", {
+        description: result.error
+      });
+    } else {
+      // Show success toast
+      toast.success("Message sent!", {
+        description: contact?.formSettings?.successMessage
+      });
     }
-  });
 
-  async function onSubmit(_data: ContactFormData) {
-    // TODO: Implement actual form submission
-    // This is a placeholder - simulate form submission
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-
-    toast.success("Message sent!", {
-      description: contact?.formSettings?.successMessage
-    });
-
-    form.reset();
+    return result;
   }
 
   return (
@@ -78,60 +53,11 @@ export function ContactSection({ contact }: ContactSectionProps) {
         >
           {/* Contact Form */}
           {contact?.formSettings?.enabled ? (
-            <Card>
-              <CardHeader>
-                <CardTitle>Send a Message</CardTitle>
-                <CardDescription>Fill out the form and I&apos;ll get back to you as soon as possible.</CardDescription>
-              </CardHeader>
-              <CardContent>
-                <form onSubmit={form.handleSubmit(onSubmit)}>
-                  <FieldGroup>
-                    <Field data-invalid={!!form.formState.errors.name}>
-                      <FieldLabel htmlFor="username">Username</FieldLabel>
-                      <Input
-                        id="username"
-                        placeholder="Your name"
-                        invalid={!!form.formState.errors.name}
-                        {...form.register("name")}
-                      />
-                      <FieldError errors={[form.formState.errors.name]} />
-                    </Field>
-                    <Field data-invalid={!!form.formState.errors.email}>
-                      <FieldLabel htmlFor="email">Email</FieldLabel>
-                      <Input
-                        id="email"
-                        placeholder="your@email.com"
-                        invalid={!!form.formState.errors.email}
-                        type="email"
-                        {...form.register("email")}
-                      />
-                      <FieldError errors={[form.formState.errors.email]} />
-                    </Field>
-                    <Field data-invalid={!!form.formState.errors.message}>
-                      <FieldLabel htmlFor="message">Message</FieldLabel>
-                      <Textarea
-                        id="message"
-                        placeholder="Your message..."
-                        rows={5}
-                        invalid={!!form.formState.errors.message}
-                        {...form.register("message")}
-                      />
-                      <FieldError errors={[form.formState.errors.message]} />
-                    </Field>
-
-                    <Button
-                      type="submit"
-                      fullWidth
-                      disabled={form.formState.isSubmitting}
-                      loading={form.formState.isSubmitting}
-                      startIcon={<SendIcon />}
-                    >
-                      Send Message
-                    </Button>
-                  </FieldGroup>
-                </form>
-              </CardContent>
-            </Card>
+            <ContactForm
+              title="Send a Message"
+              description="Fill out the form and I'll get back to you as soon as possible."
+              onSubmit={handleSubmit}
+            />
           ) : null}
 
           {/* Contact Info */}
