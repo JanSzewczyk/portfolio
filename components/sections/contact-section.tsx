@@ -20,6 +20,7 @@ import {
   Textarea,
   toast
 } from "@szum-tech/design-system";
+import { cn } from "@szum-tech/design-system/utils";
 import { ReactIcon, type IconName } from "~/components/ui/react-icon";
 import { SectionHeading } from "~/components/ui/section-heading";
 import { Section } from "~/constants/sections";
@@ -61,7 +62,7 @@ export function ContactSection({ contact }: ContactSectionProps) {
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
     toast.success("Message sent!", {
-      description: "Thank you for reaching out. I'll get back to you soon."
+      description: contact?.formSettings?.successMessage
     });
 
     form.reset();
@@ -72,62 +73,66 @@ export function ContactSection({ contact }: ContactSectionProps) {
       <div className="container">
         <SectionHeading title={contact?.heading?.title ?? ""} description={contact?.heading?.description ?? ""} />
 
-        <div className="mx-auto grid max-w-4xl gap-8 lg:grid-cols-2">
+        <div
+          className={cn("mx-auto grid gap-8", contact?.formSettings?.enabled ? "max-w-4xl lg:grid-cols-2" : "max-w-lg")}
+        >
           {/* Contact Form */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Send a Message</CardTitle>
-              <CardDescription>Fill out the form and I&apos;ll get back to you as soon as possible.</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <form onSubmit={form.handleSubmit(onSubmit)}>
-                <FieldGroup>
-                  <Field data-invalid={!!form.formState.errors.name}>
-                    <FieldLabel htmlFor="username">Username</FieldLabel>
-                    <Input
-                      id="username"
-                      placeholder="Your name"
-                      invalid={!!form.formState.errors.name}
-                      {...form.register("name")}
-                    />
-                    <FieldError errors={[form.formState.errors.name]} />
-                  </Field>
-                  <Field data-invalid={!!form.formState.errors.email}>
-                    <FieldLabel htmlFor="email">Email</FieldLabel>
-                    <Input
-                      id="email"
-                      placeholder="your@email.com"
-                      invalid={!!form.formState.errors.email}
-                      type="email"
-                      {...form.register("email")}
-                    />
-                    <FieldError errors={[form.formState.errors.email]} />
-                  </Field>
-                  <Field data-invalid={!!form.formState.errors.message}>
-                    <FieldLabel htmlFor="message">Message</FieldLabel>
-                    <Textarea
-                      id="message"
-                      placeholder="Your message..."
-                      rows={5}
-                      invalid={!!form.formState.errors.message}
-                      {...form.register("message")}
-                    />
-                    <FieldError errors={[form.formState.errors.message]} />
-                  </Field>
+          {contact?.formSettings?.enabled ? (
+            <Card>
+              <CardHeader>
+                <CardTitle>Send a Message</CardTitle>
+                <CardDescription>Fill out the form and I&apos;ll get back to you as soon as possible.</CardDescription>
+              </CardHeader>
+              <CardContent>
+                <form onSubmit={form.handleSubmit(onSubmit)}>
+                  <FieldGroup>
+                    <Field data-invalid={!!form.formState.errors.name}>
+                      <FieldLabel htmlFor="username">Username</FieldLabel>
+                      <Input
+                        id="username"
+                        placeholder="Your name"
+                        invalid={!!form.formState.errors.name}
+                        {...form.register("name")}
+                      />
+                      <FieldError errors={[form.formState.errors.name]} />
+                    </Field>
+                    <Field data-invalid={!!form.formState.errors.email}>
+                      <FieldLabel htmlFor="email">Email</FieldLabel>
+                      <Input
+                        id="email"
+                        placeholder="your@email.com"
+                        invalid={!!form.formState.errors.email}
+                        type="email"
+                        {...form.register("email")}
+                      />
+                      <FieldError errors={[form.formState.errors.email]} />
+                    </Field>
+                    <Field data-invalid={!!form.formState.errors.message}>
+                      <FieldLabel htmlFor="message">Message</FieldLabel>
+                      <Textarea
+                        id="message"
+                        placeholder="Your message..."
+                        rows={5}
+                        invalid={!!form.formState.errors.message}
+                        {...form.register("message")}
+                      />
+                      <FieldError errors={[form.formState.errors.message]} />
+                    </Field>
 
-                  <Button
-                    type="submit"
-                    fullWidth
-                    disabled={form.formState.isSubmitting}
-                    loading={form.formState.isSubmitting}
-                    startIcon={<SendIcon />}
-                  >
-                    Send Message
-                  </Button>
-                </FieldGroup>
-              </form>
-            </CardContent>
-          </Card>
+                    <Button
+                      type="submit"
+                      fullWidth
+                      disabled={form.formState.isSubmitting}
+                      loading={form.formState.isSubmitting}
+                      startIcon={<SendIcon />}
+                    >
+                      Send Message
+                    </Button>
+                  </FieldGroup>
+                </form>
+              </CardContent>
+            </Card>
+          ) : null}
 
           {/* Contact Info */}
           <div className="space-y-6">
