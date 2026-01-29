@@ -145,12 +145,12 @@ export const portfolioPage = defineType({
           rows: 10,
           validation: (rule) => rule.required()
         }),
-        defineField({
-          name: "location",
-          title: "Location",
-          type: "string",
-          description: "Current location (e.g., 'Cracow, Poland')"
-        }),
+        // defineField({
+        //   name: "location",
+        //   title: "Location",
+        //   type: "string",
+        //   description: "Current location (e.g., 'Cracow, Poland')"
+        // }),
         defineField({
           name: "stats",
           title: "Statistics",
@@ -539,6 +539,21 @@ export const portfolioPage = defineType({
               initialValue: "Thank you for your message! I'll get back to you soon."
             })
           ]
+        }),
+        defineField({
+          name: "quickChatTitle",
+          title: "Quick Chat Title",
+          type: "string",
+          description: "Title for the quick chat call-out card",
+          initialValue: "Prefer a quick chat?"
+        }),
+        defineField({
+          name: "quickChatDescription",
+          title: "Quick Chat Description",
+          type: "text",
+          description: "Description for the quick chat call-out card",
+          rows: 2,
+          initialValue: "Feel free to reach out on LinkedIn or Twitter for a faster response."
         })
       ]
     }),

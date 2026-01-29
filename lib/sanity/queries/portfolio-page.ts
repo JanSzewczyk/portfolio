@@ -214,7 +214,9 @@ export const portfolioPageQuery = defineQuery(`
         enabled,
         submitButtonText,
         successMessage
-      }
+      },
+      quickChatTitle,
+      quickChatDescription
     },
 
     // Footer

@@ -31,9 +31,9 @@ export const education = defineType({
       type: "string",
       options: {
         list: [
-          { title: "Bachelor", value: "bachelor" },
-          { title: "Master", value: "master" },
-          { title: "PhD", value: "phd" }
+          { title: "Bachelor's Degree", value: "Bachelor's Degree" },
+          { title: "Master's Degree", value: "Master's Degree" },
+          { title: "Ph.D.", value: "Ph.D." }
         ]
       },
       validation: (rule) => rule.required()
