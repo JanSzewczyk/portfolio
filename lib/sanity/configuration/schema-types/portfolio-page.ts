@@ -23,13 +23,13 @@ export const portfolioPage = defineType({
   icon: DocumentIcon,
   fields: [
     // ============================================
-    // Hero Section
+    // Personal Information
     // ============================================
     defineField({
-      name: "hero",
-      title: "Hero Section",
+      name: "personalInfo",
+      title: "Personal Information",
       type: "object",
-      description: "Main landing section with introduction and CTA buttons",
+      description: "Core personal information used across the portfolio",
       options: {
         collapsible: true,
         collapsed: false
@@ -55,20 +55,18 @@ export const portfolioPage = defineType({
           description: "Current company or organization"
         }),
         defineField({
-          name: "alternativeTitles",
-          title: "Alternative Titles",
-          type: "array",
-          description: "Rotating titles displayed in hero section",
-          of: [{ type: "string" }],
-          validation: (rule) => rule.required().min(1)
-        }),
-        defineField({
-          name: "tagline",
-          title: "Tagline",
-          type: "text",
-          description: "Short description displayed below the title",
-          rows: 2,
-          validation: (rule) => rule.required().max(200)
+          name: "email",
+          title: "Contact Email",
+          type: "string",
+          description: "Primary contact email address",
+          validation: (rule) =>
+            rule
+              .required()
+              .email()
+              .custom((email) => {
+                if (!email) return true;
+                return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || "Invalid email format";
+              })
         }),
         defineField({
           name: "avatar",
@@ -92,6 +90,51 @@ export const portfolioPage = defineType({
                 })
             })
           ]
+        }),
+        defineField({
+          name: "location",
+          title: "Location",
+          type: "string",
+          description: "Current location (e.g., 'Cracow, Poland')"
+        }),
+        defineField({
+          name: "socialLinks",
+          title: "Social Links",
+          type: "array",
+          description: "Social media profiles (used in contact and footer)",
+          of: [{ type: "socialLink" }]
+        })
+      ]
+    }),
+
+    // ============================================
+    // Hero Section
+    // ============================================
+    defineField({
+      name: "hero",
+      title: "Hero Section",
+      type: "object",
+      description: "Main landing section with introduction and CTA buttons",
+      options: {
+        collapsible: true,
+        collapsed: true
+      },
+      fields: [
+        defineField({
+          name: "alternativeTitles",
+          title: "Alternative Titles",
+          type: "array",
+          description: "Rotating titles displayed in hero section",
+          of: [{ type: "string" }],
+          validation: (rule) => rule.required().min(1)
+        }),
+        defineField({
+          name: "tagline",
+          title: "Tagline",
+          type: "text",
+          description: "Short description displayed below the title",
+          rows: 2,
+          validation: (rule) => rule.required().max(200)
         }),
         defineField({
           name: "isAvailable",
@@ -119,23 +162,11 @@ export const portfolioPage = defineType({
         defineField({
           name: "heading",
           title: "Section Heading",
-          type: "object",
-          fields: [
-            defineField({
-              name: "title",
-              title: "Title",
-              type: "string",
-              initialValue: "About Me",
-              validation: (rule) => rule.required()
-            }),
-            defineField({
-              name: "description",
-              title: "Description",
-              type: "text",
-              rows: 2,
-              initialValue: "Get to know me a little better."
-            })
-          ]
+          type: "sectionHeading",
+          initialValue: {
+            title: "About Me",
+            description: "Get to know me a little better."
+          }
         }),
         defineField({
           name: "bio",
@@ -145,12 +176,7 @@ export const portfolioPage = defineType({
           rows: 10,
           validation: (rule) => rule.required()
         }),
-        // defineField({
-        //   name: "location",
-        //   title: "Location",
-        //   type: "string",
-        //   description: "Current location (e.g., 'Cracow, Poland')"
-        // }),
+
         defineField({
           name: "stats",
           title: "Statistics",
@@ -215,23 +241,11 @@ export const portfolioPage = defineType({
         defineField({
           name: "heading",
           title: "Section Heading",
-          type: "object",
-          fields: [
-            defineField({
-              name: "title",
-              title: "Title",
-              type: "string",
-              initialValue: "Skills & Technologies",
-              validation: (rule) => rule.required()
-            }),
-            defineField({
-              name: "description",
-              title: "Description",
-              type: "text",
-              rows: 2,
-              initialValue: "The tools and technologies I work with to bring ideas to life."
-            })
-          ]
+          type: "sectionHeading",
+          initialValue: {
+            title: "Skills & Technologies",
+            description: "The tools and technologies I work with to bring ideas to life."
+          }
         }),
         defineField({
           name: "technologyGroups",
@@ -265,24 +279,12 @@ export const portfolioPage = defineType({
         defineField({
           name: "heading",
           title: "Section Heading",
-          type: "object",
-          fields: [
-            defineField({
-              name: "title",
-              title: "Title",
-              type: "string",
-              initialValue: "Featured Projects",
-              validation: (rule) => rule.required()
-            }),
-            defineField({
-              name: "description",
-              title: "Description",
-              type: "text",
-              rows: 2,
-              initialValue:
-                "A selection of projects I've worked on, from open source libraries to full-stack applications."
-            })
-          ]
+          type: "sectionHeading",
+          initialValue: {
+            title: "Featured Projects",
+            description:
+              "A selection of projects I've worked on, from open source libraries to full-stack applications."
+          }
         }),
         defineField({
           name: "featuredProjects",
@@ -328,23 +330,11 @@ export const portfolioPage = defineType({
         defineField({
           name: "heading",
           title: "Section Heading",
-          type: "object",
-          fields: [
-            defineField({
-              name: "title",
-              title: "Title",
-              type: "string",
-              initialValue: "Experience",
-              validation: (rule) => rule.required()
-            }),
-            defineField({
-              name: "description",
-              title: "Description",
-              type: "text",
-              rows: 2,
-              initialValue: "My professional journey and the roles that shaped my career."
-            })
-          ]
+          type: "sectionHeading",
+          initialValue: {
+            title: "Experience",
+            description: "My professional journey and the roles that shaped my career."
+          }
         }),
         defineField({
           name: "experiences",
@@ -378,23 +368,11 @@ export const portfolioPage = defineType({
         defineField({
           name: "heading",
           title: "Section Heading",
-          type: "object",
-          fields: [
-            defineField({
-              name: "title",
-              title: "Title",
-              type: "string",
-              initialValue: "Education",
-              validation: (rule) => rule.required()
-            }),
-            defineField({
-              name: "description",
-              title: "Description",
-              type: "text",
-              rows: 2,
-              initialValue: "My academic journey and the knowledge that built my foundation."
-            })
-          ]
+          type: "sectionHeading",
+          initialValue: {
+            title: "Education",
+            description: "My academic journey and the knowledge that built my foundation."
+          }
         }),
         defineField({
           name: "education",
@@ -428,89 +406,11 @@ export const portfolioPage = defineType({
         defineField({
           name: "heading",
           title: "Section Heading",
-          type: "object",
-          fields: [
-            defineField({
-              name: "title",
-              title: "Title",
-              type: "string",
-              initialValue: "Get in Touch",
-              validation: (rule) => rule.required()
-            }),
-            defineField({
-              name: "description",
-              title: "Description",
-              type: "text",
-              rows: 2,
-              initialValue: "Have a project in mind or just want to say hello? I'd love to hear from you."
-            })
-          ]
-        }),
-        defineField({
-          name: "email",
-          title: "Contact Email",
-          type: "string",
-          description: "Primary contact email address",
-          validation: (rule) =>
-            rule
-              .required()
-              .email()
-              .custom((email) => {
-                if (!email) return true;
-                return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || "Invalid email format";
-              })
-        }),
-        defineField({
-          name: "socialLinks",
-          title: "Social Links",
-          type: "array",
-          description: "Social media profiles",
-          of: [
-            {
-              type: "object",
-              fields: [
-                defineField({
-                  name: "platform",
-                  title: "Platform",
-                  type: "string",
-                  description: "Social media platform name (e.g., 'GitHub', 'LinkedIn', 'Twitter')",
-                  validation: (rule) => rule.required()
-                }),
-                defineField({
-                  name: "url",
-                  title: "URL",
-                  type: "url",
-                  validation: (rule) => rule.required()
-                }),
-                defineField({
-                  name: "icon",
-                  title: "Icon",
-                  type: "string",
-                  description: "Icon name from react-icons (e.g., 'github', 'linkedin', 'twitter')",
-                  validation: (rule) => rule.required()
-                }),
-                defineField({
-                  name: "username",
-                  title: "Username",
-                  type: "string",
-                  description: "Optional username/handle to display"
-                })
-              ],
-              preview: {
-                select: {
-                  platform: "platform",
-                  url: "url",
-                  username: "username"
-                },
-                prepare({ platform, url, username }) {
-                  return {
-                    title: platform,
-                    subtitle: username || url
-                  };
-                }
-              }
-            }
-          ]
+          type: "sectionHeading",
+          initialValue: {
+            title: "Get in Touch",
+            description: "Have a project in mind or just want to say hello? I'd love to hear from you."
+          }
         }),
         defineField({
           name: "form",
@@ -636,49 +536,6 @@ export const portfolioPage = defineType({
           type: "string",
           description: "Copyright notice (year will be added automatically)",
           placeholder: "Jan Szewczyk. All rights reserved."
-        }),
-        defineField({
-          name: "socialLinks",
-          title: "Social Links",
-          type: "array",
-          description: "Social media links displayed in footer",
-          of: [
-            {
-              type: "object",
-              fields: [
-                defineField({
-                  name: "platform",
-                  title: "Platform",
-                  type: "string",
-                  validation: (rule) => rule.required()
-                }),
-                defineField({
-                  name: "url",
-                  title: "URL",
-                  type: "url",
-                  validation: (rule) => rule.required()
-                }),
-                defineField({
-                  name: "icon",
-                  title: "Icon",
-                  type: "string",
-                  validation: (rule) => rule.required()
-                })
-              ],
-              preview: {
-                select: {
-                  platform: "platform",
-                  url: "url"
-                },
-                prepare({ platform, url }) {
-                  return {
-                    title: platform,
-                    subtitle: url
-                  };
-                }
-              }
-            }
-          ]
         })
       ]
     }),

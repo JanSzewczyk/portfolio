@@ -27,9 +27,14 @@ export default async function HomePage() {
 
   return (
     <>
-      <Navigation />
+      <Navigation personalInfo={portfolioPage?.personalInfo} />
       <main>
-        <HeroSection hero={portfolioPage?.hero} documentId={portfolioPage._id} documentType={portfolioPage._type} />
+        <HeroSection
+          personalInfo={portfolioPage?.personalInfo}
+          hero={portfolioPage?.hero}
+          documentId={portfolioPage._id}
+          documentType={portfolioPage._type}
+        />
         <AboutSection about={portfolioPage?.about} documentId={portfolioPage._id} documentType={portfolioPage._type} />
         <SkillsSection
           skills={portfolioPage?.skills}
@@ -52,12 +57,13 @@ export default async function HomePage() {
           documentType={portfolioPage._type}
         />
         <ContactSection
+          personalInfo={portfolioPage?.personalInfo}
           contact={portfolioPage?.contact}
           documentId={portfolioPage._id}
           documentType={portfolioPage._type}
         />
       </main>
-      <Footer footer={portfolioPage?.footer} />
+      <Footer personalInfo={portfolioPage?.personalInfo} footer={portfolioPage?.footer} />
     </>
   );
 }

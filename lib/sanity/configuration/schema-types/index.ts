@@ -4,11 +4,24 @@ import { education } from "./education";
 import { experience } from "./experience";
 import { portfolioPage } from "./portfolio-page";
 import { project } from "./project";
+import { sectionHeading } from "./section-heading";
+import { socialLink } from "./social-link";
 import { technology } from "./technology";
 import { technologyGroup } from "./technology-group";
 
 type SanitySchema = { types: Array<SchemaTypeDefinition> };
 
 export const schema: SanitySchema = {
-  types: [portfolioPage, technology, technologyGroup, project, experience, education]
+  types: [
+    // Reusable object types
+    sectionHeading,
+    socialLink,
+    // Document types
+    portfolioPage,
+    technology,
+    technologyGroup,
+    project,
+    experience,
+    education
+  ]
 };

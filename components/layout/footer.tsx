@@ -1,19 +1,13 @@
 import { Button } from "@szum-tech/design-system";
-import { ReactIcon, type IconName } from "~/components/ui/react-icon";
-import { PERSONAL_INFO } from "~/constants";
+import { type IconName, ReactIcon } from "~/components/ui/react-icon";
 import { type PortfolioPageQueryResult } from "~/lib/sanity/types";
-
-const iconMap: Record<string, IconName> = {
-  github: "SiGithub",
-  linkedin: "SiLinkedin",
-  twitter: "SiX"
-};
 
 type FooterProps = {
   footer: NonNullable<PortfolioPageQueryResult>["footer"];
+  personalInfo: NonNullable<PortfolioPageQueryResult>["personalInfo"];
 };
 
-export function Footer({ footer }: FooterProps) {
+export function Footer({ footer, personalInfo }: FooterProps) {
   const currentYear = new Date().getFullYear();
 
   return (
@@ -21,15 +15,14 @@ export function Footer({ footer }: FooterProps) {
       <div className="container py-12">
         <div className="flex flex-col items-center justify-between gap-6 md:flex-row">
           <div className="text-center md:text-left">
-            <p className="font-semibold">{PERSONAL_INFO.name}</p>
-            <p className="text-muted-foreground text-sm">{PERSONAL_INFO.title}</p>
+            <p className="font-semibold">{personalInfo?.name}</p>
+            <p className="text-muted-foreground text-sm">{personalInfo?.title}</p>
           </div>
 
           <div className="flex items-center gap-2">
-            {footer?.socialLinks &&
-              footer.socialLinks.length > 0 &&
-              footer.socialLinks.map((link) => {
-                const iconName = link.icon ? iconMap[link.icon] : undefined;
+            {personalInfo?.socialLinks &&
+              personalInfo.socialLinks.length > 0 &&
+              personalInfo.socialLinks.map((link) => {
                 return (
                   <Button key={link._key} variant="ghost" size="icon" asChild>
                     <a
@@ -38,7 +31,7 @@ export function Footer({ footer }: FooterProps) {
                       rel="noopener noreferrer"
                       aria-label={link.platform ?? ""}
                     >
-                      {iconName && <ReactIcon name={iconName} className="size-5" />}
+                      <ReactIcon name={link.icon as IconName} className="size-5" />
                     </a>
                   </Button>
                 );
@@ -46,13 +39,9 @@ export function Footer({ footer }: FooterProps) {
           </div>
         </div>
 
-        {footer?.copyrightText && (
-          <div className="text-muted-foreground mt-8 border-t pt-8 text-center text-sm">
-            <p>
-              &copy; {currentYear} {footer.copyrightText}
-            </p>
-          </div>
-        )}
+        <div className="text-muted-foreground mt-8 border-t pt-8 text-center text-sm">
+          <p>{footer?.copyrightText ? `&copy; ${currentYear} ${footer.copyrightText}` : null}</p>
+        </div>
       </div>
     </footer>
   );

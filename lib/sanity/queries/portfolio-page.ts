@@ -5,13 +5,30 @@ import { defineQuery } from "next-sanity";
 export const portfolioPageQuery = defineQuery(`
   *[_type == "portfolioPage"][0] {
     ...,
-    // Hero Section
-    hero {
-      ...,
+    // Personal Information
+    personalInfo {
+      name,
+      title,
+      company,
+      email,
       avatar {
         ...,
-        asset-> 
+        asset->
       },
+      socialLinks[] {
+        _key,
+        platform,
+        url,
+        icon,
+        username
+      }
+    },
+
+    // Hero Section
+    hero {
+      alternativeTitles,
+      tagline,
+      isAvailable
     },
 
     // About Section
@@ -190,15 +207,26 @@ export const portfolioPageQuery = defineQuery(`
 
     // Contact Section
     contact {
-      email,
-      socialLinks[] {
-        _key,
-        platform,
-        url,
-        icon,
-        username
+      heading {
+        title,
+        description
       },
-      ...
+      form {
+        enabled,
+        title,
+        description,
+        successMessage,
+        submitButtonText,
+        successView {
+          title,
+          description,
+          buttonText
+        }
+      },
+      quickChat {
+        title,
+        description
+      }
     },
 
     // Footer

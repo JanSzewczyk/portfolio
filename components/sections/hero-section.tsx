@@ -22,15 +22,16 @@ import { buildSanityAttribute } from "~/lib/sanity/utils";
 import { scrollToSection } from "~/lib/scroll-to-section";
 
 type HeroSectionProps = {
+  personalInfo: NonNullable<PortfolioPageQueryResult>["personalInfo"];
   hero: NonNullable<PortfolioPageQueryResult>["hero"];
   documentId: string;
   documentType: string;
 };
 
-export function HeroSection({ hero, documentId, documentType }: HeroSectionProps) {
+export function HeroSection({ personalInfo, hero, documentId, documentType }: HeroSectionProps) {
   const { createSanityAttribute } = buildSanityAttribute({ documentId, documentType });
 
-  const initials = hero?.name
+  const initials = personalInfo?.name
     ?.split(" ")
     .map((n) => n[0])
     .join("");
@@ -42,8 +43,8 @@ export function HeroSection({ hero, documentId, documentType }: HeroSectionProps
       <div className="container flex min-h-[calc(100vh-4rem)] items-center py-20">
         <div className="mx-auto flex max-w-4xl flex-col items-center text-center">
           <Avatar className="size-32">
-            {hero?.avatar ? (
-              <AvatarImage src={urlFor(hero.avatar).auto("format").url()} alt={hero?.avatar?.alt} />
+            {personalInfo?.avatar ? (
+              <AvatarImage src={urlFor(personalInfo.avatar).auto("format").url()} alt={personalInfo?.avatar?.alt} />
             ) : null}
             <AvatarFallback className="text-3xl">{initials}</AvatarFallback>
           </Avatar>
@@ -58,8 +59,8 @@ export function HeroSection({ hero, documentId, documentType }: HeroSectionProps
             </Status>
           </div>
 
-          <h1 className="text-display-lg mb-4" data-sanity={createSanityAttribute("hero.name")}>
-            <TypingText text={`Hi I'm ${stegaClean(hero?.name)}`} speed={80} />
+          <h1 className="text-display-lg mb-4" data-sanity={createSanityAttribute("personalInfo.name")}>
+            <TypingText text={`Hi I'm ${stegaClean(personalInfo?.name)}`} speed={80} />
           </h1>
 
           {hero?.alternativeTitles && hero.alternativeTitles.length > 0 && (
