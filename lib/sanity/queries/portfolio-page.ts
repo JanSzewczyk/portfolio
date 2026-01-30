@@ -4,22 +4,14 @@ import { defineQuery } from "next-sanity";
 
 export const portfolioPageQuery = defineQuery(`
   *[_type == "portfolioPage"][0] {
-    _id,
-    _type,
-    _updatedAt,
-
+    ...,
     // Hero Section
     hero {
-      name,
-      title,
-      company,
-      alternativeTitles,
-      tagline,
+      ...,
       avatar {
         ...,
         asset-> 
       },
-      isAvailable
     },
 
     // About Section
@@ -198,10 +190,6 @@ export const portfolioPageQuery = defineQuery(`
 
     // Contact Section
     contact {
-      heading {
-        title,
-        description
-      },
       email,
       socialLinks[] {
         _key,
@@ -210,13 +198,7 @@ export const portfolioPageQuery = defineQuery(`
         icon,
         username
       },
-      formSettings {
-        enabled,
-        submitButtonText,
-        successMessage
-      },
-      quickChatTitle,
-      quickChatDescription
+      ...
     },
 
     // Footer

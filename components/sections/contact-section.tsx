@@ -1,14 +1,11 @@
-"use client";
-
 import { Mail } from "lucide-react";
 
-import { Button, Card, CardContent, CardHeader, CardTitle, toast } from "@szum-tech/design-system";
+import { Button, Card, CardContent, CardHeader, CardTitle } from "@szum-tech/design-system";
 import { cn } from "@szum-tech/design-system/utils";
 import { ReactIcon, type IconName } from "~/components/ui/react-icon";
 import { SectionHeading } from "~/components/ui/section-heading";
 import { Section } from "~/constants/sections";
 import { ContactForm } from "~/features/contact/components/contact-form";
-import { type ContactFormData } from "~/features/contact/schemas/contact.schema";
 import { sendContactEmail } from "~/features/contact/server/actions/send-contact-email";
 import { type PortfolioPageQueryResult } from "~/lib/sanity/types";
 
@@ -25,39 +22,15 @@ type ContactSectionProps = {
 };
 
 export function ContactSection({ contact }: ContactSectionProps) {
-  async function handleSubmit(formData: ContactFormData) {
-    const result = await sendContactEmail(formData);
-
-    if (!result.success) {
-      // Show error toast
-      toast.error("Failed to send message", {
-        description: result.error
-      });
-    } else {
-      // Show success toast
-      toast.success("Message sent!", {
-        description: contact?.formSettings?.successMessage
-      });
-    }
-
-    return result;
-  }
-
   return (
     <section id={Section.CONTACT} className="py-24">
       <div className="container">
         <SectionHeading title={contact?.heading?.title ?? ""} description={contact?.heading?.description ?? ""} />
 
-        <div
-          className={cn("mx-auto grid gap-8", contact?.formSettings?.enabled ? "max-w-4xl lg:grid-cols-2" : "max-w-lg")}
-        >
+        <div className={cn("mx-auto grid gap-8", contact?.form?.enabled ? "max-w-4xl lg:grid-cols-2" : "max-w-lg")}>
           {/* Contact Form */}
-          {contact?.formSettings?.enabled ? (
-            <ContactForm
-              title="Send a Message"
-              description="Fill out the form and I'll get back to you as soon as possible."
-              onSubmit={handleSubmit}
-            />
+          {contact?.form?.enabled ? (
+            <ContactForm contactFormContent={contact.form} onSubmitAction={sendContactEmail} />
           ) : null}
 
           {/* Contact Info */}
@@ -101,21 +74,16 @@ export function ContactSection({ contact }: ContactSectionProps) {
               </CardContent>
             </Card>
 
-            {(contact?.quickChatTitle || contact?.quickChatDescription) && (
+            {contact?.quickChat ? (
               <Card className="bg-primary/5 border-primary/20">
+                <CardHeader>
+                  <CardTitle>{contact?.quickChat.title}</CardTitle>
+                </CardHeader>
                 <CardContent>
-                  <p className="text-muted-foreground text-body-sm">
-                    {contact?.quickChatTitle && (
-                      <>
-                        <strong className="text-foreground">{contact.quickChatTitle}</strong>
-                        <br />
-                      </>
-                    )}
-                    {contact?.quickChatDescription}
-                  </p>
+                  <p className="text-muted-foreground text-body-sm">{contact?.quickChat?.description}</p>
                 </CardContent>
               </Card>
-            )}
+            ) : null}
           </div>
         </div>
       </div>

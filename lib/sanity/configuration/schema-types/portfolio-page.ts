@@ -513,10 +513,14 @@ export const portfolioPage = defineType({
           ]
         }),
         defineField({
-          name: "formSettings",
+          name: "form",
           title: "Contact Form Settings",
           type: "object",
           description: "Configuration for the contact form",
+          options: {
+            collapsible: true,
+            collapsed: true
+          },
           fields: [
             defineField({
               name: "enabled",
@@ -526,10 +530,17 @@ export const portfolioPage = defineType({
               initialValue: true
             }),
             defineField({
-              name: "submitButtonText",
-              title: "Submit Button Text",
+              name: "title",
+              title: "Contact Form Title",
               type: "string",
-              initialValue: "Send Message"
+              initialValue: "Send a Message"
+            }),
+            defineField({
+              name: "description",
+              title: "Contact Form Description",
+              type: "text",
+              rows: 2,
+              initialValue: "Fill out the form and I'll get back to you as soon as possible."
             }),
             defineField({
               name: "successMessage",
@@ -537,23 +548,71 @@ export const portfolioPage = defineType({
               type: "text",
               rows: 2,
               initialValue: "Thank you for your message! I'll get back to you soon."
+            }),
+
+            defineField({
+              name: "submitButtonText",
+              title: "Submit Button Text",
+              type: "string",
+              initialValue: "Send Message"
+            }),
+
+            defineField({
+              name: "successView",
+              title: "Success View Settings",
+              type: "object",
+              description: "Configuration for the success message after form submission",
+              fields: [
+                defineField({
+                  name: "title",
+                  title: "Success Title",
+                  type: "string",
+                  initialValue: "Thank you for your message!"
+                }),
+                defineField({
+                  name: "description",
+                  title: "Success Description",
+                  type: "text",
+                  rows: 2,
+                  initialValue: "Thank you for your message! I'll get back to you soon."
+                }),
+                defineField({
+                  name: "buttonText",
+                  title: "Send Another Button Text",
+                  type: "string",
+                  initialValue: "Send another message"
+                })
+              ]
             })
           ]
         }),
+
         defineField({
-          name: "quickChatTitle",
-          title: "Quick Chat Title",
-          type: "string",
-          description: "Title for the quick chat call-out card",
-          initialValue: "Prefer a quick chat?"
-        }),
-        defineField({
-          name: "quickChatDescription",
-          title: "Quick Chat Description",
-          type: "text",
-          description: "Description for the quick chat call-out card",
-          rows: 2,
-          initialValue: "Feel free to reach out on LinkedIn or Twitter for a faster response."
+          name: "quickChat",
+          title: "Quick Chat Settings",
+          type: "object",
+          description: "Configuration for the quick chat",
+          options: {
+            collapsible: true,
+            collapsed: true
+          },
+          fields: [
+            defineField({
+              name: "title",
+              title: "Quick Chat Title",
+              type: "string",
+              description: "Title for the quick chat call-out card",
+              initialValue: "Prefer a quick chat?"
+            }),
+            defineField({
+              name: "description",
+              title: "Quick Chat Description",
+              type: "text",
+              description: "Description for the quick chat call-out card",
+              rows: 2,
+              initialValue: "Feel free to reach out on LinkedIn or Twitter for a faster response."
+            })
+          ]
         })
       ]
     }),

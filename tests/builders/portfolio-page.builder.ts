@@ -472,8 +472,14 @@ export const portfolioPageContactBuilder = build<NonNullable<PortfolioPageQueryR
     ]),
     formSettings: {
       enabled: true,
-      submitButtonText: "Send Message",
-      successMessage: "Thank you for your message!"
+      title: "Send a Message",
+      description: "Fill out the form and I'll get back to you as soon as possible.",
+      submitButtonText: "Send Message"
+    },
+    successView: {
+      title: "Thank you for your message!",
+      description: "Thank you for your message! I'll get back to you soon.",
+      buttonText: "Send another message"
     },
     quickChatTitle: perBuild(() => faker.lorem.words(4)),
     quickChatDescription: perBuild(() => faker.lorem.sentence())
