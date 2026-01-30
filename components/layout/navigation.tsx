@@ -8,10 +8,12 @@ import { Button, Header } from "@szum-tech/design-system";
 import Link from "next/link";
 import { ThemeToggle } from "~/components/ui/theme-toggle";
 import { NAV_ITEMS } from "~/constants/navigation";
-import { PERSONAL_INFO } from "~/constants/portfolio";
+import { type PortfolioPageQueryResult } from "~/lib/sanity/types";
 import { scrollToSection } from "~/lib/scroll-to-section";
 
-export function Navigation() {
+export type NavigationProps = { personalInfo: NonNullable<PortfolioPageQueryResult>["personalInfo"] };
+
+export function Navigation({ personalInfo }: NavigationProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
@@ -19,7 +21,7 @@ export function Navigation() {
       <Header>
         <div className="flex w-full items-center justify-between">
           <Link href="/" className="hover:text-primary text-heading-h3 transition-colors">
-            {PERSONAL_INFO.name}
+            {personalInfo?.name}
           </Link>
 
           <div>

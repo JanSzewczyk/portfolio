@@ -51,6 +51,45 @@ export const portfolioPageAboutBuilder = build<NonNullable<PortfolioPageQueryRes
 });
 
 /**
+ * Builder for PortfolioPage personal info section test data.
+ *
+ * @example
+ * const personalInfo = portfolioPagePersonalInfoBuilder.one();
+ */
+export const portfolioPagePersonalInfoBuilder = build<NonNullable<PortfolioPageQueryResult>["personalInfo"]>({
+  fields: {
+    name: perBuild(() => faker.person.fullName()),
+    title: perBuild(() => faker.person.jobTitle()),
+    company: perBuild(() => faker.company.name()),
+    email: perBuild(() => faker.internet.email()),
+    avatar: null,
+    socialLinks: perBuild(() => [
+      {
+        _key: faker.string.uuid(),
+        platform: "GitHub",
+        url: faker.internet.url(),
+        icon: "github",
+        username: faker.internet.username()
+      },
+      {
+        _key: faker.string.uuid(),
+        platform: "LinkedIn",
+        url: faker.internet.url(),
+        icon: "linkedin",
+        username: faker.internet.username()
+      },
+      {
+        _key: faker.string.uuid(),
+        platform: "Twitter",
+        url: faker.internet.url(),
+        icon: "twitter",
+        username: faker.internet.username()
+      }
+    ])
+  }
+});
+
+/**
  * Builder for PortfolioPage hero section test data.
  *
  * @example
@@ -58,12 +97,8 @@ export const portfolioPageAboutBuilder = build<NonNullable<PortfolioPageQueryRes
  */
 export const portfolioPageHeroBuilder = build<NonNullable<PortfolioPageQueryResult>["hero"]>({
   fields: {
-    name: perBuild(() => faker.person.fullName()),
-    title: perBuild(() => faker.person.jobTitle()),
-    company: perBuild(() => faker.company.name()),
     alternativeTitles: perBuild(() => [faker.person.jobTitle(), faker.person.jobTitle(), faker.person.jobTitle()]),
     tagline: perBuild(() => faker.lorem.sentence()),
-    avatar: null,
     isAvailable: true
   },
   traits: {
@@ -446,43 +481,22 @@ export const portfolioPageContactBuilder = build<NonNullable<PortfolioPageQueryR
       title: perBuild(() => faker.lorem.words(3)),
       description: perBuild(() => faker.lorem.sentence())
     },
-    email: perBuild(() => faker.internet.email()),
-    socialLinks: perBuild(() => [
-      {
-        _key: faker.string.uuid(),
-        platform: "GitHub",
-        url: faker.internet.url(),
-        icon: "github",
-        username: faker.internet.username()
-      },
-      {
-        _key: faker.string.uuid(),
-        platform: "LinkedIn",
-        url: faker.internet.url(),
-        icon: "linkedin",
-        username: faker.internet.username()
-      },
-      {
-        _key: faker.string.uuid(),
-        platform: "Twitter",
-        url: faker.internet.url(),
-        icon: "twitter",
-        username: faker.internet.username()
-      }
-    ]),
-    formSettings: {
+    form: {
       enabled: true,
       title: "Send a Message",
       description: "Fill out the form and I'll get back to you as soon as possible.",
-      submitButtonText: "Send Message"
+      successMessage: "Thank you for your message!",
+      submitButtonText: "Send Message",
+      successView: {
+        title: "Thank you for your message!",
+        description: "Thank you for your message! I'll get back to you soon.",
+        buttonText: "Send another message"
+      }
     },
-    successView: {
-      title: "Thank you for your message!",
-      description: "Thank you for your message! I'll get back to you soon.",
-      buttonText: "Send another message"
-    },
-    quickChatTitle: perBuild(() => faker.lorem.words(4)),
-    quickChatDescription: perBuild(() => faker.lorem.sentence())
+    quickChat: {
+      title: perBuild(() => faker.lorem.words(4)),
+      description: perBuild(() => faker.lorem.sentence())
+    }
   }
 });
 
@@ -528,7 +542,10 @@ export const portfolioPageBuilder = build<NonNullable<PortfolioPageQueryResult>>
   fields: {
     _id: perBuild(() => faker.string.uuid()),
     _type: "portfolioPage" as const,
+    _createdAt: perBuild(() => faker.date.past().toISOString()),
     _updatedAt: perBuild(() => faker.date.recent().toISOString()),
+    _rev: perBuild(() => `rev-${faker.string.uuid()}`),
+    personalInfo: perBuild(() => portfolioPagePersonalInfoBuilder.one()),
     hero: perBuild(() => portfolioPageHeroBuilder.one()),
     about: perBuild(() => portfolioPageAboutBuilder.one()),
     skills: perBuild(() => portfolioPageSkillsBuilder.one()),
