@@ -287,29 +287,17 @@ export const portfolioPage = defineType({
           }
         }),
         defineField({
-          name: "featuredProjects",
-          title: "Featured Projects",
+          name: "projectGroups",
+          title: "Project Groups",
           type: "array",
-          description: "Highlighted projects shown prominently",
+          description: "Organized groups of projects (e.g., Featured, Web Apps, Mobile Apps)",
           of: [
             {
               type: "reference",
-              to: [{ type: "project" }]
+              to: [{ type: "projectGroup" }]
             }
           ],
-          validation: (rule) => rule.max(6)
-        }),
-        defineField({
-          name: "allProjects",
-          title: "All Projects",
-          type: "array",
-          description: "All projects (can be filtered by category)",
-          of: [
-            {
-              type: "reference",
-              to: [{ type: "project" }]
-            }
-          ]
+          validation: (rule) => rule.required().min(1)
         })
       ]
     }),

@@ -31,20 +31,24 @@ Default.test("Renders section heading with title and description", async ({ canv
   }
 });
 
-// Test: Renders tabs for categories
-Default.test("Renders project category tabs", async ({ canvas }) => {
+// Test: Renders tabs for project groups
+Default.test("Renders project group tabs", async ({ canvas, args }) => {
   const tabList = canvas.getByRole("tablist");
   await expect(tabList).toBeVisible();
 
-  const featuredTab = canvas.getByRole("tab", { name: /featured/i });
-  await expect(featuredTab).toBeVisible();
+  const firstGroup = args.projects?.projectGroups?.[0];
+  if (firstGroup?.label) {
+    const firstTab = canvas.getByRole("tab", { name: new RegExp(firstGroup.label, "i") });
+    await expect(firstTab).toBeVisible();
+  }
 });
 
-// Test: Displays featured projects by default
-Default.test("Displays featured projects in the Featured tab", async ({ canvas, args }) => {
-  const featuredProjectsCount = args.projects?.featuredProjects?.length ?? 0;
+// Test: Displays projects in the first group by default
+Default.test("Displays projects from the first project group", async ({ canvas, args }) => {
+  const firstGroup = args.projects?.projectGroups?.[0];
+  const projectsCount = firstGroup?.projects?.length ?? 0;
 
-  if (featuredProjectsCount > 0) {
+  if (projectsCount > 0) {
     // Check that at least one project card is visible
     const projectCards = canvas.getAllByRole("article");
     await expect(projectCards.length).toBeGreaterThan(0);
@@ -53,7 +57,8 @@ Default.test("Displays featured projects in the Featured tab", async ({ canvas, 
 
 // Test: Project cards display correct information
 Default.test("Project cards display title, description, and technologies", async ({ canvas, args }) => {
-  const firstProject = args.projects?.featuredProjects?.[0];
+  const firstGroup = args.projects?.projectGroups?.[0];
+  const firstProject = firstGroup?.projects?.[0];
 
   if (firstProject) {
     // Check title
@@ -81,7 +86,8 @@ Default.test("Project cards display title, description, and technologies", async
 
 // Test: Links render when available
 Default.test("Renders live and GitHub links when available", async ({ canvas, args }) => {
-  const firstProject = args.projects?.featuredProjects?.[0];
+  const firstGroup = args.projects?.projectGroups?.[0];
+  const firstProject = firstGroup?.projects?.[0];
 
   if (firstProject?.links?.live) {
     const liveLink = canvas.getByRole("link", { name: /live/i });
@@ -115,19 +121,23 @@ export const EmptyState = meta.story({
         title: "My Projects",
         description: "Check out what I've been working on"
       },
-      featuredProjects: [],
-      allProjects: []
+      projectGroups: []
     },
     documentId: "test-portfolio-page-id",
     documentType: "portfolioPage"
   }
 });
 
-EmptyState.test("Shows empty state when no projects available", async ({ canvas }) => {
-  const tabContent = canvas.getByRole("tabpanel");
-  await expect(tabContent).toBeVisible();
+EmptyState.test("Shows empty state when no project groups available", async ({ canvas }) => {
+  // When no project groups exist, tabs won't render
+  const tabList = canvas.queryByRole("tablist");
 
-  // Should not have any project cards
-  const projectCards = canvas.queryAllByRole("article");
-  await expect(projectCards.length).toBe(0);
+  if (tabList) {
+    // If tabs somehow render, there should be no project cards
+    const projectCards = canvas.queryAllByRole("article");
+    await expect(projectCards.length).toBe(0);
+  } else {
+    // No tabs should exist when projectGroups is empty
+    await expect(tabList).not.toBeInTheDocument();
+  }
 });

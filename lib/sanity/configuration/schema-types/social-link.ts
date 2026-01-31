@@ -1,4 +1,5 @@
 import { defineField, defineType } from "sanity";
+
 import { IconSearchInput } from "~/lib/sanity/configuration/schema-types/components/icon-search-input";
 
 /**

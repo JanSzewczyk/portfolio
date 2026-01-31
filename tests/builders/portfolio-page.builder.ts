@@ -212,7 +212,6 @@ export const projectBuilder = build<{
     icon: string | null;
     description: string | null;
   }> | null;
-  category: "ai" | "mobile" | "oss" | "web" | null;
   links: {
     live: string | null;
     github: string | null;
@@ -242,7 +241,6 @@ export const projectBuilder = build<{
     technologies: perBuild(() =>
       Array.from({ length: faker.number.int({ min: 2, max: 6 }) }, () => technologyBuilder.one())
     ),
-    category: perBuild(() => faker.helpers.arrayElement(["web", "mobile", "oss", "ai"] as const)),
     links: perBuild(() => ({
       live: faker.datatype.boolean() ? faker.internet.url() : null,
       github: faker.datatype.boolean() ? faker.internet.url() : null
@@ -253,6 +251,59 @@ export const projectBuilder = build<{
     featured: {
       overrides: { featured: true }
     }
+  }
+});
+
+/**
+ * Builder for ProjectGroup test data.
+ *
+ * @example
+ * const projectGroup = projectGroupBuilder.one();
+ */
+export const projectGroupBuilder = build<{
+  _id: string;
+  label: string | null;
+  description: string | null;
+  projects: Array<{
+    _id: string;
+    title: string | null;
+    description: string | null;
+    longDescription: string | null;
+    thumbnail: {
+      asset: {
+        _id: string;
+        url: string | null;
+        metadata: {
+          dimensions: {
+            _type: "sanity.imageDimensions";
+            height?: number;
+            width?: number;
+            aspectRatio?: number;
+          } | null;
+          lqip: string | null;
+        } | null;
+      } | null;
+    } | null;
+    technologies: Array<{
+      _id: string;
+      name: string | null;
+      icon: string | null;
+      description: string | null;
+    }> | null;
+    links: {
+      live: string | null;
+      github: string | null;
+    } | null;
+    featured: boolean | null;
+  }> | null;
+}>({
+  fields: {
+    _id: perBuild(() => faker.string.uuid()),
+    label: perBuild(() =>
+      faker.helpers.arrayElement(["Featured Projects", "Web Applications", "Mobile Apps", "Open Source"])
+    ),
+    description: perBuild(() => faker.lorem.sentence()),
+    projects: perBuild(() => Array.from({ length: faker.number.int({ min: 3, max: 6 }) }, () => projectBuilder.one()))
   }
 });
 
@@ -268,11 +319,8 @@ export const portfolioPageProjectsBuilder = build<NonNullable<PortfolioPageQuery
       title: perBuild(() => faker.lorem.words(3)),
       description: perBuild(() => faker.lorem.sentence())
     },
-    featuredProjects: perBuild(() =>
-      Array.from({ length: faker.number.int({ min: 3, max: 6 }) }, () => projectBuilder.one({ traits: ["featured"] }))
-    ),
-    allProjects: perBuild(() =>
-      Array.from({ length: faker.number.int({ min: 6, max: 12 }) }, () => projectBuilder.one())
+    projectGroups: perBuild(() =>
+      Array.from({ length: faker.number.int({ min: 2, max: 4 }) }, () => projectGroupBuilder.one())
     )
   }
 });
