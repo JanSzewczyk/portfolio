@@ -109,6 +109,21 @@ export type SanityImageHotspot = {
   width?: number;
 };
 
+export type ProjectGroup = {
+  _id: string;
+  _type: "projectGroup";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  label?: string;
+  description?: string;
+  projects?: Array<
+    {
+      _key: string;
+    } & ProjectReference
+  >;
+};
+
 export type Project = {
   _id: string;
   _type: "project";
@@ -130,7 +145,6 @@ export type Project = {
       _key: string;
     } & TechnologyReference
   >;
-  category?: "web" | "mobile" | "oss" | "ai";
   links?: {
     live?: string;
     github?: string;
@@ -169,6 +183,13 @@ export type TechnologyGroupReference = {
   _type: "reference";
   _weak?: boolean;
   [internalGroqTypeReferenceTo]?: "technologyGroup";
+};
+
+export type ProjectGroupReference = {
+  _ref: string;
+  _type: "reference";
+  _weak?: boolean;
+  [internalGroqTypeReferenceTo]?: "projectGroup";
 };
 
 export type ExperienceReference = {
@@ -236,15 +257,10 @@ export type PortfolioPage = {
   };
   projects?: {
     heading?: SectionHeading;
-    featuredProjects?: Array<
+    projectGroups?: Array<
       {
         _key: string;
-      } & ProjectReference
-    >;
-    allProjects?: Array<
-      {
-        _key: string;
-      } & ProjectReference
+      } & ProjectGroupReference
     >;
   };
   experience?: {
@@ -424,10 +440,12 @@ export type AllSanitySchemaTypes =
   | Experience
   | SanityImageCrop
   | SanityImageHotspot
+  | ProjectGroup
   | Project
   | TechnologyGroup
   | Technology
   | TechnologyGroupReference
+  | ProjectGroupReference
   | ExperienceReference
   | EducationReference
   | PortfolioPage
@@ -453,7 +471,7 @@ type ArrayOf<T> = Array<
 
 // Source: lib/sanity/queries/portfolio-page.ts
 // Variable: portfolioPageQuery
-// Query: *[_type == "portfolioPage"][0] {    ...,    // Personal Information    personalInfo {      name,      title,      company,      email,      avatar {        ...,        asset->      },      socialLinks[] {        _key,        platform,        url,        icon,        username      }    },    // Hero Section    hero {      alternativeTitles,      tagline,      isAvailable    },    // About Section    about {      heading {        title,        description      },      bio,      location,      stats[] {        _key,        label,        value,        suffix      }    },    // Skills Section    skills {      heading {        title,        description      },      technologyGroups[]-> {        _id,        label,        slug,        category,        technologies[]-> {          _id,          name,          icon,          description        }      }    },    // Projects Section    projects {      heading {        title,        description      },      featuredProjects[]-> {        _id,        title,        description,        longDescription,        thumbnail {          asset-> {            _id,            url,            metadata {              dimensions,              lqip            }          }        },        technologies[]-> {          _id,          name,          icon,          description        },        category,        links {          live,          github        },        featured      },      allProjects[]-> {        _id,        title,        description,        longDescription,        thumbnail {          asset-> {            _id,            url,            metadata {              dimensions,              lqip            }          }        },        technologies[]-> {          _id,          name,          icon,          description        },        category,        links {          live,          github        },        featured      }    },    // Experience Section    experience {      heading {        title,        description      },      experiences[]-> {        _id,        role,        company,        companyLogo {          asset-> {            _id,            url,            metadata {              dimensions,              lqip            }          }        },        companyUrl,        location,        type,        startDate,        endDate,        summary,        responsibilities,        achievements,        technologies[]-> {          _id,          name,          icon,          description        }      }    },    // Education Section    education {      heading {        title,        description      },      education[]-> {        _id,        institution,        institutionUrl,        location,        degree,        fieldOfStudy,        startDate,        endDate,        grade,        thesis {          title,          description,          technologies[]-> {            _id,            name,            icon,            description          },          project-> {            _id,            title,            description          },          url        },        achievements,        coursework      }    },    // Contact Section    contact {      heading {        title,        description      },      form {        enabled,        title,        description,        successMessage,        submitButtonText,        successView {          title,          description,          buttonText        }      },      quickChat {        title,        description      }    },    // Footer    footer {      copyrightText,      socialLinks[] {        _key,        platform,        url,        icon      }    },    // SEO & Metadata    seo {      metaTitle,      metaDescription,      ogImage {        asset-> {          _id,          url,          metadata {            dimensions,            lqip          }        }      },      keywords    }  }
+// Query: *[_type == "portfolioPage"][0] {    ...,    // Personal Information    personalInfo {      name,      title,      company,      email,      avatar {        ...,        asset->      },      socialLinks[] {        _key,        platform,        url,        icon,        username      }    },    // Hero Section    hero {      alternativeTitles,      tagline,      isAvailable    },    // About Section    about {      heading {        title,        description      },      bio,      location,      stats[] {        _key,        label,        value,        suffix      }    },    // Skills Section    skills {      heading {        title,        description      },      technologyGroups[]-> {        _id,        label,        slug,        category,        technologies[]-> {          _id,          name,          icon,          description        }      }    },    // Projects Section    projects {      heading {        title,        description      },      projectGroups[]-> {        _id,        label,        description,        projects[]-> {          _id,          title,          description,          longDescription,          thumbnail {            asset-> {              _id,              url,              metadata {                dimensions,                lqip              }            }          },          technologies[]-> {            _id,            name,            icon,            description          },          links {            live,            github          },          featured        }      }    },    // Experience Section    experience {      heading {        title,        description      },      experiences[]-> {        _id,        role,        company,        companyLogo {          asset-> {            _id,            url,            metadata {              dimensions,              lqip            }          }        },        companyUrl,        location,        type,        startDate,        endDate,        summary,        responsibilities,        achievements,        technologies[]-> {          _id,          name,          icon,          description        }      }    },    // Education Section    education {      heading {        title,        description      },      education[]-> {        _id,        institution,        institutionUrl,        location,        degree,        fieldOfStudy,        startDate,        endDate,        grade,        thesis {          title,          description,          technologies[]-> {            _id,            name,            icon,            description          },          project-> {            _id,            title,            description          },          url        },        achievements,        coursework      }    },    // Contact Section    contact {      heading {        title,        description      },      form {        enabled,        title,        description,        successMessage,        submitButtonText,        successView {          title,          description,          buttonText        }      },      quickChat {        title,        description      }    },    // Footer    footer {      copyrightText,      socialLinks[] {        _key,        platform,        url,        icon      }    },    // SEO & Metadata    seo {      metaTitle,      metaDescription,      ogImage {        asset-> {          _id,          url,          metadata {            dimensions,            lqip          }        }      },      keywords    }  }
 export type PortfolioPageQueryResult = {
   _id: string;
   _type: "portfolioPage";
@@ -544,61 +562,37 @@ export type PortfolioPageQueryResult = {
       title: string | null;
       description: string | null;
     } | null;
-    featuredProjects: Array<{
+    projectGroups: Array<{
       _id: string;
-      title: string | null;
+      label: string | null;
       description: string | null;
-      longDescription: string | null;
-      thumbnail: {
-        asset: {
-          _id: string;
-          url: string | null;
-          metadata: {
-            dimensions: SanityImageDimensions | null;
-            lqip: string | null;
+      projects: Array<{
+        _id: string;
+        title: string | null;
+        description: string | null;
+        longDescription: string | null;
+        thumbnail: {
+          asset: {
+            _id: string;
+            url: string | null;
+            metadata: {
+              dimensions: SanityImageDimensions | null;
+              lqip: string | null;
+            } | null;
           } | null;
         } | null;
-      } | null;
-      technologies: Array<{
-        _id: string;
-        name: string | null;
-        icon: string | null;
-        description: string | null;
-      }> | null;
-      category: "ai" | "mobile" | "oss" | "web" | null;
-      links: {
-        live: string | null;
-        github: string | null;
-      } | null;
-      featured: boolean | null;
-    }> | null;
-    allProjects: Array<{
-      _id: string;
-      title: string | null;
-      description: string | null;
-      longDescription: string | null;
-      thumbnail: {
-        asset: {
+        technologies: Array<{
           _id: string;
-          url: string | null;
-          metadata: {
-            dimensions: SanityImageDimensions | null;
-            lqip: string | null;
-          } | null;
+          name: string | null;
+          icon: string | null;
+          description: string | null;
+        }> | null;
+        links: {
+          live: string | null;
+          github: string | null;
         } | null;
-      } | null;
-      technologies: Array<{
-        _id: string;
-        name: string | null;
-        icon: string | null;
-        description: string | null;
+        featured: boolean | null;
       }> | null;
-      category: "ai" | "mobile" | "oss" | "web" | null;
-      links: {
-        live: string | null;
-        github: string | null;
-      } | null;
-      featured: boolean | null;
     }> | null;
   } | null;
   experience: {
@@ -718,6 +712,6 @@ export type PortfolioPageQueryResult = {
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    '\n  *[_type == "portfolioPage"][0] {\n    ...,\n    // Personal Information\n    personalInfo {\n      name,\n      title,\n      company,\n      email,\n      avatar {\n        ...,\n        asset->\n      },\n      socialLinks[] {\n        _key,\n        platform,\n        url,\n        icon,\n        username\n      }\n    },\n\n    // Hero Section\n    hero {\n      alternativeTitles,\n      tagline,\n      isAvailable\n    },\n\n    // About Section\n    about {\n      heading {\n        title,\n        description\n      },\n      bio,\n      location,\n      stats[] {\n        _key,\n        label,\n        value,\n        suffix\n      }\n    },\n\n    // Skills Section\n    skills {\n      heading {\n        title,\n        description\n      },\n      technologyGroups[]-> {\n        _id,\n        label,\n        slug,\n        category,\n        technologies[]-> {\n          _id,\n          name,\n          icon,\n          description\n        }\n      }\n    },\n\n    // Projects Section\n    projects {\n      heading {\n        title,\n        description\n      },\n      featuredProjects[]-> {\n        _id,\n        title,\n        description,\n        longDescription,\n        thumbnail {\n          asset-> {\n            _id,\n            url,\n            metadata {\n              dimensions,\n              lqip\n            }\n          }\n        },\n        technologies[]-> {\n          _id,\n          name,\n          icon,\n          description\n        },\n        category,\n        links {\n          live,\n          github\n        },\n        featured\n      },\n      allProjects[]-> {\n        _id,\n        title,\n        description,\n        longDescription,\n        thumbnail {\n          asset-> {\n            _id,\n            url,\n            metadata {\n              dimensions,\n              lqip\n            }\n          }\n        },\n        technologies[]-> {\n          _id,\n          name,\n          icon,\n          description\n        },\n        category,\n        links {\n          live,\n          github\n        },\n        featured\n      }\n    },\n\n    // Experience Section\n    experience {\n      heading {\n        title,\n        description\n      },\n      experiences[]-> {\n        _id,\n        role,\n        company,\n        companyLogo {\n          asset-> {\n            _id,\n            url,\n            metadata {\n              dimensions,\n              lqip\n            }\n          }\n        },\n        companyUrl,\n        location,\n        type,\n        startDate,\n        endDate,\n        summary,\n        responsibilities,\n        achievements,\n        technologies[]-> {\n          _id,\n          name,\n          icon,\n          description\n        }\n      }\n    },\n\n    // Education Section\n    education {\n      heading {\n        title,\n        description\n      },\n      education[]-> {\n        _id,\n        institution,\n        institutionUrl,\n        location,\n        degree,\n        fieldOfStudy,\n        startDate,\n        endDate,\n        grade,\n        thesis {\n          title,\n          description,\n          technologies[]-> {\n            _id,\n            name,\n            icon,\n            description\n          },\n          project-> {\n            _id,\n            title,\n            description\n          },\n          url\n        },\n        achievements,\n        coursework\n      }\n    },\n\n    // Contact Section\n    contact {\n      heading {\n        title,\n        description\n      },\n      form {\n        enabled,\n        title,\n        description,\n        successMessage,\n        submitButtonText,\n        successView {\n          title,\n          description,\n          buttonText\n        }\n      },\n      quickChat {\n        title,\n        description\n      }\n    },\n\n    // Footer\n    footer {\n      copyrightText,\n      socialLinks[] {\n        _key,\n        platform,\n        url,\n        icon\n      }\n    },\n\n    // SEO & Metadata\n    seo {\n      metaTitle,\n      metaDescription,\n      ogImage {\n        asset-> {\n          _id,\n          url,\n          metadata {\n            dimensions,\n            lqip\n          }\n        }\n      },\n      keywords\n    }\n  }\n': PortfolioPageQueryResult;
+    '\n  *[_type == "portfolioPage"][0] {\n    ...,\n    // Personal Information\n    personalInfo {\n      name,\n      title,\n      company,\n      email,\n      avatar {\n        ...,\n        asset->\n      },\n      socialLinks[] {\n        _key,\n        platform,\n        url,\n        icon,\n        username\n      }\n    },\n\n    // Hero Section\n    hero {\n      alternativeTitles,\n      tagline,\n      isAvailable\n    },\n\n    // About Section\n    about {\n      heading {\n        title,\n        description\n      },\n      bio,\n      location,\n      stats[] {\n        _key,\n        label,\n        value,\n        suffix\n      }\n    },\n\n    // Skills Section\n    skills {\n      heading {\n        title,\n        description\n      },\n      technologyGroups[]-> {\n        _id,\n        label,\n        slug,\n        category,\n        technologies[]-> {\n          _id,\n          name,\n          icon,\n          description\n        }\n      }\n    },\n\n    // Projects Section\n    projects {\n      heading {\n        title,\n        description\n      },\n      projectGroups[]-> {\n        _id,\n        label,\n        description,\n        projects[]-> {\n          _id,\n          title,\n          description,\n          longDescription,\n          thumbnail {\n            asset-> {\n              _id,\n              url,\n              metadata {\n                dimensions,\n                lqip\n              }\n            }\n          },\n          technologies[]-> {\n            _id,\n            name,\n            icon,\n            description\n          },\n          links {\n            live,\n            github\n          },\n          featured\n        }\n      }\n    },\n\n    // Experience Section\n    experience {\n      heading {\n        title,\n        description\n      },\n      experiences[]-> {\n        _id,\n        role,\n        company,\n        companyLogo {\n          asset-> {\n            _id,\n            url,\n            metadata {\n              dimensions,\n              lqip\n            }\n          }\n        },\n        companyUrl,\n        location,\n        type,\n        startDate,\n        endDate,\n        summary,\n        responsibilities,\n        achievements,\n        technologies[]-> {\n          _id,\n          name,\n          icon,\n          description\n        }\n      }\n    },\n\n    // Education Section\n    education {\n      heading {\n        title,\n        description\n      },\n      education[]-> {\n        _id,\n        institution,\n        institutionUrl,\n        location,\n        degree,\n        fieldOfStudy,\n        startDate,\n        endDate,\n        grade,\n        thesis {\n          title,\n          description,\n          technologies[]-> {\n            _id,\n            name,\n            icon,\n            description\n          },\n          project-> {\n            _id,\n            title,\n            description\n          },\n          url\n        },\n        achievements,\n        coursework\n      }\n    },\n\n    // Contact Section\n    contact {\n      heading {\n        title,\n        description\n      },\n      form {\n        enabled,\n        title,\n        description,\n        successMessage,\n        submitButtonText,\n        successView {\n          title,\n          description,\n          buttonText\n        }\n      },\n      quickChat {\n        title,\n        description\n      }\n    },\n\n    // Footer\n    footer {\n      copyrightText,\n      socialLinks[] {\n        _key,\n        platform,\n        url,\n        icon\n      }\n    },\n\n    // SEO & Metadata\n    seo {\n      metaTitle,\n      metaDescription,\n      ogImage {\n        asset-> {\n          _id,\n          url,\n          metadata {\n            dimensions,\n            lqip\n          }\n        }\n      },\n      keywords\n    }\n  }\n': PortfolioPageQueryResult;
   }
 }

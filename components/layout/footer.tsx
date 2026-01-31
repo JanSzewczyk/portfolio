@@ -40,7 +40,7 @@ export function Footer({ footer, personalInfo }: FooterProps) {
         </div>
 
         <div className="text-muted-foreground mt-8 border-t pt-8 text-center text-sm">
-          <p>{footer?.copyrightText ? `&copy; ${currentYear} ${footer.copyrightText}` : null}</p>
+          <p>{footer?.copyrightText ? `© ${currentYear} ${footer.copyrightText}` : null}</p>
         </div>
       </div>
     </footer>

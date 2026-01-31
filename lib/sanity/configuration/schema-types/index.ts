@@ -4,6 +4,7 @@ import { education } from "./education";
 import { experience } from "./experience";
 import { portfolioPage } from "./portfolio-page";
 import { project } from "./project";
+import { projectGroup } from "./project-group";
 import { sectionHeading } from "./section-heading";
 import { socialLink } from "./social-link";
 import { technology } from "./technology";
@@ -21,6 +22,7 @@ export const schema: SanitySchema = {
     technology,
     technologyGroup,
     project,
+    projectGroup,
     experience,
     education
   ]

@@ -1,4 +1,12 @@
-import { CaseIcon, CodeIcon, ComponentIcon, DocumentIcon, MasterDetailIcon, ProjectsIcon } from "@sanity/icons";
+import {
+  CaseIcon,
+  CodeIcon,
+  ComponentIcon,
+  DocumentIcon,
+  FolderIcon,
+  MasterDetailIcon,
+  ProjectsIcon
+} from "@sanity/icons";
 import { type StructureResolver } from "sanity/structure";
 
 export const structure: StructureResolver = (S) =>
@@ -28,9 +36,6 @@ export const structure: StructureResolver = (S) =>
       // Documents (First Level)
       // ============================================
 
-      // Projects
-      S.listItem().title("Projects").icon(ProjectsIcon).child(S.documentTypeList("project").title("Projects")),
-
       // Experience
       S.listItem().title("Experience").icon(CaseIcon).child(S.documentTypeList("experience").title("Experience")),
 
@@ -46,5 +51,16 @@ export const structure: StructureResolver = (S) =>
       S.listItem()
         .title("Technology Groups")
         .icon(ComponentIcon)
-        .child(S.documentTypeList("technologyGroup").title("Technology Groups"))
+        .child(S.documentTypeList("technologyGroup").title("Technology Groups")),
+
+      S.divider(),
+
+      // Projects
+      S.listItem().title("Projects").icon(ProjectsIcon).child(S.documentTypeList("project").title("Projects")),
+
+      // Project Groups
+      S.listItem()
+        .title("Project Groups")
+        .icon(FolderIcon)
+        .child(S.documentTypeList("projectGroup").title("Project Groups"))
     ]);

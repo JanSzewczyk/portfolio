@@ -26,10 +26,12 @@ import { urlFor } from "~/lib/sanity/image";
 import { type PortfolioPageQueryResult } from "~/lib/sanity/types";
 import { buildSanityAttribute } from "~/lib/sanity/utils";
 
-type ProjectData =
-  NonNullable<NonNullable<NonNullable<PortfolioPageQueryResult>["projects"]>["allProjects"]> extends (infer T)[]
+type ProjectGroupData =
+  NonNullable<NonNullable<NonNullable<PortfolioPageQueryResult>["projects"]>["projectGroups"]> extends (infer T)[]
     ? T
     : never;
+
+type ProjectData = NonNullable<ProjectGroupData["projects"]> extends (infer T)[] ? T : never;
 
 type ProjectCardProps = {
   project: ProjectData;
@@ -119,28 +121,19 @@ type ProjectsSectionProps = {
 export function ProjectsSection({ projects, documentId, documentType }: ProjectsSectionProps) {
   const { createSanityAttribute } = buildSanityAttribute({ documentId, documentType });
 
-  // Build project categories from available projects
-  const allProjects = projects?.allProjects ?? [];
-  const featuredProjects = projects?.featuredProjects ?? [];
+  // Get project groups from the data
+  const projectGroups = projects?.projectGroups ?? [];
 
-  // Extract unique categories from all projects
-  const uniqueCategories = Array.from(
-    new Set(allProjects.map((p) => p.category).filter((c): c is NonNullable<typeof c> => c !== null))
-  );
+  // Build project categories from project groups
+  const projectCategories: ProjectCategoryTab[] = projectGroups.map((group, index) => ({
+    value: `group-${index}`,
+    label: stegaClean(group.label) ?? `Group ${index + 1}`
+  }));
 
-  const projectCategories: ProjectCategoryTab[] = [
-    { value: "all", label: "Featured" },
-    ...uniqueCategories.map((category) => ({
-      value: category,
-      label: category.charAt(0).toUpperCase() + category.slice(1)
-    }))
-  ];
-
-  const filterProjects = (category: string): ProjectData[] => {
-    if (category === "all") {
-      return featuredProjects;
-    }
-    return allProjects.filter((p) => p.category === category);
+  const getProjectsByGroup = (groupValue: string): ProjectData[] => {
+    const groupIndex = parseInt(groupValue.replace("group-", ""), 10);
+    const group = projectGroups[groupIndex];
+    return group?.projects ?? [];
   };
 
   return (
@@ -152,7 +145,7 @@ export function ProjectsSection({ projects, documentId, documentType }: Projects
           data-sanity={createSanityAttribute("projects.heading")}
         />
 
-        <Tabs defaultValue="all" className="w-full">
+        <Tabs defaultValue={projectCategories[0]?.value} className="w-full">
           <TabsList className="mx-auto mb-8">
             {projectCategories.map((category) => (
               <TabsTrigger key={category.value} value={category.value}>
@@ -161,20 +154,20 @@ export function ProjectsSection({ projects, documentId, documentType }: Projects
             ))}
           </TabsList>
 
-          {projectCategories.map((category) => {
-            const categoryProjects = filterProjects(category.value);
+          {projectCategories.map((category, groupIndex) => {
+            const categoryProjects = getProjectsByGroup(category.value);
 
             return (
               <TabsContent key={category.value} value={category.value}>
                 <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                  {categoryProjects.map((project, index) => {
-                    const projectArrayPath =
-                      category.value === "all" ? "projects.featuredProjects" : "projects.allProjects";
+                  {categoryProjects.map((project, projectIndex) => {
                     return (
                       <ProjectCard
                         key={project._id}
                         project={project}
-                        dataSanity={createSanityAttribute(`${projectArrayPath}[${index}]`)}
+                        dataSanity={createSanityAttribute(
+                          `projects.projectGroups[${groupIndex}].projects[${projectIndex}]`
+                        )}
                       />
                     );
                   })}

@@ -73,61 +73,31 @@ export const portfolioPageQuery = defineQuery(`
         title,
         description
       },
-      featuredProjects[]-> {
+      projectGroups[]-> {
         _id,
-        title,
+        label,
         description,
-        longDescription,
-        thumbnail {
-          asset-> {
-            _id,
-            url,
-            metadata {
-              dimensions,
-              lqip
-            }
-          }
-        },
-        technologies[]-> {
+        projects[]-> {
           _id,
-          name,
-          icon,
-          description
-        },
-        category,
-        links {
-          live,
-          github
-        },
-        featured
-      },
-      allProjects[]-> {
-        _id,
-        title,
-        description,
-        longDescription,
-        thumbnail {
-          asset-> {
+          title,
+          description,
+          longDescription,
+          thumbnail {
+            ...,
+            asset->
+          },
+          technologies[]-> {
             _id,
-            url,
-            metadata {
-              dimensions,
-              lqip
-            }
-          }
-        },
-        technologies[]-> {
-          _id,
-          name,
-          icon,
-          description
-        },
-        category,
-        links {
-          live,
-          github
-        },
-        featured
+            name,
+            icon,
+            description
+          },
+          links {
+            live,
+            github
+          },
+          featured
+        }
       }
     },
 
