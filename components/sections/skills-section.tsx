@@ -61,7 +61,7 @@ function SkillCard({
           className={cn(
             "bg-card group relative overflow-hidden rounded border transition-all duration-300",
             "hover:shadow-primary/10 hover:-translate-y-1 hover:shadow-lg",
-            featured ? "col-span-2 row-span-2 p-6 lg:col-span-1" : "hover:border-primary/50 p-4"
+            featured ? "col-span-2 row-span-3 p-6 lg:col-span-1" : "hover:border-primary/50 p-4"
           )}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
