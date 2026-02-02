@@ -5,6 +5,7 @@
 ## Template 1: Form Component
 
 ```typescript
+// ✅ CORRECT: Only import expect, fn, waitFor - NOT userEvent or canvas
 import { expect, fn, waitFor } from "storybook/test";
 import preview from "~/.storybook/preview";
 import { ContactForm } from "./contact-form";

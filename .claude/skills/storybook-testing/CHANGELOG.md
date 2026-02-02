@@ -1,5 +1,52 @@
 # Storybook Testing Skill - Changelog
 
+## 2026-02-02 - Update 3: userEvent from Function Parameters (Critical)
+
+### What Changed
+
+Updated ALL documentation to enforce **critical pattern**: `userEvent` must ALWAYS be destructured from test function parameters, NEVER imported from `storybook/test`.
+
+**Old (Wrong) Pattern:**
+```typescript
+import { expect, fn, userEvent } from "storybook/test";
+Story.test("Test", async ({ canvas }) => {
+  await userEvent.click(button); // ❌ Missing integration
+});
+```
+
+**New (Correct) Pattern:**
+```typescript
+import { expect, fn } from "storybook/test";
+Story.test("Test", async ({ canvas, userEvent }) => {
+  await userEvent.click(button); // ✅ Properly integrated
+});
+```
+
+### Key Rules
+
+1. **Imports:** Only `expect`, `fn`, `waitFor`, `screen` if needed
+2. **Never Import:** `userEvent`, `within`, `canvas` - always destructure from parameter
+3. **Why:** Test framework provides these with proper Storybook integration to handle timing
+4. **Pattern:** All parameters (canvas, userEvent, args, step) come from function signature
+
+### Updated Files
+
+- ✅ **best-practices.md** - Added ⭐ CRITICAL section with prominent warning
+- ✅ **templates.md** - Updated with import comment and correct patterns
+- ✅ **examples.md** - Fixed all 3 examples (LoginForm, ConfirmDialog, Select)
+  - Removed `userEvent` from imports
+  - Converted old `play` functions to `.test()` method
+  - All test functions now destructure `userEvent` properly
+
+### Impact
+
+- **Fixes Timing Issues:** userEvent now properly integrates with Storybook timing
+- **Consistency:** All examples follow the same pattern
+- **Clarity:** Developers know exactly what to import and what to destructure
+- **Future-Proof:** Aligns with Storybook best practices
+
+---
+
 ## 2026-01-23 - Update 2: Story Naming Convention
 
 ### What Changed

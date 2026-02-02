@@ -284,7 +284,7 @@ export function LoginForm({ onSubmit, isLoading = false }: LoginFormProps) {
 ```tsx
 // components/LoginForm.stories.tsx
 import preview from "~/.storybook/preview";
-import { expect, fn, userEvent, within } from "@storybook/test";
+import { expect, fn } from "@storybook/test";
 import { LoginForm } from "./LoginForm";
 
 const meta = preview.meta({
@@ -305,7 +305,8 @@ const meta = preview.meta({
   ]
 });
 
-export const Default: Story = {};
+// Visual documentation story
+export const Default = meta.story({});
 
 export const Loading = meta.story({
   args: {
@@ -313,95 +314,63 @@ export const Loading = meta.story({
   }
 });
 
-// Interaction Tests
-export const ValidSubmission = meta.story({
-  play: async ({ args, canvasElement, step }) => {
-    const canvas = within(canvasElement);
+// Test story with multiple interaction tests
+export const FormInteractions = meta.story({});
 
-    await step("Fill in valid credentials", async () => {
-      const emailInput = canvas.getByLabelText(/email/i);
-      const passwordInput = canvas.getByLabelText(/password/i);
-
-      await userEvent.type(emailInput, "user@example.com");
-      await userEvent.type(passwordInput, "password123");
-    });
-
-    await step("Submit form", async () => {
-      const submitButton = canvas.getByRole("button", { name: /log in/i });
-      await userEvent.click(submitButton);
-    });
-
-    await step("Verify onSubmit was called with correct data", () => {
-      expect(args.onSubmit).toHaveBeenCalledWith({
-        email: "user@example.com",
-        password: "password123"
-      });
-    });
-  }
-});
-
-export const InvalidEmail = meta.story({
-  play: async ({ args, canvasElement, step }) => {
-    const canvas = within(canvasElement);
-
-    await step("Fill in invalid email", async () => {
-      const emailInput = canvas.getByLabelText(/email/i);
-      const passwordInput = canvas.getByLabelText(/password/i);
-
-      await userEvent.type(emailInput, "invalid-email");
-      await userEvent.type(passwordInput, "password123");
-    });
-
-    await step("Submit form", async () => {
-      const submitButton = canvas.getByRole("button", { name: /log in/i });
-      await userEvent.click(submitButton);
-    });
-
-    await step("Verify error message is shown", async () => {
-      const errorMessage = await canvas.findByText(/invalid email address/i);
-      expect(errorMessage).toBeInTheDocument();
-    });
-
-    await step("Verify onSubmit was NOT called", () => {
-      expect(args.onSubmit).not.toHaveBeenCalled();
-    });
-  }
-});
-
-export const ShortPassword = meta.story({
-  play: async ({ args, canvasElement }) => {
-    const canvas = within(canvasElement);
-
-    // Fill in short password
+FormInteractions.test("Submits form with valid credentials", async ({ canvas, userEvent, args, step }) => {
+  await step("Fill in valid credentials", async () => {
     await userEvent.type(canvas.getByLabelText(/email/i), "user@example.com");
-    await userEvent.type(canvas.getByLabelText(/password/i), "short");
+    await userEvent.type(canvas.getByLabelText(/password/i), "password123");
+  });
 
-    // Submit form
+  await step("Submit form", async () => {
     await userEvent.click(canvas.getByRole("button", { name: /log in/i }));
+  });
 
-    // Verify error message
-    const errorMessage = await canvas.findByText(/password must be at least 8 characters/i);
-    expect(errorMessage).toBeInTheDocument();
-
-    // Verify onSubmit was NOT called
-    expect(args.onSubmit).not.toHaveBeenCalled();
-  }
+  await step("Verify onSubmit was called with correct data", () => {
+    expect(args.onSubmit).toHaveBeenCalledWith({
+      email: "user@example.com",
+      password: "password123"
+    });
+  });
 });
 
-export const EmptyFields = meta.story({
-  play: async ({ args, canvasElement }) => {
-    const canvas = within(canvasElement);
+FormInteractions.test("Shows error for invalid email", async ({ canvas, userEvent, args, step }) => {
+  await step("Fill in invalid email", async () => {
+    await userEvent.type(canvas.getByLabelText(/email/i), "invalid-email");
+    await userEvent.type(canvas.getByLabelText(/password/i), "password123");
+  });
 
-    // Submit without filling anything
+  await step("Submit form", async () => {
     await userEvent.click(canvas.getByRole("button", { name: /log in/i }));
+  });
 
-    // Verify error messages
-    expect(await canvas.findByText(/invalid email address/i)).toBeInTheDocument();
-    expect(await canvas.findByText(/password must be at least 8 characters/i)).toBeInTheDocument();
+  await step("Verify error message is shown", async () => {
+    const errorMessage = await canvas.findByText(/invalid email address/i);
+    expect(errorMessage).toBeInTheDocument();
+  });
 
-    // Verify onSubmit was NOT called
+  await step("Verify onSubmit was NOT called", () => {
     expect(args.onSubmit).not.toHaveBeenCalled();
-  }
+  });
+});
+
+FormInteractions.test("Shows error for short password", async ({ canvas, userEvent, args }) => {
+  await userEvent.type(canvas.getByLabelText(/email/i), "user@example.com");
+  await userEvent.type(canvas.getByLabelText(/password/i), "short");
+  await userEvent.click(canvas.getByRole("button", { name: /log in/i }));
+
+  const errorMessage = await canvas.findByText(/password must be at least 8 characters/i);
+  expect(errorMessage).toBeInTheDocument();
+  expect(args.onSubmit).not.toHaveBeenCalled();
+});
+
+FormInteractions.test("Shows errors for empty fields", async ({ canvas, userEvent, args }) => {
+  await userEvent.click(canvas.getByRole("button", { name: /log in/i }));
+
+  expect(await canvas.findByText(/invalid email address/i)).toBeInTheDocument();
+  expect(await canvas.findByText(/password must be at least 8 characters/i)).toBeInTheDocument();
+  expect(args.onSubmit).not.toHaveBeenCalled();
 });
 ```
 
@@ -472,7 +441,7 @@ export function ConfirmDialog({
 ```tsx
 // components/ConfirmDialog.stories.tsx
 import preview from "~/.storybook/preview";
-import { expect, fn, userEvent, within } from "@storybook/test";
+import { expect, fn } from "@storybook/test";
 import { ConfirmDialog } from "./ConfirmDialog";
 
 const meta = preview.meta({
@@ -513,73 +482,54 @@ export const Closed = meta.story({
   }
 });
 
-// Interaction Tests
-export const ConfirmAction = meta.story({
+// Test story with multiple interaction tests
+export const DialogInteractions = meta.story({
   args: {
     title: "Confirm Action",
     message: "Are you sure?"
-  },
-  play: async ({ args, canvasElement, step }) => {
-    const canvas = within(canvasElement);
-
-    await step("Verify dialog is visible", () => {
-      const dialog = canvas.getByRole("dialog");
-      expect(dialog).toBeInTheDocument();
-      expect(canvas.getByText("Confirm Action")).toBeInTheDocument();
-    });
-
-    await step("Click confirm button", async () => {
-      const confirmButton = canvas.getByRole("button", { name: /confirm/i });
-      await userEvent.click(confirmButton);
-    });
-
-    await step("Verify onConfirm was called", () => {
-      expect(args.onConfirm).toHaveBeenCalledTimes(1);
-      expect(args.onCancel).not.toHaveBeenCalled();
-    });
   }
 });
 
-export const CancelAction = meta.story({
-  args: {
-    title: "Confirm Action",
-    message: "Are you sure?"
-  },
-  play: async ({ args, canvasElement }) => {
-    const canvas = within(canvasElement);
+DialogInteractions.test("Calls onConfirm when confirm button clicked", async ({ canvas, userEvent, args, step }) => {
+  await step("Verify dialog is visible", () => {
+    const dialog = canvas.getByRole("dialog");
+    expect(dialog).toBeInTheDocument();
+    expect(canvas.getByText("Confirm Action")).toBeInTheDocument();
+  });
 
-    // Click cancel button
-    const cancelButton = canvas.getByRole("button", { name: /cancel/i });
-    await userEvent.click(cancelButton);
-
-    // Verify onCancel was called
-    expect(args.onCancel).toHaveBeenCalledTimes(1);
-    expect(args.onConfirm).not.toHaveBeenCalled();
-  }
-});
-
-export const KeyboardNavigation = meta.story({
-  args: {
-    title: "Keyboard Test",
-    message: "Test keyboard navigation"
-  },
-  play: async ({ args, canvasElement }) => {
-    const canvas = within(canvasElement);
-
-    // Tab to first button (Cancel)
-    await userEvent.tab();
-    const cancelButton = canvas.getByRole("button", { name: /cancel/i });
-    expect(cancelButton).toHaveFocus();
-
-    // Tab to second button (Confirm)
-    await userEvent.tab();
+  await step("Click confirm button", async () => {
     const confirmButton = canvas.getByRole("button", { name: /confirm/i });
-    expect(confirmButton).toHaveFocus();
+    await userEvent.click(confirmButton);
+  });
 
-    // Press Enter on confirm
-    await userEvent.keyboard("{Enter}");
-    expect(args.onConfirm).toHaveBeenCalled();
-  }
+  await step("Verify callbacks", () => {
+    expect(args.onConfirm).toHaveBeenCalledTimes(1);
+    expect(args.onCancel).not.toHaveBeenCalled();
+  });
+});
+
+DialogInteractions.test("Calls onCancel when cancel button clicked", async ({ canvas, userEvent, args }) => {
+  const cancelButton = canvas.getByRole("button", { name: /cancel/i });
+  await userEvent.click(cancelButton);
+
+  expect(args.onCancel).toHaveBeenCalledTimes(1);
+  expect(args.onConfirm).not.toHaveBeenCalled();
+});
+
+DialogInteractions.test("Supports keyboard navigation and Enter to confirm", async ({ canvas, userEvent, args }) => {
+  // Tab to first button (Cancel)
+  await userEvent.tab();
+  const cancelButton = canvas.getByRole("button", { name: /cancel/i });
+  expect(cancelButton).toHaveFocus();
+
+  // Tab to second button (Confirm)
+  await userEvent.tab();
+  const confirmButton = canvas.getByRole("button", { name: /confirm/i });
+  expect(confirmButton).toHaveFocus();
+
+  // Press Enter on confirm
+  await userEvent.keyboard("{Enter}");
+  expect(args.onConfirm).toHaveBeenCalled();
 });
 ```
 
@@ -592,7 +542,7 @@ export const KeyboardNavigation = meta.story({
 ```tsx
 // components/Select.stories.tsx
 import preview from "~/.storybook/preview";
-import { expect, fn, userEvent, within } from "@storybook/test";
+import { expect, fn } from "@storybook/test";
 
 const meta = preview.meta({
   title: "Components/Select",
@@ -618,28 +568,29 @@ const meta = preview.meta({
 }>;
 
 
-export const Default: Story = {};
+// Visual documentation story
+export const Default = meta.story({});
 
-export const WithDefaultValue= meta.story({
+export const WithDefaultValue = meta.story({
   args: {
     defaultValue: "option2"
   }
 });
 
-export const SelectOption= meta.story({
-  play: async ({ args, canvasElement }) => {
-    const canvas = within(canvasElement);
-    const select = canvas.getByRole("combobox");
+// Test story
+export const SelectOption = meta.story({});
 
-    // Select option
-    await userEvent.selectOptions(select, "option2");
+SelectOption.test("Selects and triggers onChange", async ({ canvas, userEvent, args }) => {
+  const select = canvas.getByRole("combobox");
 
-    // Verify onChange was called
-    expect(args.onChange).toHaveBeenCalledWith("option2");
+  // Select option
+  await userEvent.selectOptions(select, "option2");
 
-    // Verify selected value
-    expect(select).toHaveValue("option2");
-  }
+  // Verify onChange was called
+  expect(args.onChange).toHaveBeenCalledWith("option2");
+
+  // Verify selected value
+  expect(select).toHaveValue("option2");
 });
 ```
 
