@@ -134,6 +134,30 @@ const meta = preview.meta({ component: MyComponent });
 export const Default = meta.story({});
 ```
 
+## ⭐ CRITICAL: userEvent from Function Parameters (Not Imports)
+
+**ALWAYS use `userEvent` from the test function parameter, NEVER import it.**
+
+```typescript
+// ❌ WRONG - Do NOT import userEvent
+import { expect, fn, userEvent } from "storybook/test";
+
+Story.test("Example", async ({ canvas }) => {
+  await userEvent.click(button); // ❌ Won't work
+});
+
+// ✅ CORRECT - Destructure userEvent from parameter
+import { expect, fn } from "storybook/test";
+
+Story.test("Example", async ({ canvas, userEvent }) => {
+  await userEvent.click(button); // ✅ Works correctly
+});
+```
+
+**Why?** The test framework provides `userEvent` as a function parameter with proper Storybook integration. Importing directly from `storybook/test` bypasses this integration and may cause timing issues.
+
+**Rule:** Your imports should only include `expect`, `fn`, `waitFor`, `screen` if needed. Never import `userEvent`, `within`, or `canvas` - always destructure them from the function parameter.
+
 ## Testing Best Practices
 
 ### 1. Use Semantic Queries
