@@ -7,10 +7,10 @@ import { contactFormContentBuilder } from "~/tests/builders";
 import preview from "~/.storybook/preview";
 
 const meta = preview.meta({
-  title: "Features/Contact/ContactForm",
+  title: "Features/Contact/Contact Form",
   component: ContactForm,
   parameters: {
-    layout: "centered"
+    layout: "padded"
   },
   args: {
     contactFormContent: contactFormContentBuilder.one(),
@@ -18,7 +18,8 @@ const meta = preview.meta({
       success: true as const,
       data: { id: "test-id" } as CreateEmailResponseSuccess
     }))
-  }
+  },
+  decorators: [(Story) => <div className="w-full max-w-xl">{Story()}</div>]
 });
 
 export default meta;

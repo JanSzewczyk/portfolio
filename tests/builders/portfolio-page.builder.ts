@@ -1,5 +1,5 @@
 import { faker } from "@faker-js/faker";
-import { build, perBuild, sequence } from "@jackfranklin/test-data-bot";
+import { build, perBuild } from "@jackfranklin/test-data-bot";
 import { type PortfolioPageQueryResult } from "~/lib/sanity/types";
 
 /**
@@ -20,7 +20,7 @@ export const portfolioPageAboutBuilder = build<NonNullable<PortfolioPageQueryRes
       description: perBuild(() => faker.lorem.sentence())
     },
     bio: perBuild(() => faker.lorem.paragraphs(2, "\n\n")),
-    location: perBuild(() => faker.location.city()),
+    location: perBuild(() => faker.location.city()) as any,
     stats: perBuild(() => [
       {
         _key: faker.string.uuid(),
@@ -55,6 +55,9 @@ export const portfolioPageAboutBuilder = build<NonNullable<PortfolioPageQueryRes
  *
  * @example
  * const personalInfo = portfolioPagePersonalInfoBuilder.one();
+ *
+ * @example
+ * const withAvatar = portfolioPagePersonalInfoBuilder.one({ traits: ["withAvatar"] });
  */
 export const portfolioPagePersonalInfoBuilder = build<NonNullable<PortfolioPageQueryResult>["personalInfo"]>({
   fields: {
@@ -86,6 +89,38 @@ export const portfolioPagePersonalInfoBuilder = build<NonNullable<PortfolioPageQ
         username: faker.internet.username()
       }
     ])
+  },
+  traits: {
+    withAvatar: {
+      overrides: {
+        avatar: perBuild(() => {
+          const imageId = faker.string.alphanumeric(28);
+          return {
+            _type: "image" as const,
+            asset: {
+              _id: `image-${imageId}-400x400-jpg`,
+              _type: "sanity.imageAsset" as const,
+              _createdAt: faker.date.past().toISOString(),
+              _updatedAt: faker.date.recent().toISOString(),
+              _rev: `rev-${faker.string.uuid()}`,
+              url: `https://cdn.sanity.io/images/project/dataset/${imageId}-400x400.jpg`,
+              metadata: {
+                _type: "sanity.imageMetadata" as const,
+                dimensions: {
+                  _type: "sanity.imageDimensions" as const,
+                  height: 400,
+                  width: 400,
+                  aspectRatio: 1
+                },
+                lqip: "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAKABQDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAAMEBf/EABQQAQAAAAAAAAAAAAAAAAAAAAD/xAAVAQEBAAAAAAAAAAAAAAAAAAAAAf/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/AMOA=",
+                hasAlpha: false,
+                isOpaque: true
+              }
+            }
+          };
+        })
+      }
+    }
   }
 });
 
@@ -176,7 +211,7 @@ export const portfolioPageSkillsBuilder = build<NonNullable<PortfolioPageQueryRe
       title: perBuild(() => faker.lorem.words(3)),
       description: perBuild(() => faker.lorem.sentence())
     },
-    technologyGroups: perBuild(() => Array.from({ length: 4 }, () => technologyGroupBuilder.one()))
+    technologyGroups: perBuild(() => Array.from({ length: 4 }, () => technologyGroupBuilder.one())) as any
   }
 });
 
@@ -255,48 +290,18 @@ export const projectBuilder = build<{
 });
 
 /**
- * Builder for ProjectGroup test data.
+ * Builder for ProjectGroup test data (query result shape with expanded projects).
  *
  * @example
  * const projectGroup = projectGroupBuilder.one();
+ *
+ * @example
+ * const customGroup = projectGroupBuilder.one({
+ *   overrides: { label: "Featured Work" }
+ * });
  */
-export const projectGroupBuilder = build<{
-  _id: string;
-  label: string | null;
-  description: string | null;
-  projects: Array<{
-    _id: string;
-    title: string | null;
-    description: string | null;
-    longDescription: string | null;
-    thumbnail: {
-      asset: {
-        _id: string;
-        url: string | null;
-        metadata: {
-          dimensions: {
-            _type: "sanity.imageDimensions";
-            height?: number;
-            width?: number;
-            aspectRatio?: number;
-          } | null;
-          lqip: string | null;
-        } | null;
-      } | null;
-    } | null;
-    technologies: Array<{
-      _id: string;
-      name: string | null;
-      icon: string | null;
-      description: string | null;
-    }> | null;
-    links: {
-      live: string | null;
-      github: string | null;
-    } | null;
-    featured: boolean | null;
-  }> | null;
-}>({
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const projectGroupBuilder = build<any>({
   fields: {
     _id: perBuild(() => faker.string.uuid()),
     label: perBuild(() =>
@@ -513,7 +518,7 @@ export const portfolioPageEducationBuilder = build<NonNullable<PortfolioPageQuer
     },
     education: perBuild(() =>
       Array.from({ length: faker.number.int({ min: 1, max: 3 }) }, () => educationBuilder.one())
-    )
+    ) as any
   }
 });
 
@@ -576,7 +581,7 @@ export const portfolioPageFooterBuilder = build<NonNullable<PortfolioPageQueryRe
         url: faker.internet.url(),
         icon: "twitter"
       }
-    ])
+    ]) as any
   }
 });
 
