@@ -59,9 +59,9 @@ function SkillCard({
       <TooltipTrigger asChild>
         <div
           className={cn(
-            "bg-card group relative overflow-hidden rounded border transition-all duration-300",
+            "bg-card group relative overflow-hidden rounded border p-4 transition-all duration-300",
             "hover:shadow-primary/10 hover:-translate-y-1 hover:shadow-lg",
-            featured ? "col-span-2 row-span-3 p-6 lg:col-span-1" : "hover:border-primary/50 p-4"
+            featured ? "col-span-2 row-span-3 lg:col-span-1" : "hover:border-primary/50"
           )}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
@@ -155,7 +155,7 @@ export function SkillsSection({ skills, documentId, documentType }: SkillsSectio
         {allTechnologies.length > 0 && (
           <div className="relative -mx-4 mb-20 sm:-mx-6 lg:-mx-8">
             <Marquee pauseOnHover className="[--duration:50s]">
-              {allTechnologies.map((tech, index) => (
+              {allTechnologies.map((tech) => (
                 <TechLogo
                   key={tech._id}
                   tech={tech}
@@ -194,7 +194,7 @@ export function SkillsSection({ skills, documentId, documentType }: SkillsSectio
                         key={skill._id}
                         name={skill.name ?? ""}
                         description={skill.description}
-                        featured={skillIndex === featuredSkillIndex}
+                        featured={!!group?.featured && skillIndex === featuredSkillIndex}
                         icon={skill.icon as IconName}
                         dataSanity={createSanityAttribute(
                           `skills.technologyGroups[${groupIndex}].technologies[${skillIndex}]`

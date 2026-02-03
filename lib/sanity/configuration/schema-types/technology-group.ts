@@ -15,18 +15,11 @@ export const technologyGroup = defineType({
       validation: (rule) => rule.required()
     }),
     defineField({
-      name: "category",
-      title: "Category",
-      type: "string",
-      options: {
-        list: [
-          { title: "Frontend", value: "frontend" },
-          { title: "Backend", value: "backend" },
-          { title: "Mobile", value: "mobile" },
-          { title: "DevOps", value: "devops" },
-          { title: "Tools", value: "tools" }
-        ]
-      },
+      name: "featured",
+      title: "Featured",
+      type: "boolean",
+      description: 'Defines if the technology group is featured (e.g., displayed prominently).',
+      initialValue: true,
       validation: (rule) => rule.required()
     }),
     defineField({
