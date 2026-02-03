@@ -549,7 +549,8 @@ export type PortfolioPageQueryResult = {
     technologyGroups: Array<{
       _id: string;
       label: string | null;
-      featured: boolean | null;
+      slug: null;
+      category: "backend" | "devops" | "frontend" | "mobile" | "tools" | null;
       technologies: Array<{
         _id: string;
         name: string | null;
