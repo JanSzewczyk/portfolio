@@ -56,8 +56,7 @@ export const portfolioPageQuery = defineQuery(`
       technologyGroups[]-> {
         _id,
         label,
-        slug,
-        category,
+        featured,
         technologies[]-> {
           _id,
           name,
