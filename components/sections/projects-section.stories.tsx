@@ -18,10 +18,11 @@ const meta = preview.meta({
   }
 });
 
-export const Default = meta.story({ name: "Projects Section" });
+// Story named after component
+export const ProjectsSection_ = meta.story({});
 
 // Test: Renders section heading
-Default.test("Renders section heading with title and description", async ({ canvas, args }) => {
+ProjectsSection_.test("Renders section heading with title and description", async ({ canvas, args }) => {
   const heading = canvas.getByRole("heading", { level: 2, name: args.projects?.heading?.title ?? "" });
   await expect(heading).toBeVisible();
 
@@ -32,7 +33,7 @@ Default.test("Renders section heading with title and description", async ({ canv
 });
 
 // Test: Renders tabs for project groups
-Default.test("Renders project group tabs", async ({ canvas, args }) => {
+ProjectsSection_.test("Renders project group tabs", async ({ canvas, args }) => {
   const tabList = canvas.getByRole("tablist");
   await expect(tabList).toBeVisible();
 
@@ -44,7 +45,7 @@ Default.test("Renders project group tabs", async ({ canvas, args }) => {
 });
 
 // Test: Displays projects in the first group by default
-Default.test("Displays projects from the first project group", async ({ canvas, args }) => {
+ProjectsSection_.test("Displays projects from the first project group", async ({ canvas, args }) => {
   const firstGroup = args.projects?.projectGroups?.[0];
   const projectsCount = firstGroup?.projects?.length ?? 0;
 
@@ -56,7 +57,7 @@ Default.test("Displays projects from the first project group", async ({ canvas, 
 });
 
 // Test: Project cards display correct information
-Default.test("Project cards display title, description, and technologies", async ({ canvas, args }) => {
+ProjectsSection_.test("Project cards display title, description, and technologies", async ({ canvas, args }) => {
   const firstGroup = args.projects?.projectGroups?.[0];
   const firstProject = firstGroup?.projects?.[0];
 
@@ -85,7 +86,7 @@ Default.test("Project cards display title, description, and technologies", async
 });
 
 // Test: Links render when available
-Default.test("Renders live and GitHub links when available", async ({ canvas, args }) => {
+ProjectsSection_.test("Renders live and GitHub links when available", async ({ canvas, args }) => {
   const firstGroup = args.projects?.projectGroups?.[0];
   const firstProject = firstGroup?.projects?.[0];
 

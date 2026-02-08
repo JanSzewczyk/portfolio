@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Portfolio is a personal portfolio website built with Next.js 16, TypeScript, Tailwind CSS v4, React Compiler, Sanity CMS, and comprehensive testing infrastructure.
+Portfolio is a personal portfolio website built with Next.js 16.1, React 19.2, TypeScript 5.9, Tailwind CSS 4.1, React Compiler, Sanity CMS 5.6, and comprehensive testing infrastructure (Vitest 4.0, Playwright 1.58, Storybook 10.2).
 
 ## Commands
 
@@ -56,8 +56,7 @@ npm run storybook:build       # Build static Storybook
 ```bash
 npm run sanity:dev            # Start Sanity Studio in dev mode
 npm run sanity:deploy         # Deploy Sanity Studio to Sanity hosting
-npm run sanity:extract        # Extract schema to JSON file
-npm run sanity:typegen        # Generate TypeScript types from schema
+npm run sanity:typegen        # Extract schema and generate TypeScript types
 ```
 
 ### Analysis
@@ -80,8 +79,6 @@ import { env } from "~/data/env/server";
 ### Key Directories
 
 - **app/**: Next.js App Router pages, layouts, and API routes
-- **app/studio/**: Embedded Sanity Studio route
-- **sanity-studio/**: Sanity Studio configuration and schema types
 - **features/**: Feature-based modules (see structure below)
 - **components/**: Shared reusable components (ui/, layout/, providers/)
 - **lib/**: Utilities and configurations (logger)
@@ -134,7 +131,7 @@ Use `test-only` tag for stories that should be excluded from docs but run in tes
 
 ### Design System
 
-Uses `@szum-tech/design-system` package. Import components directly:
+Uses `@szum-tech/design-system` v3.11 (shadcn/ui based). Import components directly:
 
 ```typescript
 import { Button } from "@szum-tech/design-system";
@@ -153,8 +150,9 @@ Built-in health endpoint at `/api/health` with multiple URL aliases: `/healthz`,
 ## Conventions
 
 - Commits follow [Conventional Commits](https://www.conventionalcommits.org/) for semantic release
-- ESLint: Uses `@szum-tech/eslint-config`
-- Prettier: Uses `@szum-tech/prettier-config`
-- Semantic Release: Uses `@szum-tech/semantic-release-config`
+- ESLint: Uses `@szum-tech/eslint-config` v2.1
+- Prettier: Uses `@szum-tech/prettier-config` v1.6
+- Semantic Release: Uses `@szum-tech/semantic-release-config` v2.3
 - React Compiler handles memoization automatically - avoid unnecessary `useMemo`/`useCallback`
 - Default to Server Components; only add `"use client"` when hooks or interactivity are needed
+- Email service: Uses Resend for transactional emails with @react-email/components
