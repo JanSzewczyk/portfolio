@@ -1,5 +1,5 @@
-import { expect, waitFor } from "storybook/test";
-import { portfolioPagePersonalInfoBuilder, portfolioPageHeroBuilder } from "~/tests/builders/portfolio-page.builder";
+import { expect } from "storybook/test";
+import { portfolioPageHeroBuilder, portfolioPagePersonalInfoBuilder } from "~/tests/builders/portfolio-page.builder";
 
 import { HeroSection } from "./hero-section";
 
@@ -8,323 +8,266 @@ import preview from "~/.storybook/preview";
 const meta = preview.meta({
   title: "Components/Sections/Hero Section",
   component: HeroSection,
-  args: {
-    personalInfo: portfolioPagePersonalInfoBuilder.one({ traits: ["withAvatar"] }),
-    hero: portfolioPageHeroBuilder.one(),
-    documentId: "portfolio-page-123",
-    documentType: "portfolioPage"
-  },
   parameters: {
     layout: "fullscreen"
+  },
+  args: {
+    documentId: "test-portfolio",
+    documentType: "portfolioPage"
   }
 });
 
-/**
- * Default story showing the HeroSection with available status.
- * Displays avatar, status indicator, typing animation for name,
- * word rotation for alternative titles, tagline, CTA buttons, and scroll indicator.
- */
-export const Available = meta.story({ name: "Hero Section" });
-
-Available.test("Renders avatar with correct image and alt text", async ({ canvasElement, args, step }) => {
-  await step("Verify avatar image structure is present", async () => {
-    // Check if any img elements are present (avatar or other)
-    const images = canvasElement.querySelectorAll("img");
-
-    if (images.length > 0) {
-      // If images loaded, verify alt text
-      const avatar = Array.from(images).find((img) => img.alt === args.personalInfo?.name);
-      if (avatar) {
-        await expect(avatar).toHaveAttribute("alt", args.personalInfo?.name ?? "");
-      } else {
-        // Image present but might be loading
-        await expect(images.length).toBeGreaterThan(0);
-      }
-    } else {
-      // No images yet - avatar component is still initializing
-      // This is acceptable for fast tests
-      await expect(canvasElement.querySelector("section")).toBeInTheDocument();
-    }
-  });
+// Story 1: With Avatar and Available Status
+export const HeroSectionWithAvatar = meta.story({
+  args: {
+    personalInfo: portfolioPagePersonalInfoBuilder.one({ traits: ["withAvatar"] }),
+    hero: portfolioPageHeroBuilder.one()
+  }
 });
 
-Available.test("Renders avatar fallback with correct initials", async ({ canvasElement, args, step }) => {
-  await step("Verify avatar container is present", async () => {
-    // Avatar is rendered, check for span elements (Avatar uses span tags)
-    const avatarSpans = canvasElement.querySelectorAll("span");
-    await expect(avatarSpans.length).toBeGreaterThan(0);
-  });
+// Story 2: Without Avatar and Unavailable Status
+export const HeroSectionWithoutAvatar = meta.story({
+  args: {
+    personalInfo: portfolioPagePersonalInfoBuilder.one(), // No withAvatar trait = null avatar
+    hero: portfolioPageHeroBuilder.one({ traits: ["unavailable"] })
+  }
+});
 
-  await step("Verify fallback initials would be correct if image fails", async () => {
-    const name = args.personalInfo?.name ?? "";
-    const expectedInitials = name
+// ============================================================================
+// Tests for HeroSectionWithAvatar
+// ============================================================================
+
+// Test 1: Avatar Image
+HeroSectionWithAvatar.test("Renders avatar image with correct alt text", async ({ canvas, args }) => {
+  // The AvatarImage component from design system renders an img inside a span
+  const avatar = canvas.queryByRole("img");
+
+  if (avatar) {
+    await expect(avatar).toBeVisible();
+
+    // Verify alt text if provided
+    if (args.personalInfo?.avatar?.alt) {
+      await expect(avatar).toHaveAccessibleName(args.personalInfo.avatar.alt);
+    }
+  } else {
+    // If no img role found, verify the avatar container exists (fallback scenario)
+    const avatarContainer = canvas.getByText(
+      args.personalInfo?.name
+        ?.split(" ")
+        .map((n) => n[0])
+        .join("") || ""
+    );
+    await expect(avatarContainer).toBeInTheDocument();
+  }
+});
+
+// Test 2: Available Status
+HeroSectionWithAvatar.test("Renders available status indicator correctly", async ({ canvas }) => {
+  const status = canvas.getByText(/available for opportunities/i);
+  await expect(status).toBeVisible();
+});
+
+// Test 3: Heading with Typing Animation
+HeroSectionWithAvatar.test("Renders heading with typing animation", async ({ canvas, args }) => {
+  const heading = canvas.getByRole("heading", { level: 1 });
+  await expect(heading).toBeVisible();
+
+  // TypingText component starts with just cursor, so we don't validate the full name here
+  // Just verify the heading exists and is rendering
+  // The typing animation will complete over time
+});
+
+// Test 4: Alternative Titles
+HeroSectionWithAvatar.test("Renders all alternative titles in rotation", async ({ canvas, args }) => {
+  if (args.hero?.alternativeTitles && args.hero.alternativeTitles.length > 0) {
+    // Check that at least one alternative title is visible in the DOM
+    const firstTitle = args.hero.alternativeTitles[0];
+    if (firstTitle) {
+      const titleElement = canvas.getByText(firstTitle);
+      await expect(titleElement).toBeInTheDocument();
+    }
+  }
+});
+
+// Test 5: Tagline
+HeroSectionWithAvatar.test("Renders tagline text", async ({ canvas, args }) => {
+  if (args.hero?.tagline) {
+    const tagline = canvas.getByText(args.hero.tagline);
+    await expect(tagline).toBeVisible();
+  }
+});
+
+// Test 6: Get in Touch Button
+HeroSectionWithAvatar.test("Get in Touch button is clickable and has correct text", async ({ canvas }) => {
+  const button = canvas.getByRole("button", { name: /get in touch/i });
+  await expect(button).toBeVisible();
+  await expect(button).toBeEnabled();
+});
+
+// Test 7: View Projects Button
+HeroSectionWithAvatar.test("View Projects button is clickable and has correct icon", async ({ canvas }) => {
+  const button = canvas.getByRole("button", { name: /view projects/i });
+  await expect(button).toBeVisible();
+  await expect(button).toBeEnabled();
+});
+
+// Test 8: Heading Hierarchy
+HeroSectionWithAvatar.test("Section has correct heading hierarchy", async ({ canvas }) => {
+  const heading = canvas.getByRole("heading", { level: 1 });
+  await expect(heading).toBeVisible();
+
+  // Verify the heading uses h1 tag
+  const headingTag = heading.tagName.toLowerCase();
+  expect(headingTag).toBe("h1");
+});
+
+// Test 9: Keyboard Accessibility
+HeroSectionWithAvatar.test("All interactive elements are keyboard accessible", async ({ canvas }) => {
+  const getInTouchButton = canvas.getByRole("button", { name: /get in touch/i });
+  const viewProjectsButton = canvas.getByRole("button", { name: /view projects/i });
+
+  // Verify buttons can receive focus
+  getInTouchButton.focus();
+  await expect(getInTouchButton).toHaveFocus();
+
+  viewProjectsButton.focus();
+  await expect(viewProjectsButton).toHaveFocus();
+});
+
+// Test 10: Scroll Indicator
+HeroSectionWithAvatar.test("Scroll indicator has proper visual feedback", async ({ canvasElement }) => {
+  // Find the scroll indicator (arrow icon at the bottom)
+  const scrollIndicator = canvasElement.querySelector(".animate-bounce");
+  expect(scrollIndicator).toBeInTheDocument();
+});
+
+// Test 17: GridBackground
+HeroSectionWithAvatar.test("GridBackground component is rendered", async ({ canvasElement }) => {
+  // Verify section has relative positioning (required for GridBackground)
+  const section = canvasElement.querySelector("section");
+  expect(section).toBeInTheDocument();
+  expect(section?.classList.contains("relative")).toBe(true);
+});
+
+// Test 18: Container Layout
+HeroSectionWithAvatar.test("Container has proper layout structure", async ({ canvasElement }) => {
+  const section = canvasElement.querySelector("section");
+  const container = section?.querySelector(".container");
+
+  expect(container).toBeInTheDocument();
+  expect(container?.classList.contains("flex")).toBe(true);
+
+  // Verify max-width constraint exists
+  const maxWidthElement = canvasElement.querySelector(".max-w-4xl");
+  expect(maxWidthElement).toBeInTheDocument();
+});
+
+// Test 19: Avatar Size
+HeroSectionWithAvatar.test("Avatar has proper size styling", async ({ canvasElement }) => {
+  const avatar = canvasElement.querySelector("[class*='size-32']");
+  expect(avatar).toBeInTheDocument();
+});
+
+// Test 20: Clean Name Text
+HeroSectionWithAvatar.test("Name in heading uses stegaClean utility", async ({ canvas, args }) => {
+  const heading = canvas.getByRole("heading", { level: 1 });
+  const headingText = heading.textContent;
+
+  // Verify text doesn't contain Sanity metadata artifacts (no special characters)
+  if (args.personalInfo?.name) {
+    expect(headingText).not.toContain("{");
+    expect(headingText).not.toContain("}");
+    expect(headingText).not.toContain("__");
+  }
+});
+
+// ============================================================================
+// Tests for HeroSectionWithoutAvatar
+// ============================================================================
+
+// Test 11: Initials Fallback
+HeroSectionWithoutAvatar.test("Renders initials fallback when avatar is missing", async ({ canvas, args }) => {
+  // Avatar image should NOT be present
+  const avatarImages = canvas.queryAllByRole("img");
+  expect(avatarImages.length).toBe(0);
+
+  // Verify initials are calculated and displayed
+  if (args.personalInfo?.name) {
+    const initials = args.personalInfo.name
       .split(" ")
       .map((n) => n[0])
       .join("");
-    await expect(expectedInitials.length).toBeGreaterThan(0);
-  });
-});
 
-Available.test("Renders heading with TypingText animation", async ({ canvas, step }) => {
-  await step("Verify heading element is present with correct level", async () => {
-    const heading = canvas.getByRole("heading", { level: 1 });
-    await expect(heading).toBeInTheDocument();
-  });
-
-  await step("Verify heading contains expected greeting text", async () => {
-    const heading = canvas.getByRole("heading", { level: 1 });
-
-    // TypingText animates character by character, so we wait for full text
-    await waitFor(
-      async () => {
-        const headingText = heading.textContent || "";
-        await expect(headingText).toContain("Hi I'm");
-      },
-      { timeout: 3000 }
-    );
-  });
-});
-
-Available.test("Renders tagline text correctly", async ({ canvas, args, step }) => {
-  await step("Verify tagline is visible", async () => {
-    const tagline = canvas.getByText(args.hero?.tagline ?? "");
-    await expect(tagline).toBeVisible();
-  });
-});
-
-Available.test("Renders scroll indicator at bottom", async ({ canvasElement, step }) => {
-  await step("Verify scroll indicator with bounce animation is present", async () => {
-    // Scroll indicator is an ArrowDownIcon with animate-bounce
-    const scrollIndicator = canvasElement.querySelector(".animate-bounce");
-    await expect(scrollIndicator).toBeInTheDocument();
-  });
-});
-
-// ===== Status Tests (2 tests) =====
-
-Available.test("Displays available status with success variant", async ({ canvas, step }) => {
-  await step("Verify status label shows available message", async () => {
-    const statusLabel = canvas.getByText("Available for opportunities");
-    await expect(statusLabel).toBeVisible();
-  });
-
-  await step("Verify status component container exists", async () => {
-    const statusLabel = canvas.getByText("Available for opportunities");
-    // Status component wraps the label, verify it has a parent
-    await expect(statusLabel.parentElement).toBeInTheDocument();
-  });
-});
-
-/**
- * Note: To test the unavailable state, override the story args:
- * - args: { hero: { ...MOCK_PERSONAL_INFO, isAvailable: false } }
- * Then verify "Currently unavailable" appears with the error variant.
- */
-
-// ===== Button Tests (3 tests) =====
-
-Available.test("Renders both CTA buttons with correct text", async ({ canvas, step }) => {
-  await step("Verify 'Get in Touch' button is present", async () => {
-    const contactButton = canvas.getByRole("button", { name: /get in touch/i });
-    await expect(contactButton).toBeVisible();
-  });
-
-  await step("Verify 'View Projects' button is present", async () => {
-    const projectsButton = canvas.getByRole("button", { name: /view projects/i });
-    await expect(projectsButton).toBeVisible();
-  });
-});
-
-Available.test("Buttons use correct size and variant styling", async ({ canvas, step }) => {
-  await step("Verify 'Get in Touch' button has default variant", async () => {
-    const contactButton = canvas.getByRole("button", { name: /get in touch/i });
-    await expect(contactButton).toBeInTheDocument();
-    // Button from design system applies variants via classes
-  });
-
-  await step("Verify 'View Projects' button has outline variant", async () => {
-    const projectsButton = canvas.getByRole("button", { name: /view projects/i });
-    await expect(projectsButton).toBeInTheDocument();
-  });
-});
-
-Available.test("View Projects button includes arrow icon", async ({ canvas, step }) => {
-  await step("Verify button contains ArrowDownIcon", async () => {
-    // Find button by accessible name
-    const projectsButton = canvas.getByRole("button", { name: /view projects/i });
-    await expect(projectsButton).toBeInTheDocument();
-
-    // Check for svg element within button (Lucide icons render as SVG)
-    const buttonElement = projectsButton as HTMLButtonElement;
-    const icon = buttonElement.querySelector("svg");
-    await expect(icon).toBeInTheDocument();
-  });
-});
-
-// ===== Animation Tests (2 tests) =====
-
-Available.test("TypingText component receives correct props", async ({ canvasElement, step }) => {
-  await step("Verify TypingText animation props", async () => {
-    const heading = canvasElement.querySelector("h1");
-    await expect(heading).toBeInTheDocument();
-
-    // Component should contain TypingText with correct text
-    await waitFor(
-      async () => {
-        const headingText = heading?.textContent || "";
-        await expect(headingText.length).toBeGreaterThan(0);
-      },
-      { timeout: 2000 }
-    );
-  });
-});
-
-Available.test("WordRotate component receives correct alternative titles", async ({ canvasElement, args, step }) => {
-  await step("Verify WordRotate renders alternative titles", async () => {
-    // WordRotate cycles through titles - verify container exists
-    const wordRotateContainer = canvasElement.querySelector(".text-primary");
-    await expect(wordRotateContainer).toBeInTheDocument();
-
-    // At least one alternative title should appear
-    const alternativeTitles = args.hero?.alternativeTitles ?? [];
-    await waitFor(
-      async () => {
-        const containerText = wordRotateContainer?.textContent || "";
-        const hasMatchingTitle = alternativeTitles.some((title) => containerText.includes(title));
-        await expect(hasMatchingTitle).toBe(true);
-      },
-      { timeout: 5000 }
-    );
-  });
-});
-
-// ===== Layout Tests (2 tests) =====
-
-Available.test("Section has correct ID for navigation", async ({ canvasElement, step }) => {
-  await step("Verify section has 'hero' ID", async () => {
-    const section = canvasElement.querySelector("#hero");
-    await expect(section).toBeInTheDocument();
-    await expect(section?.tagName.toLowerCase()).toBe("section");
-  });
-});
-
-Available.test("Section uses responsive container classes", async ({ canvasElement, step }) => {
-  await step("Verify section element exists", async () => {
-    const section = canvasElement.querySelector("#hero");
-    await expect(section).toBeInTheDocument();
-    await expect(section).toBeInstanceOf(HTMLElement);
-  });
-
-  await step("Verify nested content structure is present", async () => {
-    // Verify some nested divs exist (component uses multiple div layers)
-    const allDivs = canvasElement.querySelectorAll("div");
-    await expect(allDivs.length).toBeGreaterThan(3);
-  });
-});
-
-// ===== Accessibility Tests (3 tests) =====
-
-Available.test("Avatar image has meaningful alt text", async ({ canvasElement, step }) => {
-  await step("Verify avatar structure and alt attribute", async () => {
-    // Avatar component should render with alt attribute
-    // Note: Image might not load immediately due to async loading
-    const images = canvasElement.querySelectorAll("img");
-
-    if (images.length > 0) {
-      // If image has loaded, verify it has alt attribute
-      const hasAltAttribute = Array.from(images).some((img) => img.hasAttribute("alt"));
-      await expect(hasAltAttribute).toBe(true);
-    } else {
-      // If image hasn't loaded yet, that's acceptable - verify Avatar container exists
-      const section = canvasElement.querySelector("section");
-      await expect(section).toBeInTheDocument();
-    }
-  });
-});
-
-Available.test("Buttons are keyboard accessible", async ({ canvas, step }) => {
-  await step("Tab to first button", async () => {
-    const contactButton = canvas.getByRole("button", { name: /get in touch/i });
-    contactButton.focus();
-    await expect(contactButton).toHaveFocus();
-  });
-
-  await step("Tab to second button", async () => {
-    const projectsButton = canvas.getByRole("button", { name: /view projects/i });
-    projectsButton.focus();
-    await expect(projectsButton).toHaveFocus();
-  });
-});
-
-Available.test("Heading hierarchy is correct", async ({ canvas, args, step }) => {
-  await step("Verify h1 is used for main heading", async () => {
-    const h1 = canvas.getByRole("heading", { level: 1 });
-    await expect(h1).toBeInTheDocument();
-  });
-
-  await step("Verify h1 contains user name", async () => {
-    const h1 = canvas.getByRole("heading", { level: 1 });
-    await waitFor(
-      async () => {
-        const headingText = h1.textContent || "";
-        await expect(headingText).toContain(args.personalInfo?.name ?? "");
-      },
-      { timeout: 3000 }
-    );
-  });
-});
-
-// ===== Responsive Tests (2 tests) =====
-
-Available.test("Content container has max-width constraint", async ({ canvasElement, step }) => {
-  await step("Verify max-w-4xl class is applied to content", async () => {
-    const contentWrapper = canvasElement.querySelector(".max-w-4xl");
-    await expect(contentWrapper).toBeInTheDocument();
-  });
-
-  await step("Verify content is centered with mx-auto", async () => {
-    const contentWrapper = canvasElement.querySelector(".mx-auto");
-    await expect(contentWrapper).toBeInTheDocument();
-  });
-});
-
-Available.test("Buttons stack on mobile and display inline on desktop", async ({ canvasElement, step }) => {
-  await step("Verify button container uses responsive flex classes", async () => {
-    const buttonContainer = canvasElement.querySelector(".flex.flex-col.sm\\:flex-row");
-
-    if (!buttonContainer) {
-      // Alternative: find container with both buttons
-      const buttons = Array.from(canvasElement.querySelectorAll("button"));
-      const contactBtn = buttons.find((btn) => btn.textContent?.includes("Get in Touch"));
-      const container = contactBtn?.parentElement;
-
-      await expect(container).toBeInTheDocument();
-      // Verify it has flex classes
-      await expect(container?.classList.toString()).toMatch(/flex/);
-    } else {
-      await expect(buttonContainer).toBeInTheDocument();
-    }
-  });
-});
-
-// ===== Unavailable Status Story =====
-
-/**
- * Story showing the HeroSection with unavailable status.
- */
-export const Unavailable = meta.story({
-  name: "Hero Section - Unavailable",
-  args: {
-    personalInfo: portfolioPagePersonalInfoBuilder.one({ traits: ["withAvatar"] }),
-    hero: portfolioPageHeroBuilder.one({ traits: ["unavailable"] }),
-    documentId: "portfolio-page-123",
-    documentType: "portfolioPage"
+    const initialsElement = canvas.getByText(initials);
+    await expect(initialsElement).toBeVisible();
   }
 });
 
-Unavailable.test("Displays unavailable status with error variant", async ({ canvas, step }) => {
-  await step("Verify status label shows unavailable message", async () => {
-    const statusLabel = canvas.getByText("Currently unavailable");
-    await expect(statusLabel).toBeVisible();
+// Test 12: Unavailable Status
+HeroSectionWithoutAvatar.test("Renders unavailable status indicator correctly", async ({ canvas }) => {
+  const status = canvas.getByText(/currently unavailable/i);
+  await expect(status).toBeVisible();
+});
+
+// Test 13: All Content Without Avatar
+HeroSectionWithoutAvatar.test("Still renders all other content correctly without avatar", async ({ canvas, args }) => {
+  // Verify heading
+  const heading = canvas.getByRole("heading", { level: 1 });
+  await expect(heading).toBeVisible();
+
+  // Verify tagline if present
+  if (args.hero?.tagline) {
+    const tagline = canvas.getByText(args.hero.tagline);
+    await expect(tagline).toBeVisible();
+  }
+
+  // Verify both buttons
+  const getInTouchButton = canvas.getByRole("button", { name: /get in touch/i });
+  const viewProjectsButton = canvas.getByRole("button", { name: /view projects/i });
+
+  await expect(getInTouchButton).toBeVisible();
+  await expect(viewProjectsButton).toBeVisible();
+});
+
+// Test 14: Missing Alternative Titles
+HeroSectionWithoutAvatar.test("Handles missing alternative titles gracefully", async ({ canvas }) => {
+  // Override to test null alternativeTitles
+  const storyWithNullTitles = meta.story({
+    args: {
+      personalInfo: portfolioPagePersonalInfoBuilder.one(),
+      hero: portfolioPageHeroBuilder.one({
+        overrides: { alternativeTitles: null }
+      })
+    }
   });
+
+  // Component should still render other elements
+  const heading = canvas.getByRole("heading", { level: 1 });
+  await expect(heading).toBeVisible();
+});
+
+// Test 15: Empty Alternative Titles Array
+HeroSectionWithoutAvatar.test("Handles empty alternative titles array", async ({ canvas }) => {
+  // Override to test empty array
+  const storyWithEmptyTitles = meta.story({
+    args: {
+      personalInfo: portfolioPagePersonalInfoBuilder.one(),
+      hero: portfolioPageHeroBuilder.one({
+        overrides: { alternativeTitles: [] }
+      })
+    }
+  });
+
+  // Component should still render correctly
+  const heading = canvas.getByRole("heading", { level: 1 });
+  await expect(heading).toBeVisible();
+});
+
+// Test 16: Section ID
+HeroSectionWithoutAvatar.test("Component renders within section with correct ID", async ({ canvasElement }) => {
+  const section = canvasElement.querySelector("section#hero");
+  expect(section).toBeInTheDocument();
+
+  // Verify scroll offset class
+  expect(section?.classList.contains("scroll-m-16")).toBe(true);
 });

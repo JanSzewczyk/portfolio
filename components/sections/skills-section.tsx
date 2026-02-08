@@ -179,7 +179,7 @@ export function SkillsSection({ skills, documentId, documentType }: SkillsSectio
 
         {/* Desktop: Bento Grid Layout */}
         <div className="hidden lg:block">
-          <div className="grid grid-cols-4 gap-6">
+          <div className="grid grid-cols-5 gap-6">
             {skills?.technologyGroups?.map((group, groupIndex) => {
               // Create a bento-style layout with different sized cards
               const featuredSkillIndex = 0; // First skill in each category is featured

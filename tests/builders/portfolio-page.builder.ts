@@ -211,7 +211,7 @@ export const portfolioPageSkillsBuilder = build<NonNullable<PortfolioPageQueryRe
       title: perBuild(() => faker.lorem.words(3)),
       description: perBuild(() => faker.lorem.sentence())
     },
-    technologyGroups: perBuild(() => Array.from({ length: 4 }, () => technologyGroupBuilder.one())) as any
+    technologyGroups: perBuild(() => Array.from({ length: 4 }, () => technologyGroupBuilder.one()))
   }
 });
 
