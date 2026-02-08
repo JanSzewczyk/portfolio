@@ -259,6 +259,14 @@ export const portfolioPage = defineType({
             }
           ],
           validation: (rule) => rule.required().min(1)
+        }),
+        defineField({
+          name: "decorativeBottomText",
+          title: "Decorative Bottom Text",
+          type: "text",
+          description:
+            'Optional decorative text displayed at the bottom of the skills section (e.g., "And many more...")',
+          initialValue: "And many more..."
         })
       ]
     }),

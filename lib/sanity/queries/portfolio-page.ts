@@ -63,7 +63,8 @@ export const portfolioPageQuery = defineQuery(`
           icon,
           description
         }
-      }
+      },
+      decorativeBottomText
     },
 
     // Projects Section
