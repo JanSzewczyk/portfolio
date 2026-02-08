@@ -24,10 +24,8 @@ This directory contains configuration and documentation for Claude Code agents a
 │   ├── library-updater.md
 │   ├── nextjs-backend-engineer.md
 │   ├── performance-analyzer.md
-│   ├── storybook-test-architect.md
+│   ├── storybook-test-architect.md  # Multi-phase with approval checkpoints
 │   ├── testing-strategist.md
-│   ├── storybook-test-architect/
-│   │   └── workflow.md        # 5-phase testing workflow
 │   └── examples/              # Example outputs
 │       ├── database-queries.example.md
 │       └── server-actions.example.md
@@ -116,8 +114,7 @@ All agents include:
 Agents orchestrate workflows and use skills for technical knowledge.
 
 **Example: storybook-test-architect**
-- **Agent**: `agents/storybook-test-architect.md` - Role, mission, workflow orchestration
-  - `agents/storybook-test-architect/workflow.md` - 5-phase testing workflow
+- **Agent**: `agents/storybook-test-architect.md` - Role, mission, phase protocol, templates (single file)
 - **Skill**: `skills/storybook-testing/` - Complete technical documentation
   - `patterns.md` - CSF Next testing patterns
   - `best-practices.md` - Best practices and pitfalls
