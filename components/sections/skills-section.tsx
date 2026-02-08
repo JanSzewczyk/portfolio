@@ -2,7 +2,17 @@
 
 import { useState } from "react";
 
-import { Badge, Card, CardHeader, Marquee, Tooltip, TooltipContent, TooltipTrigger } from "@szum-tech/design-system";
+import {
+  Badge,
+  Card,
+  CardHeader,
+  Marquee,
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+  Masonry,
+  MasonryItem
+} from "@szum-tech/design-system";
 import { cn } from "@szum-tech/design-system/utils";
 import { ReactIcon, type IconName } from "~/components/ui/react-icon";
 import { SectionHeading } from "~/components/ui/section-heading";
@@ -60,8 +70,7 @@ function SkillCard({
         <div
           className={cn(
             "bg-card group relative overflow-hidden rounded border p-4 transition-all duration-300",
-            "hover:shadow-primary/10 hover:-translate-y-1 hover:shadow-lg",
-            featured ? "col-span-2 row-span-3 lg:col-span-1" : "hover:border-primary/50"
+            "hover:shadow-primary/10 hover:border-primary/50 hover:-translate-y-1 hover:shadow-lg"
           )}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
@@ -187,21 +196,22 @@ export function SkillsSection({ skills, documentId, documentType }: SkillsSectio
                     </CardHeader>
                   </Card>
 
-                  {/* Skills in bento grid pattern */}
-                  <div className="grid grid-cols-2 gap-4">
+                  {/* Skills in masonry layout */}
+                  <Masonry columnCount={2} gap={16}>
                     {group.technologies?.map((skill, skillIndex) => (
-                      <SkillCard
-                        key={skill._id}
-                        name={skill.name ?? ""}
-                        description={skill.description}
-                        featured={!!group?.featured && skillIndex === featuredSkillIndex}
-                        icon={skill.icon as IconName}
-                        dataSanity={createSanityAttribute(
-                          `skills.technologyGroups[${groupIndex}].technologies[${skillIndex}]`
-                        )}
-                      />
+                      <MasonryItem key={skill._id}>
+                        <SkillCard
+                          name={skill.name ?? ""}
+                          description={skill.description}
+                          featured={!!group?.featured && skillIndex === featuredSkillIndex}
+                          icon={skill.icon as IconName}
+                          dataSanity={createSanityAttribute(
+                            `skills.technologyGroups[${groupIndex}].technologies[${skillIndex}]`
+                          )}
+                        />
+                      </MasonryItem>
                     ))}
-                  </div>
+                  </Masonry>
                 </div>
               );
             })}

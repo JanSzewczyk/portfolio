@@ -18,7 +18,7 @@ export const technologyGroup = defineType({
       name: "featured",
       title: "Featured",
       type: "boolean",
-      description: 'Defines if the technology group is featured (e.g., displayed prominently).',
+      description: "Defines if the technology group is featured (e.g., displayed prominently).",
       initialValue: true,
       validation: (rule) => rule.required()
     }),
