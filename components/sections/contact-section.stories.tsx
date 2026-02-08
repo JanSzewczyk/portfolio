@@ -1,4 +1,8 @@
-import { portfolioPageContactBuilder } from "~/tests/builders/portfolio-page.builder";
+import { expect } from "storybook/test";
+import {
+  portfolioPageContactBuilder,
+  portfolioPagePersonalInfoBuilder
+} from "~/tests/builders/portfolio-page.builder";
 
 import { ContactSection } from "./contact-section";
 
@@ -8,6 +12,7 @@ const meta = preview.meta({
   title: "Components/Sections/Contact Section",
   component: ContactSection,
   args: {
+    personalInfo: portfolioPagePersonalInfoBuilder.one({ traits: ["withSocialLinks"] }),
     contact: portfolioPageContactBuilder.one(),
     documentId: "test-portfolio-id",
     documentType: "portfolioPage"
@@ -17,4 +22,91 @@ const meta = preview.meta({
   }
 });
 
-export const Default = meta.story({ name: "Contact Section" });
+// Story named after component (CSF Next best practice)
+export const ContactSection_ = meta.story({});
+
+// Test 1: Section heading
+ContactSection_.test("Renders section heading with title and description", async ({ canvas, args }) => {
+  if (args.contact?.heading?.title) {
+    const heading = canvas.getByRole("heading", { level: 2, name: args.contact.heading.title });
+    await expect(heading).toBeVisible();
+  }
+
+  if (args.contact?.heading?.description) {
+    const description = canvas.getByText(args.contact.heading.description);
+    await expect(description).toBeVisible();
+  }
+});
+
+// Test 2: Email card
+ContactSection_.test("Displays email contact information", async ({ canvas, args }) => {
+  const emailLabel = canvas.getByText("Email");
+  await expect(emailLabel).toBeVisible();
+
+  if (args.personalInfo?.email) {
+    const emailLink = canvas.getByRole("link", { name: args.personalInfo.email });
+    await expect(emailLink).toBeVisible();
+    await expect(emailLink).toHaveAttribute("href", `mailto:${args.personalInfo.email}`);
+  }
+});
+
+// Test 3: Social links
+ContactSection_.test("Renders social media links", async ({ canvas, args }) => {
+  const socialLinks = args.personalInfo?.socialLinks ?? [];
+
+  if (socialLinks.length > 0) {
+    const connectHeading = canvas.getByRole("heading", { name: /connect with me/i });
+    await expect(connectHeading).toBeVisible();
+
+    for (const link of socialLinks) {
+      if (link.platform) {
+        const socialLink = canvas.getByRole("link", { name: link.platform });
+        await expect(socialLink).toBeVisible();
+        await expect(socialLink).toHaveAttribute("target", "_blank");
+        await expect(socialLink).toHaveAttribute("rel", "noopener noreferrer");
+      }
+    }
+  }
+});
+
+// Test 4: Quick chat card
+ContactSection_.test("Displays quick chat card when enabled", async ({ canvas, args }) => {
+  if (args.contact?.quickChat?.title) {
+    const quickChatTitle = canvas.getByRole("heading", { name: args.contact.quickChat.title });
+    await expect(quickChatTitle).toBeVisible();
+  }
+
+  if (args.contact?.quickChat?.description) {
+    const quickChatDescription = canvas.getByText(args.contact.quickChat.description);
+    await expect(quickChatDescription).toBeVisible();
+  }
+});
+
+// Story: Without form
+export const WithoutForm = meta.story({
+  args: {
+    personalInfo: portfolioPagePersonalInfoBuilder.one({ traits: ["withSocialLinks"] }),
+    contact: portfolioPageContactBuilder.one({
+      overrides: {
+        form: {
+          enabled: false,
+          title: null,
+          description: null,
+          successMessage: null,
+          submitButtonText: null,
+          successView: null
+        }
+      }
+    })
+  }
+});
+
+WithoutForm.test("Renders correctly without contact form", async ({ canvas }) => {
+  // Email card should still be visible
+  const emailLabel = canvas.getByText("Email");
+  await expect(emailLabel).toBeVisible();
+
+  // Form fields should not be present
+  const nameInput = canvas.queryByLabelText(/username/i);
+  await expect(nameInput).not.toBeInTheDocument();
+});

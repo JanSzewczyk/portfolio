@@ -10,12 +10,14 @@ When using this configuration in other projects, update this file with your proj
 | Framework | Next.js | 16.1 (App Router, Turbopack) | ✅ Installed |
 | UI Library | React | 19.2 (with React Compiler) | ✅ Installed |
 | Styling | Tailwind CSS | 4.1 | ✅ Installed |
-| Design System | @szum-tech/design-system | 3.9 (shadcn/ui based) | ✅ Installed |
+| Design System | @szum-tech/design-system | 3.11 (shadcn/ui based) | ✅ Installed |
 | Type Safety | TypeScript | 5.9 (strict mode) | ✅ Installed |
 | Env Validation | T3 Env | @t3-oss/env-nextjs 0.13 | ✅ Installed |
-| Logging | Pino | 10.1 (pretty-printing in dev) | ✅ Installed |
+| Logging | Pino | 10.3 (pretty-printing in dev) | ✅ Installed |
 | Forms | React Hook Form | 7.71 | ✅ Installed |
 | Validation | Zod | 4.3 | ✅ Installed |
+| Email | Resend | 6.9 (with @react-email/components) | ✅ Installed |
+| CMS | Sanity | 5.6 (with next-sanity 12.0) | ✅ Installed |
 
 ### Optional Integrations (Not Yet Installed)
 
@@ -33,9 +35,9 @@ These are recommended patterns documented in skills but require installation:
 
 | Type | Tool | Location | Command |
 |------|------|----------|---------|
-| Unit | Vitest | `tests/unit/`, `*.test.ts` | `npm run test:unit` |
-| Component | Storybook 10 + Vitest | `*.stories.tsx` | `npm run test:storybook` |
-| E2E | Playwright | `tests/e2e/` | `npm run test:e2e` |
+| Unit | Vitest 4.0 | `tests/unit/`, `*.test.ts` | `npm run test:unit` |
+| Component | Storybook 10.2 + Vitest | `*.stories.tsx` | `npm run test:storybook` |
+| E2E | Playwright 1.58 | `tests/e2e/` | `npm run test:e2e` |
 | All | Vitest | - | `npm run test` |
 
 ## Key Files

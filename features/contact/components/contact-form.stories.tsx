@@ -22,8 +22,6 @@ const meta = preview.meta({
   decorators: [(Story) => <div className="w-full max-w-xl">{Story()}</div>]
 });
 
-export default meta;
-
 // Story named after component (single story)
 export const ContactForm_ = meta.story({});
 

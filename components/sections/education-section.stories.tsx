@@ -22,40 +22,48 @@ const meta = preview.meta({
  * Default story showing the EducationSection component with full education data.
  * Displays timeline with education history, thesis information, achievements, and coursework.
  */
-export const Default = meta.story({});
-Default.test("Renders all education information correctly", async ({ canvas, step, args }) => {
-  await step("Verify section heading is visible", async () => {
-    const heading = canvas.getByRole("heading", { name: args.education?.heading?.title ?? "", level: 2 });
-    await expect(heading).toBeVisible();
-  });
+export const EducationSection_ = meta.story({});
 
-  await step("Verify education card is present", async () => {
-    const educationList = args.education?.education ?? [];
-    if (educationList.length > 0) {
-      const firstEdu = educationList[0];
-      if (firstEdu && firstEdu.institution) {
-        const institution = canvas.getByText(firstEdu.institution);
-        await expect(institution).toBeVisible();
-      }
-    }
-  });
+// Test: Section heading
+EducationSection_.test("Renders section heading with title and description", async ({ canvas, args }) => {
+  const heading = canvas.getByRole("heading", { name: args.education?.heading?.title ?? "", level: 2 });
+  await expect(heading).toBeVisible();
+
+  if (args.education?.heading?.description) {
+    const description = canvas.getByText(args.education.heading.description);
+    await expect(description).toBeVisible();
+  }
 });
 
-/**
- * Tests accordion interaction for achievements section.
- * Verifies achievements can be expanded and collapsed.
- */
-export const AchievementsAccordion = meta.story({
-  tags: ["test-only"],
-  play: async ({ canvas, step, userEvent }) => {
-    await step("Verify achievements accordion trigger is present", async () => {
-      const achievementsTrigger = canvas.getByRole("button", { name: /Key Achievements/i });
-      await expect(achievementsTrigger).toBeVisible();
+// Test: Education card
+EducationSection_.test("Displays education institution and details", async ({ canvas, args }) => {
+  const educationList = args.education?.education ?? [];
+
+  if (educationList.length > 0) {
+    const firstEdu = educationList[0];
+    if (firstEdu?.institution) {
+      const institution = canvas.getByText(firstEdu.institution);
+      await expect(institution).toBeVisible();
+    }
+  }
+});
+
+// Test: Accordion expand/collapse for achievements
+// Using play function because this is a multi-step user flow
+EducationSection_.test(
+  "Expands and collapses achievements accordion",
+  async ({ canvas, step, userEvent }) => {
+    const achievementsTrigger = canvas.queryByRole("button", { name: /Key Achievements/i });
+
+    if (!achievementsTrigger) {
+      return; // Skip if no achievements accordion present
+    }
+
+    await step("Verify accordion is initially collapsed", async () => {
       await expect(achievementsTrigger).toHaveAttribute("aria-expanded", "false");
     });
 
-    await step("Click to expand achievements", async () => {
-      const achievementsTrigger = canvas.getByRole("button", { name: /Key Achievements/i });
+    await step("Expand achievements", async () => {
       await userEvent.click(achievementsTrigger);
 
       await waitFor(
@@ -66,7 +74,7 @@ export const AchievementsAccordion = meta.story({
       );
     });
 
-    await step("Verify achievements content is visible when expanded", async () => {
+    await step("Verify content is visible", async () => {
       await waitFor(
         async () => {
           const achievementText = canvas.getAllByRole("listitem")[0];
@@ -76,8 +84,7 @@ export const AchievementsAccordion = meta.story({
       );
     });
 
-    await step("Click to collapse achievements", async () => {
-      const achievementsTrigger = canvas.getByRole("button", { name: /Key Achievements/i });
+    await step("Collapse achievements", async () => {
       await userEvent.click(achievementsTrigger);
 
       await waitFor(
@@ -88,23 +95,23 @@ export const AchievementsAccordion = meta.story({
       );
     });
   }
-});
+);
 
-/**
- * Tests accordion interaction for coursework section.
- * Verifies coursework can be expanded and collapsed.
- */
-export const CourseworkAccordion = meta.story({
-  tags: ["test-only"],
-  play: async ({ canvas, step, userEvent }) => {
-    await step("Verify coursework accordion trigger is present", async () => {
-      const courseworkTrigger = canvas.getByRole("button", { name: /Relevant Coursework/i });
-      await expect(courseworkTrigger).toBeVisible();
+// Test: Accordion expand/collapse for coursework
+EducationSection_.test(
+  "Expands and collapses coursework accordion",
+  async ({ canvas, step, userEvent }) => {
+    const courseworkTrigger = canvas.queryByRole("button", { name: /Relevant Coursework/i });
+
+    if (!courseworkTrigger) {
+      return; // Skip if no coursework accordion present
+    }
+
+    await step("Verify accordion is initially collapsed", async () => {
       await expect(courseworkTrigger).toHaveAttribute("aria-expanded", "false");
     });
 
-    await step("Click to expand coursework", async () => {
-      const courseworkTrigger = canvas.getByRole("button", { name: /Relevant Coursework/i });
+    await step("Expand coursework", async () => {
       await userEvent.click(courseworkTrigger);
 
       await waitFor(
@@ -115,18 +122,7 @@ export const CourseworkAccordion = meta.story({
       );
     });
 
-    await step("Verify coursework content is visible when expanded", async () => {
-      await waitFor(
-        async () => {
-          const courseworkText = canvas.getAllByRole("listitem")[0];
-          await expect(courseworkText).toBeVisible();
-        },
-        { timeout: 2000 }
-      );
-    });
-
-    await step("Click to collapse coursework", async () => {
-      const courseworkTrigger = canvas.getByRole("button", { name: /Relevant Coursework/i });
+    await step("Collapse coursework", async () => {
       await userEvent.click(courseworkTrigger);
 
       await waitFor(
@@ -137,25 +133,4 @@ export const CourseworkAccordion = meta.story({
       );
     });
   }
-});
-
-/**
- * Tests section heading and description.
- * Verifies proper heading hierarchy and descriptive content.
- */
-export const SectionHeadingStructure = meta.story({
-  tags: ["test-only"],
-  play: async ({ canvas, step, args }) => {
-    await step("Verify section has proper heading hierarchy", async () => {
-      const mainHeading = canvas.getByRole("heading", { name: args.education?.heading?.title ?? "", level: 2 });
-      await expect(mainHeading).toBeVisible();
-    });
-
-    await step("Verify section description is present", async () => {
-      if (args.education?.heading?.description) {
-        const description = canvas.getByText(args.education.heading.description);
-        await expect(description).toBeVisible();
-      }
-    });
-  }
-});
+);

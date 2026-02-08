@@ -1,4 +1,4 @@
-import { expect, userEvent, waitFor, within } from "storybook/test";
+import { expect, waitFor, within } from "storybook/test";
 
 import { Navigation } from "./navigation";
 
@@ -60,7 +60,7 @@ export const Mobile = meta.story({
     viewport: { value: "mobile2", isRotated: false }
   }
 });
-Mobile.test("Mobile menu opens and closes", async ({ canvas, canvasElement, step }) => {
+Mobile.test("Mobile menu opens and closes", async ({ canvas, canvasElement, step, userEvent }) => {
   // Query the button - it might not be visible on desktop due to md:hidden
   const openMenuButton = canvas.queryByRole("button", { name: /open menu/i });
 
@@ -104,7 +104,7 @@ Mobile.test("Mobile menu opens and closes", async ({ canvas, canvasElement, step
     await expect(openMenuButton).toBeInTheDocument();
   });
 });
-Mobile.test("Mobile accessibility", async ({ canvas, canvasElement, step }) => {
+Mobile.test("Mobile accessibility", async ({ canvas, canvasElement, step, userEvent }) => {
   // Query the button - it might not be visible on desktop due to md:hidden
   const menuButton = canvas.queryByRole("button", { name: /open menu/i });
 
