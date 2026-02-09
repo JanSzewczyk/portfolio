@@ -8,7 +8,8 @@
 
 **Personal portfolio website for Jan Szewczyk - Frontend Engineer & Open Source Creator**
 
-[Live Demo](https://janszewczyk.com) • [Features](#-features) • [Tech Stack](#-tech-stack) • [Getting Started](#-getting-started)
+[Live Demo](https://janszewczyk.com) • [Features](#-features) • [Tech Stack](#-tech-stack) •
+[Getting Started](#-getting-started)
 
 </div>
 
@@ -16,7 +17,9 @@
 
 ## 👋 About
 
-This is the personal portfolio website of **Jan Szewczyk**, a Frontend Engineer from Cracow, Poland, specializing in React, Next.js, TypeScript, and React Native. The site showcases professional experience, projects, skills, and provides a contact form for inquiries.
+This is the personal portfolio website of **Jan Szewczyk**, a Frontend Engineer from Cracow, Poland, specializing in
+React, Next.js, TypeScript, and React Native. The site showcases professional experience, projects, skills, and provides
+a contact form for inquiries.
 
 ### Portfolio Sections
 
@@ -33,30 +36,35 @@ This is the personal portfolio website of **Jan Szewczyk**, a Frontend Engineer 
 ## ✨ Features
 
 ### 🎨 Modern Design
+
 - Responsive design optimized for all devices
 - Dark/Light theme with system preference detection
 - Smooth animations and micro-interactions
 - [Szum-Tech Design System](https://www.npmjs.com/package/@szum-tech/design-system) components
 
 ### 📝 Content Management
+
 - **Sanity CMS** integration for dynamic content
 - Embedded Sanity Studio at `/studio`
 - Draft mode for content preview
 - Type-safe content queries
 
 ### 📧 Contact Form
+
 - Server-side form processing with Server Actions
 - Email delivery via **Resend**
 - Form validation with **Zod** schemas
 - React Hook Form integration
 
 ### 🔍 SEO Optimized
+
 - Structured data (JSON-LD)
 - Open Graph and Twitter meta tags
 - Dynamic sitemap and robots.txt
 - Perfect Lighthouse scores
 
 ### 🧪 Comprehensive Testing
+
 - Unit tests with **Vitest** and React Testing Library
 - Component tests with **Storybook** interaction testing
 - E2E tests with **Playwright**
@@ -67,27 +75,27 @@ This is the personal portfolio website of **Jan Szewczyk**, a Frontend Engineer 
 
 ### Core Technologies
 
-| Category | Technology | Version |
-|----------|------------|---------|
-| Framework | [Next.js](https://nextjs.org/) | 16.1 |
-| UI Library | [React](https://react.dev/) | 19.2 |
-| Language | [TypeScript](https://www.typescriptlang.org/) | 5.9 |
-| Styling | [Tailwind CSS](https://tailwindcss.com/) | 4.1 |
-| CMS | [Sanity](https://www.sanity.io/) | 5.6 |
-| Email | [Resend](https://resend.com/) | 6.9 |
+| Category   | Technology                                    | Version |
+| ---------- | --------------------------------------------- | ------- |
+| Framework  | [Next.js](https://nextjs.org/)                | 16.1    |
+| UI Library | [React](https://react.dev/)                   | 19.2    |
+| Language   | [TypeScript](https://www.typescriptlang.org/) | 5.9     |
+| Styling    | [Tailwind CSS](https://tailwindcss.com/)      | 4.1     |
+| CMS        | [Sanity](https://www.sanity.io/)              | 5.6     |
+| Email      | [Resend](https://resend.com/)                 | 6.9     |
 
 ### Developer Tools
 
-| Category | Technology | Version |
-|----------|------------|---------|
-| Design System | [@szum-tech/design-system](https://www.npmjs.com/package/@szum-tech/design-system) | 3.11 |
-| Testing | [Vitest](https://vitest.dev/) | 4.0 |
-| E2E Testing | [Playwright](https://playwright.dev/) | 1.58 |
-| Component Dev | [Storybook](https://storybook.js.org/) | 10.2 |
-| Forms | [React Hook Form](https://react-hook-form.com/) | 7.71 |
-| Validation | [Zod](https://zod.dev/) | 4.3 |
-| Logging | [Pino](https://getpino.io/) | 10.3 |
-| Env Validation | [T3 Env](https://env.t3.gg/) | 0.13 |
+| Category       | Technology                                                                         | Version |
+| -------------- | ---------------------------------------------------------------------------------- | ------- |
+| Design System  | [@szum-tech/design-system](https://www.npmjs.com/package/@szum-tech/design-system) | 3.11    |
+| Testing        | [Vitest](https://vitest.dev/)                                                      | 4.0     |
+| E2E Testing    | [Playwright](https://playwright.dev/)                                              | 1.58    |
+| Component Dev  | [Storybook](https://storybook.js.org/)                                             | 10.2    |
+| Forms          | [React Hook Form](https://react-hook-form.com/)                                    | 7.71    |
+| Validation     | [Zod](https://zod.dev/)                                                            | 4.3     |
+| Logging        | [Pino](https://getpino.io/)                                                        | 10.3    |
+| Env Validation | [T3 Env](https://env.t3.gg/)                                                       | 0.13    |
 
 ---
 

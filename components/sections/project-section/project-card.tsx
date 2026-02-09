@@ -1,5 +1,3 @@
-"use client";
-
 import { ExternalLinkIcon } from "lucide-react";
 import { stegaClean } from "next-sanity";
 
@@ -11,34 +9,27 @@ import {
   CardDescription,
   CardFooter,
   CardHeader,
-  CardTitle,
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger
+  CardTitle
 } from "@szum-tech/design-system";
 import { cn } from "@szum-tech/design-system/utils";
 import Image from "next/image";
 import { ReactIcon } from "~/components/ui/react-icon";
-import { SectionHeading } from "~/components/ui/section-heading";
-import { Section } from "~/constants/sections";
 import { urlFor } from "~/lib/sanity/image";
 import { type PortfolioPageQueryResult } from "~/lib/sanity/types";
-import { buildSanityAttribute } from "~/lib/sanity/utils";
 
 type ProjectGroupData =
   NonNullable<NonNullable<NonNullable<PortfolioPageQueryResult>["projects"]>["projectGroups"]> extends (infer T)[]
     ? T
     : never;
 
-type ProjectData = NonNullable<ProjectGroupData["projects"]> extends (infer T)[] ? T : never;
+export type ProjectData = NonNullable<ProjectGroupData["projects"]> extends (infer T)[] ? T : never;
 
-type ProjectCardProps = {
+export type ProjectCardProps = {
   project: ProjectData;
   dataSanity?: string;
 };
 
-function ProjectCard({ project, dataSanity }: ProjectCardProps) {
+export function ProjectCard({ project, dataSanity }: ProjectCardProps) {
   const thumbnailUrl = project.thumbnail?.asset?.url
     ? urlFor(project.thumbnail).auto("format").width(800).height(450).url()
     : null;
@@ -104,79 +95,5 @@ function ProjectCard({ project, dataSanity }: ProjectCardProps) {
         )}
       </CardFooter>
     </Card>
-  );
-}
-
-type ProjectCategoryTab = {
-  value: string;
-  label: string;
-};
-
-type ProjectsSectionProps = {
-  projects: NonNullable<PortfolioPageQueryResult>["projects"];
-  documentId: string;
-  documentType: string;
-};
-
-export function ProjectsSection({ projects, documentId, documentType }: ProjectsSectionProps) {
-  const { createSanityAttribute } = buildSanityAttribute({ documentId, documentType });
-
-  // Get project groups from the data
-  const projectGroups = projects?.projectGroups ?? [];
-
-  // Build project categories from project groups
-  const projectCategories: ProjectCategoryTab[] = projectGroups.map((group, index) => ({
-    value: `group-${index}`,
-    label: stegaClean(group.label) ?? `Group ${index + 1}`
-  }));
-
-  const getProjectsByGroup = (groupValue: string): ProjectData[] => {
-    const groupIndex = parseInt(groupValue.replace("group-", ""), 10);
-    const group = projectGroups[groupIndex];
-    return group?.projects ?? [];
-  };
-
-  return (
-    <section id={Section.PROJECTS} className="py-24">
-      <div className="container">
-        <SectionHeading
-          title={projects?.heading?.title ?? ""}
-          description={projects?.heading?.description ?? ""}
-          data-sanity={createSanityAttribute("projects.heading")}
-        />
-
-        <Tabs defaultValue={projectCategories[0]?.value} className="w-full">
-          <TabsList className="mx-auto mb-8">
-            {projectCategories.map((category) => (
-              <TabsTrigger key={category.value} value={category.value}>
-                {category.label}
-              </TabsTrigger>
-            ))}
-          </TabsList>
-
-          {projectCategories.map((category, groupIndex) => {
-            const categoryProjects = getProjectsByGroup(category.value);
-
-            return (
-              <TabsContent key={category.value} value={category.value}>
-                <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                  {categoryProjects.map((project, projectIndex) => {
-                    return (
-                      <ProjectCard
-                        key={project._id}
-                        project={project}
-                        dataSanity={createSanityAttribute(
-                          `projects.projectGroups[${groupIndex}].projects[${projectIndex}]`
-                        )}
-                      />
-                    );
-                  })}
-                </div>
-              </TabsContent>
-            );
-          })}
-        </Tabs>
-      </div>
-    </section>
   );
 }
