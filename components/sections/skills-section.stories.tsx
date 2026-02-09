@@ -1,5 +1,5 @@
 import { expect, waitFor } from "storybook/test";
-import {  portfolioPageSkillsBuilder } from "~/tests/builders/portfolio-page.builder";
+import { portfolioPageSkillsBuilder } from "~/tests/builders/portfolio-page.builder";
 
 import { SkillsSection } from "./skills-section";
 

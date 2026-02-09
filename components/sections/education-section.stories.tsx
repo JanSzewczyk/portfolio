@@ -50,87 +50,81 @@ EducationSection_.test("Displays education institution and details", async ({ ca
 
 // Test: Accordion expand/collapse for achievements
 // Using play function because this is a multi-step user flow
-EducationSection_.test(
-  "Expands and collapses achievements accordion",
-  async ({ canvas, step, userEvent }) => {
-    const achievementsTrigger = canvas.queryByRole("button", { name: /Key Achievements/i });
+EducationSection_.test("Expands and collapses achievements accordion", async ({ canvas, step, userEvent }) => {
+  const achievementsTrigger = canvas.queryByRole("button", { name: /Key Achievements/i });
 
-    if (!achievementsTrigger) {
-      return; // Skip if no achievements accordion present
-    }
-
-    await step("Verify accordion is initially collapsed", async () => {
-      await expect(achievementsTrigger).toHaveAttribute("aria-expanded", "false");
-    });
-
-    await step("Expand achievements", async () => {
-      await userEvent.click(achievementsTrigger);
-
-      await waitFor(
-        async () => {
-          await expect(achievementsTrigger).toHaveAttribute("aria-expanded", "true");
-        },
-        { timeout: 2000 }
-      );
-    });
-
-    await step("Verify content is visible", async () => {
-      await waitFor(
-        async () => {
-          const achievementText = canvas.getAllByRole("listitem")[0];
-          await expect(achievementText).toBeVisible();
-        },
-        { timeout: 2000 }
-      );
-    });
-
-    await step("Collapse achievements", async () => {
-      await userEvent.click(achievementsTrigger);
-
-      await waitFor(
-        async () => {
-          await expect(achievementsTrigger).toHaveAttribute("aria-expanded", "false");
-        },
-        { timeout: 2000 }
-      );
-    });
+  if (!achievementsTrigger) {
+    return; // Skip if no achievements accordion present
   }
-);
+
+  await step("Verify accordion is initially collapsed", async () => {
+    await expect(achievementsTrigger).toHaveAttribute("aria-expanded", "false");
+  });
+
+  await step("Expand achievements", async () => {
+    await userEvent.click(achievementsTrigger);
+
+    await waitFor(
+      async () => {
+        await expect(achievementsTrigger).toHaveAttribute("aria-expanded", "true");
+      },
+      { timeout: 2000 }
+    );
+  });
+
+  await step("Verify content is visible", async () => {
+    await waitFor(
+      async () => {
+        const achievementText = canvas.getAllByRole("listitem")[0];
+        await expect(achievementText).toBeVisible();
+      },
+      { timeout: 2000 }
+    );
+  });
+
+  await step("Collapse achievements", async () => {
+    await userEvent.click(achievementsTrigger);
+
+    await waitFor(
+      async () => {
+        await expect(achievementsTrigger).toHaveAttribute("aria-expanded", "false");
+      },
+      { timeout: 2000 }
+    );
+  });
+});
 
 // Test: Accordion expand/collapse for coursework
-EducationSection_.test(
-  "Expands and collapses coursework accordion",
-  async ({ canvas, step, userEvent }) => {
-    const courseworkTrigger = canvas.queryByRole("button", { name: /Relevant Coursework/i });
+EducationSection_.test("Expands and collapses coursework accordion", async ({ canvas, step, userEvent }) => {
+  const courseworkTrigger = canvas.queryByRole("button", { name: /Relevant Coursework/i });
 
-    if (!courseworkTrigger) {
-      return; // Skip if no coursework accordion present
-    }
-
-    await step("Verify accordion is initially collapsed", async () => {
-      await expect(courseworkTrigger).toHaveAttribute("aria-expanded", "false");
-    });
-
-    await step("Expand coursework", async () => {
-      await userEvent.click(courseworkTrigger);
-
-      await waitFor(
-        async () => {
-          await expect(courseworkTrigger).toHaveAttribute("aria-expanded", "true");
-        },
-        { timeout: 2000 }
-      );
-    });
-
-    await step("Collapse coursework", async () => {
-      await userEvent.click(courseworkTrigger);
-
-      await waitFor(
-        async () => {
-          await expect(courseworkTrigger).toHaveAttribute("aria-expanded", "false");
-        },
-        { timeout: 2000 }
-      );
-    });
+  if (!courseworkTrigger) {
+    return; // Skip if no coursework accordion present
   }
-);
+
+  await step("Verify accordion is initially collapsed", async () => {
+    await expect(courseworkTrigger).toHaveAttribute("aria-expanded", "false");
+  });
+
+  await step("Expand coursework", async () => {
+    await userEvent.click(courseworkTrigger);
+
+    await waitFor(
+      async () => {
+        await expect(courseworkTrigger).toHaveAttribute("aria-expanded", "true");
+      },
+      { timeout: 2000 }
+    );
+  });
+
+  await step("Collapse coursework", async () => {
+    await userEvent.click(courseworkTrigger);
+
+    await waitFor(
+      async () => {
+        await expect(courseworkTrigger).toHaveAttribute("aria-expanded", "false");
+      },
+      { timeout: 2000 }
+    );
+  });
+});

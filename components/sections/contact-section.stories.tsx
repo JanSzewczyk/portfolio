@@ -1,8 +1,5 @@
 import { expect } from "storybook/test";
-import {
-  portfolioPageContactBuilder,
-  portfolioPagePersonalInfoBuilder
-} from "~/tests/builders/portfolio-page.builder";
+import { portfolioPageContactBuilder, portfolioPagePersonalInfoBuilder } from "~/tests/builders/portfolio-page.builder";
 
 import { ContactSection } from "./contact-section";
 
