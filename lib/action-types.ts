@@ -14,7 +14,7 @@ type ActionStateSuccess<T> = {
 /**
  * Failure state returned by server actions
  */
-type ActionStateFailed = {
+export type ActionStateFailed = {
   /** Indicates the action failed */
   success: false;
   /** Error message describing what went wrong */
