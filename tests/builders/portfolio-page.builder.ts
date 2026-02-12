@@ -80,21 +80,21 @@ export const portfolioPagePersonalInfoBuilder = build<NonNullable<PortfolioPageQ
         _key: faker.string.uuid(),
         platform: "GitHub",
         url: faker.internet.url(),
-        icon: "github",
+        icon: "SiGithub",
         username: faker.internet.username()
       },
       {
         _key: faker.string.uuid(),
         platform: "LinkedIn",
         url: faker.internet.url(),
-        icon: "linkedin",
+        icon: "SiLinkedin",
         username: faker.internet.username()
       },
       {
         _key: faker.string.uuid(),
-        platform: "Twitter",
+        platform: "X",
         url: faker.internet.url(),
-        icon: "twitter",
+        icon: "SiX",
         username: faker.internet.username()
       }
     ])
@@ -161,9 +161,41 @@ export const portfolioPageHeroBuilder = build<NonNullable<PortfolioPageQueryResu
 export const technologyBuilder = build<PortfolioTechnology>({
   fields: {
     _id: perBuild(() => faker.string.uuid()),
-    name: perBuild(() => faker.helpers.arrayElement(["React", "Next.js", "TypeScript", "Node.js", "Tailwind CSS"])),
+    name: perBuild(() =>
+      faker.helpers.arrayElement([
+        "React",
+        "Next.js",
+        "TypeScript",
+        "Node.js",
+        "Tailwind CSS",
+        "Expo",
+        "Python",
+        "Vitest",
+        "Storybook",
+        "Playwright",
+        "Zod",
+        "Radix UI",
+        "Sanity",
+        "Pino"
+      ])
+    ),
     icon: perBuild(() =>
-      faker.helpers.arrayElement(["SiReact", "SiNextdotjs", "SiTypescript", "SiNodedotjs", "SiTailwindcss"])
+      faker.helpers.arrayElement([
+        "SiReact",
+        "SiNextdotjs",
+        "SiTypescript",
+        "SiNodedotjs",
+        "SiTailwindcss",
+        "SiExpo",
+        "SiPython",
+        "SiVitest",
+        "SiStorybook",
+        "SiZod",
+        "SiRadixui",
+        "SiSanity",
+        "TbTestPipe",
+        "VscDebugConsole"
+      ])
     ),
     description: perBuild(() => faker.lorem.sentence())
   }
