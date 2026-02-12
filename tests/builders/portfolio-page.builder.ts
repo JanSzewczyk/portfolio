@@ -2,6 +2,14 @@ import { faker } from "@faker-js/faker";
 import { build, perBuild } from "@jackfranklin/test-data-bot";
 import { type PortfolioPageQueryResult } from "~/lib/sanity/types";
 
+// Extracted types from query result for type-safe builders
+type PortfolioPage = NonNullable<PortfolioPageQueryResult>;
+type PortfolioTechnologyGroup = NonNullable<NonNullable<PortfolioPage["skills"]>["technologyGroups"]>[number];
+type PortfolioProjectGroup = NonNullable<NonNullable<PortfolioPage["projects"]>["projectGroups"]>[number];
+type PortfolioProject = NonNullable<NonNullable<PortfolioProjectGroup["projects"]>>[number];
+type PortfolioExperience = NonNullable<NonNullable<PortfolioPage["experience"]>["experiences"]>[number];
+type PortfolioEducation = NonNullable<NonNullable<PortfolioPage["education"]>["education"]>[number];
+
 /**
  * Builder for PortfolioPage about section test data.
  *
@@ -20,7 +28,7 @@ export const portfolioPageAboutBuilder = build<NonNullable<PortfolioPageQueryRes
       description: perBuild(() => faker.lorem.sentence())
     },
     bio: perBuild(() => faker.lorem.paragraphs(2, "\n\n")),
-    location: perBuild(() => faker.location.city()) as any,
+    location: null,
     stats: perBuild(() => [
       {
         _key: faker.string.uuid(),
@@ -171,30 +179,11 @@ export const technologyBuilder = build<{
  * @example
  * const technologyGroup = technologyGroupBuilder.one();
  */
-export const technologyGroupBuilder = build<{
-  _id: string;
-  label: string | null;
-  slug: {
-    _type: "slug";
-    current?: string;
-    source?: string;
-  } | null;
-  category: "backend" | "devops" | "frontend" | "mobile" | "tools" | null;
-  technologies: Array<{
-    _id: string;
-    name: string | null;
-    icon: string | null;
-    description: string | null;
-  }> | null;
-}>({
+export const technologyGroupBuilder = build<PortfolioTechnologyGroup>({
   fields: {
     _id: perBuild(() => faker.string.uuid()),
     label: perBuild(() => faker.helpers.arrayElement(["Frontend", "Backend", "Mobile", "DevOps & Tools", "Other"])),
-    slug: perBuild(() => ({
-      _type: "slug" as const,
-      current: faker.helpers.slugify(faker.word.words(2)).toLowerCase()
-    })),
-    category: perBuild(() => faker.helpers.arrayElement(["frontend", "backend", "mobile", "devops", "tools"] as const)),
+    featured: perBuild(() => faker.datatype.boolean()),
     technologies: perBuild(() =>
       Array.from({ length: faker.number.int({ min: 3, max: 8 }) }, () => technologyBuilder.one())
     )
@@ -213,7 +202,8 @@ export const portfolioPageSkillsBuilder = build<NonNullable<PortfolioPageQueryRe
       title: perBuild(() => faker.lorem.words(3)),
       description: perBuild(() => faker.lorem.sentence())
     },
-    technologyGroups: perBuild(() => Array.from({ length: 4 }, () => technologyGroupBuilder.one()))
+    technologyGroups: perBuild(() => Array.from({ length: 4 }, () => technologyGroupBuilder.one())),
+    decorativeBottomText: perBuild(() => faker.lorem.words(2))
   }
 });
 
@@ -223,38 +213,7 @@ export const portfolioPageSkillsBuilder = build<NonNullable<PortfolioPageQueryRe
  * @example
  * const project = projectBuilder.one();
  */
-export const projectBuilder = build<{
-  _id: string;
-  title: string | null;
-  description: string | null;
-  longDescription: string | null;
-  thumbnail: {
-    asset: {
-      _id: string;
-      url: string | null;
-      metadata: {
-        dimensions: {
-          _type: "sanity.imageDimensions";
-          height?: number;
-          width?: number;
-          aspectRatio?: number;
-        } | null;
-        lqip: string | null;
-      } | null;
-    } | null;
-  } | null;
-  technologies: Array<{
-    _id: string;
-    name: string | null;
-    icon: string | null;
-    description: string | null;
-  }> | null;
-  links: {
-    live: string | null;
-    github: string | null;
-  } | null;
-  featured: boolean | null;
-}>({
+export const projectBuilder = build<PortfolioProject>({
   fields: {
     _id: perBuild(() => faker.string.uuid()),
     title: perBuild(() => faker.company.catchPhrase()),
@@ -263,10 +222,16 @@ export const projectBuilder = build<{
     thumbnail: perBuild(() => {
       const imageId = faker.string.alphanumeric(28);
       return {
+        _type: "image" as const,
         asset: {
           _id: `image-${imageId}-800x450-jpg`,
+          _type: "sanity.imageAsset" as const,
+          _createdAt: faker.date.past().toISOString(),
+          _updatedAt: faker.date.recent().toISOString(),
+          _rev: `rev-${faker.string.uuid()}`,
           url: `https://cdn.sanity.io/images/project/dataset/${imageId}-800x450.jpg`,
           metadata: {
+            _type: "sanity.imageMetadata" as const,
             dimensions: {
               _type: "sanity.imageDimensions" as const,
               height: 450,
@@ -305,8 +270,7 @@ export const projectBuilder = build<{
  *   overrides: { label: "Featured Work" }
  * });
  */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const projectGroupBuilder = build<any>({
+export const projectGroupBuilder = build<PortfolioProjectGroup>({
   fields: {
     _id: perBuild(() => faker.string.uuid()),
     label: perBuild(() =>
@@ -341,40 +305,7 @@ export const portfolioPageProjectsBuilder = build<NonNullable<PortfolioPageQuery
  * @example
  * const experience = experienceBuilder.one();
  */
-export const experienceBuilder = build<{
-  _id: string;
-  role: string | null;
-  company: string | null;
-  companyLogo: {
-    asset: {
-      _id: string;
-      url: string | null;
-      metadata: {
-        dimensions: {
-          _type: "sanity.imageDimensions";
-          height?: number;
-          width?: number;
-          aspectRatio?: number;
-        } | null;
-        lqip: string | null;
-      } | null;
-    } | null;
-  } | null;
-  companyUrl: string | null;
-  location: string | null;
-  type: "contract" | "freelance" | "full-time" | "part-time" | null;
-  startDate: string | null;
-  endDate: string | null;
-  summary: string | null;
-  responsibilities: Array<string> | null;
-  achievements: Array<string> | null;
-  technologies: Array<{
-    _id: string;
-    name: string | null;
-    icon: string | null;
-    description: string | null;
-  }> | null;
-}>({
+export const experienceBuilder = build<PortfolioExperience>({
   fields: {
     _id: perBuild(() => faker.string.uuid()),
     role: perBuild(() => faker.person.jobTitle()),
@@ -450,41 +381,13 @@ export const portfolioPageExperienceBuilder = build<NonNullable<PortfolioPageQue
  * @example
  * const education = educationBuilder.one();
  */
-export const educationBuilder = build<{
-  _id: string;
-  institution: string | null;
-  institutionUrl: string | null;
-  location: string | null;
-  degree: "bachelor" | "master" | "phd" | null;
-  fieldOfStudy: string | null;
-  startDate: string | null;
-  endDate: string | null;
-  grade: string | null;
-  thesis: {
-    title: string | null;
-    description: string | null;
-    technologies: Array<{
-      _id: string;
-      name: string | null;
-      icon: string | null;
-      description: string | null;
-    }> | null;
-    project: {
-      _id: string;
-      title: string | null;
-      description: string | null;
-    } | null;
-    url: string | null;
-  } | null;
-  achievements: Array<string> | null;
-  coursework: Array<string> | null;
-}>({
+export const educationBuilder = build<PortfolioEducation>({
   fields: {
     _id: perBuild(() => faker.string.uuid()),
     institution: perBuild(() => faker.company.name() + " University"),
     institutionUrl: perBuild(() => faker.internet.url()),
     location: perBuild(() => `${faker.location.city()}, ${faker.location.country()}`),
-    degree: perBuild(() => faker.helpers.arrayElement(["bachelor", "master", "phd"] as const)),
+    degree: perBuild(() => faker.helpers.arrayElement(["Bachelor's Degree", "Master's Degree", "Ph.D."] as const)),
     fieldOfStudy: perBuild(() =>
       faker.helpers.arrayElement(["Computer Science", "Software Engineering", "Information Technology"])
     ),
@@ -567,26 +470,7 @@ export const portfolioPageContactBuilder = build<NonNullable<PortfolioPageQueryR
 export const portfolioPageFooterBuilder = build<NonNullable<PortfolioPageQueryResult>["footer"]>({
   fields: {
     copyrightText: perBuild(() => `${faker.company.name()}. All rights reserved.`),
-    socialLinks: perBuild(() => [
-      {
-        _key: faker.string.uuid(),
-        platform: "GitHub",
-        url: faker.internet.url(),
-        icon: "github"
-      },
-      {
-        _key: faker.string.uuid(),
-        platform: "LinkedIn",
-        url: faker.internet.url(),
-        icon: "linkedin"
-      },
-      {
-        _key: faker.string.uuid(),
-        platform: "Twitter",
-        url: faker.internet.url(),
-        icon: "twitter"
-      }
-    ]) as any
+    socialLinks: null
   }
 });
 

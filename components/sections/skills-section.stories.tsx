@@ -26,7 +26,6 @@ const testTechTailwind = technologyBuilder.one({
 const testGroupFrontend = technologyGroupBuilder.one({
   overrides: {
     label: "Frontend",
-    category: "frontend" as const,
     technologies: [testTechReact, testTechTypeScript, testTechTailwind]
   }
 });
@@ -34,7 +33,6 @@ const testGroupFrontend = technologyGroupBuilder.one({
 const testGroupBackend = technologyGroupBuilder.one({
   overrides: {
     label: "Backend",
-    category: "backend" as const,
     technologies: [testTechNode]
   }
 });
@@ -242,7 +240,8 @@ export const EmptySkills = meta.story({
         title: "Skills & Technologies",
         description: "The tools and technologies I work with"
       },
-      technologyGroups: []
+      technologyGroups: [],
+      decorativeBottomText: null
     },
     documentId: "portfolio-page",
     documentType: "portfolioPage"

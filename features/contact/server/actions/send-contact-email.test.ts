@@ -1,5 +1,3 @@
-import { describe, it, expect, vi, beforeEach } from "vitest";
-
 // Use vi.hoisted to create mock that's accessible in vi.mock
 const { mockSend } = vi.hoisted(() => {
   return {
@@ -10,11 +8,9 @@ const { mockSend } = vi.hoisted(() => {
 // Mock dependencies BEFORE importing the module under test
 vi.mock("resend", () => ({
   Resend: class MockResend {
-    constructor() {
-      (this as any).emails = {
-        send: mockSend
-      };
-    }
+    emails = {
+      send: mockSend
+    };
   }
 }));
 
@@ -36,6 +32,7 @@ vi.mock("~/data/env/server", () => ({
 }));
 
 import { type ContactFormData } from "~/features/contact/schemas/contact.schema";
+import { type ActionStateFailed } from "~/lib/action-types";
 
 import { sendContactEmail } from "./send-contact-email";
 
@@ -45,7 +42,7 @@ describe("sendContactEmail", () => {
   });
 
   describe("successful email sending", () => {
-    it("sends email successfully with valid form data", async () => {
+    test("sends email successfully with valid form data", async () => {
       // Arrange
       const formData: ContactFormData = {
         name: "John Doe",
@@ -79,7 +76,7 @@ describe("sendContactEmail", () => {
       });
     });
 
-    it("handles long messages correctly", async () => {
+    test("handles long messages correctly", async () => {
       // Arrange
       const longMessage = "A".repeat(500);
       const formData: ContactFormData = {
@@ -106,7 +103,7 @@ describe("sendContactEmail", () => {
       );
     });
 
-    it("uses correct email addresses from environment", async () => {
+    test("uses correct email addresses from environment", async () => {
       // Arrange
       const formData: ContactFormData = {
         name: "Test User",
@@ -133,7 +130,7 @@ describe("sendContactEmail", () => {
   });
 
   describe("error handling", () => {
-    it("returns error when Resend API fails", async () => {
+    test("returns error when Resend API fails", async () => {
       // Arrange
       const formData: ContactFormData = {
         name: "Failed User",
@@ -161,7 +158,7 @@ describe("sendContactEmail", () => {
       });
     });
 
-    it("handles unexpected exceptions gracefully", async () => {
+    test("handles unexpected exceptions gracefully", async () => {
       // Arrange
       const formData: ContactFormData = {
         name: "Exception User",
@@ -195,11 +192,11 @@ describe("sendContactEmail", () => {
       const result = await sendContactEmail(formData);
 
       // Assert
-      expect(result.success).toBe(false);
-      expect(result.error).toContain("unexpected error");
+      expect(result.success).toBeFalsy();
+      expect((result as ActionStateFailed).error).toContain("unexpected error");
     });
 
-    it("handles Resend API error with missing error name", async () => {
+    test("handles Resend API error with missing error name", async () => {
       // Arrange
       const formData: ContactFormData = {
         name: "Partial Error User",
@@ -224,7 +221,7 @@ describe("sendContactEmail", () => {
   });
 
   describe("email content", () => {
-    it("includes sender name in subject line", async () => {
+    test("includes sender name in subject line", async () => {
       // Arrange
       const formData: ContactFormData = {
         name: "Jane Smith",
@@ -248,7 +245,7 @@ describe("sendContactEmail", () => {
       );
     });
 
-    it("sets reply-to to sender email", async () => {
+    test("sets reply-to to sender email", async () => {
       // Arrange
       const senderEmail = "sender@domain.com";
       const formData: ContactFormData = {
