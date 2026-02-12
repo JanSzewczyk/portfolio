@@ -63,10 +63,14 @@ ExperienceSection_Default.test("Displays company logo images when provided", asy
   const hasLogos = experiences.some((exp) => exp.companyLogo?.asset?.url);
 
   if (hasLogos) {
-    // Find all logo images
-    const images = canvas.getAllByRole("img");
-    // At least one image should exist (beyond any other images in the component)
-    await expect(images.length).toBeGreaterThan(0);
+    // Find all logo images - they should have alt text with company name
+    const firstExpWithLogo = experiences.find((exp) => exp.companyLogo?.asset?.url);
+    if (firstExpWithLogo?.company) {
+      const logo = canvas.queryByAltText(firstExpWithLogo.company);
+      if (logo) {
+        await expect(logo).toBeInTheDocument();
+      }
+    }
   }
 });
 

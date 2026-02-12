@@ -84,7 +84,7 @@ Default.test("Renders fade overlay when fade is true", async ({ canvas, step }) 
     const fadeOverlay = children[1];
     await expect(fadeOverlay).toHaveClass("from-background");
     await expect(fadeOverlay).toHaveClass("to-background");
-    await expect(fadeOverlay).toHaveClass("bg-gradient-to-b");
+    await expect(fadeOverlay).toHaveClass("bg-linear-to-b");
     await expect(fadeOverlay).toHaveClass("via-transparent");
   });
 });

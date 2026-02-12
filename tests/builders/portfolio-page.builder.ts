@@ -158,7 +158,9 @@ export const technologyBuilder = build<{
   fields: {
     _id: perBuild(() => faker.string.uuid()),
     name: perBuild(() => faker.helpers.arrayElement(["React", "Next.js", "TypeScript", "Node.js", "Tailwind CSS"])),
-    icon: perBuild(() => faker.helpers.arrayElement(["react", "nextjs", "typescript", "nodejs", "tailwindcss"])),
+    icon: perBuild(() =>
+      faker.helpers.arrayElement(["SiReact", "SiNextdotjs", "SiTypescript", "SiNodedotjs", "SiTailwindcss"])
+    ),
     description: perBuild(() => faker.lorem.sentence())
   }
 });
@@ -258,21 +260,24 @@ export const projectBuilder = build<{
     title: perBuild(() => faker.company.catchPhrase()),
     description: perBuild(() => faker.lorem.sentence()),
     longDescription: perBuild(() => faker.lorem.paragraphs(2)),
-    thumbnail: perBuild(() => ({
-      asset: {
-        _id: faker.string.uuid(),
-        url: faker.image.urlLoremFlickr({ category: "technology" }),
-        metadata: {
-          dimensions: {
-            _type: "sanity.imageDimensions" as const,
-            height: 450,
-            width: 800,
-            aspectRatio: 16 / 9
-          },
-          lqip: "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAKABQDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAAMEBf/EABQQAQAAAAAAAAAAAAAAAAAAAAD/xAAVAQEBAAAAAAAAAAAAAAAAAAAAAf/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/AMOA="
+    thumbnail: perBuild(() => {
+      const imageId = faker.string.alphanumeric(28);
+      return {
+        asset: {
+          _id: `image-${imageId}-800x450-jpg`,
+          url: `https://cdn.sanity.io/images/project/dataset/${imageId}-800x450.jpg`,
+          metadata: {
+            dimensions: {
+              _type: "sanity.imageDimensions" as const,
+              height: 450,
+              width: 800,
+              aspectRatio: 16 / 9
+            },
+            lqip: "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAKABQDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAAMEBf/EABQQAQAAAAAAAAAAAAAAAAAAAAD/xAAVAQEBAAAAAAAAAAAAAAAAAAAAAf/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/AMOA="
+          }
         }
-      }
-    })),
+      };
+    }),
     technologies: perBuild(() =>
       Array.from({ length: faker.number.int({ min: 2, max: 6 }) }, () => technologyBuilder.one())
     ),
@@ -518,7 +523,7 @@ export const portfolioPageEducationBuilder = build<NonNullable<PortfolioPageQuer
     },
     education: perBuild(() =>
       Array.from({ length: faker.number.int({ min: 1, max: 3 }) }, () => educationBuilder.one())
-    ) as any
+    )
   }
 });
 
