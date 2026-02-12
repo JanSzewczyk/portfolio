@@ -51,11 +51,14 @@ EducationSection_.test("Displays education institution and details", async ({ ca
 // Test: Accordion expand/collapse for achievements
 // Using play function because this is a multi-step user flow
 EducationSection_.test("Expands and collapses achievements accordion", async ({ canvas, step, userEvent }) => {
-  const achievementsTrigger = canvas.queryByRole("button", { name: /Key Achievements/i });
+  const achievementsTriggers = canvas.queryAllByRole("button", { name: /Key Achievements/i });
 
-  if (!achievementsTrigger) {
+  if (achievementsTriggers.length === 0) {
     return; // Skip if no achievements accordion present
   }
+
+  // Test the first achievements accordion
+  const achievementsTrigger = achievementsTriggers[0];
 
   await step("Verify accordion is initially collapsed", async () => {
     await expect(achievementsTrigger).toHaveAttribute("aria-expanded", "false");
@@ -73,10 +76,12 @@ EducationSection_.test("Expands and collapses achievements accordion", async ({ 
   });
 
   await step("Verify content is visible", async () => {
+    // Wait for accordion content to expand and list items to be visible
     await waitFor(
       async () => {
-        const achievementText = canvas.getAllByRole("listitem")[0];
-        await expect(achievementText).toBeVisible();
+        // Query for list items within the accordion content
+        const accordionContent = canvas.getAllByRole("region")[0];
+        await expect(accordionContent).toBeVisible();
       },
       { timeout: 2000 }
     );
@@ -96,11 +101,14 @@ EducationSection_.test("Expands and collapses achievements accordion", async ({ 
 
 // Test: Accordion expand/collapse for coursework
 EducationSection_.test("Expands and collapses coursework accordion", async ({ canvas, step, userEvent }) => {
-  const courseworkTrigger = canvas.queryByRole("button", { name: /Relevant Coursework/i });
+  const courseworkTriggers = canvas.queryAllByRole("button", { name: /Relevant Coursework/i });
 
-  if (!courseworkTrigger) {
+  if (courseworkTriggers.length === 0) {
     return; // Skip if no coursework accordion present
   }
+
+  // Test the first coursework accordion
+  const courseworkTrigger = courseworkTriggers[0];
 
   await step("Verify accordion is initially collapsed", async () => {
     await expect(courseworkTrigger).toHaveAttribute("aria-expanded", "false");

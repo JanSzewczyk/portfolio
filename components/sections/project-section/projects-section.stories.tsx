@@ -1,15 +1,65 @@
 import { expect } from "storybook/test";
-import { portfolioPageBuilder, portfolioPageProjectsBuilder } from "~/tests/builders/portfolio-page.builder";
+import {
+  portfolioPageBuilder,
+  portfolioPageProjectsBuilder,
+  projectBuilder,
+  projectGroupBuilder,
+  technologyBuilder
+} from "~/tests/builders/portfolio-page.builder";
 
 import { ProjectsSection } from "./projects-section";
 
 import preview from "~/.storybook/preview";
 
+// Create deterministic test data to avoid flaky tests
+const testTech1 = technologyBuilder.one({ overrides: { name: "React", icon: "SiReact" } });
+const testTech2 = technologyBuilder.one({ overrides: { name: "TypeScript", icon: "SiTypescript" } });
+const testTech3 = technologyBuilder.one({ overrides: { name: "Node.js", icon: "SiNodedotjs" } });
+
+const testProject = projectBuilder.one({
+  overrides: {
+    title: "Test Project",
+    description: "A test project description",
+    technologies: [testTech1, testTech2],
+    links: {
+      live: "https://example.com",
+      github: "https://github.com/test/repo"
+    }
+  }
+});
+
+const testGroup1 = projectGroupBuilder.one({
+  overrides: {
+    label: "Featured Projects",
+    projects: [testProject]
+  }
+});
+
+const testGroup2 = projectGroupBuilder.one({
+  overrides: {
+    label: "Open Source",
+    projects: [
+      projectBuilder.one({
+        overrides: {
+          technologies: [testTech3],
+          links: { live: null, github: "https://github.com/test/oss" }
+        }
+      })
+    ]
+  }
+});
+
 const meta = preview.meta({
   title: "Components/Sections/Projects Section",
   component: ProjectsSection,
   args: {
-    projects: portfolioPageProjectsBuilder.one(),
+    projects: {
+      heading: {
+        title: "Featured Work",
+        description: "A collection of projects I've worked on"
+      },
+      projectGroups: [testGroup1, testGroup2]
+    },
     documentId: "test-portfolio-page-id",
     documentType: "portfolioPage"
   },
@@ -47,12 +97,12 @@ ProjectsSection_.test("Renders project group tabs", async ({ canvas, args }) => 
 // Test: Displays projects in the first group by default
 ProjectsSection_.test("Displays projects from the first project group", async ({ canvas, args }) => {
   const firstGroup = args.projects?.projectGroups?.[0];
-  const projectsCount = firstGroup?.projects?.length ?? 0;
+  const firstProject = firstGroup?.projects?.[0];
 
-  if (projectsCount > 0) {
-    // Check that at least one project card is visible
-    const projectCards = canvas.getAllByRole("article");
-    await expect(projectCards.length).toBeGreaterThan(0);
+  if (firstProject?.title) {
+    // Check that the first project is visible by its title
+    const projectTitle = canvas.getByText(firstProject.title);
+    await expect(projectTitle).toBeVisible();
   }
 });
 
@@ -90,16 +140,28 @@ ProjectsSection_.test("Renders live and GitHub links when available", async ({ c
   const firstGroup = args.projects?.projectGroups?.[0];
   const firstProject = firstGroup?.projects?.[0];
 
-  if (firstProject?.links?.live) {
-    const liveLink = canvas.getByRole("link", { name: /live/i });
-    await expect(liveLink).toBeVisible();
-    await expect(liveLink).toHaveAttribute("href", firstProject.links.live);
-  }
+  // First verify the project is visible
+  if (firstProject?.title) {
+    const projectTitle = canvas.getByText(firstProject.title);
+    await expect(projectTitle).toBeVisible();
 
-  if (firstProject?.links?.github) {
-    const githubLink = canvas.getByRole("link", { name: /code/i });
-    await expect(githubLink).toBeVisible();
-    await expect(githubLink).toHaveAttribute("href", firstProject.links.github);
+    // Links are rendered with Button asChild, so they appear as <a> tags
+    // Just find them by text content
+    if (firstProject.links?.live) {
+      const liveLink = canvas.getByText("Live").closest("a");
+      await expect(liveLink).toBeVisible();
+      if (liveLink) {
+        await expect(liveLink).toHaveAttribute("href", firstProject.links.live);
+      }
+    }
+
+    if (firstProject.links?.github) {
+      const githubLink = canvas.getByText("Code").closest("a");
+      await expect(githubLink).toBeVisible();
+      if (githubLink) {
+        await expect(githubLink).toHaveAttribute("href", firstProject.links.github);
+      }
+    }
   }
 });
 
