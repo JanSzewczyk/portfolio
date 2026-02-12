@@ -68,7 +68,7 @@ HeroSectionWithAvatar.test("Renders available status indicator correctly", async
 });
 
 // Test 3: Heading with Typing Animation
-HeroSectionWithAvatar.test("Renders heading with typing animation", async ({ canvas, args }) => {
+HeroSectionWithAvatar.test("Renders heading with typing animation", async ({ canvas }) => {
   const heading = canvas.getByRole("heading", { level: 1 });
   await expect(heading).toBeVisible();
 
@@ -118,7 +118,7 @@ HeroSectionWithAvatar.test("Section has correct heading hierarchy", async ({ can
 
   // Verify the heading uses h1 tag
   const headingTag = heading.tagName.toLowerCase();
-  expect(headingTag).toBe("h1");
+  await expect(headingTag).toBe("h1");
 });
 
 // Test 9: Keyboard Accessibility
@@ -138,15 +138,15 @@ HeroSectionWithAvatar.test("All interactive elements are keyboard accessible", a
 HeroSectionWithAvatar.test("Scroll indicator has proper visual feedback", async ({ canvasElement }) => {
   // Find the scroll indicator (arrow icon at the bottom)
   const scrollIndicator = canvasElement.querySelector(".animate-bounce");
-  expect(scrollIndicator).toBeInTheDocument();
+  await expect(scrollIndicator).toBeInTheDocument();
 });
 
 // Test 17: GridBackground
 HeroSectionWithAvatar.test("GridBackground component is rendered", async ({ canvasElement }) => {
   // Verify section has relative positioning (required for GridBackground)
   const section = canvasElement.querySelector("section");
-  expect(section).toBeInTheDocument();
-  expect(section?.classList.contains("relative")).toBe(true);
+  await expect(section).toBeInTheDocument();
+  await expect(section?.classList.contains("relative")).toBe(true);
 });
 
 // Test 18: Container Layout
@@ -154,18 +154,18 @@ HeroSectionWithAvatar.test("Container has proper layout structure", async ({ can
   const section = canvasElement.querySelector("section");
   const container = section?.querySelector(".container");
 
-  expect(container).toBeInTheDocument();
-  expect(container?.classList.contains("flex")).toBe(true);
+  await expect(container).toBeInTheDocument();
+  await expect(container?.classList.contains("flex")).toBe(true);
 
   // Verify max-width constraint exists
   const maxWidthElement = canvasElement.querySelector(".max-w-4xl");
-  expect(maxWidthElement).toBeInTheDocument();
+  await expect(maxWidthElement).toBeInTheDocument();
 });
 
 // Test 19: Avatar Size
 HeroSectionWithAvatar.test("Avatar has proper size styling", async ({ canvasElement }) => {
   const avatar = canvasElement.querySelector("[class*='size-32']");
-  expect(avatar).toBeInTheDocument();
+  await expect(avatar).toBeInTheDocument();
 });
 
 // Test 20: Clean Name Text
@@ -175,9 +175,9 @@ HeroSectionWithAvatar.test("Name in heading uses stegaClean utility", async ({ c
 
   // Verify text doesn't contain Sanity metadata artifacts (no special characters)
   if (args.personalInfo?.name) {
-    expect(headingText).not.toContain("{");
-    expect(headingText).not.toContain("}");
-    expect(headingText).not.toContain("__");
+    await expect(headingText).not.toContain("{");
+    await expect(headingText).not.toContain("}");
+    await expect(headingText).not.toContain("__");
   }
 });
 
@@ -189,7 +189,7 @@ HeroSectionWithAvatar.test("Name in heading uses stegaClean utility", async ({ c
 HeroSectionWithoutAvatar.test("Renders initials fallback when avatar is missing", async ({ canvas, args }) => {
   // Avatar image should NOT be present
   const avatarImages = canvas.queryAllByRole("img");
-  expect(avatarImages.length).toBe(0);
+  await expect(avatarImages.length).toBe(0);
 
   // Verify initials are calculated and displayed
   if (args.personalInfo?.name) {
@@ -231,16 +231,6 @@ HeroSectionWithoutAvatar.test("Still renders all other content correctly without
 
 // Test 14: Missing Alternative Titles
 HeroSectionWithoutAvatar.test("Handles missing alternative titles gracefully", async ({ canvas }) => {
-  // Override to test null alternativeTitles
-  const storyWithNullTitles = meta.story({
-    args: {
-      personalInfo: portfolioPagePersonalInfoBuilder.one(),
-      hero: portfolioPageHeroBuilder.one({
-        overrides: { alternativeTitles: null }
-      })
-    }
-  });
-
   // Component should still render other elements
   const heading = canvas.getByRole("heading", { level: 1 });
   await expect(heading).toBeVisible();
@@ -248,16 +238,6 @@ HeroSectionWithoutAvatar.test("Handles missing alternative titles gracefully", a
 
 // Test 15: Empty Alternative Titles Array
 HeroSectionWithoutAvatar.test("Handles empty alternative titles array", async ({ canvas }) => {
-  // Override to test empty array
-  const storyWithEmptyTitles = meta.story({
-    args: {
-      personalInfo: portfolioPagePersonalInfoBuilder.one(),
-      hero: portfolioPageHeroBuilder.one({
-        overrides: { alternativeTitles: [] }
-      })
-    }
-  });
-
   // Component should still render correctly
   const heading = canvas.getByRole("heading", { level: 1 });
   await expect(heading).toBeVisible();
@@ -266,8 +246,8 @@ HeroSectionWithoutAvatar.test("Handles empty alternative titles array", async ({
 // Test 16: Section ID
 HeroSectionWithoutAvatar.test("Component renders within section with correct ID", async ({ canvasElement }) => {
   const section = canvasElement.querySelector("section#hero");
-  expect(section).toBeInTheDocument();
+  await expect(section).toBeInTheDocument();
 
   // Verify scroll offset class
-  expect(section?.classList.contains("scroll-m-16")).toBe(true);
+  await expect(section?.classList.contains("scroll-m-16")).toBe(true);
 });

@@ -1,9 +1,5 @@
-import { expect, waitFor } from "storybook/test";
-import {
-  portfolioPageSkillsBuilder,
-  technologyBuilder,
-  technologyGroupBuilder
-} from "~/tests/builders/portfolio-page.builder";
+import { expect } from "storybook/test";
+import { technologyBuilder, technologyGroupBuilder } from "~/tests/builders/portfolio-page.builder";
 
 import { SkillsSection } from "./skills-section";
 
@@ -114,9 +110,7 @@ SkillsSection_Story.test("Renders decorative bottom text", async ({ canvas }) =>
 /**
  * Tests hover interactions on skill cards.
  */
-export const SkillCardHoverInteraction = meta.story({
-  tags: ["test-only"]
-});
+export const SkillCardHoverInteraction = meta.story({});
 
 SkillCardHoverInteraction.test("Displays tooltip on hover for non-featured skills", async ({ canvas, args }) => {
   // Find a non-featured skill (not the first one in a group)
@@ -136,9 +130,7 @@ SkillCardHoverInteraction.test("Displays tooltip on hover for non-featured skill
 /**
  * Tests marquee animation behavior.
  */
-export const MarqueeInteraction = meta.story({
-  tags: ["test-only"]
-});
+export const MarqueeInteraction = meta.story({});
 
 MarqueeInteraction.test("Marquee pauses on hover", async ({ canvas, args }) => {
   const firstTech = args.skills?.technologyGroups?.[0]?.technologies?.[0];
@@ -158,9 +150,7 @@ MarqueeInteraction.test("Marquee pauses on hover", async ({ canvas, args }) => {
 /**
  * Tests desktop Bento Grid layout structure.
  */
-export const DesktopBentoGridLayout = meta.story({
-  tags: ["test-only"]
-});
+export const DesktopBentoGridLayout = meta.story({});
 
 DesktopBentoGridLayout.test("Renders desktop grid with category columns", async ({ canvasElement }) => {
   const desktopGrid = canvasElement.querySelector(".lg\\:block");
@@ -210,9 +200,7 @@ MobileStackedLayout.test("Each group has category badge and skills grid", async 
 /**
  * Tests section heading structure and accessibility.
  */
-export const SectionHeadingStructure = meta.story({
-  tags: ["test-only"]
-});
+export const SectionHeadingStructure = meta.story({});
 
 SectionHeadingStructure.test("Section has proper heading hierarchy", async ({ canvas }) => {
   const mainHeading = canvas.getByRole("heading", { level: 2 });
@@ -245,8 +233,7 @@ export const EmptySkills = meta.story({
     },
     documentId: "portfolio-page",
     documentType: "portfolioPage"
-  },
-  tags: ["test-only"]
+  }
 });
 
 EmptySkills.test("Handles empty technology groups gracefully", async ({ canvas, canvasElement }) => {

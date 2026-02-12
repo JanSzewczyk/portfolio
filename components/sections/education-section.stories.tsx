@@ -58,7 +58,7 @@ EducationSection_.test("Expands and collapses achievements accordion", async ({ 
   }
 
   // Test the first achievements accordion
-  const achievementsTrigger = achievementsTriggers[0];
+  const achievementsTrigger = achievementsTriggers[0]!;
 
   await step("Verify accordion is initially collapsed", async () => {
     await expect(achievementsTrigger).toHaveAttribute("aria-expanded", "false");
@@ -108,7 +108,7 @@ EducationSection_.test("Expands and collapses coursework accordion", async ({ ca
   }
 
   // Test the first coursework accordion
-  const courseworkTrigger = courseworkTriggers[0];
+  const courseworkTrigger = courseworkTriggers[0]!;
 
   await step("Verify accordion is initially collapsed", async () => {
     await expect(courseworkTrigger).toHaveAttribute("aria-expanded", "false");
