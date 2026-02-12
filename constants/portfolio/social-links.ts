@@ -4,19 +4,19 @@ export const SOCIAL_LINKS: SocialLink[] = [
   {
     platform: "GitHub",
     url: "https://github.com/JanSzewczyk",
-    icon: "github",
+    icon: "SiGithub",
     username: "@JanSzewczyk"
   },
   {
     platform: "LinkedIn",
     url: "https://linkedin.com/in/janszewczyk",
-    icon: "linkedin",
+    icon: "SiLinkedin",
     username: "Jan Szewczyk"
   },
   {
-    platform: "Twitter",
+    platform: "X",
     url: "https://x.com/DzikiSzumrak",
-    icon: "twitter",
+    icon: "SiX",
     username: "@DzikiSzumrak"
   }
 ];
