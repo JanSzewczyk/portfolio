@@ -29,7 +29,7 @@
     "test:ui": "vitest --ui",
     "test:unit": "vitest --project=unit --coverage --passWithNoTests",
     "test:watch": "vitest watch --passWithNoTests",
-    "type-check": "tsc --noEmit"
+    "type-check": "next typegen && tsc --noEmit"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
