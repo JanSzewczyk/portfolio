@@ -202,12 +202,6 @@ export const portfolioPageQuery = defineQuery(`
     // Footer
     footer {
       copyrightText,
-      socialLinks[] {
-        _key,
-        platform,
-        url,
-        icon
-      }
     },
 
     // SEO & Metadata

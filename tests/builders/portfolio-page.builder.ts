@@ -9,6 +9,7 @@ type PortfolioProjectGroup = NonNullable<NonNullable<PortfolioPage["projects"]>[
 type PortfolioProject = NonNullable<NonNullable<PortfolioProjectGroup["projects"]>>[number];
 type PortfolioExperience = NonNullable<NonNullable<PortfolioPage["experience"]>["experiences"]>[number];
 type PortfolioEducation = NonNullable<NonNullable<PortfolioPage["education"]>["education"]>[number];
+type PortfolioTechnology = NonNullable<PortfolioTechnologyGroup["technologies"]>[number];
 
 /**
  * Builder for PortfolioPage about section test data.
@@ -157,12 +158,7 @@ export const portfolioPageHeroBuilder = build<NonNullable<PortfolioPageQueryResu
  * @example
  * const technology = technologyBuilder.one();
  */
-export const technologyBuilder = build<{
-  _id: string;
-  name: string | null;
-  icon: string | null;
-  description: string | null;
-}>({
+export const technologyBuilder = build<PortfolioTechnology>({
   fields: {
     _id: perBuild(() => faker.string.uuid()),
     name: perBuild(() => faker.helpers.arrayElement(["React", "Next.js", "TypeScript", "Node.js", "Tailwind CSS"])),
@@ -469,8 +465,7 @@ export const portfolioPageContactBuilder = build<NonNullable<PortfolioPageQueryR
  */
 export const portfolioPageFooterBuilder = build<NonNullable<PortfolioPageQueryResult>["footer"]>({
   fields: {
-    copyrightText: perBuild(() => `${faker.company.name()}. All rights reserved.`),
-    socialLinks: null
+    copyrightText: perBuild(() => `${faker.company.name()}. All rights reserved.`)
   }
 });
 
