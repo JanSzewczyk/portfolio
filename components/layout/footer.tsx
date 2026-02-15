@@ -1,5 +1,6 @@
 import { Button } from "@szum-tech/design-system";
 import { type IconName, ReactIcon } from "~/components/ui/react-icon";
+import { env } from "~/data/env/client";
 import { type PortfolioPageQueryResult } from "~/lib/sanity/types";
 
 type FooterProps = {
@@ -39,8 +40,9 @@ export function Footer({ footer, personalInfo }: FooterProps) {
           </div>
         </div>
 
-        <div className="text-muted-foreground mt-8 border-t pt-8 text-center text-sm">
+        <div className="text-muted-foreground mt-8 flex flex-col items-center justify-between gap-4 border-t pt-8 text-sm md:flex-row">
           <p>{footer?.copyrightText ? `© ${currentYear} ${footer.copyrightText}` : null}</p>
+          <p className="text-muted-foreground/60">v{env.NEXT_PUBLIC_APP_VERSION}</p>
         </div>
       </div>
     </footer>

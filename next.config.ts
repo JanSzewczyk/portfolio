@@ -7,6 +7,9 @@ import { env } from "./data/env/server";
 
 const config: NextConfig = {
   reactStrictMode: true,
+  env: {
+    NEXT_PUBLIC_APP_VERSION: process.env.npm_package_version
+  },
   serverExternalPackages: ["pino", "pino-pretty"],
   reactCompiler: true,
   images: {

@@ -11,9 +11,16 @@ jobs:
   publish:
     name: Publish 📦🚀
     runs-on: ubuntu-latest
+    permissions:
+      contents: write # to be able to publish a GitHub release
+      issues: write # to be able to comment on released issues
+      pull-requests: write # to be able to comment on released pull requests
+      id-token: write # to enable use of OIDC for npm provenance
     steps:
       - name: Checkout code 📚
         uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
       - name: Set up Node 🟢
         uses: actions/setup-node@v6
         with:
@@ -21,10 +28,7 @@ jobs:
           cache: "npm"
       - name: Install packages ⚙️
         run: npm ci
-#        HERE 👇👇👇
-#        Expose block of code below
-#      - name: Publish package 📦🚀
-#        run: npx semantic-release
-#        run: yarn semantic-release
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish package 📦🚀
+        run: npx semantic-release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
