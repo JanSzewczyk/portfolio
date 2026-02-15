@@ -4,11 +4,12 @@ import withPlugins from "next-compose-plugins";
 import withBundleAnalyzer from "@next/bundle-analyzer";
 
 import { env } from "./data/env/server";
+import packageJson from "./package.json";
 
 const config: NextConfig = {
   reactStrictMode: true,
   env: {
-    NEXT_PUBLIC_APP_VERSION: process.env.npm_package_version
+    NEXT_PUBLIC_APP_VERSION: packageJson.version
   },
   serverExternalPackages: ["pino", "pino-pretty"],
   reactCompiler: true,

@@ -7,7 +7,7 @@ When using this configuration in other projects, update this file with your proj
 
 | Category | Technology | Version | Status |
 |----------|------------|---------|--------|
-| Framework | Next.js | 16.1 (App Router, Turbopack) | ✅ Installed |
+| Framework | Next.js | 16.1 (App Router) | ✅ Installed |
 | UI Library | React | 19.2 (with React Compiler) | ✅ Installed |
 | Styling | Tailwind CSS | 4.1 | ✅ Installed |
 | Design System | @szum-tech/design-system | 3.11 (shadcn/ui based) | ✅ Installed |
@@ -35,7 +35,7 @@ These are recommended patterns documented in skills but require installation:
 
 | Type | Tool | Location | Command |
 |------|------|----------|---------|
-| Unit | Vitest 4.0 | `tests/unit/`, `*.test.ts` | `npm run test:unit` |
+| Unit | Vitest 4.0 | `features/`, `components/`, `tests/unit/` | `npm run test:unit` |
 | Component | Storybook 10.2 + Vitest | `*.stories.tsx` | `npm run test:storybook` |
 | E2E | Playwright 1.58 | `tests/e2e/` | `npm run test:e2e` |
 | All | Vitest | - | `npm run test` |
@@ -46,9 +46,14 @@ These are recommended patterns documented in skills but require installation:
 |---------|------|
 | Next.js config | `next.config.ts` |
 | Request logging | `proxy.ts` |
+| ESLint config | `eslint.config.ts` |
+| Prettier config | `prettier.config.ts` |
 | Dependencies | `package.json` |
 | TypeScript | `tsconfig.json` |
-| Tailwind | `app/styles/globals.css` (CSS-first config) |
+| Tailwind | `app/globals.css` (CSS-first config) |
+| Sanity config | `sanity.config.ts`, `sanity.cli.ts` |
+| Playwright | `playwright.config.ts` |
+| Semantic Release | `release.config.js` |
 | Environment vars | `data/env/server.ts`, `data/env/client.ts` |
 | Vitest config | `vitest.config.ts` |
 | Storybook | `.storybook/` |
@@ -104,6 +109,24 @@ featureLogger.warn({ userId }, "Resource not found");
 // Error
 featureLogger.error({ userId, error: err.message }, "Operation failed");
 ```
+
+## Environment Variables
+
+The project uses `@t3-oss/env-nextjs` for type-safe environment variables.
+
+- **Server-side**: `data/env/server.ts`
+- **Client-side**: `data/env/client.ts` (must be prefixed with `NEXT_PUBLIC_`)
+
+### Key Variables
+- `NEXT_PUBLIC_APP_VERSION`: Exposed application version from `package.json` at build time.
+- `SKIP_ENV_VALIDATION`: Set to `true` to skip validation during build/dev.
+
+## Deployment & Releases
+
+- **GitHub Actions**: Workflows in `.github/workflows/`
+  - `publish.yml`: Uses `semantic-release` for automated versioning and GitHub releases on `main` push.
+  - Node version set to `latest` in all workflows.
+- **Semantic Release**: Configured via `release.config.js` using `@szum-tech/semantic-release-config`.
 
 ## React 19 Patterns
 
