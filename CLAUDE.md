@@ -150,7 +150,7 @@ Built-in health endpoint at `/api/health` with multiple URL aliases: `/healthz`,
 ## Conventions
 
 - Commits follow [Conventional Commits](https://www.conventionalcommits.org/) for semantic release
-- ESLint: Uses `@szum-tech/eslint-config` v2.1
+- ESLint: Uses `@szum-tech/eslint-config` v2.2 in `eslint.config.ts`
 - Prettier: Uses `@szum-tech/prettier-config` v1.6
 - Semantic Release: Uses `@szum-tech/semantic-release-config` v2.3
 - React Compiler handles memoization automatically - avoid unnecessary `useMemo`/`useCallback`
