@@ -103,7 +103,8 @@ export const portfolioPageQuery = defineQuery(`
               }
             },
             hotspot,
-            crop
+            crop,
+            alt
           },
           technologies[]-> {
             _id,
@@ -113,7 +114,8 @@ export const portfolioPageQuery = defineQuery(`
           },
           links {
             live,
-            github
+            github,
+            npm
           },
           featured
         }

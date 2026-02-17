@@ -258,13 +258,15 @@ export const projectBuilder = build<PortfolioProject>({
           }
         },
         hotspot: null,
-        crop: null
+        crop: null,
+        alt: faker.lorem.sentence()
       };
     },
     technologies: () => Array.from({ length: faker.number.int({ min: 2, max: 6 }) }, () => technologyBuilder.one()),
     links: () => ({
       live: faker.helpers.arrayElement([faker.internet.url(), null]),
-      github: faker.helpers.arrayElement([faker.internet.url(), null])
+      github: faker.helpers.arrayElement([faker.internet.url(), null]),
+      npm: faker.helpers.arrayElement([faker.internet.url(), null])
     }),
     featured: false
   },
@@ -343,10 +345,10 @@ export const experienceBuilder = build<PortfolioExperience>({
     companyUrl: () => faker.internet.url(),
     location: () => `${faker.location.city()}, ${faker.location.country()}`,
     type: () => faker.helpers.arrayElement(["full-time", "part-time", "contract", "freelance"] as const),
-    startDate: () => faker.date.past({ years: 5 }).toISOString().split("T")[0] ?? null,
+    startDate: () => faker.date.past({ years: 5 }).toISOString(),
     endDate: () => {
       const hasEndDate = faker.datatype.boolean();
-      return hasEndDate ? (faker.date.recent().toISOString().split("T")[0] ?? null) : null;
+      return hasEndDate ? faker.date.recent().toISOString() : null;
     },
     summary: () => faker.lorem.paragraph(),
     responsibilities: () => Array.from({ length: faker.number.int({ min: 3, max: 6 }) }, () => faker.lorem.sentence()),
@@ -394,8 +396,8 @@ export const educationBuilder = build<PortfolioEducation>({
     degree: () => faker.helpers.arrayElement(["Bachelor's Degree", "Master's Degree", "Ph.D."] as const),
     fieldOfStudy: () =>
       faker.helpers.arrayElement(["Computer Science", "Software Engineering", "Information Technology"]),
-    startDate: () => faker.date.past({ years: 10 }).toISOString().split("T")[0] ?? null,
-    endDate: () => faker.date.past({ years: 2 }).toISOString().split("T")[0] ?? null,
+    startDate: () => faker.date.past({ years: 10 }).toISOString(),
+    endDate: () => faker.date.past({ years: 2 }).toISOString(),
     grade: () => faker.helpers.arrayElement(["4.0", "3.8", "3.5", null]),
     thesis: () => ({
       title: faker.lorem.words(5),
