@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.0](https://github.com/JanSzewczyk/portfolio/compare/v1.0.0...v1.1.0) (2026-02-17)
+
+### Features
+
+* add new 192x192 and 512x512 icon components for image generation ([3bf9744](https://github.com/JanSzewczyk/portfolio/commit/3bf974472e1d829d6e8ea2e612818579b18f454e))
+* add new icon components (192x192, 512x512) and improve key handling for lists ([39e3c94](https://github.com/JanSzewczyk/portfolio/commit/39e3c94a4bc32012ed4ea431d7ef5ebf90536662))
+
 ## 1.0.0 (2026-02-15)
 
 ### Features
