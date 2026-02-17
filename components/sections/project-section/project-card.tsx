@@ -30,10 +30,6 @@ export type ProjectCardProps = {
 };
 
 export function ProjectCard({ project, dataSanity }: ProjectCardProps) {
-  const thumbnailUrl = project.thumbnail?.asset?.url
-    ? urlFor(project.thumbnail).auto("format").width(800).height(450).url()
-    : null;
-
   return (
     <Card
       className="group flex h-full flex-col transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
@@ -41,10 +37,10 @@ export function ProjectCard({ project, dataSanity }: ProjectCardProps) {
     >
       <CardHeader>
         <div className="bg-muted mb-4 aspect-video overflow-hidden rounded">
-          {thumbnailUrl ? (
+          {project.thumbnail ? (
             <Image
-              src={thumbnailUrl}
-              alt={stegaClean(project.title) || "Project thumbnail"}
+              src={urlFor(project.thumbnail).auto("format").width(800).height(450).url()}
+              alt={stegaClean(project.thumbnail?.alt) || "Project thumbnail"}
               className="size-full object-cover transition-transform duration-300 group-hover:scale-105"
               width={800}
               height={450}
@@ -90,6 +86,13 @@ export function ProjectCard({ project, dataSanity }: ProjectCardProps) {
           <Button startIcon={<ReactIcon name="SiGithub" />} size="sm" variant="outline" asChild>
             <a href={stegaClean(project.links.github)} target="_blank" rel="noopener noreferrer">
               Code
+            </a>
+          </Button>
+        )}
+        {project.links?.npm && (
+          <Button startIcon={<ReactIcon name="SiNpm" />} size="sm" variant="outline" asChild>
+            <a href={stegaClean(project.links.npm)} target="_blank" rel="noopener noreferrer">
+              NPM
             </a>
           </Button>
         )}

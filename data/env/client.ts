@@ -8,7 +8,7 @@ export const env = createEnv({
     NEXT_PUBLIC_SANITY_PROJECT_ID: z.string().min(1),
     NEXT_PUBLIC_SANITY_DATASET: z.string().min(1),
     NEXT_PUBLIC_SANITY_API_VERSION: z.string().default("2026-01-27"),
-    NEXT_PUBLIC_APP_VERSION: z.string()
+    NEXT_PUBLIC_APP_VERSION: z.string().default("0.0.0")
   },
   experimental__runtimeEnv: {
     NEXT_PUBLIC_VERCEL_URL: process.env.NEXT_PUBLIC_VERCEL_URL,
