@@ -109,24 +109,20 @@ export const portfolioPagePersonalInfoBuilder = build<NonNullable<PortfolioPageQ
             _type: "image" as const,
             asset: {
               _id: `image-${imageId}-400x400-jpg`,
-              _type: "sanity.imageAsset" as const,
-              _createdAt: faker.date.past().toISOString(),
-              _updatedAt: faker.date.recent().toISOString(),
-              _rev: `rev-${faker.string.uuid()}`,
               url: `https://cdn.sanity.io/images/project/dataset/${imageId}-400x400.jpg`,
               metadata: {
-                _type: "sanity.imageMetadata" as const,
                 dimensions: {
                   _type: "sanity.imageDimensions" as const,
                   height: 400,
                   width: 400,
                   aspectRatio: 1
                 },
-                lqip: "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAKABQDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAAMEBf/EABQQAQAAAAAAAAAAAAAAAAAAAAD/xAAVAQEBAAAAAAAAAAAAAAAAAAAAAf/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/AMOA=",
-                hasAlpha: false,
-                isOpaque: true
+                lqip: "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAKABQDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAAMEBf/EABQQAQAAAAAAAAAAAAAAAAAAAAD/xAAVAQEBAAAAAAAAAAAAAAAAAAAAAf/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/AMOA="
               }
-            }
+            },
+            hotspot: null,
+            crop: null,
+            alt: faker.lorem.words(3)
           };
         }
       }
@@ -250,13 +246,8 @@ export const projectBuilder = build<PortfolioProject>({
         _type: "image" as const,
         asset: {
           _id: `image-${imageId}-800x450-jpg`,
-          _type: "sanity.imageAsset" as const,
-          _createdAt: faker.date.past().toISOString(),
-          _updatedAt: faker.date.recent().toISOString(),
-          _rev: `rev-${faker.string.uuid()}`,
           url: `https://cdn.sanity.io/images/project/dataset/${imageId}-800x450.jpg`,
           metadata: {
-            _type: "sanity.imageMetadata" as const,
             dimensions: {
               _type: "sanity.imageDimensions" as const,
               height: 450,
@@ -265,7 +256,9 @@ export const projectBuilder = build<PortfolioProject>({
             },
             lqip: "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAKABQDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAAMEBf/EABQQAQAAAAAAAAAAAAAAAAAAAAD/xAAVAQEBAAAAAAAAAAAAAAAAAAAAAf/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/AMOA="
           }
-        }
+        },
+        hotspot: null,
+        crop: null
       };
     },
     technologies: () => Array.from({ length: faker.number.int({ min: 2, max: 6 }) }, () => technologyBuilder.one()),
@@ -500,7 +493,6 @@ export const portfolioPageBuilder = build<NonNullable<PortfolioPageQueryResult>>
     experience: () => portfolioPageExperienceBuilder.one(),
     education: () => portfolioPageEducationBuilder.one(),
     contact: () => portfolioPageContactBuilder.one(),
-    footer: () => portfolioPageFooterBuilder.one(),
-    seo: null
+    footer: () => portfolioPageFooterBuilder.one()
   }
 });
