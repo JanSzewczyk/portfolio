@@ -147,9 +147,10 @@ type SkillsSectionProps = {
 export function SkillsSection({ skills, documentId, documentType }: SkillsSectionProps) {
   const { createSanityAttribute } = buildSanityAttribute({ documentId, documentType });
 
-  // Collect all technologies from all groups for the marquee
+  // Collect all technologies from all groups for the marquee (deduplicated by _id)
   const allTechnologies =
     skills?.technologyGroups?.flatMap((group) => group.technologies?.filter((tech) => tech.name) ?? []) ?? [];
+  const uniqueTechnologies = Array.from(new Map(allTechnologies.map((tech) => [tech._id, tech])).values());
 
   return (
     <section id={Section.SKILLS} className="py-24">
@@ -161,10 +162,10 @@ export function SkillsSection({ skills, documentId, documentType }: SkillsSectio
         />
 
         {/* Tech logos marquee with enhanced styling */}
-        {allTechnologies.length > 0 && (
+        {uniqueTechnologies.length > 0 && (
           <div className="relative -mx-4 mb-20 sm:-mx-6 lg:-mx-8">
             <Marquee pauseOnHover className="[--duration:50s]">
-              {allTechnologies.map((tech) => (
+              {uniqueTechnologies.map((tech) => (
                 <TechLogo
                   key={tech._id}
                   tech={tech}

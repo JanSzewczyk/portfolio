@@ -89,8 +89,12 @@ export function EducationSection({ education }: EducationSectionProps) {
                           <p className="text-body-sm text-muted-foreground mb-3">{edu.thesis.description}</p>
                           {edu.thesis.technologies && (
                             <div className="flex flex-wrap gap-1.5">
-                              {edu.thesis.technologies.map((tech) => (
-                                <Badge key={tech._id} variant="outline" className="text-body-xs">
+                              {edu.thesis.technologies.map((tech, techIndex) => (
+                                <Badge
+                                  key={`${edu._id}-thesis-${tech._id}-${techIndex}`}
+                                  variant="outline"
+                                  className="text-body-xs"
+                                >
                                   {tech.name}
                                 </Badge>
                               ))}

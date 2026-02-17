@@ -93,9 +93,9 @@ export function ProjectsSection({ projects, documentId, documentType }: Projects
           {tabs.map((tab) => (
             <TabsContent key={tab.value} value={tab.value}>
               <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                {tab.projects.map((item) => (
+                {tab.projects.map((item, index) => (
                   <ProjectCard
-                    key={item.data._id}
+                    key={`${tab.value}-${item.data._id}-${index}`}
                     project={item.data}
                     dataSanity={createSanityAttribute(item.sanityPath)}
                   />
