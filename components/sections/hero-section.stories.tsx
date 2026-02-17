@@ -12,18 +12,15 @@ const meta = preview.meta({
     layout: "fullscreen"
   },
   args: {
+    personalInfo: portfolioPagePersonalInfoBuilder.one({ traits: ["withAvatar"] }),
+    hero: portfolioPageHeroBuilder.one(),
     documentId: "test-portfolio",
     documentType: "portfolioPage"
   }
 });
 
 // Story 1: With Avatar and Available Status
-export const HeroSectionWithAvatar = meta.story({
-  args: {
-    personalInfo: portfolioPagePersonalInfoBuilder.one({ traits: ["withAvatar"] }),
-    hero: portfolioPageHeroBuilder.one()
-  }
-});
+export const HeroSectionWithAvatar = meta.story({});
 
 // Story 2: Without Avatar and Unavailable Status
 export const HeroSectionWithoutAvatar = meta.story({

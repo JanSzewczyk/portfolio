@@ -1,5 +1,6 @@
+import { build } from "mimicry-js";
+
 import { faker } from "@faker-js/faker";
-import { build, perBuild } from "@jackfranklin/test-data-bot";
 import { type PortfolioPageQueryResult } from "~/lib/sanity/types";
 
 /**
@@ -61,14 +62,14 @@ export const contactFormContentBuilder = build<ContactFormContent>({
      */
     extended: {
       overrides: {
-        title: perBuild(() => faker.lorem.words(4)),
-        description: perBuild(() => faker.lorem.paragraphs(1)),
-        successMessage: perBuild(() => faker.lorem.sentence()),
-        submitButtonText: perBuild(() => faker.lorem.words(2)),
+        title: () => faker.lorem.words(4),
+        description: () => faker.lorem.paragraphs(1),
+        successMessage: () => faker.lorem.sentence(),
+        submitButtonText: () => faker.lorem.words(2),
         successView: {
-          title: perBuild(() => faker.lorem.words(5)),
-          description: perBuild(() => faker.lorem.paragraphs(1)),
-          buttonText: perBuild(() => faker.lorem.words(3))
+          title: () => faker.lorem.words(5),
+          description: () => faker.lorem.paragraphs(1),
+          buttonText: () => faker.lorem.words(3)
         }
       }
     },

@@ -1,5 +1,6 @@
+import { build } from "mimicry-js";
+
 import { faker } from "@faker-js/faker";
-import { build, perBuild } from "@jackfranklin/test-data-bot";
 import { type PortfolioPageQueryResult } from "~/lib/sanity/types";
 
 // Extracted types from query result for type-safe builders
@@ -25,12 +26,12 @@ type PortfolioTechnology = NonNullable<PortfolioTechnologyGroup["technologies"]>
 export const portfolioPageAboutBuilder = build<NonNullable<PortfolioPageQueryResult>["about"]>({
   fields: {
     heading: {
-      title: perBuild(() => faker.lorem.words(3)),
-      description: perBuild(() => faker.lorem.sentence())
+      title: () => faker.lorem.words(3),
+      description: () => faker.lorem.sentence()
     },
-    bio: perBuild(() => faker.lorem.paragraphs(2, "\n\n")),
+    bio: () => faker.lorem.paragraphs(2, "\n\n"),
     location: null,
-    stats: perBuild(() => [
+    stats: () => [
       {
         _key: faker.string.uuid(),
         label: "Years Experience",
@@ -55,7 +56,7 @@ export const portfolioPageAboutBuilder = build<NonNullable<PortfolioPageQueryRes
         value: faker.number.int({ min: 5, max: 50 }),
         suffix: "+"
       }
-    ])
+    ]
   }
 });
 
@@ -70,12 +71,12 @@ export const portfolioPageAboutBuilder = build<NonNullable<PortfolioPageQueryRes
  */
 export const portfolioPagePersonalInfoBuilder = build<NonNullable<PortfolioPageQueryResult>["personalInfo"]>({
   fields: {
-    name: perBuild(() => faker.person.fullName()),
-    title: perBuild(() => faker.person.jobTitle()),
-    company: perBuild(() => faker.company.name()),
-    email: perBuild(() => faker.internet.email()),
+    name: () => faker.person.fullName(),
+    title: () => faker.person.jobTitle(),
+    company: () => faker.company.name(),
+    email: () => faker.internet.email(),
     avatar: null,
-    socialLinks: perBuild(() => [
+    socialLinks: () => [
       {
         _key: faker.string.uuid(),
         platform: "GitHub",
@@ -97,12 +98,12 @@ export const portfolioPagePersonalInfoBuilder = build<NonNullable<PortfolioPageQ
         icon: "SiX",
         username: faker.internet.username()
       }
-    ])
+    ]
   },
   traits: {
     withAvatar: {
       overrides: {
-        avatar: perBuild(() => {
+        avatar: () => {
           const imageId = faker.string.alphanumeric(28);
           return {
             _type: "image" as const,
@@ -127,7 +128,7 @@ export const portfolioPagePersonalInfoBuilder = build<NonNullable<PortfolioPageQ
               }
             }
           };
-        })
+        }
       }
     }
   }
@@ -141,8 +142,8 @@ export const portfolioPagePersonalInfoBuilder = build<NonNullable<PortfolioPageQ
  */
 export const portfolioPageHeroBuilder = build<NonNullable<PortfolioPageQueryResult>["hero"]>({
   fields: {
-    alternativeTitles: perBuild(() => [faker.person.jobTitle(), faker.person.jobTitle(), faker.person.jobTitle()]),
-    tagline: perBuild(() => faker.lorem.sentence()),
+    alternativeTitles: () => [faker.person.jobTitle(), faker.person.jobTitle(), faker.person.jobTitle()],
+    tagline: () => faker.lorem.sentence(),
     isAvailable: true
   },
   traits: {
@@ -160,8 +161,8 @@ export const portfolioPageHeroBuilder = build<NonNullable<PortfolioPageQueryResu
  */
 export const technologyBuilder = build<PortfolioTechnology>({
   fields: {
-    _id: perBuild(() => faker.string.uuid()),
-    name: perBuild(() =>
+    _id: () => faker.string.uuid(),
+    name: () =>
       faker.helpers.arrayElement([
         "React",
         "Next.js",
@@ -177,9 +178,8 @@ export const technologyBuilder = build<PortfolioTechnology>({
         "Radix UI",
         "Sanity",
         "Pino"
-      ])
-    ),
-    icon: perBuild(() =>
+      ]),
+    icon: () =>
       faker.helpers.arrayElement([
         "SiReact",
         "SiNextdotjs",
@@ -195,9 +195,8 @@ export const technologyBuilder = build<PortfolioTechnology>({
         "SiSanity",
         "TbTestPipe",
         "VscDebugConsole"
-      ])
-    ),
-    description: perBuild(() => faker.lorem.sentence())
+      ]),
+    description: () => faker.lorem.sentence()
   }
 });
 
@@ -209,12 +208,10 @@ export const technologyBuilder = build<PortfolioTechnology>({
  */
 export const technologyGroupBuilder = build<PortfolioTechnologyGroup>({
   fields: {
-    _id: perBuild(() => faker.string.uuid()),
-    label: perBuild(() => faker.helpers.arrayElement(["Frontend", "Backend", "Mobile", "DevOps & Tools", "Other"])),
-    featured: perBuild(() => faker.datatype.boolean()),
-    technologies: perBuild(() =>
-      Array.from({ length: faker.number.int({ min: 3, max: 8 }) }, () => technologyBuilder.one())
-    )
+    _id: () => faker.string.uuid(),
+    label: () => faker.helpers.arrayElement(["Frontend", "Backend", "Mobile", "DevOps & Tools", "Other"]),
+    featured: () => faker.datatype.boolean(),
+    technologies: () => Array.from({ length: faker.number.int({ min: 3, max: 8 }) }, () => technologyBuilder.one())
   }
 });
 
@@ -227,11 +224,11 @@ export const technologyGroupBuilder = build<PortfolioTechnologyGroup>({
 export const portfolioPageSkillsBuilder = build<NonNullable<PortfolioPageQueryResult>["skills"]>({
   fields: {
     heading: {
-      title: perBuild(() => faker.lorem.words(3)),
-      description: perBuild(() => faker.lorem.sentence())
+      title: () => faker.lorem.words(3),
+      description: () => faker.lorem.sentence()
     },
-    technologyGroups: perBuild(() => Array.from({ length: 4 }, () => technologyGroupBuilder.one())),
-    decorativeBottomText: perBuild(() => faker.lorem.words(2))
+    technologyGroups: () => technologyGroupBuilder.many(4),
+    decorativeBottomText: () => faker.lorem.words(2)
   }
 });
 
@@ -243,11 +240,11 @@ export const portfolioPageSkillsBuilder = build<NonNullable<PortfolioPageQueryRe
  */
 export const projectBuilder = build<PortfolioProject>({
   fields: {
-    _id: perBuild(() => faker.string.uuid()),
-    title: perBuild(() => faker.company.catchPhrase()),
-    description: perBuild(() => faker.lorem.sentence()),
-    longDescription: perBuild(() => faker.lorem.paragraphs(2)),
-    thumbnail: perBuild(() => {
+    _id: () => faker.string.uuid(),
+    title: () => faker.company.catchPhrase(),
+    description: () => faker.lorem.sentence(),
+    longDescription: () => faker.lorem.paragraphs(2),
+    thumbnail: () => {
       const imageId = faker.string.alphanumeric(28);
       return {
         _type: "image" as const,
@@ -270,14 +267,12 @@ export const projectBuilder = build<PortfolioProject>({
           }
         }
       };
+    },
+    technologies: () => Array.from({ length: faker.number.int({ min: 2, max: 6 }) }, () => technologyBuilder.one()),
+    links: () => ({
+      live: faker.helpers.arrayElement([faker.internet.url(), null]),
+      github: faker.helpers.arrayElement([faker.internet.url(), null])
     }),
-    technologies: perBuild(() =>
-      Array.from({ length: faker.number.int({ min: 2, max: 6 }) }, () => technologyBuilder.one())
-    ),
-    links: perBuild(() => ({
-      live: faker.datatype.boolean() ? faker.internet.url() : null,
-      github: faker.datatype.boolean() ? faker.internet.url() : null
-    })),
     featured: false
   },
   traits: {
@@ -300,12 +295,10 @@ export const projectBuilder = build<PortfolioProject>({
  */
 export const projectGroupBuilder = build<PortfolioProjectGroup>({
   fields: {
-    _id: perBuild(() => faker.string.uuid()),
-    label: perBuild(() =>
-      faker.helpers.arrayElement(["Featured Projects", "Web Applications", "Mobile Apps", "Open Source"])
-    ),
-    description: perBuild(() => faker.lorem.sentence()),
-    projects: perBuild(() => Array.from({ length: faker.number.int({ min: 3, max: 6 }) }, () => projectBuilder.one()))
+    _id: () => faker.string.uuid(),
+    label: () => faker.helpers.arrayElement(["Featured Projects", "Web Applications", "Mobile Apps", "Open Source"]),
+    description: () => faker.lorem.sentence(),
+    projects: () => Array.from({ length: faker.number.int({ min: 3, max: 6 }) }, () => projectBuilder.one())
   }
 });
 
@@ -318,12 +311,10 @@ export const projectGroupBuilder = build<PortfolioProjectGroup>({
 export const portfolioPageProjectsBuilder = build<NonNullable<PortfolioPageQueryResult>["projects"]>({
   fields: {
     heading: {
-      title: perBuild(() => faker.lorem.words(3)),
-      description: perBuild(() => faker.lorem.sentence())
+      title: () => faker.lorem.words(3),
+      description: () => faker.lorem.sentence()
     },
-    projectGroups: perBuild(() =>
-      Array.from({ length: faker.number.int({ min: 2, max: 4 }) }, () => projectGroupBuilder.one())
-    )
+    projectGroups: () => Array.from({ length: faker.number.int({ min: 2, max: 4 }) }, () => projectGroupBuilder.one())
   }
 });
 
@@ -335,10 +326,10 @@ export const portfolioPageProjectsBuilder = build<NonNullable<PortfolioPageQuery
  */
 export const experienceBuilder = build<PortfolioExperience>({
   fields: {
-    _id: perBuild(() => faker.string.uuid()),
-    role: perBuild(() => faker.person.jobTitle()),
-    company: perBuild(() => faker.company.name()),
-    companyLogo: perBuild(() => {
+    _id: () => faker.string.uuid(),
+    role: () => faker.person.jobTitle(),
+    company: () => faker.company.name(),
+    companyLogo: () => {
       const imageId = faker.string.alphanumeric(28);
       return {
         asset: {
@@ -355,25 +346,19 @@ export const experienceBuilder = build<PortfolioExperience>({
           }
         }
       };
-    }),
-    companyUrl: perBuild(() => faker.internet.url()),
-    location: perBuild(() => `${faker.location.city()}, ${faker.location.country()}`),
-    type: perBuild(() => faker.helpers.arrayElement(["full-time", "part-time", "contract", "freelance"] as const)),
-    startDate: perBuild(() => faker.date.past({ years: 5 }).toISOString().split("T")[0] ?? null),
-    endDate: perBuild(() => {
+    },
+    companyUrl: () => faker.internet.url(),
+    location: () => `${faker.location.city()}, ${faker.location.country()}`,
+    type: () => faker.helpers.arrayElement(["full-time", "part-time", "contract", "freelance"] as const),
+    startDate: () => faker.date.past({ years: 5 }).toISOString().split("T")[0] ?? null,
+    endDate: () => {
       const hasEndDate = faker.datatype.boolean();
       return hasEndDate ? (faker.date.recent().toISOString().split("T")[0] ?? null) : null;
-    }),
-    summary: perBuild(() => faker.lorem.paragraph()),
-    responsibilities: perBuild(() =>
-      Array.from({ length: faker.number.int({ min: 3, max: 6 }) }, () => faker.lorem.sentence())
-    ),
-    achievements: perBuild(() =>
-      Array.from({ length: faker.number.int({ min: 2, max: 4 }) }, () => faker.lorem.sentence())
-    ),
-    technologies: perBuild(() =>
-      Array.from({ length: faker.number.int({ min: 3, max: 8 }) }, () => technologyBuilder.one())
-    )
+    },
+    summary: () => faker.lorem.paragraph(),
+    responsibilities: () => Array.from({ length: faker.number.int({ min: 3, max: 6 }) }, () => faker.lorem.sentence()),
+    achievements: () => Array.from({ length: faker.number.int({ min: 2, max: 4 }) }, () => faker.lorem.sentence()),
+    technologies: () => Array.from({ length: faker.number.int({ min: 3, max: 8 }) }, () => technologyBuilder.one())
   },
   traits: {
     withoutLogo: {
@@ -394,12 +379,10 @@ export const experienceBuilder = build<PortfolioExperience>({
 export const portfolioPageExperienceBuilder = build<NonNullable<PortfolioPageQueryResult>["experience"]>({
   fields: {
     heading: {
-      title: perBuild(() => faker.lorem.words(3)),
-      description: perBuild(() => faker.lorem.sentence())
+      title: () => faker.lorem.words(3),
+      description: () => faker.lorem.sentence()
     },
-    experiences: perBuild(() =>
-      Array.from({ length: faker.number.int({ min: 2, max: 4 }) }, () => experienceBuilder.one())
-    )
+    experiences: () => Array.from({ length: faker.number.int({ min: 2, max: 4 }) }, () => experienceBuilder.one())
   }
 });
 
@@ -411,18 +394,17 @@ export const portfolioPageExperienceBuilder = build<NonNullable<PortfolioPageQue
  */
 export const educationBuilder = build<PortfolioEducation>({
   fields: {
-    _id: perBuild(() => faker.string.uuid()),
-    institution: perBuild(() => faker.company.name() + " University"),
-    institutionUrl: perBuild(() => faker.internet.url()),
-    location: perBuild(() => `${faker.location.city()}, ${faker.location.country()}`),
-    degree: perBuild(() => faker.helpers.arrayElement(["Bachelor's Degree", "Master's Degree", "Ph.D."] as const)),
-    fieldOfStudy: perBuild(() =>
-      faker.helpers.arrayElement(["Computer Science", "Software Engineering", "Information Technology"])
-    ),
-    startDate: perBuild(() => faker.date.past({ years: 10 }).toISOString().split("T")[0] ?? null),
-    endDate: perBuild(() => faker.date.past({ years: 2 }).toISOString().split("T")[0] ?? null),
-    grade: perBuild(() => faker.helpers.arrayElement(["4.0", "3.8", "3.5", null])),
-    thesis: perBuild(() => ({
+    _id: () => faker.string.uuid(),
+    institution: () => faker.company.name() + " University",
+    institutionUrl: () => faker.internet.url(),
+    location: () => `${faker.location.city()}, ${faker.location.country()}`,
+    degree: () => faker.helpers.arrayElement(["Bachelor's Degree", "Master's Degree", "Ph.D."] as const),
+    fieldOfStudy: () =>
+      faker.helpers.arrayElement(["Computer Science", "Software Engineering", "Information Technology"]),
+    startDate: () => faker.date.past({ years: 10 }).toISOString().split("T")[0] ?? null,
+    endDate: () => faker.date.past({ years: 2 }).toISOString().split("T")[0] ?? null,
+    grade: () => faker.helpers.arrayElement(["4.0", "3.8", "3.5", null]),
+    thesis: () => ({
       title: faker.lorem.words(5),
       description: faker.lorem.paragraph(),
       technologies: Array.from({ length: faker.number.int({ min: 3, max: 6 }) }, () => technologyBuilder.one()),
@@ -432,11 +414,9 @@ export const educationBuilder = build<PortfolioEducation>({
         description: faker.lorem.sentence()
       },
       url: faker.internet.url()
-    })),
-    achievements: perBuild(() =>
-      Array.from({ length: faker.number.int({ min: 2, max: 4 }) }, () => faker.lorem.sentence())
-    ),
-    coursework: perBuild(() => Array.from({ length: faker.number.int({ min: 4, max: 8 }) }, () => faker.lorem.words(3)))
+    }),
+    achievements: () => Array.from({ length: faker.number.int({ min: 2, max: 4 }) }, () => faker.lorem.sentence()),
+    coursework: () => Array.from({ length: faker.number.int({ min: 4, max: 8 }) }, () => faker.lorem.words(3))
   }
 });
 
@@ -449,12 +429,10 @@ export const educationBuilder = build<PortfolioEducation>({
 export const portfolioPageEducationBuilder = build<NonNullable<PortfolioPageQueryResult>["education"]>({
   fields: {
     heading: {
-      title: perBuild(() => faker.lorem.words(2)),
-      description: perBuild(() => faker.lorem.sentence())
+      title: () => faker.lorem.words(2),
+      description: () => faker.lorem.sentence()
     },
-    education: perBuild(() =>
-      Array.from({ length: faker.number.int({ min: 1, max: 3 }) }, () => educationBuilder.one())
-    )
+    education: () => Array.from({ length: faker.number.int({ min: 1, max: 3 }) }, () => educationBuilder.one())
   }
 });
 
@@ -467,8 +445,8 @@ export const portfolioPageEducationBuilder = build<NonNullable<PortfolioPageQuer
 export const portfolioPageContactBuilder = build<NonNullable<PortfolioPageQueryResult>["contact"]>({
   fields: {
     heading: {
-      title: perBuild(() => faker.lorem.words(3)),
-      description: perBuild(() => faker.lorem.sentence())
+      title: () => faker.lorem.words(3),
+      description: () => faker.lorem.sentence()
     },
     form: {
       enabled: true,
@@ -483,8 +461,8 @@ export const portfolioPageContactBuilder = build<NonNullable<PortfolioPageQueryR
       }
     },
     quickChat: {
-      title: perBuild(() => faker.lorem.words(4)),
-      description: perBuild(() => faker.lorem.sentence())
+      title: () => faker.lorem.words(4),
+      description: () => faker.lorem.sentence()
     }
   }
 });
@@ -497,7 +475,7 @@ export const portfolioPageContactBuilder = build<NonNullable<PortfolioPageQueryR
  */
 export const portfolioPageFooterBuilder = build<NonNullable<PortfolioPageQueryResult>["footer"]>({
   fields: {
-    copyrightText: perBuild(() => `${faker.company.name()}. All rights reserved.`)
+    copyrightText: () => `${faker.company.name()}. All rights reserved.`
   }
 });
 
@@ -509,20 +487,20 @@ export const portfolioPageFooterBuilder = build<NonNullable<PortfolioPageQueryRe
  */
 export const portfolioPageBuilder = build<NonNullable<PortfolioPageQueryResult>>({
   fields: {
-    _id: perBuild(() => faker.string.uuid()),
+    _id: () => faker.string.uuid(),
     _type: "portfolioPage" as const,
-    _createdAt: perBuild(() => faker.date.past().toISOString()),
-    _updatedAt: perBuild(() => faker.date.recent().toISOString()),
-    _rev: perBuild(() => `rev-${faker.string.uuid()}`),
-    personalInfo: perBuild(() => portfolioPagePersonalInfoBuilder.one()),
-    hero: perBuild(() => portfolioPageHeroBuilder.one()),
-    about: perBuild(() => portfolioPageAboutBuilder.one()),
-    skills: perBuild(() => portfolioPageSkillsBuilder.one()),
-    projects: perBuild(() => portfolioPageProjectsBuilder.one()),
-    experience: perBuild(() => portfolioPageExperienceBuilder.one()),
-    education: perBuild(() => portfolioPageEducationBuilder.one()),
-    contact: perBuild(() => portfolioPageContactBuilder.one()),
-    footer: perBuild(() => portfolioPageFooterBuilder.one()),
+    _createdAt: () => faker.date.past().toISOString(),
+    _updatedAt: () => faker.date.recent().toISOString(),
+    _rev: () => `rev-${faker.string.uuid()}`,
+    personalInfo: () => portfolioPagePersonalInfoBuilder.one(),
+    hero: () => portfolioPageHeroBuilder.one(),
+    about: () => portfolioPageAboutBuilder.one(),
+    skills: () => portfolioPageSkillsBuilder.one(),
+    projects: () => portfolioPageProjectsBuilder.one(),
+    experience: () => portfolioPageExperienceBuilder.one(),
+    education: () => portfolioPageEducationBuilder.one(),
+    contact: () => portfolioPageContactBuilder.one(),
+    footer: () => portfolioPageFooterBuilder.one(),
     seo: null
   }
 });
