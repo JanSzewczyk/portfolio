@@ -67,8 +67,8 @@ export function ProjectCard({ project, dataSanity }: ProjectCardProps) {
 
       <CardContent className="flex-1">
         <div className="flex flex-wrap gap-1.5">
-          {project.technologies?.slice(0, 4).map((tech: { _id: string; name: string | null }) => (
-            <Badge key={tech._id} variant="secondary">
+          {project.technologies?.slice(0, 4).map((tech: { _id: string; name: string | null }, techIndex: number) => (
+            <Badge key={`${project._id}-${tech._id}-${techIndex}`} variant="secondary">
               {tech.name}
             </Badge>
           ))}

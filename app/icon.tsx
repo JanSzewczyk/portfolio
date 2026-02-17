@@ -21,7 +21,7 @@ export default function Icon() {
         color: "#EAEAEAFF"
       }}
     >
-      NS
+      JS
     </div>,
     {
       ...size
