@@ -38,6 +38,7 @@ These are recommended patterns documented in skills but require installation:
 | Unit | Vitest 4.0 | `features/`, `components/`, `tests/unit/` | `npm run test:unit` |
 | Component | Storybook 10.2 + Vitest | `*.stories.tsx` | `npm run test:storybook` |
 | E2E | Playwright 1.58 | `tests/e2e/` | `npm run test:e2e` |
+| Test Data | mimicry-js 3.1 | `tests/builders/` | Builders for mock data |
 | All | Vitest | - | `npm run test` |
 
 ## Key Files
@@ -228,6 +229,54 @@ export async function createResource(formData: FormData) {
 }
 ```
 
+## Test Data Builders Pattern
+
+> **Full documentation**: See `.claude/skills/builder-factory/` skill.
+
+**Library:** `mimicry-js` + `@faker-js/faker` (default English locale)
+
+**File Location:** `tests/builders/[type-name].builder.ts`
+
+```typescript
+import { build, sequence, oneOf } from "mimicry-js";
+import { faker } from "@faker-js/faker";
+
+/**
+ * Builder for User test data.
+ *
+ * @example
+ * const user = userBuilder.one();
+ *
+ * @example
+ * const users = userBuilder.many(5);
+ *
+ * @example
+ * const admin = userBuilder.one({ traits: "admin" });
+ */
+export const userBuilder = build<User>({
+  fields: {
+    id: sequence(),
+    name: () => faker.person.fullName(),
+    email: () => faker.internet.email(),
+    role: "user",
+    isActive: true,
+  },
+  traits: {
+    admin: {
+      overrides: { role: "admin" },
+    },
+  },
+});
+```
+
+**Key Methods:**
+- `.one()` - Generate single instance
+- `.many(count)` - Generate array of instances
+- `sequence()` - Auto-increment (1, 2, 3...)
+- `oneOf(...)` - Random value from options (use at field level only)
+- `() => faker.something()` - Fresh value per build (use inside functions)
+- `faker.helpers.arrayElement([...])` - Random array element (use inside nested functions)
+
 ## Common Pitfalls
 
 These are frequent mistakes to avoid when working with this stack:
@@ -311,6 +360,27 @@ function SubmitButton() {
   const { pending } = useFormStatus();
   return <button disabled={pending}>Submit</button>;
 }
+```
+
+### Test Data Builders (mimicry-js)
+
+❌ **Don't:** Use `oneOf()` inside nested arrow functions
+```typescript
+// ❌ WRONG - oneOf inside nested function
+links: () => ({
+  live: () => oneOf([faker.internet.url(), null])
+})
+```
+
+✅ **Do:** Use `oneOf()` at field level or `faker.helpers.arrayElement()` inside functions
+```typescript
+// ✅ CORRECT - oneOf at field level
+status: oneOf("active", "inactive")
+
+// ✅ CORRECT - faker.helpers.arrayElement inside function
+links: () => ({
+  live: faker.helpers.arrayElement([faker.internet.url(), null])
+})
 ```
 
 <!--
@@ -404,7 +474,7 @@ Skills provide detailed documentation and patterns. Located in `.claude/skills/`
 | `tailwind-css-4`      | Tailwind v4 CSS-first config, design system integration      | Styling components, responsive design, theming |
 | `t3-env-validation`   | Type-safe env vars with @t3-oss/env-nextjs and Zod           | Environment configuration, validation          |
 | `structured-logging`  | Pino logging with context enrichment and log levels          | Server-side logging, debugging, monitoring     |
-| `builder-factory`     | Test data builders with test-data-bot                        | Creating mock data for tests/stories           |
+| `builder-factory`     | Test data builders with mimicry-js and Faker.js              | Creating mock data for tests/stories           |
 | `api-test`            | API endpoint testing with Playwright                         | Testing route handlers, API endpoints          |
 | `accessibility-audit` | WCAG accessibility audits                                    | Auditing components for a11y                   |
 | `performance-optimization` | Bundle analysis, React rendering, DB query optimization | Performance issues, slow pages, large bundles  |
