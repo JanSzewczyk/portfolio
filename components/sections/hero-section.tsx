@@ -44,7 +44,10 @@ export function HeroSection({ personalInfo, hero, documentId, documentType }: He
         <div className="mx-auto flex max-w-4xl flex-col items-center text-center">
           <Avatar className="size-32">
             {personalInfo?.avatar ? (
-              <AvatarImage src={urlFor(personalInfo.avatar).auto("format").url()} alt={personalInfo?.avatar?.alt} />
+              <AvatarImage
+                src={urlFor(personalInfo.avatar).auto("format").url()}
+                alt={personalInfo?.avatar?.alt ?? undefined}
+              />
             ) : null}
             <AvatarFallback className="text-3xl">{initials}</AvatarFallback>
           </Avatar>

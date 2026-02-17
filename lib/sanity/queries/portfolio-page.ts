@@ -12,8 +12,18 @@ export const portfolioPageQuery = defineQuery(`
       company,
       email,
       avatar {
-        ...,
-        asset->
+        _type,
+        asset-> {
+          _id,
+          url,
+          metadata {
+            dimensions,
+            lqip
+          }
+        },
+        hotspot,
+        crop,
+        alt
       },
       socialLinks[] {
         _key,
@@ -83,8 +93,17 @@ export const portfolioPageQuery = defineQuery(`
           description,
           longDescription,
           thumbnail {
-            ...,
-            asset->
+            _type,
+            asset-> {
+              _id,
+              url,
+              metadata {
+                dimensions,
+                lqip
+              }
+            },
+            hotspot,
+            crop
           },
           technologies[]-> {
             _id,
@@ -202,23 +221,6 @@ export const portfolioPageQuery = defineQuery(`
     // Footer
     footer {
       copyrightText,
-    },
-
-    // SEO & Metadata
-    seo {
-      metaTitle,
-      metaDescription,
-      ogImage {
-        asset-> {
-          _id,
-          url,
-          metadata {
-            dimensions,
-            lqip
-          }
-        }
-      },
-      keywords
     }
   }
 `);
