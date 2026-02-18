@@ -3,6 +3,20 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.1](https://github.com/JanSzewczyk/portfolio/compare/v1.1.0...v1.1.1) (2026-02-18)
+
+### Bug Fixes
+
+* enhance project card with NPM link support and improve metadata handling ([3549e7f](https://github.com/JanSzewczyk/portfolio/commit/3549e7f3eed0500d41b3584241c27915e58900dd))
+
+### Miscellaneous Chores
+
+* refactor test data builders to use mimicry-js and update package dependencies ([8fce885](https://github.com/JanSzewczyk/portfolio/commit/8fce8859d9443ac588d2d3fb33488feb00f664bd))
+
+### Code Refactoring
+
+* update avatar handling and image metadata structure in portfolio page ([797de56](https://github.com/JanSzewczyk/portfolio/commit/797de5645e3d9a2da1b59970d39c71dac5d31045))
+
 ## [1.1.0](https://github.com/JanSzewczyk/portfolio/compare/v1.0.0...v1.1.0) (2026-02-17)
 
 ### Features
