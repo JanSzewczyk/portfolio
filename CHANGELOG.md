@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.1](https://github.com/JanSzewczyk/portfolio/compare/v1.2.0...v1.2.1) (2026-02-22)
+
+### Bug Fixes
+
+* Update imports and dependencies for improved compatibility ([37c5250](https://github.com/JanSzewczyk/portfolio/commit/37c525022fa4f02d5fa9dc38d58d1e6be4261513))
+
 ## [1.2.0](https://github.com/JanSzewczyk/portfolio/compare/v1.1.1...v1.2.0) (2026-02-22)
 
 ### Features
