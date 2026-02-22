@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import * as React from "react";
 
 import { SendIcon, MailboxIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
@@ -32,7 +32,7 @@ export type ContactFormProps = {
 };
 
 export function ContactForm({ onSubmitAction, contactFormContent }: ContactFormProps) {
-  const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
+  const [isSubmitted, setIsSubmitted] = React.useState<boolean>(false);
 
   const form = useForm<ContactFormData>({
     resolver: zodResolver(contactFormSchema),
