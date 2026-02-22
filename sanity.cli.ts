@@ -4,14 +4,15 @@
  **/
 import { defineCliConfig } from "sanity/cli";
 
-const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID;
-const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET;
+const projectId = process.env.SANITY_STUDIO_API_PROJECT_ID;
+const dataset = process.env.SANITY_STUDIO_API_DATASET;
 
 export default defineCliConfig({
   api: { projectId, dataset },
   deployment: {
-    appId: "juuyslopxpq4fl70pr55ual9"
+    appId: process.env.SANITY_STUDIO_DEPLOYMENT_APP_ID
   },
+
   schemaExtraction: {
     path: "lib/sanity/schema.json"
   },

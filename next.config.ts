@@ -7,6 +7,11 @@ import { env } from "./data/env/server";
 import packageJson from "./package.json";
 
 const config: NextConfig = {
+  logging: {
+    fetches: {
+      fullUrl: true
+    }
+  },
   reactStrictMode: true,
   env: {
     NEXT_PUBLIC_APP_VERSION: packageJson.version

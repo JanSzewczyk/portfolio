@@ -9,20 +9,33 @@ import {
   ProjectsSection,
   SkillsSection
 } from "~/components/sections";
+import { createLogger } from "~/lib/logger";
 import { sanityFetch } from "~/lib/sanity/live";
 import { portfolioPageQuery } from "~/lib/sanity/queries/portfolio-page";
 
+const logger = createLogger({ module: "portfolio-page" });
+
 async function loadData() {
-  const { data: portfolioPage } = await sanityFetch({ query: portfolioPageQuery });
+  logger.debug({ query: "portfolioPageQuery" }, "Fetching portfolio page data");
+
+  const { data: portfolioPage } = await sanityFetch({ query: portfolioPageQuery, params: {} });
 
   if (!portfolioPage) {
+    logger.warn({ query: "portfolioPageQuery" }, "Portfolio page not found");
     notFound();
   }
+
+  logger.info(
+    { documentId: portfolioPage._id, documentType: portfolioPage._type },
+    "Portfolio page loaded successfully"
+  );
 
   return { portfolioPage };
 }
 
 export default async function HomePage() {
+  logger.info("Rendering home page");
+
   const { portfolioPage } = await loadData();
 
   return (

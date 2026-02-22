@@ -93,7 +93,6 @@ Default.test("Button Has Correct Role", async ({ canvas, step }) => {
  * Note: The actual theme depends on Storybook's dark mode setting.
  */
 export const InitialState = meta.story({
-  tags: ["test-only"],
   play: async ({ canvas, step }) => {
     await step("Verify button is visible and enabled", async () => {
       const button = canvas.getByRole("button");
@@ -121,7 +120,6 @@ export const InitialState = meta.story({
  * Verifies complete cycle: initial -> second -> third -> initial
  */
 export const FullThemeCycle = meta.story({
-  tags: ["test-only"],
   play: async ({ canvas, step, userEvent }) => {
     const button = canvas.getByRole("button");
     const themesVisited: string[] = [];
@@ -177,7 +175,6 @@ export const FullThemeCycle = meta.story({
  * Verifies Enter key press cycles through themes.
  */
 export const KeyboardAccessibilityEnter = meta.story({
-  tags: ["test-only"],
   play: async ({ canvas, step, userEvent }) => {
     const button = canvas.getByRole("button");
 
@@ -219,7 +216,6 @@ export const KeyboardAccessibilityEnter = meta.story({
  * Verifies Space key press cycles through themes.
  */
 export const KeyboardAccessibilitySpace = meta.story({
-  tags: ["test-only"],
   play: async ({ canvas, step, userEvent }) => {
     const button = canvas.getByRole("button");
 
@@ -261,7 +257,6 @@ export const KeyboardAccessibilitySpace = meta.story({
  * Verifies tooltip appears when hovering over the button.
  */
 export const TooltipDisplayOnHover = meta.story({
-  tags: ["test-only"],
   play: async ({ canvas, step, userEvent }) => {
     const button = canvas.getByRole("button");
 
@@ -296,7 +291,6 @@ export const TooltipDisplayOnHover = meta.story({
  * Verifies tooltip content is consistent with button state.
  */
 export const TooltipShowsThemeName = meta.story({
-  tags: ["test-only"],
   play: async ({ canvas, step, userEvent }) => {
     const button = canvas.getByRole("button");
 
@@ -353,7 +347,6 @@ export const TooltipShowsThemeName = meta.story({
  * Verifies aria-label includes current theme and next theme information.
  */
 export const AccessibleAriaLabels = meta.story({
-  tags: ["test-only"],
   play: async ({ canvas, step, userEvent }) => {
     const button = canvas.getByRole("button");
 
@@ -404,7 +397,6 @@ export const AccessibleAriaLabels = meta.story({
  * Verifies visual feedback updates with theme state.
  */
 export const IconChangesWithTheme = meta.story({
-  tags: ["test-only"],
   play: async ({ canvas, step, userEvent }) => {
     const button = canvas.getByRole("button");
 

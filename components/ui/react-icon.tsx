@@ -5,7 +5,6 @@ import { type IconType } from "react-icons";
 import * as SimpleIcons from "react-icons/si";
 import * as TablerIcons from "react-icons/tb";
 import * as VSCodeIcons from "react-icons/vsc";
-import logger from "~/lib/logger";
 
 const ICONS = { ...SimpleIcons, ...TablerIcons, ...VSCodeIcons } as const;
 
@@ -20,7 +19,8 @@ export type DynamicIconProps = {
 export function ReactIcon({ name, className, size }: DynamicIconProps) {
   const Icon = ICONS[name] as IconType | undefined;
   if (!Icon) {
-    logger.warn(`Icon "${name}" not found in react-icons`);
+    // eslint-disable-next-line
+    console.warn(`Icon "${name}" not found in react-icons`);
     return null;
   }
   return <Icon className={className} size={size} />;

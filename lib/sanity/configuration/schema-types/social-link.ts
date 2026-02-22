@@ -1,6 +1,6 @@
 import { defineField, defineType } from "sanity";
 
-import { IconSearchInput } from "~/lib/sanity/configuration/schema-types/components/icon-search-input";
+import { IconSearchInput } from "./components/icon-search-input";
 
 /**
  * Social Link Schema (Reusable Object Type)
