@@ -125,3 +125,6 @@ src/styles
 # Ignore Sanity files
 .sanity
 /lib/sanity/schema.json
+
+# Claude
+/.claude/*.local.*

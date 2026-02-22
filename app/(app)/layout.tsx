@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 
 import { draftMode } from "next/headers";
 import { VisualEditing } from "next-sanity/visual-editing";
