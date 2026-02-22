@@ -22,7 +22,7 @@ async function loadData() {
 
   if (!portfolioPage) {
     logger.warn({ query: "portfolioPageQuery" }, "Portfolio page not found");
-    throw new Error(`Could not find portfolio page data`);
+    notFound();
   }
 
   logger.info(
