@@ -18,7 +18,7 @@ const logger = createLogger({ module: "portfolio-page" });
 async function loadData() {
   logger.debug({ query: "portfolioPageQuery" }, "Fetching portfolio page data");
 
-  const { data: portfolioPage } = await sanityFetch({ query: portfolioPageQuery, params: {} });
+  const { data: portfolioPage } = await sanityFetch({ query: portfolioPageQuery });
 
   if (!portfolioPage) {
     logger.warn({ query: "portfolioPageQuery" }, "Portfolio page not found");
