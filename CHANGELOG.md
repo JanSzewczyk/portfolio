@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.2.0](https://github.com/JanSzewczyk/portfolio/compare/v1.1.1...v1.2.0) (2026-02-22)
+
+### Features
+
+* Add custom 404 Not Found page with navigation back to home ([b683e10](https://github.com/JanSzewczyk/portfolio/commit/b683e10bad876e3f88b756110a088d497e7232c5))
+
+### Bug Fixes
+
+* Ensure HTTPS protocol for Vercel URL in layout, robots, and sitemap files ([04fc829](https://github.com/JanSzewczyk/portfolio/commit/04fc829e06cb53ff61362736068a1dd48a2d792e))
+* Improve styling and structure of 404 Not Found page ([b83a8cb](https://github.com/JanSzewczyk/portfolio/commit/b83a8cb982f390277cb30f1e760ae8c0b620fd89))
+* Update fallback URLs in layout, robots, and sitemap files to use HTTPS ([4804986](https://github.com/JanSzewczyk/portfolio/commit/4804986e337606e5058d85245bf346add9f34458))
+* Update route types import path and enable environment validation in PR check workflow ([7df11b6](https://github.com/JanSzewczyk/portfolio/commit/7df11b6174c64c49d91d1ae546d220110e1582fc))
+* Update Sanity configuration in environment files and improve logging in API routes ([095fe32](https://github.com/JanSzewczyk/portfolio/commit/095fe326d00aacf2b590c1a5650ee0c27440a7e3))
+* Update SANITY_REVALIDATE_SECRET to use secrets for enhanced security ([4bcc816](https://github.com/JanSzewczyk/portfolio/commit/4bcc816e362a9d270e2cf216f65a950578d218e5))
+* Update Vercel URL type in environment configuration and add Sanity Studio secrets to PR check workflow ([b25e788](https://github.com/JanSzewczyk/portfolio/commit/b25e788a800657a1357c284a43d8f37cf35b15b7))
+
+### Miscellaneous Chores
+
+* remove `package-lock.json` file to switch to another package manager or lockfile system ([ff1278e](https://github.com/JanSzewczyk/portfolio/commit/ff1278e0bdfe7fa577fb7274f38f0576ba6c3eb5))
+
 ## [1.1.1](https://github.com/JanSzewczyk/portfolio/compare/v1.1.0...v1.1.1) (2026-02-18)
 
 ### Bug Fixes
