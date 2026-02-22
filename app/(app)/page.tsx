@@ -34,9 +34,9 @@ async function loadData() {
 }
 
 export default async function HomePage() {
-  logger.info("Rendering home page");
-
   const { portfolioPage } = await loadData();
+
+  logger.info("Rendering home page");
 
   return (
     <>
