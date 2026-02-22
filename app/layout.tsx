@@ -8,7 +8,11 @@ import { env } from "~/data/env/client";
 
 import "./globals.css";
 
-const siteUrl = env.NEXT_PUBLIC_VERCEL_URL || "http://localhost:3000";
+const siteUrl = env.NEXT_PUBLIC_VERCEL_URL
+  ? env.NEXT_PUBLIC_VERCEL_URL.startsWith("http")
+    ? env.NEXT_PUBLIC_VERCEL_URL
+    : `https://${env.NEXT_PUBLIC_VERCEL_URL}`
+  : "http://localhost:3000";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
