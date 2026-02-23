@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.3.0](https://github.com/JanSzewczyk/portfolio/compare/v1.2.1...v1.3.0) (2026-02-23)
+
+### Features
+
+* Implement SEO data fetching and structured data generation ([0fb2c5f](https://github.com/JanSzewczyk/portfolio/commit/0fb2c5f0f515ff637f8087535477ab0500621699))
+* Refactor SEO and portfolio data fetching functions for improved error handling ([73df5cc](https://github.com/JanSzewczyk/portfolio/commit/73df5ccd5ebc6df38c6472f63b15cc8f7f31e4d6))
+* Update Sanity configuration and metadata building for improved environment variable handling ([5345aa1](https://github.com/JanSzewczyk/portfolio/commit/5345aa169265659aaec13e681e21b53affd08b6b))
+
 ## [1.2.1](https://github.com/JanSzewczyk/portfolio/compare/v1.2.0...v1.2.1) (2026-02-22)
 
 ### Bug Fixes
