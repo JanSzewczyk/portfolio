@@ -2,7 +2,6 @@ import "server-only";
 
 import { type Metadata } from "next";
 
-import { PERSONAL_INFO } from "~/constants/portfolio";
 import { type SeoQueryResult } from "~/lib/sanity/types";
 
 /**
@@ -10,14 +9,14 @@ import { type SeoQueryResult } from "~/lib/sanity/types";
  */
 export function buildMetadata({ siteUrl, seoData }: { siteUrl: string; seoData: SeoQueryResult | null }): Metadata {
   // Get personal info from Sanity or fallback
-  const name = seoData?.personalInfo?.name || PERSONAL_INFO.name;
-  const title = seoData?.personalInfo?.title || PERSONAL_INFO.title;
+  const name = seoData?.personalInfo?.name ?? "";
+  const title = seoData?.personalInfo?.title ?? "";
 
   // Get SEO data from Sanity or fallback
   const metaTitle = seoData?.seo?.metaTitle || `${name} | ${title}`;
   const metaDescription =
     seoData?.seo?.metaDescription ||
-    `Frontend Engineer from Cracow, Poland specializing in React, Next.js, TypeScript, and React Native. Creator of @szum-tech/design-system and open source tools.`;
+    `Frontend Engineer from Cracow, Poland specializing in React, Next.js, TypeScript, and React Native.`;
   const keywords = seoData?.seo?.keywords || [
     "Frontend Engineer",
     "Frontend Developer",
@@ -45,7 +44,7 @@ export function buildMetadata({ siteUrl, seoData }: { siteUrl: string; seoData: 
   const twitterTitle = ogTitle;
   const twitterDescription = ogDescription;
   const twitterImage = seoData?.seo?.twitterImage?.asset?.url || ogImage;
-  const twitterCreator = seoData?.seo?.twitterCreator || "@DzikiSzumrak";
+  const twitterCreator = seoData?.seo?.twitterCreator ?? "";
 
   // Build metadata object
   const metadata: Metadata = {
