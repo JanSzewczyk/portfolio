@@ -1,1 +1,2 @@
-export { fetchSeoData } from "./seo";
+export { getSeoData } from "./seo";
+export { getPortfolioPageData } from "./portfolio-page";

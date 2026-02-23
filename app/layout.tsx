@@ -5,7 +5,7 @@ import { type Metadata, type Viewport } from "next";
 import { ThemeProvider } from "~/components/providers/theme-provider";
 import { StructuredData } from "~/components/seo/structured-data";
 import { env } from "~/data/env/client";
-import { fetchSeoData } from "~/lib/sanity/services";
+import { getSeoData } from "~/lib/sanity/services";
 import { buildMetadata } from "~/lib/seo/utils";
 
 import "./globals.css";
@@ -17,7 +17,8 @@ const siteUrl = env.NEXT_PUBLIC_VERCEL_URL
   : "http://localhost:3000";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const seoData = await fetchSeoData();
+  const [, seoData] = await getSeoData();
+
   return buildMetadata({ siteUrl, seoData });
 }
 
@@ -33,7 +34,8 @@ export const viewport: Viewport = {
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const seoData = await fetchSeoData();
+  const [, seoData] = await getSeoData();
+
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
