@@ -1,0 +1,1 @@
+export { fetchSeoData } from "./seo";

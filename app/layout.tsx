@@ -5,6 +5,8 @@ import { type Metadata, type Viewport } from "next";
 import { ThemeProvider } from "~/components/providers/theme-provider";
 import { StructuredData } from "~/components/seo/structured-data";
 import { env } from "~/data/env/client";
+import { fetchSeoData } from "~/lib/sanity/services";
+import { buildMetadata } from "~/lib/seo/utils";
 
 import "./globals.css";
 
@@ -14,80 +16,10 @@ const siteUrl = env.NEXT_PUBLIC_VERCEL_URL
     : `https://${env.NEXT_PUBLIC_VERCEL_URL}`
   : "http://localhost:3000";
 
-export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
-
-  title: {
-    default: "Jan Szewczyk | Frontend Engineer & Open Source Creator",
-    template: "%s | Jan Szewczyk"
-  },
-
-  description:
-    "Frontend Engineer from Cracow, Poland specializing in React, Next.js, TypeScript, and React Native. Creator of @szum-tech/design-system and open source tools.",
-
-  keywords: [
-    "Frontend Engineer",
-    "Frontend Developer",
-    "React Developer",
-    "Next.js",
-    "TypeScript",
-    "React Native",
-    "Open Source",
-    "Cracow Poland",
-    "Web Development",
-    "UI/UX",
-    "@szum-tech",
-    "Jan Szewczyk",
-    "Szum-Tech",
-    "Szumrak Technologies"
-  ],
-
-  authors: [{ name: "Jan Szewczyk", url: siteUrl }],
-
-  creator: "Jan Szewczyk",
-
-  openGraph: {
-    type: "website",
-    locale: "en_US",
-    url: siteUrl,
-    siteName: "Jan Szewczyk - Frontend Engineer",
-    title: "Jan Szewczyk | Frontend Engineer & Open Source Creator",
-    description:
-      "Frontend Engineer from Cracow, Poland specializing in React, Next.js, TypeScript, and React Native. Creator of @szum-tech/design-system.",
-    images: [
-      {
-        url: "/og-image.png",
-        width: 1200,
-        height: 630,
-        alt: "Jan Szewczyk - Frontend Engineer Portfolio"
-      }
-    ]
-  },
-
-  twitter: {
-    card: "summary_large_image",
-    title: "Jan Szewczyk | Frontend Engineer & Open Source Creator",
-    description: "Frontend Engineer specializing in React, Next.js, TypeScript. Creator of @szum-tech/design-system.",
-    images: ["/og-image.png"],
-    creator: "@DzikiSzumrak"
-  },
-
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1
-    }
-  },
-
-  alternates: {
-    canonical: siteUrl
-  }
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const seoData = await fetchSeoData();
+  return buildMetadata({ siteUrl, seoData });
+}
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -101,10 +33,11 @@ export const viewport: Viewport = {
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const seoData = await fetchSeoData();
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <StructuredData />
+        <StructuredData siteUrl={siteUrl} seoData={seoData} />
         <link rel="preconnect" href="https://github.com" />
         <link rel="preconnect" href="https://avatars.githubusercontent.com" />
         <link rel="dns-prefetch" href="https://github.com" />

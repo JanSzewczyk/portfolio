@@ -57,6 +57,7 @@
     "nextjs-react@szum-tech": true,
     "code-quality@szum-tech": true,
     "dev-experience@szum-tech": true,
-    "testing@szum-tech": true
+    "testing@szum-tech": true,
+    "firebase-auth@szum-tech": true
   }
 }
