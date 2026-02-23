@@ -565,20 +565,163 @@ export const portfolioPage = defineType({
           validation: (rule) => rule.max(160)
         }),
         defineField({
+          name: "keywords",
+          title: "Keywords",
+          type: "array",
+          description: "SEO keywords",
+          of: [{ type: "string" }]
+        }),
+        defineField({
           name: "ogImage",
           title: "Open Graph Image",
           type: "image",
           description: "Image shown when sharing on social media (1200x630px recommended)",
           options: {
             hotspot: true
+          },
+          fields: [
+            defineField({
+              name: "alt",
+              type: "string",
+              title: "Alternative text"
+            })
+          ]
+        }),
+        defineField({
+          name: "ogTitle",
+          title: "Open Graph Title",
+          type: "string",
+          description: "Title for Open Graph (defaults to meta title if not provided)"
+        }),
+        defineField({
+          name: "ogDescription",
+          title: "Open Graph Description",
+          type: "text",
+          description: "Description for Open Graph (defaults to meta description if not provided)",
+          rows: 2
+        }),
+        defineField({
+          name: "twitterCardType",
+          title: "Twitter Card Type",
+          type: "string",
+          description: "Twitter card type",
+          initialValue: "summary_large_image",
+          options: {
+            list: [
+              { title: "Summary Large Image", value: "summary_large_image" },
+              { title: "Summary", value: "summary" },
+              { title: "App", value: "app" },
+              { title: "Player", value: "player" }
+            ]
           }
         }),
         defineField({
-          name: "keywords",
-          title: "Keywords",
+          name: "twitterSite",
+          title: "Twitter Site",
+          type: "string",
+          description: "Twitter site handle (e.g., @username)"
+        }),
+        defineField({
+          name: "twitterCreator",
+          title: "Twitter Creator",
+          type: "string",
+          description: "Twitter creator handle (e.g., @username)"
+        }),
+        defineField({
+          name: "twitterImage",
+          title: "Twitter Image",
+          type: "image",
+          description: "Image shown when sharing on Twitter (1200x630px recommended)",
+          options: {
+            hotspot: true
+          },
+          fields: [
+            defineField({
+              name: "alt",
+              type: "string",
+              title: "Alternative text"
+            })
+          ]
+        }),
+        defineField({
+          name: "noindex",
+          title: "No Index",
+          type: "boolean",
+          description: "Prevent this page from being indexed by search engines"
+        }),
+        defineField({
+          name: "nofollow",
+          title: "No Follow",
+          type: "boolean",
+          description: "Tell search engines not to follow links on this page"
+        }),
+        defineField({
+          name: "noarchive",
+          title: "No Archive",
+          type: "boolean",
+          description: "Prevent search engines from caching this page"
+        }),
+        defineField({
+          name: "canonicalUrl",
+          title: "Canonical URL",
+          type: "string",
+          description: "Canonical URL for this page (defaults to site URL if not provided)"
+        }),
+        defineField({
+          name: "alternateUrls",
+          title: "Alternate URLs",
           type: "array",
-          description: "SEO keywords",
-          of: [{ type: "string" }]
+          description: "Alternate language versions of this page",
+          of: [
+            {
+              type: "object",
+              fields: [
+                defineField({
+                  name: "hreflang",
+                  title: "Hreflang",
+                  type: "string",
+                  description: "Language code (e.g., en-US, pl-PL)",
+                  validation: (rule) => rule.required()
+                }),
+                defineField({
+                  name: "url",
+                  title: "URL",
+                  type: "url",
+                  description: "Alternate page URL",
+                  validation: (rule) => rule.required()
+                })
+              ]
+            }
+          ]
+        }),
+        defineField({
+          name: "organizationName",
+          title: "Organization Name",
+          type: "string",
+          description: "Organization name for structured data"
+        }),
+        defineField({
+          name: "organizationLogo",
+          title: "Organization Logo",
+          type: "image",
+          description: "Organization logo for structured data",
+          options: {
+            hotspot: true
+          },
+          fields: [
+            defineField({
+              name: "alt",
+              type: "string",
+              title: "Alternative text"
+            })
+          ]
+        }),
+        defineField({
+          name: "sameAsUrls",
+          title: "Same As URLs",
+          type: "array",
+          description: "Additional URLs associated with the organization or person (e.g., social profiles)",
+          of: [{ type: "url" }]
         })
       ]
     })

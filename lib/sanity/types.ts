@@ -307,14 +307,47 @@ export type PortfolioPage = {
   seo?: {
     metaTitle?: string;
     metaDescription?: string;
+    keywords?: Array<string>;
     ogImage?: {
       asset?: SanityImageAssetReference;
       media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
+      alt?: string;
       _type: "image";
     };
-    keywords?: Array<string>;
+    ogTitle?: string;
+    ogDescription?: string;
+    twitterCardType?: "summary_large_image" | "summary" | "app" | "player";
+    twitterSite?: string;
+    twitterCreator?: string;
+    twitterImage?: {
+      asset?: SanityImageAssetReference;
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: "image";
+    };
+    noindex?: boolean;
+    nofollow?: boolean;
+    noarchive?: boolean;
+    canonicalUrl?: string;
+    alternateUrls?: Array<{
+      hreflang?: string;
+      url?: string;
+      _key: string;
+    }>;
+    organizationName?: string;
+    organizationLogo?: {
+      asset?: SanityImageAssetReference;
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: "image";
+    };
+    sameAsUrls?: Array<string>;
   };
 };
 
@@ -680,15 +713,123 @@ export type PortfolioPageQueryResult = {
   seo?: {
     metaTitle?: string;
     metaDescription?: string;
+    keywords?: Array<string>;
     ogImage?: {
       asset?: SanityImageAssetReference;
       media?: unknown;
       hotspot?: SanityImageHotspot;
       crop?: SanityImageCrop;
+      alt?: string;
       _type: "image";
     };
-    keywords?: Array<string>;
+    ogTitle?: string;
+    ogDescription?: string;
+    twitterCardType?: "app" | "player" | "summary_large_image" | "summary";
+    twitterSite?: string;
+    twitterCreator?: string;
+    twitterImage?: {
+      asset?: SanityImageAssetReference;
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: "image";
+    };
+    noindex?: boolean;
+    nofollow?: boolean;
+    noarchive?: boolean;
+    canonicalUrl?: string;
+    alternateUrls?: Array<{
+      hreflang?: string;
+      url?: string;
+      _key: string;
+    }>;
+    organizationName?: string;
+    organizationLogo?: {
+      asset?: SanityImageAssetReference;
+      media?: unknown;
+      hotspot?: SanityImageHotspot;
+      crop?: SanityImageCrop;
+      alt?: string;
+      _type: "image";
+    };
+    sameAsUrls?: Array<string>;
   };
+} | null;
+
+// Source: lib/sanity/queries/seo.ts
+// Variable: seoQuery
+// Query: *[_type == "portfolioPage"][0] {    seo {      metaTitle,      metaDescription,      keywords,      ogImage { asset-> { _id, url, metadata { dimensions } }, hotspot, crop, alt },      ogTitle,      ogDescription,      twitterCardType,      twitterSite,      twitterCreator,      twitterImage { asset-> { _id, url, metadata { dimensions } }, hotspot, crop, alt },      noindex,      nofollow,      noarchive,      canonicalUrl,      alternateUrls[] { hreflang, url },      organizationName,      organizationLogo { asset-> { _id, url, metadata { dimensions } }, hotspot, crop, alt },      sameAsUrls    },    personalInfo {      name,      title,      email,      avatar { asset-> { _id, url }, alt },      company    }  }
+export type SeoQueryResult = {
+  seo: {
+    metaTitle: string | null;
+    metaDescription: string | null;
+    keywords: Array<string> | null;
+    ogImage: {
+      asset: {
+        _id: string;
+        url: string | null;
+        metadata: {
+          dimensions: SanityImageDimensions | null;
+        } | null;
+      } | null;
+      hotspot: SanityImageHotspot | null;
+      crop: SanityImageCrop | null;
+      alt: string | null;
+    } | null;
+    ogTitle: string | null;
+    ogDescription: string | null;
+    twitterCardType: "app" | "player" | "summary_large_image" | "summary" | null;
+    twitterSite: string | null;
+    twitterCreator: string | null;
+    twitterImage: {
+      asset: {
+        _id: string;
+        url: string | null;
+        metadata: {
+          dimensions: SanityImageDimensions | null;
+        } | null;
+      } | null;
+      hotspot: SanityImageHotspot | null;
+      crop: SanityImageCrop | null;
+      alt: string | null;
+    } | null;
+    noindex: boolean | null;
+    nofollow: boolean | null;
+    noarchive: boolean | null;
+    canonicalUrl: string | null;
+    alternateUrls: Array<{
+      hreflang: string | null;
+      url: string | null;
+    }> | null;
+    organizationName: string | null;
+    organizationLogo: {
+      asset: {
+        _id: string;
+        url: string | null;
+        metadata: {
+          dimensions: SanityImageDimensions | null;
+        } | null;
+      } | null;
+      hotspot: SanityImageHotspot | null;
+      crop: SanityImageCrop | null;
+      alt: string | null;
+    } | null;
+    sameAsUrls: Array<string> | null;
+  } | null;
+  personalInfo: {
+    name: string | null;
+    title: string | null;
+    email: string | null;
+    avatar: {
+      asset: {
+        _id: string;
+        url: string | null;
+      } | null;
+      alt: string | null;
+    } | null;
+    company: string | null;
+  } | null;
 } | null;
 
 // Query TypeMap
@@ -696,5 +837,6 @@ import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
     '\n  *[_type == "portfolioPage"][0] {\n    ...,\n    // Personal Information\n    personalInfo {\n      name,\n      title,\n      company,\n      email,\n      avatar {\n        _type,\n        asset-> {\n          _id,\n          url,\n          metadata {\n            dimensions,\n            lqip\n          }\n        },\n        hotspot,\n        crop,\n        alt\n      },\n      socialLinks[] {\n        _key,\n        platform,\n        url,\n        icon,\n        username\n      }\n    },\n\n    // Hero Section\n    hero {\n      alternativeTitles,\n      tagline,\n      isAvailable\n    },\n\n    // About Section\n    about {\n      heading {\n        title,\n        description\n      },\n      bio,\n      location,\n      stats[] {\n        _key,\n        label,\n        value,\n        suffix\n      }\n    },\n\n    // Skills Section\n    skills {\n      heading {\n        title,\n        description\n      },\n      technologyGroups[]-> {\n        _id,\n        label,\n        featured,\n        technologies[]-> {\n          _id,\n          name,\n          icon,\n          description\n        }\n      },\n      decorativeBottomText\n    },\n\n    // Projects Section\n    projects {\n      heading {\n        title,\n        description\n      },\n      projectGroups[]-> {\n        _id,\n        label,\n        description,\n        projects[]-> {\n          _id,\n          title,\n          description,\n          longDescription,\n          thumbnail {\n            _type,\n            asset-> {\n              _id,\n              url,\n              metadata {\n                dimensions,\n                lqip\n              }\n            },\n            hotspot,\n            crop,\n            alt\n          },\n          technologies[]-> {\n            _id,\n            name,\n            icon,\n            description\n          },\n          links {\n            live,\n            github,\n            npm\n          },\n          featured\n        }\n      }\n    },\n\n    // Experience Section\n    experience {\n      heading {\n        title,\n        description\n      },\n      experiences[]-> {\n        _id,\n        role,\n        company,\n        companyLogo {\n          asset-> {\n            _id,\n            url,\n            metadata {\n              dimensions,\n              lqip\n            }\n          }\n        },\n        companyUrl,\n        location,\n        type,\n        startDate,\n        endDate,\n        summary,\n        responsibilities,\n        achievements,\n        technologies[]-> {\n          _id,\n          name,\n          icon,\n          description\n        }\n      }\n    },\n\n    // Education Section\n    education {\n      heading {\n        title,\n        description\n      },\n      education[]-> {\n        _id,\n        institution,\n        institutionUrl,\n        location,\n        degree,\n        fieldOfStudy,\n        startDate,\n        endDate,\n        grade,\n        thesis {\n          title,\n          description,\n          technologies[]-> {\n            _id,\n            name,\n            icon,\n            description\n          },\n          project-> {\n            _id,\n            title,\n            description\n          },\n          url\n        },\n        achievements,\n        coursework\n      }\n    },\n\n    // Contact Section\n    contact {\n      heading {\n        title,\n        description\n      },\n      form {\n        enabled,\n        title,\n        description,\n        successMessage,\n        submitButtonText,\n        successView {\n          title,\n          description,\n          buttonText\n        }\n      },\n      quickChat {\n        title,\n        description\n      }\n    },\n\n    // Footer\n    footer {\n      copyrightText,\n    }\n  }\n': PortfolioPageQueryResult;
+    '\n  *[_type == "portfolioPage"][0] {\n    seo {\n      metaTitle,\n      metaDescription,\n      keywords,\n      ogImage { asset-> { _id, url, metadata { dimensions } }, hotspot, crop, alt },\n      ogTitle,\n      ogDescription,\n      twitterCardType,\n      twitterSite,\n      twitterCreator,\n      twitterImage { asset-> { _id, url, metadata { dimensions } }, hotspot, crop, alt },\n      noindex,\n      nofollow,\n      noarchive,\n      canonicalUrl,\n      alternateUrls[] { hreflang, url },\n      organizationName,\n      organizationLogo { asset-> { _id, url, metadata { dimensions } }, hotspot, crop, alt },\n      sameAsUrls\n    },\n    personalInfo {\n      name,\n      title,\n      email,\n      avatar { asset-> { _id, url }, alt },\n      company\n    }\n  }\n': SeoQueryResult;
   }
 }
