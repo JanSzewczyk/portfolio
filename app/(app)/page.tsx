@@ -9,26 +9,14 @@ import {
   ProjectsSection,
   SkillsSection
 } from "~/components/sections";
-import { createLogger } from "~/lib/logger";
-import { sanityFetch } from "~/lib/sanity/live";
-import { portfolioPageQuery } from "~/lib/sanity/queries/portfolio-page";
-
-const logger = createLogger({ module: "portfolio-page" });
+import { getPortfolioPageData } from "~/lib/sanity/services";
 
 async function loadData() {
-  logger.debug({ query: "portfolioPageQuery" }, "Fetching portfolio page data");
+  const [error, portfolioPage] = await getPortfolioPageData();
 
-  const { data: portfolioPage } = await sanityFetch({ query: portfolioPageQuery });
-
-  if (!portfolioPage) {
-    logger.warn({ query: "portfolioPageQuery" }, "Portfolio page not found");
+  if (error) {
     notFound();
   }
-
-  logger.info(
-    { documentId: portfolioPage._id, documentType: portfolioPage._type },
-    "Portfolio page loaded successfully"
-  );
 
   return { portfolioPage };
 }
@@ -36,47 +24,45 @@ async function loadData() {
 export default async function HomePage() {
   const { portfolioPage } = await loadData();
 
-  logger.info("Rendering home page");
-
   return (
     <>
-      <Navigation personalInfo={portfolioPage?.personalInfo} />
+      <Navigation personalInfo={portfolioPage.personalInfo} />
       <main>
         <HeroSection
-          personalInfo={portfolioPage?.personalInfo}
-          hero={portfolioPage?.hero}
+          personalInfo={portfolioPage.personalInfo}
+          hero={portfolioPage.hero}
           documentId={portfolioPage._id}
           documentType={portfolioPage._type}
         />
-        <AboutSection about={portfolioPage?.about} documentId={portfolioPage._id} documentType={portfolioPage._type} />
+        <AboutSection about={portfolioPage.about} documentId={portfolioPage._id} documentType={portfolioPage._type} />
         <SkillsSection
-          skills={portfolioPage?.skills}
+          skills={portfolioPage.skills}
           documentId={portfolioPage._id}
           documentType={portfolioPage._type}
         />
         <ProjectsSection
-          projects={portfolioPage?.projects}
+          projects={portfolioPage.projects}
           documentId={portfolioPage._id}
           documentType={portfolioPage._type}
         />
         <ExperienceSection
-          experience={portfolioPage?.experience}
+          experience={portfolioPage.experience}
           documentId={portfolioPage._id}
           documentType={portfolioPage._type}
         />
         <EducationSection
-          education={portfolioPage?.education}
+          education={portfolioPage.education}
           documentId={portfolioPage._id}
           documentType={portfolioPage._type}
         />
         <ContactSection
-          personalInfo={portfolioPage?.personalInfo}
-          contact={portfolioPage?.contact}
+          personalInfo={portfolioPage.personalInfo}
+          contact={portfolioPage.contact}
           documentId={portfolioPage._id}
           documentType={portfolioPage._type}
         />
       </main>
-      <Footer personalInfo={portfolioPage?.personalInfo} footer={portfolioPage?.footer} />
+      <Footer personalInfo={portfolioPage.personalInfo} footer={portfolioPage.footer} />
     </>
   );
 }
