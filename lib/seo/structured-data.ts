@@ -17,12 +17,18 @@ export function buildPersonSchema({ siteUrl, seoData }: { siteUrl: string; seoDa
   const description = seoData?.seo?.metaDescription || "";
   const sameAsUrls = seoData?.seo?.sameAsUrls || [];
 
+  // Get structured data fields from Sanity or use fallback values
+  const alternateNames = seoData?.seo?.alternateNames || [];
+  const addressLocality = seoData?.seo?.addressLocality || "";
+  const addressCountry = seoData?.seo?.addressCountry || "";
+  const knowsAbout = seoData?.seo?.knowsAbout || [];
+
   return {
     "@context": "https://schema.org",
     "@type": "Person",
     "@id": `${siteUrl}#person`,
     name,
-    alternateName: ["Jan Szewczyk", "JanSzewczyk"],
+    alternateName: alternateNames,
     jobTitle: title,
     description,
     image: {
@@ -34,20 +40,11 @@ export function buildPersonSchema({ siteUrl, seoData }: { siteUrl: string; seoDa
     email: `mailto:${email}`,
     address: {
       "@type": "PostalAddress",
-      addressLocality: "Cracow",
-      addressCountry: "PL"
+      addressLocality,
+      addressCountry
     },
     sameAs: sameAsUrls,
-    knowsAbout: [
-      "React",
-      "Next.js",
-      "TypeScript",
-      "React Native",
-      "Frontend Development",
-      "Web Development",
-      "Design Systems",
-      "Tailwind CSS"
-    ],
+    knowsAbout,
     worksFor: {
       "@type": "Organization",
       name: company

@@ -84,7 +84,7 @@ export function EducationSection({ education }: EducationSectionProps) {
                     <CardContent className="space-y-4">
                       {edu.thesis ? (
                         <div className="bg-muted/50 rounded border p-4">
-                          <h4 className="text-body-lg mb-2 font-semibold">Master&apos;s Thesis</h4>
+                          <h3 className="text-body-lg mb-2 font-semibold">Master&apos;s Thesis</h3>
                           <p className="text-body-md text-primary mb-1 font-medium">{edu.thesis.title}</p>
                           <p className="text-body-sm text-muted-foreground mb-3">{edu.thesis.description}</p>
                           {edu.thesis.technologies && (

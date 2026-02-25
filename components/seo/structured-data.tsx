@@ -1,6 +1,7 @@
 import { type SeoQueryResult } from "~/lib/sanity/types";
 import {
   buildBreadcrumbSchema,
+  buildOrganizationSchema,
   buildPersonSchema,
   buildProfilePageSchema,
   buildWebPageSchema,
@@ -18,6 +19,7 @@ export function StructuredData({ siteUrl, seoData }: StructuredDataProps) {
   const webPageSchema = buildWebPageSchema({ siteUrl, seoData });
   const profilePageSchema = buildProfilePageSchema({ siteUrl, seoData });
   const breadcrumbSchema = buildBreadcrumbSchema({ siteUrl });
+  const organizationSchema = buildOrganizationSchema({ siteUrl, seoData });
 
   return (
     <>
@@ -45,6 +47,11 @@ export function StructuredData({ siteUrl, seoData }: StructuredDataProps) {
         id="breadcrumb-schema"
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
+      <script
+        id="organization-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
       />
     </>
   );

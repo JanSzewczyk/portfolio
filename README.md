@@ -58,9 +58,10 @@ a contact form for inquiries.
 
 ### 🔍 SEO Optimized
 
-- Structured data (JSON-LD)
+- Structured data (JSON-LD) - Person, Organization, WebSite, WebPage schemas
 - Open Graph and Twitter meta tags
 - Dynamic sitemap and robots.txt
+- PWA manifest for mobile installability
 - Perfect Lighthouse scores
 
 ### 🧪 Comprehensive Testing
@@ -88,7 +89,7 @@ a contact form for inquiries.
 
 | Category       | Technology                                                                         | Version |
 | -------------- | ---------------------------------------------------------------------------------- | ------- |
-| Design System  | [@szum-tech/design-system](https://www.npmjs.com/package/@szum-tech/design-system) | 3.11    |
+| Design System  | [@szum-tech/design-system](https://www.npmjs.com/package/@szum-tech/design-system) | 3.12.2  |
 | Testing        | [Vitest](https://vitest.dev/)                                                      | 4.0     |
 | E2E Testing    | [Playwright](https://playwright.dev/)                                              | 1.58    |
 | Component Dev  | [Storybook](https://storybook.js.org/)                                             | 10.2    |
@@ -217,7 +218,7 @@ portfolio/
 │   ├── layout/           # Layout components (header, footer)
 │   ├── providers/        # React context providers
 │   ├── sections/         # Page sections (hero, about, etc.)
-│   ├── seo/              # SEO components
+│   ├── seo/              # SEO components (structured data)
 │   └── ui/               # Reusable UI components
 ├── constants/            # Static constants and navigation
 ├── data/
@@ -229,6 +230,7 @@ portfolio/
 │       └── server/       # Server actions
 ├── lib/
 │   ├── sanity/           # Sanity client and queries
+│   ├── seo/              # SEO utilities and structured data builders
 │   └── logger.ts         # Pino logger configuration
 ├── tests/
 │   ├── e2e/              # Playwright E2E tests

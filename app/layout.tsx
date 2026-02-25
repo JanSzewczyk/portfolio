@@ -5,7 +5,7 @@ import { type Metadata, type Viewport } from "next";
 import { ThemeProvider } from "~/components/providers/theme-provider";
 import { StructuredData } from "~/components/seo/structured-data";
 import { env } from "~/data/env/client";
-import { getSeoData } from "~/lib/sanity/services";
+import { getCachedSeoData } from "~/lib/sanity/services";
 import { buildMetadata } from "~/lib/seo/utils";
 
 import "./globals.css";
@@ -17,7 +17,7 @@ const siteUrl = env.NEXT_PUBLIC_VERCEL_URL
   : "http://localhost:3000";
 
 export async function generateMetadata(): Promise<Metadata> {
-  const [, seoData] = await getSeoData();
+  const [, seoData] = await getCachedSeoData();
 
   return buildMetadata({ siteUrl, seoData });
 }
@@ -34,15 +34,20 @@ export const viewport: Viewport = {
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const [, seoData] = await getSeoData();
+  const [, seoData] = await getCachedSeoData();
 
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
         <StructuredData siteUrl={siteUrl} seoData={seoData} />
-        <link rel="preconnect" href="https://github.com" />
-        <link rel="preconnect" href="https://avatars.githubusercontent.com" />
+        <link rel="manifest" href="/manifest.webmanifest" />
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <link rel="preconnect" href="https://github.com" referrerPolicy="no-referrer" />
+        <link rel="preconnect" href="https://avatars.githubusercontent.com" referrerPolicy="no-referrer" />
         <link rel="dns-prefetch" href="https://github.com" />
+
+        <meta name="google-site-verification" content="VpLSpIScRUpUFCb5ndhMvOh69KiWkRKQCrjYIkQZi3U" />
       </head>
       <body>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>

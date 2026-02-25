@@ -67,6 +67,22 @@ npm run analyze               # Bundle analyzer (sets ANALYZE=true)
 
 ## Architecture
 
+### SEO Implementation
+
+The portfolio uses Next.js Metadata API for comprehensive SEO optimization:
+
+- **Metadata API**: Dynamic metadata generation in `app/layout.tsx`
+- **Structured Data**: JSON-LD schemas in `lib/seo/structured-data.ts`:
+  - Person schema for author information
+  - WebSite schema for site metadata
+  - WebPage schema for page metadata
+  - ProfilePage schema for portfolio context
+  - Organization schema for company information
+  - BreadcrumbList schema for navigation
+- **Caching**: SEO data fetched once per request using React `cache()`
+- **Sanity Integration**: All SEO data managed via Sanity CMS fields
+- **PWA Support**: Progressive Web App manifest at `app/manifest.ts`
+
 ### Path Aliases
 
 Use `~/` prefix for absolute imports (configured in tsconfig.json):

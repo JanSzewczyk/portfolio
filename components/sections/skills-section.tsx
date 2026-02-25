@@ -260,8 +260,8 @@ export function SkillsSection({ skills, documentId, documentType }: SkillsSectio
         </div>
 
         {/* Decorative bottom text */}
-        <div className="text-muted-foreground/50 mt-16 text-center">
-          <p className="text-sm">{skills?.decorativeBottomText}</p>
+        <div className="mt-16 text-center">
+          <p className="text-muted-foreground text-body-sm">{skills?.decorativeBottomText}</p>
         </div>
       </div>
     </section>
