@@ -47,7 +47,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <link rel="preconnect" href="https://avatars.githubusercontent.com" referrerPolicy="no-referrer" />
         <link rel="dns-prefetch" href="https://github.com" />
 
-        <meta name="google-site-verification" content="VpLSpIScRUpUFCb5ndhMvOh69KiWkRKQCrjYIkQZi3U" />
+        <meta name="google-site-verification" content="AiA9CANm5wTKgVJ2UQVly5tWskJNx898rxpPlbtcpLE" />
       </head>
       <body>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
