@@ -45,6 +45,8 @@ export function buildMetadata({ siteUrl, seoData }: { siteUrl: string; seoData: 
     authors: [{ name, url: siteUrl }],
 
     creator: name,
+    generator: "Next.js 16.1.0",
+    applicationName: `${name} - Portfolio`,
 
     openGraph: {
       type: "website",

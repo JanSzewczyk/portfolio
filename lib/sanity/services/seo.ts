@@ -1,5 +1,7 @@
 import "server-only";
 
+import { cache } from "react";
+
 import { createLogger } from "~/lib/logger";
 import { sanityFetch } from "~/lib/sanity/live";
 import { seoQuery } from "~/lib/sanity/queries";
@@ -56,3 +58,10 @@ export async function getSeoData(): Promise<[null, NonNullable<SeoQueryResult>] 
     return [apiError, null];
   }
 }
+
+/**
+ * Cached version of getSeoData to prevent duplicate requests during the same render.
+ * This wraps the SEO data fetching with React's cache() utility to ensure
+ * that multiple calls within the same request cycle return the same result.
+ */
+export const getCachedSeoData = cache(getSeoData);

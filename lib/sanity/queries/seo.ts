@@ -29,7 +29,11 @@ export const seoQuery = defineQuery(`
       alternateUrls[] { hreflang, url },
       organizationName,
       organizationLogo { asset-> { _id, url, metadata { dimensions } }, hotspot, crop, alt },
-      sameAsUrls
+      sameAsUrls,
+      alternateNames,
+      addressLocality,
+      addressCountry,
+      knowsAbout
     },
     personalInfo {
       name,

@@ -1,5 +1,12 @@
-import { type NavItem } from "./portfolio/types";
 import { Section } from "./sections";
+
+/**
+ * Navigation item type.
+ */
+export interface NavItem {
+  label: string;
+  section: Section;
+}
 
 /**
  * Navigation items for the portfolio header.

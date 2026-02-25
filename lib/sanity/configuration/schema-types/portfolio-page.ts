@@ -722,6 +722,36 @@ export const portfolioPage = defineType({
           type: "array",
           description: "Additional URLs associated with the organization or person (e.g., social profiles)",
           of: [{ type: "url" }]
+        }),
+
+        // ============================================
+        // Structured Data (Schema.org)
+        // ============================================
+        defineField({
+          name: "alternateNames",
+          title: "Alternate Names",
+          type: "array",
+          description: "Alternative names for the person (e.g., 'Jan Szewczyk', 'JanSzewczyk')",
+          of: [{ type: "string" }]
+        }),
+        defineField({
+          name: "addressLocality",
+          title: "Address Locality",
+          type: "string",
+          description: "City name (e.g., 'Cracow')"
+        }),
+        defineField({
+          name: "addressCountry",
+          title: "Address Country",
+          type: "string",
+          description: "ISO country code (e.g., 'PL' for Poland)"
+        }),
+        defineField({
+          name: "knowsAbout",
+          title: "Knows About",
+          type: "array",
+          description: "Skills and areas of expertise for structured data",
+          of: [{ type: "string" }]
         })
       ]
     })
