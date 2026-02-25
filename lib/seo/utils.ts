@@ -14,25 +14,8 @@ export function buildMetadata({ siteUrl, seoData }: { siteUrl: string; seoData: 
 
   // Get SEO data from Sanity or fallback
   const metaTitle = seoData?.seo?.metaTitle || `${name} | ${title}`;
-  const metaDescription =
-    seoData?.seo?.metaDescription ||
-    `Frontend Engineer from Cracow, Poland specializing in React, Next.js, TypeScript, and React Native.`;
-  const keywords = seoData?.seo?.keywords || [
-    "Frontend Engineer",
-    "Frontend Developer",
-    "React Developer",
-    "Next.js",
-    "TypeScript",
-    "React Native",
-    "Open Source",
-    "Cracow Poland",
-    "Web Development",
-    "UI/UX",
-    "@szum-tech",
-    "Jan Szewczyk",
-    "Szum-Tech",
-    "Szumrak Technologies"
-  ];
+  const metaDescription = seoData?.seo?.metaDescription || ``;
+  const keywords = seoData?.seo?.keywords || [];
 
   // Open Graph
   const ogTitle = seoData?.seo?.ogTitle || metaTitle;
