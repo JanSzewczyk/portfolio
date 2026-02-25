@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.0](https://github.com/JanSzewczyk/portfolio/compare/v1.3.0...v1.4.0) (2026-02-25)
+
+### Features
+
+* Add cached SEO data fetching and enhance structured data fields for improved SEO performance ([edccba4](https://github.com/JanSzewczyk/portfolio/commit/edccba41dbc2feb95101c8d8cbf0d377e17c7e39))
+
+### Bug Fixes
+
+* Update generator field in metadata to remove version for consistency ([fead9f1](https://github.com/JanSzewczyk/portfolio/commit/fead9f136298c59a68bb2cbdbdedac7ffc122d06))
+* Update structured data fallback values for improved handling of missing SEO data ([c02acdb](https://github.com/JanSzewczyk/portfolio/commit/c02acdbdc156c5cb28f052df61e2be009fcece3a))
+
 ## [1.3.0](https://github.com/JanSzewczyk/portfolio/compare/v1.2.1...v1.3.0) (2026-02-23)
 
 ### Features
