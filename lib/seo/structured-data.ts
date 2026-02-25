@@ -1,7 +1,5 @@
 import "server-only";
 
-import { PERSONAL_INFO } from "~/constants/portfolio";
-import { SOCIAL_LINKS } from "~/constants/portfolio/social-links";
 import { type SeoQueryResult } from "~/lib/sanity/types";
 
 /**
@@ -9,15 +7,15 @@ import { type SeoQueryResult } from "~/lib/sanity/types";
  */
 export function buildPersonSchema({ siteUrl, seoData }: { siteUrl: string; seoData: SeoQueryResult | null }) {
   // Get personal info from Sanity or fallback
-  const name = seoData?.personalInfo?.name || PERSONAL_INFO.name;
-  const title = seoData?.personalInfo?.title || PERSONAL_INFO.title;
-  const email = seoData?.personalInfo?.email || PERSONAL_INFO.email;
-  const company = seoData?.personalInfo?.company || PERSONAL_INFO.company;
-  const avatar = seoData?.personalInfo?.avatar?.asset?.url || PERSONAL_INFO.avatar;
+  const name = seoData?.personalInfo?.name || "";
+  const title = seoData?.personalInfo?.title || "";
+  const email = seoData?.personalInfo?.email || "";
+  const company = seoData?.personalInfo?.company || "";
+  const avatar = seoData?.personalInfo?.avatar?.asset?.url || "";
 
   // Get SEO data for description and social links
-  const description = seoData?.seo?.metaDescription || PERSONAL_INFO.tagline;
-  const sameAsUrls = seoData?.seo?.sameAsUrls || SOCIAL_LINKS.map((link) => link.url);
+  const description = seoData?.seo?.metaDescription || "";
+  const sameAsUrls = seoData?.seo?.sameAsUrls || [];
 
   return {
     "@context": "https://schema.org",
@@ -61,9 +59,9 @@ export function buildPersonSchema({ siteUrl, seoData }: { siteUrl: string; seoDa
  * Build WebSite schema from Sanity data with fallback values
  */
 export function buildWebsiteSchema({ siteUrl, seoData }: { siteUrl: string; seoData: SeoQueryResult | null }) {
-  const name = seoData?.personalInfo?.name || PERSONAL_INFO.name;
-  const title = seoData?.personalInfo?.title || PERSONAL_INFO.title;
-  const description = seoData?.seo?.metaDescription || PERSONAL_INFO.tagline;
+  const name = seoData?.personalInfo?.name || "";
+  const title = seoData?.personalInfo?.title || "";
+  const description = seoData?.seo?.metaDescription || "";
 
   return {
     "@context": "https://schema.org",
@@ -83,9 +81,9 @@ export function buildWebsiteSchema({ siteUrl, seoData }: { siteUrl: string; seoD
  * Build WebPage schema from Sanity data with fallback values
  */
 export function buildWebPageSchema({ siteUrl, seoData }: { siteUrl: string; seoData: SeoQueryResult | null }) {
-  const name = seoData?.personalInfo?.name || PERSONAL_INFO.name;
-  const title = seoData?.personalInfo?.title || PERSONAL_INFO.title;
-  const description = seoData?.seo?.metaDescription || PERSONAL_INFO.tagline;
+  const name = seoData?.personalInfo?.name || "";
+  const title = seoData?.personalInfo?.title || "";
+  const description = seoData?.seo?.metaDescription || "";
   const ogImage = seoData?.seo?.ogImage?.asset?.url || `${siteUrl}/og-image.png`;
 
   return {
@@ -113,8 +111,8 @@ export function buildWebPageSchema({ siteUrl, seoData }: { siteUrl: string; seoD
  * Build ProfilePage schema from Sanity data with fallback values
  */
 export function buildProfilePageSchema({ siteUrl, seoData }: { siteUrl: string; seoData: SeoQueryResult | null }) {
-  const name = seoData?.personalInfo?.name || PERSONAL_INFO.name;
-  const description = seoData?.seo?.metaDescription || PERSONAL_INFO.bio;
+  const name = seoData?.personalInfo?.name || "";
+  const description = seoData?.seo?.metaDescription || "";
 
   return {
     "@context": "https://schema.org",
@@ -133,9 +131,9 @@ export function buildProfilePageSchema({ siteUrl, seoData }: { siteUrl: string; 
  * Build Organization schema from Sanity data (optional)
  */
 export function buildOrganizationSchema({ siteUrl, seoData }: { siteUrl: string; seoData: SeoQueryResult | null }) {
-  const name = seoData?.seo?.organizationName || PERSONAL_INFO.company;
+  const name = seoData?.seo?.organizationName || "";
   const logo = seoData?.seo?.organizationLogo?.asset?.url;
-  const sameAsUrls = seoData?.seo?.sameAsUrls || SOCIAL_LINKS.map((link) => link.url);
+  const sameAsUrls = seoData?.seo?.sameAsUrls || [];
 
   const schema: Record<string, unknown> = {
     "@context": "https://schema.org",
