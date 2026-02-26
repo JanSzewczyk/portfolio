@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.1](https://github.com/JanSzewczyk/portfolio/compare/v1.4.0...v1.4.1) (2026-02-26)
+
+### Bug Fixes
+
+* Remove unused sitemap entries for improved clarity and maintenance ([0a21f13](https://github.com/JanSzewczyk/portfolio/commit/0a21f1384a326c4980a570dd17574d33b006a33d))
+
 ## [1.4.0](https://github.com/JanSzewczyk/portfolio/compare/v1.3.0...v1.4.0) (2026-02-25)
 
 ### Features
