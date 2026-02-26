@@ -1,12 +1,10 @@
 import { type MetadataRoute } from "next";
 
-import { env } from "~/data/env/client";
-
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = env.NEXT_PUBLIC_VERCEL_URL
-    ? env.NEXT_PUBLIC_VERCEL_URL.startsWith("http")
-      ? env.NEXT_PUBLIC_VERCEL_URL
-      : `https://${env.NEXT_PUBLIC_VERCEL_URL}`
+  const baseUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
+    ? process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL.startsWith("http")
+      ? process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
+      : `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`
     : "https://localhost:3000";
 
   return {
