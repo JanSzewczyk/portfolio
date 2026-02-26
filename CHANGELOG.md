@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.5.0](https://github.com/JanSzewczyk/portfolio/compare/v1.4.4...v1.5.0) (2026-02-26)
+
+### Features
+
+* Integrate Vercel Analytics for enhanced tracking and insights ([2f263e3](https://github.com/JanSzewczyk/portfolio/commit/2f263e37c5995388917363d7176bbf355e388522))
+
 ## [1.4.4](https://github.com/JanSzewczyk/portfolio/compare/v1.4.3...v1.4.4) (2026-02-26)
 
 ### Bug Fixes
