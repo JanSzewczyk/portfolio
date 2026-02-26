@@ -1,6 +1,7 @@
 import * as React from "react";
 
 import { type Metadata, type Viewport } from "next";
+import { Analytics } from "@vercel/analytics/next";
 
 import { ThemeProvider } from "~/components/providers/theme-provider";
 import { StructuredData } from "~/components/seo/structured-data";
@@ -50,6 +51,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
           {children}
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );
