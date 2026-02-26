@@ -13,7 +13,7 @@ export function buildMetadata({ siteUrl, seoData }: { siteUrl: string; seoData: 
   const title = seoData?.personalInfo?.title ?? "";
 
   // Get SEO data from Sanity or fallback
-  const metaTitle = seoData?.seo?.metaTitle || `${name} | ${title}`;
+  const metaTitle = seoData?.seo?.metaTitle ||'';
   const metaDescription = seoData?.seo?.metaDescription || ``;
   const keywords = seoData?.seo?.keywords || [];
 
@@ -32,21 +32,23 @@ export function buildMetadata({ siteUrl, seoData }: { siteUrl: string; seoData: 
   // Build metadata object
   const metadata: Metadata = {
     metadataBase: new URL(siteUrl),
-
     title: {
       default: metaTitle,
       template: "%s | " + name
     },
-
     description: metaDescription,
-
     keywords,
 
     authors: [{ name, url: siteUrl }],
 
     creator: name,
     generator: "Next.js",
+
     applicationName: `${name} - Portfolio`,
+    appleWebApp: {
+      title: "Jan Szewczyk Portfolio",
+      statusBarStyle: "default"
+    },
 
     openGraph: {
       type: "website",
@@ -55,16 +57,16 @@ export function buildMetadata({ siteUrl, seoData }: { siteUrl: string; seoData: 
       siteName: `${name} - ${title}`,
       title: ogTitle,
       description: ogDescription,
-      images:  [
-        ogImage?
-            {
+      images: [
+        ogImage
+          ? {
               url: ogImage,
               width: seoData?.seo?.ogImage?.asset?.metadata?.dimensions?.width || 1200,
               height: seoData?.seo?.ogImage?.asset?.metadata?.dimensions?.height || 630,
               alt: seoData?.seo?.ogImage?.alt || `${name} - ${title}`
-            }: null
-          ].filter(Boolean)
-
+            }
+          : null
+      ].filter(Boolean)
     },
 
     twitter: {
@@ -99,7 +101,7 @@ export function buildMetadata({ siteUrl, seoData }: { siteUrl: string; seoData: 
         },
         {} as Record<string, string>
       )
-    },
+    }
   };
 
   return metadata;

@@ -1,21 +1,20 @@
 import * as React from "react";
 
 import { type Metadata, type Viewport } from "next";
-import { Analytics } from "@vercel/analytics/next";
 
+import { Analytics } from "@vercel/analytics/next";
 import { ThemeProvider } from "~/components/providers/theme-provider";
 import { StructuredData } from "~/components/seo/structured-data";
-import { env } from "~/data/env/client";
 import { getCachedSeoData } from "~/lib/sanity/services";
 import { buildMetadata } from "~/lib/seo/utils";
 
 import "./globals.css";
 
-const siteUrl = env.NEXT_PUBLIC_VERCEL_URL
-  ? env.NEXT_PUBLIC_VERCEL_URL.startsWith("http")
-    ? env.NEXT_PUBLIC_VERCEL_URL
-    : `https://${env.NEXT_PUBLIC_VERCEL_URL}`
-  : "http://localhost:3000";
+const siteUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
+  ? process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL.startsWith("http")
+    ? process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
+    : `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`
+  : "https://localhost:3000";
 
 export async function generateMetadata(): Promise<Metadata> {
   const [, seoData] = await getCachedSeoData();
