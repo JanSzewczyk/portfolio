@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.4](https://github.com/JanSzewczyk/portfolio/compare/v1.4.3...v1.4.4) (2026-02-26)
+
+### Bug Fixes
+
+* Clean up layout and manifest files by removing unused icons and optimizing image references for better performance ([822dddd](https://github.com/JanSzewczyk/portfolio/commit/822dddd50eb828ae427f43d00cdedabcf03cc0ec))
+
 ## [1.4.3](https://github.com/JanSzewczyk/portfolio/compare/v1.4.2...v1.4.3) (2026-02-26)
 
 ### Bug Fixes
