@@ -40,9 +40,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     <html lang="en" suppressHydrationWarning>
       <head>
         <StructuredData siteUrl={siteUrl} seoData={seoData} />
-        <link rel="manifest" href="/manifest.webmanifest" />
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
         <link rel="preconnect" href="https://github.com" referrerPolicy="no-referrer" />
         <link rel="preconnect" href="https://avatars.githubusercontent.com" referrerPolicy="no-referrer" />
         <link rel="dns-prefetch" href="https://github.com" />

@@ -55,23 +55,16 @@ export function buildMetadata({ siteUrl, seoData }: { siteUrl: string; seoData: 
       siteName: `${name} - ${title}`,
       title: ogTitle,
       description: ogDescription,
-      images: ogImage
-        ? [
+      images:  [
+        ogImage?
             {
               url: ogImage,
               width: seoData?.seo?.ogImage?.asset?.metadata?.dimensions?.width || 1200,
               height: seoData?.seo?.ogImage?.asset?.metadata?.dimensions?.height || 630,
               alt: seoData?.seo?.ogImage?.alt || `${name} - ${title}`
-            }
-          ]
-        : [
-            {
-              url: "/og-image.png",
-              width: 1200,
-              height: 630,
-              alt: `${name} - ${title}`
-            }
-          ]
+            }: null
+          ].filter(Boolean)
+
     },
 
     twitter: {
@@ -106,7 +99,7 @@ export function buildMetadata({ siteUrl, seoData }: { siteUrl: string; seoData: 
         },
         {} as Record<string, string>
       )
-    }
+    },
   };
 
   return metadata;
