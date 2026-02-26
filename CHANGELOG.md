@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.5.1](https://github.com/JanSzewczyk/portfolio/compare/v1.5.0...v1.5.1) (2026-02-26)
+
+### Bug Fixes
+
+* Update manifest file to remove unused favicon and optimize icon references ([87fe8fc](https://github.com/JanSzewczyk/portfolio/commit/87fe8fc98f893e1a3ead16e9d540f18b366feeb5))
+
 ## [1.5.0](https://github.com/JanSzewczyk/portfolio/compare/v1.4.4...v1.5.0) (2026-02-26)
 
 ### Features
