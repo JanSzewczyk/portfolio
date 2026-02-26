@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.4.2](https://github.com/JanSzewczyk/portfolio/compare/v1.4.1...v1.4.2) (2026-02-26)
+
+### Bug Fixes
+
+* Update base URL retrieval in sitemap for improved environment variable consistency ([25704a0](https://github.com/JanSzewczyk/portfolio/commit/25704a068c9c77760af8433e2482578b8e868165))
+
 ## [1.4.1](https://github.com/JanSzewczyk/portfolio/compare/v1.4.0...v1.4.1) (2026-02-26)
 
 ### Bug Fixes
