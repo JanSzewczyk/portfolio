@@ -6,15 +6,12 @@ import { Analytics } from "@vercel/analytics/next";
 import { ThemeProvider } from "~/components/providers/theme-provider";
 import { StructuredData } from "~/components/seo/structured-data";
 import { getCachedSeoData } from "~/lib/sanity/services";
+import { getSiteUrl } from "~/lib/seo/get-site-url";
 import { buildMetadata } from "~/lib/seo/utils";
 
 import "./globals.css";
 
-const siteUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
-  ? process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL.startsWith("http")
-    ? process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
-    : `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`
-  : "https://localhost:3000";
+const siteUrl = getSiteUrl();
 
 export async function generateMetadata(): Promise<Metadata> {
   const [, seoData] = await getCachedSeoData();
@@ -43,6 +40,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <link rel="preconnect" href="https://github.com" referrerPolicy="no-referrer" />
         <link rel="preconnect" href="https://avatars.githubusercontent.com" referrerPolicy="no-referrer" />
         <link rel="dns-prefetch" href="https://github.com" />
+        <link rel="preconnect" href="https://cdn.sanity.io" crossOrigin="anonymous" />
+        <link rel="dns-prefetch" href="https://cdn.sanity.io" />
 
         <meta name="google-site-verification" content="AiA9CANm5wTKgVJ2UQVly5tWskJNx898rxpPlbtcpLE" />
       </head>

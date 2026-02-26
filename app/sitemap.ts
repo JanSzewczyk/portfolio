@@ -1,11 +1,9 @@
 import { type MetadataRoute } from "next";
 
+import { getSiteUrl } from "~/lib/seo/get-site-url";
+
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
-    ? process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL.startsWith("http")
-      ? process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL
-      : `https://${process.env.NEXT_PUBLIC_VERCEL_PROJECT_PRODUCTION_URL}`
-    : "https://localhost:3000";
+  const baseUrl = getSiteUrl();
   const currentDate = new Date().toISOString();
 
   return [

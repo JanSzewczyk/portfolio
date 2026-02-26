@@ -44,6 +44,7 @@ export function ProjectCard({ project, dataSanity }: ProjectCardProps) {
               className="size-full object-cover transition-transform duration-300 group-hover:scale-105"
               width={800}
               height={450}
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             />
           ) : (
             <div

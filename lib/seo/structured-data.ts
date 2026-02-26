@@ -7,48 +7,54 @@ import { type SeoQueryResult } from "~/lib/sanity/types";
  */
 export function buildPersonSchema({ siteUrl, seoData }: { siteUrl: string; seoData: SeoQueryResult | null }) {
   // Get personal info from Sanity or fallback
-  const name = seoData?.personalInfo?.name || "";
-  const title = seoData?.personalInfo?.title || "";
-  const email = seoData?.personalInfo?.email || "";
-  const company = seoData?.personalInfo?.company || "";
-  const avatar = seoData?.personalInfo?.avatar?.asset?.url || "";
+  const name = seoData?.personalInfo?.name ?? undefined;
+  const title = seoData?.personalInfo?.title ?? undefined;
+  const email = seoData?.personalInfo?.email ?? undefined;
+  const company = seoData?.personalInfo?.company ?? undefined;
+  const avatar = seoData?.personalInfo?.avatar?.asset?.url ?? undefined;
 
   // Get SEO data for description and social links
-  const description = seoData?.seo?.metaDescription || "";
-  const sameAsUrls = seoData?.seo?.sameAsUrls || [];
+  const description = seoData?.seo?.metaDescription ?? undefined;
+  const sameAsUrls = seoData?.seo?.sameAsUrls ?? [];
 
   // Get structured data fields from Sanity or use fallback values
-  const alternateNames = seoData?.seo?.alternateNames || [];
-  const addressLocality = seoData?.seo?.addressLocality || "";
-  const addressCountry = seoData?.seo?.addressCountry || "";
-  const knowsAbout = seoData?.seo?.knowsAbout || [];
+  const alternateNames = seoData?.seo?.alternateNames ?? [];
+  const addressLocality = seoData?.seo?.addressLocality ?? undefined;
+  const addressCountry = seoData?.seo?.addressCountry ?? undefined;
+  const knowsAbout = seoData?.seo?.knowsAbout ?? [];
 
   return {
-    "@context": "https://schema.org",
     "@type": "Person",
     "@id": `${siteUrl}#person`,
     name,
     alternateName: alternateNames,
     jobTitle: title,
     description,
-    image: {
-      "@type": "ImageObject",
-      url: avatar,
-      caption: `${name} - ${title}`
-    },
+    image: avatar
+      ? {
+          "@type": "ImageObject",
+          url: avatar,
+          caption: `${name} - ${title}`
+        }
+      : undefined,
     url: siteUrl,
-    email: `mailto:${email}`,
-    address: {
-      "@type": "PostalAddress",
-      addressLocality,
-      addressCountry
-    },
+    email: email ? `mailto:${email}` : undefined,
+    address:
+      addressLocality || addressCountry
+        ? {
+            "@type": "PostalAddress",
+            addressLocality,
+            addressCountry
+          }
+        : undefined,
     sameAs: sameAsUrls,
     knowsAbout,
-    worksFor: {
-      "@type": "Organization",
-      name: company
-    }
+    worksFor: company
+      ? {
+          "@type": "Organization",
+          name: company
+        }
+      : undefined
   };
 }
 
@@ -56,16 +62,15 @@ export function buildPersonSchema({ siteUrl, seoData }: { siteUrl: string; seoDa
  * Build WebSite schema from Sanity data with fallback values
  */
 export function buildWebsiteSchema({ siteUrl, seoData }: { siteUrl: string; seoData: SeoQueryResult | null }) {
-  const name = seoData?.personalInfo?.name || "";
-  const title = seoData?.personalInfo?.title || "";
-  const description = seoData?.seo?.metaDescription || "";
+  const name = seoData?.personalInfo?.name ?? undefined;
+  const title = seoData?.personalInfo?.title ?? undefined;
+  const description = seoData?.seo?.metaDescription ?? undefined;
 
   return {
-    "@context": "https://schema.org",
     "@type": "WebSite",
     "@id": `${siteUrl}#website`,
     url: siteUrl,
-    name: `${name} - ${title} Portfolio`,
+    name: name && title ? `${name} - ${title} Portfolio` : undefined,
     description,
     publisher: {
       "@id": `${siteUrl}#person`
@@ -78,17 +83,16 @@ export function buildWebsiteSchema({ siteUrl, seoData }: { siteUrl: string; seoD
  * Build WebPage schema from Sanity data with fallback values
  */
 export function buildWebPageSchema({ siteUrl, seoData }: { siteUrl: string; seoData: SeoQueryResult | null }) {
-  const name = seoData?.personalInfo?.name || "";
-  const title = seoData?.personalInfo?.title || "";
-  const description = seoData?.seo?.metaDescription || "";
-  const ogImage = seoData?.seo?.ogImage?.asset?.url || `${siteUrl}/og-image.png`;
+  const name = seoData?.personalInfo?.name ?? undefined;
+  const title = seoData?.personalInfo?.title ?? undefined;
+  const description = seoData?.seo?.metaDescription ?? undefined;
+  const ogImage = seoData?.seo?.ogImage?.asset?.url ?? `${siteUrl}/opengraph-image`;
 
   return {
-    "@context": "https://schema.org",
     "@type": "WebPage",
     "@id": `${siteUrl}#webpage`,
     url: siteUrl,
-    name: `${name} | ${title}`,
+    name: name && title ? `${name} | ${title}` : undefined,
     description,
     isPartOf: {
       "@id": `${siteUrl}#website`
@@ -108,15 +112,14 @@ export function buildWebPageSchema({ siteUrl, seoData }: { siteUrl: string; seoD
  * Build ProfilePage schema from Sanity data with fallback values
  */
 export function buildProfilePageSchema({ siteUrl, seoData }: { siteUrl: string; seoData: SeoQueryResult | null }) {
-  const name = seoData?.personalInfo?.name || "";
-  const description = seoData?.seo?.metaDescription || "";
+  const name = seoData?.personalInfo?.name ?? undefined;
+  const description = seoData?.seo?.metaDescription ?? undefined;
 
   return {
-    "@context": "https://schema.org",
     "@type": "ProfilePage",
     "@id": `${siteUrl}#profilepage`,
     url: siteUrl,
-    name: `${name} - Portfolio`,
+    name: name ? `${name} - Portfolio` : undefined,
     description,
     mainEntity: {
       "@id": `${siteUrl}#person`
@@ -128,27 +131,23 @@ export function buildProfilePageSchema({ siteUrl, seoData }: { siteUrl: string; 
  * Build Organization schema from Sanity data (optional)
  */
 export function buildOrganizationSchema({ siteUrl, seoData }: { siteUrl: string; seoData: SeoQueryResult | null }) {
-  const name = seoData?.seo?.organizationName || "";
+  const name = seoData?.seo?.organizationName ?? undefined;
   const logo = seoData?.seo?.organizationLogo?.asset?.url;
-  const sameAsUrls = seoData?.seo?.sameAsUrls || [];
+  const sameAsUrls = seoData?.seo?.sameAsUrls ?? [];
 
-  const schema: Record<string, unknown> = {
-    "@context": "https://schema.org",
+  return {
     "@type": "Organization",
     "@id": `${siteUrl}#organization`,
     name,
     url: siteUrl,
-    sameAs: sameAsUrls
+    sameAs: sameAsUrls,
+    logo: logo
+      ? {
+          "@type": "ImageObject",
+          url: logo
+        }
+      : undefined
   };
-
-  if (logo) {
-    schema.logo = {
-      "@type": "ImageObject",
-      url: logo
-    };
-  }
-
-  return schema;
 }
 
 /**
@@ -156,7 +155,6 @@ export function buildOrganizationSchema({ siteUrl, seoData }: { siteUrl: string;
  */
 export function buildBreadcrumbSchema({ siteUrl }: { siteUrl: string }) {
   return {
-    "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
       {
