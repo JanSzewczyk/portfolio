@@ -248,6 +248,10 @@ export type PortfolioPage = {
       suffix?: string;
       _key: string;
     }>;
+    location?: {
+      city?: string;
+      coordinates?: Geopoint;
+    };
   };
   skills?: {
     heading?: SectionHeading;
@@ -361,6 +365,13 @@ export type SectionHeading = {
   description?: string;
 };
 
+export type Geopoint = {
+  _type: "geopoint";
+  lat?: number;
+  lng?: number;
+  alt?: number;
+};
+
 export type SocialLink = {
   _type: "socialLink";
   platform?: string;
@@ -459,13 +470,6 @@ export type SanityImageAsset = {
   source?: SanityAssetSourceData;
 };
 
-export type Geopoint = {
-  _type: "geopoint";
-  lat?: number;
-  lng?: number;
-  alt?: number;
-};
-
 export type Slug = {
   _type: "slug";
   current?: string;
@@ -490,6 +494,7 @@ export type AllSanitySchemaTypes =
   | EducationReference
   | PortfolioPage
   | SectionHeading
+  | Geopoint
   | SocialLink
   | SanityImagePaletteSwatch
   | SanityImagePalette
@@ -498,7 +503,6 @@ export type AllSanitySchemaTypes =
   | SanityFileAsset
   | SanityAssetSourceData
   | SanityImageAsset
-  | Geopoint
   | Slug;
 
 export declare const internalGroqTypeReferenceTo: unique symbol;
@@ -550,7 +554,10 @@ export type PortfolioPageQueryResult = {
       description: string | null;
     } | null;
     bio: string | null;
-    location: null;
+    location: {
+      city?: string;
+      coordinates?: Geopoint;
+    } | null;
     stats: Array<{
       _key: string;
       label: string | null;
