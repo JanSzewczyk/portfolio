@@ -5,7 +5,6 @@ import { Map, Marker, type MapProps } from "pigeon-maps";
 
 import { Card, CardContent } from "@szum-tech/design-system";
 
-
 type LocationCardProps = {
   city: string;
   coordinates: { lat?: number; lng?: number };

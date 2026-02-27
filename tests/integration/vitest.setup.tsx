@@ -18,4 +18,17 @@ vi.mock("~/lib/sanity/live", () => ({
   SanityLive: () => null
 }));
 
+// Mock Sanity image URL builder to avoid environment variable issues in tests
+// Supports chained API: urlFor().auto().width().height().url()
+const mockUrlBuilder = {
+  auto: vi.fn(() => mockUrlBuilder),
+  width: vi.fn(() => mockUrlBuilder),
+  height: vi.fn(() => mockUrlBuilder),
+  url: vi.fn(() => "https://example.com/mock-image.jpg")
+};
+
+vi.mock("~/lib/sanity/image", () => ({
+  urlFor: vi.fn(() => mockUrlBuilder)
+}));
+
 beforeAll(preview.composed.beforeAll);

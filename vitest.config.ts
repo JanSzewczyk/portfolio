@@ -71,7 +71,7 @@ export default defineConfig({
               }
             ]
           },
-          setupFiles: ["tests/integration/vitest.setup.ts"]
+          setupFiles: ["tests/integration/vitest.setup.tsx"]
         }
       }
     ]
