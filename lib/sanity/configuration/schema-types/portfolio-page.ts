@@ -221,6 +221,28 @@ export const portfolioPage = defineType({
               }
             }
           ]
+        }),
+        defineField({
+          name: "location",
+          title: "Location",
+          type: "object",
+          description: "Your current location for the about section",
+          fields: [
+            defineField({
+              name: "city",
+              title: "City Name",
+              type: "string",
+              description: "City name to display (e.g., 'Warsaw, Poland')",
+              validation: (rule) => rule.required()
+            }),
+            defineField({
+              name: "coordinates",
+              title: "Coordinates",
+              type: "geopoint",
+              description: "Geographic coordinates for the map marker",
+              validation: (rule) => rule.required()
+            })
+          ]
         })
       ]
     }),

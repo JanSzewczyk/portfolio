@@ -1,4 +1,4 @@
-import { build } from "mimicry-js";
+import { build, oneOf, bool, int } from "mimicry-js";
 
 import { faker } from "@faker-js/faker";
 import { type PortfolioPageQueryResult } from "~/lib/sanity/types";
@@ -11,6 +11,45 @@ type PortfolioProject = NonNullable<NonNullable<PortfolioProjectGroup["projects"
 type PortfolioExperience = NonNullable<NonNullable<PortfolioPage["experience"]>["experiences"]>[number];
 type PortfolioEducation = NonNullable<NonNullable<PortfolioPage["education"]>["education"]>[number];
 type PortfolioTechnology = NonNullable<PortfolioTechnologyGroup["technologies"]>[number];
+
+/**
+ * Helper function to build an expanded image asset object for regular images.
+ */
+const buildExpandedImageAsset = (width: number, height: number) => {
+  const imageId = faker.string.alphanumeric(28);
+  return {
+    _id: `image-${imageId}-${width}x${height}-jpg`,
+    url: `https://cdn.sanity.io/images/project/dataset/${imageId}-${width}x${height}.jpg`,
+    metadata: {
+      dimensions: {
+        _type: "sanity.imageDimensions" as const,
+        height,
+        width,
+        aspectRatio: width / height
+      },
+      lqip: "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAKABQDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAAMEBf/EABQQAQAAAAAAAAAAAAAAAAAAAAD/xAAVAQEBAAAAAAAAAAAAAAAAAAAAAf/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/AMOA="
+    }
+  };
+};
+
+/**
+ * Helper function to build an expanded image asset object for SEO images.
+ */
+const buildSeoImageAsset = (width: number, height: number) => {
+  const imageId = faker.string.alphanumeric(28);
+  return {
+    _id: `image-${imageId}-${width}x${height}-jpg`,
+    url: `https://cdn.sanity.io/images/project/dataset/${imageId}-${width}x${height}.jpg`,
+    metadata: {
+      dimensions: {
+        _type: "sanity.imageDimensions" as const,
+        height,
+        width,
+        aspectRatio: width / height
+      }
+    }
+  } as const;
+};
 
 /**
  * Builder for PortfolioPage about section test data.
@@ -30,30 +69,37 @@ export const portfolioPageAboutBuilder = build<NonNullable<PortfolioPageQueryRes
       description: () => faker.lorem.sentence()
     },
     bio: () => faker.lorem.paragraphs(2, "\n\n"),
-    location: null,
+    location: () => ({
+      city: faker.location.city(),
+      coordinates: {
+        _type: "geopoint" as const,
+        lat: Number(faker.location.latitude()),
+        lng: Number(faker.location.longitude())
+      }
+    }),
     stats: () => [
       {
         _key: faker.string.uuid(),
         label: "Years Experience",
-        value: faker.number.int({ min: 1, max: 20 }),
+        value: int(1, 20),
         suffix: "+"
       },
       {
         _key: faker.string.uuid(),
         label: "Projects Completed",
-        value: faker.number.int({ min: 10, max: 100 }),
+        value: int(10, 100),
         suffix: "+"
       },
       {
         _key: faker.string.uuid(),
         label: "Technologies",
-        value: faker.number.int({ min: 10, max: 50 }),
+        value: int(10, 50),
         suffix: "+"
       },
       {
         _key: faker.string.uuid(),
         label: "Clients Served",
-        value: faker.number.int({ min: 5, max: 50 }),
+        value: int(5, 50),
         suffix: "+"
       }
     ]
@@ -103,28 +149,13 @@ export const portfolioPagePersonalInfoBuilder = build<NonNullable<PortfolioPageQ
   traits: {
     withAvatar: {
       overrides: {
-        avatar: () => {
-          const imageId = faker.string.alphanumeric(28);
-          return {
-            _type: "image" as const,
-            asset: {
-              _id: `image-${imageId}-400x400-jpg`,
-              url: `https://cdn.sanity.io/images/project/dataset/${imageId}-400x400.jpg`,
-              metadata: {
-                dimensions: {
-                  _type: "sanity.imageDimensions" as const,
-                  height: 400,
-                  width: 400,
-                  aspectRatio: 1
-                },
-                lqip: "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAKABQDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAAMEBf/EABQQAQAAAAAAAAAAAAAAAAAAAAD/xAAVAQEBAAAAAAAAAAAAAAAAAAAAAf/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/AMOA="
-              }
-            },
-            hotspot: null,
-            crop: null,
-            alt: faker.lorem.words(3)
-          };
-        }
+        avatar: () => ({
+          _type: "image" as const,
+          asset: buildExpandedImageAsset(400, 400),
+          hotspot: null,
+          crop: null,
+          alt: faker.lorem.words(3)
+        })
       }
     }
   }
@@ -158,40 +189,38 @@ export const portfolioPageHeroBuilder = build<NonNullable<PortfolioPageQueryResu
 export const technologyBuilder = build<PortfolioTechnology>({
   fields: {
     _id: () => faker.string.uuid(),
-    name: () =>
-      faker.helpers.arrayElement([
-        "React",
-        "Next.js",
-        "TypeScript",
-        "Node.js",
-        "Tailwind CSS",
-        "Expo",
-        "Python",
-        "Vitest",
-        "Storybook",
-        "Playwright",
-        "Zod",
-        "Radix UI",
-        "Sanity",
-        "Pino"
-      ]),
-    icon: () =>
-      faker.helpers.arrayElement([
-        "SiReact",
-        "SiNextdotjs",
-        "SiTypescript",
-        "SiNodedotjs",
-        "SiTailwindcss",
-        "SiExpo",
-        "SiPython",
-        "SiVitest",
-        "SiStorybook",
-        "SiZod",
-        "SiRadixui",
-        "SiSanity",
-        "TbTestPipe",
-        "VscDebugConsole"
-      ]),
+    name: oneOf(
+      "React",
+      "Next.js",
+      "TypeScript",
+      "Node.js",
+      "Tailwind CSS",
+      "Expo",
+      "Python",
+      "Vitest",
+      "Storybook",
+      "Playwright",
+      "Zod",
+      "Radix UI",
+      "Sanity",
+      "Pino"
+    ),
+    icon: oneOf(
+      "SiReact",
+      "SiNextdotjs",
+      "SiTypescript",
+      "SiNodedotjs",
+      "SiTailwindcss",
+      "SiExpo",
+      "SiPython",
+      "SiVitest",
+      "SiStorybook",
+      "SiZod",
+      "SiRadixui",
+      "SiSanity",
+      "TbTestPipe",
+      "VscDebugConsole"
+    ),
     description: () => faker.lorem.sentence()
   }
 });
@@ -205,9 +234,9 @@ export const technologyBuilder = build<PortfolioTechnology>({
 export const technologyGroupBuilder = build<PortfolioTechnologyGroup>({
   fields: {
     _id: () => faker.string.uuid(),
-    label: () => faker.helpers.arrayElement(["Frontend", "Backend", "Mobile", "DevOps & Tools", "Other"]),
-    featured: () => faker.datatype.boolean(),
-    technologies: () => Array.from({ length: faker.number.int({ min: 3, max: 8 }) }, () => technologyBuilder.one())
+    label: oneOf("Frontend", "Backend", "Mobile", "DevOps & Tools", "Other"),
+    featured: bool(),
+    technologies: () => technologyBuilder.many(int(3, 8))
   }
 });
 
@@ -240,29 +269,14 @@ export const projectBuilder = build<PortfolioProject>({
     title: () => faker.company.catchPhrase(),
     description: () => faker.lorem.sentence(),
     longDescription: () => faker.lorem.paragraphs(2),
-    thumbnail: () => {
-      const imageId = faker.string.alphanumeric(28);
-      return {
-        _type: "image" as const,
-        asset: {
-          _id: `image-${imageId}-800x450-jpg`,
-          url: `https://cdn.sanity.io/images/project/dataset/${imageId}-800x450.jpg`,
-          metadata: {
-            dimensions: {
-              _type: "sanity.imageDimensions" as const,
-              height: 450,
-              width: 800,
-              aspectRatio: 16 / 9
-            },
-            lqip: "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAKABQDASIAAhEBAxEB/8QAFwAAAwEAAAAAAAAAAAAAAAAAAAMEBf/EABQQAQAAAAAAAAAAAAAAAAAAAAD/xAAVAQEBAAAAAAAAAAAAAAAAAAAAAf/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/AMOA="
-          }
-        },
-        hotspot: null,
-        crop: null,
-        alt: faker.lorem.sentence()
-      };
-    },
-    technologies: () => Array.from({ length: faker.number.int({ min: 2, max: 6 }) }, () => technologyBuilder.one()),
+    thumbnail: () => ({
+      _type: "image" as const,
+      asset: buildExpandedImageAsset(800, 450),
+      hotspot: null,
+      crop: null,
+      alt: faker.lorem.sentence()
+    }),
+    technologies: () => technologyBuilder.many(int(2, 6)),
     links: () => ({
       live: faker.helpers.arrayElement([faker.internet.url(), null]),
       github: faker.helpers.arrayElement([faker.internet.url(), null]),
@@ -291,9 +305,9 @@ export const projectBuilder = build<PortfolioProject>({
 export const projectGroupBuilder = build<PortfolioProjectGroup>({
   fields: {
     _id: () => faker.string.uuid(),
-    label: () => faker.helpers.arrayElement(["Featured Projects", "Web Applications", "Mobile Apps", "Open Source"]),
+    label: oneOf("Featured Projects", "Web Applications", "Mobile Apps", "Open Source"),
     description: () => faker.lorem.sentence(),
-    projects: () => Array.from({ length: faker.number.int({ min: 3, max: 6 }) }, () => projectBuilder.one())
+    projects: () => projectBuilder.many(int(3, 6))
   }
 });
 
@@ -309,7 +323,7 @@ export const portfolioPageProjectsBuilder = build<NonNullable<PortfolioPageQuery
       title: () => faker.lorem.words(3),
       description: () => faker.lorem.sentence()
     },
-    projectGroups: () => Array.from({ length: faker.number.int({ min: 2, max: 4 }) }, () => projectGroupBuilder.one())
+    projectGroups: () => projectGroupBuilder.many(int(2, 4))
   }
 });
 
@@ -324,36 +338,20 @@ export const experienceBuilder = build<PortfolioExperience>({
     _id: () => faker.string.uuid(),
     role: () => faker.person.jobTitle(),
     company: () => faker.company.name(),
-    companyLogo: () => {
-      const imageId = faker.string.alphanumeric(28);
-      return {
-        asset: {
-          _id: `image-${imageId}-40x40-png`,
-          url: `https://cdn.sanity.io/images/project/dataset/${imageId}-40x40.png`,
-          metadata: {
-            dimensions: {
-              _type: "sanity.imageDimensions" as const,
-              height: 40,
-              width: 40,
-              aspectRatio: 1
-            },
-            lqip: "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg=="
-          }
-        }
-      };
-    },
+    companyLogo: () => ({
+      asset: buildExpandedImageAsset(40, 40)
+    }),
     companyUrl: () => faker.internet.url(),
     location: () => `${faker.location.city()}, ${faker.location.country()}`,
-    type: () => faker.helpers.arrayElement(["full-time", "part-time", "contract", "freelance"] as const),
+    type: oneOf("full-time", "part-time", "contract", "freelance" as const),
     startDate: () => faker.date.past({ years: 5 }).toISOString(),
     endDate: () => {
-      const hasEndDate = faker.datatype.boolean();
-      return hasEndDate ? faker.date.recent().toISOString() : null;
+      return bool() ? faker.date.recent().toISOString() : null;
     },
     summary: () => faker.lorem.paragraph(),
-    responsibilities: () => Array.from({ length: faker.number.int({ min: 3, max: 6 }) }, () => faker.lorem.sentence()),
-    achievements: () => Array.from({ length: faker.number.int({ min: 2, max: 4 }) }, () => faker.lorem.sentence()),
-    technologies: () => Array.from({ length: faker.number.int({ min: 3, max: 8 }) }, () => technologyBuilder.one())
+    responsibilities: () => Array.from({ length: int(3, 6) }, () => faker.lorem.sentence()),
+    achievements: () => Array.from({ length: int(2, 4) }, () => faker.lorem.sentence()),
+    technologies: () => technologyBuilder.many(int(3, 8))
   },
   traits: {
     withoutLogo: {
@@ -377,7 +375,7 @@ export const portfolioPageExperienceBuilder = build<NonNullable<PortfolioPageQue
       title: () => faker.lorem.words(3),
       description: () => faker.lorem.sentence()
     },
-    experiences: () => Array.from({ length: faker.number.int({ min: 2, max: 4 }) }, () => experienceBuilder.one())
+    experiences: () => experienceBuilder.many(int(2, 4))
   }
 });
 
@@ -393,7 +391,7 @@ export const educationBuilder = build<PortfolioEducation>({
     institution: () => faker.company.name() + " University",
     institutionUrl: () => faker.internet.url(),
     location: () => `${faker.location.city()}, ${faker.location.country()}`,
-    degree: () => faker.helpers.arrayElement(["Bachelor's Degree", "Master's Degree", "Ph.D."] as const),
+    degree: oneOf("Bachelor's Degree", "Master's Degree", "Ph.D." as const),
     fieldOfStudy: () =>
       faker.helpers.arrayElement(["Computer Science", "Software Engineering", "Information Technology"]),
     startDate: () => faker.date.past({ years: 10 }).toISOString(),
@@ -402,7 +400,7 @@ export const educationBuilder = build<PortfolioEducation>({
     thesis: () => ({
       title: faker.lorem.words(5),
       description: faker.lorem.paragraph(),
-      technologies: Array.from({ length: faker.number.int({ min: 3, max: 6 }) }, () => technologyBuilder.one()),
+      technologies: technologyBuilder.many(int(3, 6)),
       project: {
         _id: faker.string.uuid(),
         title: faker.lorem.words(3),
@@ -410,8 +408,8 @@ export const educationBuilder = build<PortfolioEducation>({
       },
       url: faker.internet.url()
     }),
-    achievements: () => Array.from({ length: faker.number.int({ min: 2, max: 4 }) }, () => faker.lorem.sentence()),
-    coursework: () => Array.from({ length: faker.number.int({ min: 4, max: 8 }) }, () => faker.lorem.words(3))
+    achievements: () => Array.from({ length: int(2, 4) }, () => faker.lorem.sentence()),
+    coursework: () => Array.from({ length: int(4, 8) }, () => faker.lorem.words(3))
   }
 });
 
@@ -427,7 +425,7 @@ export const portfolioPageEducationBuilder = build<NonNullable<PortfolioPageQuer
       title: () => faker.lorem.words(2),
       description: () => faker.lorem.sentence()
     },
-    education: () => Array.from({ length: faker.number.int({ min: 1, max: 3 }) }, () => educationBuilder.one())
+    education: () => educationBuilder.many(int(1, 3))
   }
 });
 
@@ -458,6 +456,96 @@ export const portfolioPageContactBuilder = build<NonNullable<PortfolioPageQueryR
     quickChat: {
       title: () => faker.lorem.words(4),
       description: () => faker.lorem.sentence()
+    }
+  }
+});
+
+/**
+ * Builder for PortfolioPage SEO section test data.
+ *
+ * @example
+ * const seo = portfolioPageSeoBuilder.one();
+ *
+ * @example
+ * const withTwitter = portfolioPageSeoBuilder.one({ traits: ["withTwitter"] });
+ */
+export const portfolioPageSeoBuilder = build<NonNullable<PortfolioPageQueryResult>["seo"]>({
+  fields: {
+    metaTitle: () => faker.lorem.words(5),
+    metaDescription: () => faker.lorem.sentence(),
+    keywords: () => Array.from({ length: int(3, 8) }, () => faker.lorem.word()),
+    ogImage: (() => ({
+      _type: "image" as const,
+      asset: buildSeoImageAsset(1200, 630),
+      hotspot: null,
+      crop: null,
+      alt: faker.lorem.words(5)
+    })) as any, // eslint-disable-line @typescript-eslint/no-explicit-any
+    ogTitle: () => faker.lorem.words(4),
+    ogDescription: () => faker.lorem.sentence(),
+    twitterCardType: () => "summary_large_image" as const,
+    twitterSite: () => "@username",
+    twitterCreator: () => "@creator",
+    twitterImage: (() => ({
+      _type: "image" as const,
+      asset: buildSeoImageAsset(1200, 630),
+      hotspot: null,
+      crop: null,
+      alt: faker.lorem.words(5)
+    })) as any, // eslint-disable-line @typescript-eslint/no-explicit-any
+    noindex: false,
+    nofollow: false,
+    noarchive: false,
+    canonicalUrl: undefined,
+    alternateUrls: (() =>
+      Array.from({ length: int(0, 2) }, () => ({
+        _key: faker.string.uuid(),
+        hreflang: faker.helpers.arrayElement(["en-US", "pl-PL", "de-DE"]),
+        url: faker.internet.url()
+      }))) as any, // eslint-disable-line @typescript-eslint/no-explicit-any
+    organizationName: () => faker.company.name(),
+    organizationLogo: (() => ({
+      _type: "image" as const,
+      asset: buildSeoImageAsset(1200, 630),
+      hotspot: null,
+      crop: null,
+      alt: faker.lorem.words(5)
+    })) as any, // eslint-disable-line @typescript-eslint/no-explicit-any
+    sameAsUrls: () => Array.from({ length: int(1, 3) }, () => faker.internet.url()),
+    alternateNames: () => Array.from({ length: int(0, 2) }, () => faker.person.fullName()),
+    addressLocality: () => faker.location.city(),
+    addressCountry: () => faker.location.countryCode("alpha-2"),
+    knowsAbout: () => Array.from({ length: int(3, 6) }, () => faker.lorem.words(2))
+  },
+  traits: {
+    noSocial: {
+      overrides: {
+        twitterSite: undefined,
+        twitterCreator: undefined,
+        twitterImage: undefined,
+        sameAsUrls: []
+      }
+    },
+    withTwitter: {
+      overrides: {
+        twitterSite: () => "@username",
+        twitterCreator: () => "@creator",
+        twitterImage: (() => ({
+          _type: "image" as const,
+          asset: buildSeoImageAsset(1200, 630),
+          hotspot: null,
+          crop: null,
+          alt: faker.lorem.words(5)
+        })) as any // eslint-disable-line @typescript-eslint/no-explicit-any
+      }
+    },
+    noOrg: {
+      overrides: {
+        organizationName: undefined,
+        organizationLogo: undefined,
+        sameAsUrls: [],
+        alternateNames: []
+      }
     }
   }
 });

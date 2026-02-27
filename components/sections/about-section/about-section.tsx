@@ -1,6 +1,7 @@
 "use client";
 
 import { Card, CardContent, CountingNumber } from "@szum-tech/design-system";
+import { LocationCard } from "~/components/sections/about-section/location-card";
 import { SectionHeading } from "~/components/ui/section-heading";
 import { Section } from "~/constants/sections";
 import { type PortfolioPageQueryResult } from "~/lib/sanity/types";
@@ -49,6 +50,13 @@ export function AboutSection({ about, documentId, documentType }: AboutSectionPr
                 </CardContent>
               </Card>
             ))}
+
+            {/* Location Card */}
+            {about?.location ? (
+              <div className="col-span-2" data-sanity={createSanityAttribute("about.location")}>
+                <LocationCard city={about.location.city ?? ""} coordinates={about.location.coordinates ?? {}} />
+              </div>
+            ) : null}
           </div>
         </div>
       </div>
