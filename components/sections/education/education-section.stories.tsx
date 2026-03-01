@@ -6,7 +6,7 @@ import { EducationSection } from "./education-section";
 import preview from "~/.storybook/preview";
 
 const meta = preview.meta({
-  title: "Components/Sections/Education Section",
+  title: "Components/Sections/Education",
   component: EducationSection,
   args: {
     education: portfolioPageEducationBuilder.one(),

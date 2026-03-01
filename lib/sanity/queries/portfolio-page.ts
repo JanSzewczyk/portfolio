@@ -187,7 +187,14 @@ export const portfolioPageQuery = defineQuery(`
           project-> {
             _id,
             title,
-            description
+            description,
+            technologies[]-> {
+              _id,
+              name,
+              icon,
+              description
+            },
+            links
           },
           url
         },
