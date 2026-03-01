@@ -17,7 +17,7 @@ When using this configuration in other projects, update this file with your proj
 | Forms | React Hook Form | 7.71 | ✅ Installed |
 | Validation | Zod | 4.3 | ✅ Installed |
 | Email | Resend | 6.9 (with @react-email/components) | ✅ Installed |
-| CMS | Sanity | 5.11 (with next-sanity 12.0) | ✅ Installed |
+| CMS | Sanity | 5.12 (with next-sanity 12.0) | ✅ Installed |
 
 ### Optional Integrations (Not Yet Installed)
 
