@@ -415,7 +415,13 @@ export const educationBuilder = build<PortfolioEducation>({
       project: {
         _id: faker.string.uuid(),
         title: faker.lorem.words(3),
-        description: faker.lorem.sentence()
+        description: faker.lorem.sentence(),
+        technologies: Array.from({ length: faker.number.int({ min: 2, max: 5 }) }, () => technologyBuilder.one()),
+        links: {
+          live: faker.helpers.arrayElement([faker.internet.url(), undefined]),
+          github: faker.helpers.arrayElement([faker.internet.url(), undefined]),
+          npm: undefined
+        }
       },
       url: faker.internet.url()
     }),
