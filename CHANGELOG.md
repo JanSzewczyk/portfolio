@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.6.0](https://github.com/JanSzewczyk/portfolio/compare/v1.5.3...v1.6.0) (2026-03-01)
+
+### Features
+
+* Add location support to about section with map integration ([c1b5a13](https://github.com/JanSzewczyk/portfolio/commit/c1b5a1325c24a42f9501160060ff20bb9e6b4ad4))
+* Create EducationCard component for displaying education details ([e94c0b7](https://github.com/JanSzewczyk/portfolio/commit/e94c0b76a21d9d9663945d0a6417fac1e2370756))
+
+### Miscellaneous Chores
+
+* remove `package-lock.json` file to switch to another package manager or lockfile system ([21f288e](https://github.com/JanSzewczyk/portfolio/commit/21f288ebb72b8ff98a0b455053bc8181f5871176))
+
 ## [1.5.3](https://github.com/JanSzewczyk/portfolio/compare/v1.5.2...v1.5.3) (2026-02-26)
 
 ### Bug Fixes
