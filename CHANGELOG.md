@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.7.0](https://github.com/JanSzewczyk/portfolio/compare/v1.6.0...v1.7.0) (2026-03-01)
+
+### Features
+
+* add education card component with thesis and project details ([ec98e81](https://github.com/JanSzewczyk/portfolio/commit/ec98e8113e0322db9095b23c11719c614d176b81))
+
+### Miscellaneous Chores
+
+* update dependencies and fix import paths in project files ([4d2654d](https://github.com/JanSzewczyk/portfolio/commit/4d2654d5248f145915614760e93e8791207048a8))
+
 ## [1.6.0](https://github.com/JanSzewczyk/portfolio/compare/v1.5.3...v1.6.0) (2026-03-01)
 
 ### Features
