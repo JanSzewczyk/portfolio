@@ -1,7 +1,7 @@
 import { expect } from "storybook/test";
 import { technologyBuilder, technologyGroupBuilder } from "~/tests/builders/portfolio-page.builder";
 
-import { SkillsSection } from "./skills-section";
+import { SkillsSection } from "./skills-section/skills-section";
 
 import preview from "~/.storybook/preview";
 

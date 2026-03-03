@@ -1,15 +1,8 @@
 "use client";
 
-
 import { ArrowDownIcon } from "lucide-react";
 
-import {
-  Badge,
-  Card,
-  CardHeader,
-  Marquee,
-  CardTitle, CardContent, CardDescription
-} from "@szum-tech/design-system";
+import { Badge, Card, CardHeader, Marquee, CardTitle, CardContent, CardDescription } from "@szum-tech/design-system";
 import { cn } from "@szum-tech/design-system/utils";
 import { ReactIcon, type IconName } from "~/components/ui/react-icon";
 import { SectionHeading } from "~/components/ui/section-heading";
@@ -17,33 +10,7 @@ import { Section } from "~/constants/sections";
 import { type PortfolioPageQueryResult } from "~/lib/sanity/types";
 import { buildSanityAttribute } from "~/lib/sanity/utils";
 
-type Technology = {
-  _id: string;
-  name: string | null;
-  icon: string | null;
-  description: string | null;
-};
-
-function TechLogo({ tech, dataSanity }: { tech: Technology; dataSanity?: string }) {
-  return (
-    <Card
-      className="group relative flex h-24 w-28 flex-col items-center gap-2  transition-all duration-300 hover:scale-105 hover:shadow-md"
-      data-sanity={dataSanity}
-    >
-      <div>
-        {tech.icon ? (
-          <ReactIcon
-            name={tech.icon as IconName}
-            className="text-primary relative z-10 size-8 opacity-40 transition-opacity duration-300 group-hover:opacity-70"
-          />
-        ) : null}
-      </div>
-
-      <span className="text-foreground text-body-xs relative z-10 text-center">{tech.name}</span>
-    </Card>
-  );
-}
-
+import { TechLogo } from "./tech-logo";
 
 type SkillsSectionProps = {
   skills: NonNullable<PortfolioPageQueryResult>["skills"];
@@ -70,7 +37,10 @@ export function SkillsSection({ skills, documentId, documentType }: SkillsSectio
 
         {/* Tech logos marquee with enhanced styling */}
         {uniqueTechnologies.length > 0 && (
-          <div className="relative -mx-4 mb-20 sm:-mx-6 lg:-mx-8">
+          <div
+            className="relative -mx-4 mb-20 sm:-mx-6 lg:-mx-8"
+            data-sanity={createSanityAttribute("skills.technologyGroups")}
+          >
             <Marquee pauseOnHover className="[--duration:50s]">
               {uniqueTechnologies.map((tech) => (
                 <TechLogo
@@ -85,7 +55,10 @@ export function SkillsSection({ skills, documentId, documentType }: SkillsSectio
           </div>
         )}
 
-        <div className="grid auto-rows-auto grid-cols-1 gap-6 md:grid-cols-3">
+        <div
+          className="grid auto-rows-auto grid-cols-1 gap-6 md:grid-cols-3"
+          data-sanity={createSanityAttribute("skills.technologyGroups")}
+        >
           {skills?.technologyGroups?.map((group, groupIndex) => {
             const isFeatured = group.featured;
             const groupIcon = group.icon as IconName;
