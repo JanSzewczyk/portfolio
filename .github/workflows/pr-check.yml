@@ -187,7 +187,7 @@ jobs:
           comment-summary-in-pr: on-failure
 
   react-doctor:
-    name: React Doctor ⚕️
+    name: React Doctor🩺
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -197,9 +197,8 @@ jobs:
         uses: actions/checkout@v6
         with:
           fetch-depth: 0 # required for --diff
-      - name: React Doctor ⚕️
+      - name: React Doctor🩺
         uses: millionco/react-doctor@main
         with:
           diff: main
           github-token: ${{ secrets.GITHUB_TOKEN }}
-
