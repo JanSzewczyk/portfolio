@@ -67,6 +67,8 @@ export const portfolioPageQuery = defineQuery(`
         _id,
         label,
         featured,
+        description,
+        icon,
         technologies[]-> {
           _id,
           name,

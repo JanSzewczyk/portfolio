@@ -1,6 +1,7 @@
 import { defineField, defineType } from "sanity";
 
 import { ComponentIcon } from "@sanity/icons";
+import { IconSearchInput } from "~/lib/sanity/configuration/schema-types/components/icon-search-input";
 
 export const technologyGroup = defineType({
   name: "technologyGroup",
@@ -15,11 +16,25 @@ export const technologyGroup = defineType({
       validation: (rule) => rule.required()
     }),
     defineField({
+      name: "description",
+      title: "Description",
+      type: "text"
+    }),
+    defineField({
       name: "featured",
       title: "Featured",
       type: "boolean",
       description: "Defines if the technology group is featured (e.g., displayed prominently).",
       initialValue: true,
+      validation: (rule) => rule.required()
+    }),
+    defineField({
+      name: "icon",
+      title: "Icon",
+      type: "string",
+      components: {
+        input: IconSearchInput
+      },
       validation: (rule) => rule.required()
     }),
     defineField({
