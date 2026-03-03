@@ -1,7 +1,7 @@
 "use client";
 
 import { Card, CardContent, CountingNumber } from "@szum-tech/design-system";
-import { LocationCard } from "~/components/sections/about-section/location-card";
+import { LocationCard } from "~/components/sections/about/location-card";
 import { SectionHeading } from "~/components/ui/section-heading";
 import { Section } from "~/constants/sections";
 import { type PortfolioPageQueryResult } from "~/lib/sanity/types";
