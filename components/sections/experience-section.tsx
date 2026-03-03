@@ -154,8 +154,8 @@ export function ExperienceSection({ experience, documentId, documentType }: Expe
                                     `experience.experiences[${index}].responsibilities`
                                   )}
                                 >
-                                  {exp.responsibilities.map((responsibility, i) => (
-                                    <li key={i}>{responsibility}</li>
+                                  {exp.responsibilities.map((responsibility) => (
+                                    <li key={responsibility}>{responsibility}</li>
                                   ))}
                                 </ul>
                               </AccordionContent>
@@ -170,8 +170,8 @@ export function ExperienceSection({ experience, documentId, documentType }: Expe
                                   className="text-muted-foreground ml-4 list-disc space-y-1"
                                   data-sanity={createSanityAttribute(`experience.experiences[${index}].achievements`)}
                                 >
-                                  {exp.achievements.map((achievement, i) => (
-                                    <li key={i}>{achievement}</li>
+                                  {exp.achievements.map((achievement) => (
+                                    <li key={achievement}>{achievement}</li>
                                   ))}
                                 </ul>
                               </AccordionContent>

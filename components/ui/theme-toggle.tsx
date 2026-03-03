@@ -17,6 +17,12 @@ const THEME_LABELS: Record<Theme, string> = {
   dark: "Dark theme"
 };
 
+function ThemeIcon({ theme }: { theme: Theme }) {
+  if (theme === "system") return <MonitorIcon className="size-4" />;
+  if (theme === "light") return <SunIcon className="size-4" />;
+  return <MoonIcon className="size-4" />;
+}
+
 /**
  * Theme toggle button component that cycles through system, light, and dark themes.
  *
@@ -71,18 +77,6 @@ export function ThemeToggle() {
     );
   }
 
-  const renderIcon = () => {
-    // When theme is "system", show icon based on resolved theme
-    if (currentTheme === "system") {
-      return <MonitorIcon className="size-4" />;
-    }
-    // For explicit light/dark, show the corresponding icon
-    if (currentTheme === "light") {
-      return <SunIcon className="size-4" />;
-    }
-    return <MoonIcon className="size-4" />;
-  };
-
   const getNextThemeLabel = (): string => {
     const currentIndex = THEME_CYCLE.indexOf(currentTheme);
     const nextIndex = (currentIndex + 1) % THEME_CYCLE.length;
@@ -100,7 +94,7 @@ export function ThemeToggle() {
           onKeyDown={handleKeyDown}
           aria-label={`Current: ${THEME_LABELS[currentTheme]}. Click to switch to ${getNextThemeLabel()}`}
         >
-          {renderIcon()}
+          <ThemeIcon theme={currentTheme} />
         </Button>
       </TooltipTrigger>
       <TooltipContent side="bottom">

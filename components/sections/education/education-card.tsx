@@ -142,8 +142,8 @@ export function EducationCard({ education }: EducationCardProps) {
               <AccordionTrigger>Key Achievements</AccordionTrigger>
               <AccordionContent>
                 <ul className="text-muted-foreground ml-4 list-disc space-y-1">
-                  {education.achievements.map((achievement, i) => (
-                    <li key={i}>{achievement}</li>
+                  {education.achievements.map((achievement) => (
+                    <li key={achievement}>{achievement}</li>
                   ))}
                 </ul>
               </AccordionContent>
@@ -155,8 +155,8 @@ export function EducationCard({ education }: EducationCardProps) {
               <AccordionTrigger>Relevant Coursework</AccordionTrigger>
               <AccordionContent>
                 <ul className="text-muted-foreground ml-4 list-disc space-y-1">
-                  {education.coursework.map((course, i) => (
-                    <li key={i}>{course}</li>
+                  {education.coursework.map((course) => (
+                    <li key={course}>{course}</li>
                   ))}
                 </ul>
               </AccordionContent>
