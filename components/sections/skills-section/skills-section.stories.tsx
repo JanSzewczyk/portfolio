@@ -1,7 +1,7 @@
 import { expect } from "storybook/test";
 import { technologyBuilder, technologyGroupBuilder } from "~/tests/builders/portfolio-page.builder";
 
-import { SkillsSection } from "./skills-section/skills-section";
+import { SkillsSection } from "./skills-section";
 
 import preview from "~/.storybook/preview";
 
@@ -22,6 +22,9 @@ const testTechTailwind = technologyBuilder.one({
 const testGroupFrontend = technologyGroupBuilder.one({
   overrides: {
     label: "Frontend",
+    featured: true,
+    description: "User interfaces, design systems, and interactive web apps",
+    icon: "SiReact",
     technologies: [testTechReact, testTechTypeScript, testTechTailwind]
   }
 });
@@ -29,6 +32,9 @@ const testGroupFrontend = technologyGroupBuilder.one({
 const testGroupBackend = technologyGroupBuilder.one({
   overrides: {
     label: "Backend",
+    featured: false,
+    description: "APIs, services, and infrastructure",
+    icon: "SiNodedotjs",
     technologies: [testTechNode]
   }
 });
@@ -71,10 +77,10 @@ SkillsSection_Story.test("Renders marquee with tech logos", async ({ canvas, arg
   // Verify at least one tech logo is visible in marquee
   const firstTech = args.skills?.technologyGroups?.[0]?.technologies?.[0];
   if (firstTech?.name) {
-    // Get all elements with this tech name (appears in marquee AND in skill cards)
+    // Get all elements with this tech name (appears in marquee AND in badges)
     const techElements = canvas.getAllByText(firstTech.name);
-    // At least one should be visible (the marquee one)
-    await expect(techElements[0]).toBeVisible();
+    // Expect at least two occurrences (marquee + badge)
+    await expect(techElements.length).toBeGreaterThan(1);
   }
 });
 
@@ -152,19 +158,13 @@ MarqueeInteraction.test("Marquee pauses on hover", async ({ canvas, args }) => {
  */
 export const DesktopBentoGridLayout = meta.story({});
 
-DesktopBentoGridLayout.test("Renders desktop grid with category columns", async ({ canvasElement }) => {
-  const desktopGrid = canvasElement.querySelector(".lg\\:block");
-  await expect(desktopGrid).toBeInTheDocument();
-});
-
-DesktopBentoGridLayout.test("All categories are visible simultaneously on desktop", async ({ canvas, args }) => {
+DesktopBentoGridLayout.test("Renders one card per technology group", async ({ canvas, args }) => {
   const groups = args.skills?.technologyGroups ?? [];
 
   for (const group of groups) {
     if (group.label) {
-      // Badges appear multiple times (desktop and mobile views)
-      const badges = canvas.getAllByText(group.label);
-      await expect(badges[0]).toBeVisible();
+      const labels = canvas.getAllByText(group.label);
+      await expect(labels.length).toBe(1);
     }
   }
 });
@@ -176,21 +176,10 @@ export const MobileStackedLayout = meta.story({
   tags: ["test-only"]
 });
 
-MobileStackedLayout.test("Renders mobile stacked layout", async ({ canvasElement }) => {
-  const mobileLayout = canvasElement.querySelector(".lg\\:hidden");
-  await expect(mobileLayout).toBeInTheDocument();
-});
-
-MobileStackedLayout.test("Each group has category badge and skills grid", async ({ canvas, args }) => {
+MobileStackedLayout.test("Renders badges for technologies", async ({ canvas, args }) => {
   const firstGroup = args.skills?.technologyGroups?.[0];
-
-  if (firstGroup?.label) {
-    // Badges appear multiple times (desktop and mobile views)
-    const badges = canvas.getAllByText(firstGroup.label);
-    await expect(badges[0]).toBeVisible();
-  }
-
   const firstTech = firstGroup?.technologies?.[0];
+
   if (firstTech?.name) {
     const skill = canvas.getAllByText(firstTech.name)[0];
     await expect(skill).toBeVisible();
@@ -240,7 +229,11 @@ EmptySkills.test("Handles empty technology groups gracefully", async ({ canvas, 
   const heading = canvas.getByRole("heading", { level: 2 });
   await expect(heading).toBeVisible();
 
-  // Marquee should not render with no technologies
-  const marquee = canvasElement.querySelector('[data-testid="marquee"]');
-  await expect(marquee).not.toBeInTheDocument();
+  // No known group labels should render
+  const frontendLabel = canvas.queryByText("Frontend");
+  await expect(frontendLabel).not.toBeInTheDocument();
+
+  // Decorative text should not render when null
+  const bottomText = canvas.queryByText(/always learning and exploring new technologies/i);
+  await expect(bottomText).not.toBeInTheDocument();
 });
