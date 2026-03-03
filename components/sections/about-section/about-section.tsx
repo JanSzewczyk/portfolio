@@ -27,8 +27,8 @@ export function AboutSection({ about, documentId, documentType }: AboutSectionPr
 
         <div className="grid gap-12 lg:grid-cols-2">
           <div className="space-y-6" data-sanity={createSanityAttribute("about.bio")}>
-            {about?.bio?.split("\n\n").map((paragraph, index) => (
-              <p key={index} className="text-muted-foreground">
+            {about?.bio?.split("\n\n").map((paragraph) => (
+              <p key={paragraph} className="text-muted-foreground">
                 {paragraph}
               </p>
             ))}
