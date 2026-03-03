@@ -247,6 +247,20 @@ export const technologyGroupBuilder = build<PortfolioTechnologyGroup>({
     _id: () => faker.string.uuid(),
     label: oneOf("Frontend", "Backend", "Mobile", "DevOps & Tools", "Other"),
     featured: bool(),
+    description: () => faker.lorem.sentence(),
+    icon: oneOf(
+      "SiReact",
+      "SiNextdotjs",
+      "SiTypescript",
+      "SiNodedotjs",
+      "SiTailwindcss",
+      "SiExpo",
+      "SiPython",
+      "SiStorybook",
+      "SiSanity",
+      "TbTestPipe",
+      "VscDebugConsole"
+    ),
     technologies: () => technologyBuilder.many(int(3, 8))
   }
 });
