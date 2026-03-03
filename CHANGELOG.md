@@ -3,6 +3,25 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.8.0](https://github.com/JanSzewczyk/portfolio/compare/v1.7.0...v1.8.0) (2026-03-03)
+
+### Features
+
+* add description and icon fields to technology group schema ([9ef0e48](https://github.com/JanSzewczyk/portfolio/commit/9ef0e4879edbc01f6df77ec939fff8abe47fe7b6))
+* add React Doctor workflow for enhanced code quality checks ([f7efc9f](https://github.com/JanSzewczyk/portfolio/commit/f7efc9fb45aa4362969fb9389e98e8e782c92e30))
+* enhance technology group schema with description and icon fields ([fced057](https://github.com/JanSzewczyk/portfolio/commit/fced0572581244b970c271b41f5ab0ab21c688ae))
+
+### Bug Fixes
+
+* refactor about and project sections for improved structure and organization ([0712b9b](https://github.com/JanSzewczyk/portfolio/commit/0712b9bc8ee561b6cc65c71773de162ba7dac38e))
+* update draft mode logic to use presentation tool hook ([3fa9aa1](https://github.com/JanSzewczyk/portfolio/commit/3fa9aa189bc5b85e6c87b2a026765f4e32788943))
+* update key props in mapped lists for improved rendering and performance ([1a7e06c](https://github.com/JanSzewczyk/portfolio/commit/1a7e06c469ea3b7c5204bb8a52e2ba9a2f95b92c))
+* update React Doctor name to use a different emoji for consistency ([5a781c3](https://github.com/JanSzewczyk/portfolio/commit/5a781c3e5fdf027ad32eb831e54f927ad2228aad))
+
+### Miscellaneous Chores
+
+* **deps:** bump actions/upload-artifact ([08f2fa1](https://github.com/JanSzewczyk/portfolio/commit/08f2fa104fa1d97b3db3eff8d406cb5ba4dab839))
+
 ## [1.7.0](https://github.com/JanSzewczyk/portfolio/compare/v1.6.0...v1.7.0) (2026-03-01)
 
 ### Features
