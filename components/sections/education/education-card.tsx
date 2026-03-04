@@ -104,13 +104,15 @@ export function EducationCard({ education }: EducationCardProps) {
                     </Button>
                   ) : null}
                   {education.thesis.project.links?.github ? (
-                    <Button startIcon={<ReactIcon name="SiGithub" />} size="sm" variant="outline" asChild>
+                    <Button size="sm" variant="outline" asChild>
                       <a
-                        href={stegaClean(education.thesis.project.links.github)}
+                        href={stegaClean(education.thesis.project.links?.github)}
                         target="_blank"
                         rel="noopener noreferrer"
+                        className="flex items-center gap-2"
                       >
-                        Code
+                        <ReactIcon name="SiGithub" size={14} />
+                        <span>Code</span>
                       </a>
                     </Button>
                   ) : null}
@@ -126,9 +128,15 @@ export function EducationCard({ education }: EducationCardProps) {
             ) : null}
             {!education.thesis.project && education.thesis.url ? (
               <div className="flex flex-wrap gap-2">
-                <Button startIcon={<FileTextIcon />} size="sm" variant="outline" asChild>
-                  <a href={stegaClean(education.thesis.url)} target="_blank" rel="noopener noreferrer">
-                    Thesis
+                <Button size="sm" variant="outline" asChild>
+                  <a
+                    href={stegaClean(education.thesis.url)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2"
+                  >
+                    <FileTextIcon size={14} />
+                    <span>Thesis</span>
                   </a>
                 </Button>
               </div>
