@@ -59,12 +59,12 @@ export function EducationCard({ education }: EducationCardProps) {
           ) : (
             education.institution
           )}
-          {education.location && (
+          {education.location ? (
             <>
               {" · "}
               {education.location}
             </>
-          )}
+          ) : null}
         </CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
@@ -86,13 +86,13 @@ export function EducationCard({ education }: EducationCardProps) {
                 ))}
               </div>
             )}
-            {education.thesis.project && (
+            {education.thesis.project ? (
               <div className="border-t pt-3">
                 <h4 className="text-mute">Related Project</h4>
                 <p className="text-heading-h4 mb-2">{education.thesis.project.title}</p>
                 <p className="text-body-xs text-muted-foreground mb-2">{education.thesis.project.description}</p>
                 <div className="flex flex-wrap gap-2">
-                  {education.thesis.project.links?.live && (
+                  {education.thesis.project.links?.live ? (
                     <Button size="sm" startIcon={<ExternalLinkIcon />} asChild>
                       <a
                         href={stegaClean(education.thesis.project.links.live)}
@@ -102,8 +102,8 @@ export function EducationCard({ education }: EducationCardProps) {
                         Live
                       </a>
                     </Button>
-                  )}
-                  {education.thesis.project.links?.github && (
+                  ) : null}
+                  {education.thesis.project.links?.github ? (
                     <Button startIcon={<ReactIcon name="SiGithub" />} size="sm" variant="outline" asChild>
                       <a
                         href={stegaClean(education.thesis.project.links.github)}
@@ -113,18 +113,18 @@ export function EducationCard({ education }: EducationCardProps) {
                         Code
                       </a>
                     </Button>
-                  )}
-                  {education.thesis.url && (
+                  ) : null}
+                  {education.thesis.url ? (
                     <Button startIcon={<FileTextIcon />} size="sm" variant="outline" asChild>
                       <a href={stegaClean(education.thesis.url)} target="_blank" rel="noopener noreferrer">
                         Thesis
                       </a>
                     </Button>
-                  )}
+                  ) : null}
                 </div>
               </div>
-            )}
-            {!education.thesis.project && education.thesis.url && (
+            ) : null}
+            {!education.thesis.project && education.thesis.url ? (
               <div className="flex flex-wrap gap-2">
                 <Button startIcon={<FileTextIcon />} size="sm" variant="outline" asChild>
                   <a href={stegaClean(education.thesis.url)} target="_blank" rel="noopener noreferrer">
@@ -132,7 +132,7 @@ export function EducationCard({ education }: EducationCardProps) {
                   </a>
                 </Button>
               </div>
-            )}
+            ) : null}
           </div>
         ) : null}
 

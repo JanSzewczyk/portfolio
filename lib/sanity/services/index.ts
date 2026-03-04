@@ -1,2 +1,2 @@
-export { getCachedSeoData, getSeoData } from "./seo";
+export { getCachedSeoData } from "./seo";
 export { getPortfolioPageData } from "./portfolio-page";

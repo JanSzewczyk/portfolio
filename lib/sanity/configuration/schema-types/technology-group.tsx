@@ -1,7 +1,8 @@
 import { defineField, defineType } from "sanity";
 
 import { ComponentIcon } from "@sanity/icons";
-import { IconSearchInput } from "~/lib/sanity/configuration/schema-types/components/icon-search-input";
+
+import { IconSearchInput } from "./components/icon-search-input";
 
 export const technologyGroup = defineType({
   name: "technologyGroup",

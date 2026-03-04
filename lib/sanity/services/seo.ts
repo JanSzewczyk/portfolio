@@ -14,7 +14,7 @@ const logger = createLogger({ module: "sanity-service", service: "seo" });
  *
  * @returns Tuple [error, data] - error is null on success, data is null on error
  */
-export async function getSeoData(): Promise<[null, NonNullable<SeoQueryResult>] | [Error, null]> {
+async function getSeoData(): Promise<[null, NonNullable<SeoQueryResult>] | [Error, null]> {
   const fnLogger = logger.child({ query: "seoQuery" });
   fnLogger.debug("Fetching SEO data from Sanity");
 

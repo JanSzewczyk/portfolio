@@ -11,7 +11,7 @@ import { NAV_ITEMS } from "~/constants/navigation";
 import { type PortfolioPageQueryResult } from "~/lib/sanity/types";
 import { scrollToSection } from "~/lib/scroll-to-section";
 
-export type NavigationProps = { personalInfo: NonNullable<PortfolioPageQueryResult>["personalInfo"] };
+type NavigationProps = { personalInfo: NonNullable<PortfolioPageQueryResult>["personalInfo"] };
 
 export function Navigation({ personalInfo }: NavigationProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
