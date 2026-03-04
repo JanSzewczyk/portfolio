@@ -1,11 +1,20 @@
 import "server-only";
 
+import { type BreadcrumbList, type Graph, type Organization, type Person, type ProfilePage, type WebPage, type WebSite } from "schema-dts";
+
 import { type SeoQueryResult } from "~/lib/sanity/types";
+
+/**
+ * Serialize JSON-LD for safe inline script rendering.
+ */
+export function serializeJsonLd(data: unknown): string {
+  return JSON.stringify(data).replace(/</g, "\\u003c");
+}
 
 /**
  * Build Person schema from Sanity data with fallback values
  */
-export function buildPersonSchema({ siteUrl, seoData }: { siteUrl: string; seoData: SeoQueryResult | null }) {
+export function buildPersonSchema({ siteUrl, seoData }: { siteUrl: string; seoData: SeoQueryResult | null }): Person {
   // Get personal info from Sanity or fallback
   const name = seoData?.personalInfo?.name ?? undefined;
   const title = seoData?.personalInfo?.title ?? undefined;
@@ -61,7 +70,7 @@ export function buildPersonSchema({ siteUrl, seoData }: { siteUrl: string; seoDa
 /**
  * Build WebSite schema from Sanity data with fallback values
  */
-export function buildWebsiteSchema({ siteUrl, seoData }: { siteUrl: string; seoData: SeoQueryResult | null }) {
+export function buildWebsiteSchema({ siteUrl, seoData }: { siteUrl: string; seoData: SeoQueryResult | null }): WebSite {
   const name = seoData?.personalInfo?.name ?? undefined;
   const title = seoData?.personalInfo?.title ?? undefined;
   const description = seoData?.seo?.metaDescription ?? undefined;
@@ -82,7 +91,7 @@ export function buildWebsiteSchema({ siteUrl, seoData }: { siteUrl: string; seoD
 /**
  * Build WebPage schema from Sanity data with fallback values
  */
-export function buildWebPageSchema({ siteUrl, seoData }: { siteUrl: string; seoData: SeoQueryResult | null }) {
+export function buildWebPageSchema({ siteUrl, seoData }: { siteUrl: string; seoData: SeoQueryResult | null }): WebPage {
   const name = seoData?.personalInfo?.name ?? undefined;
   const title = seoData?.personalInfo?.title ?? undefined;
   const description = seoData?.seo?.metaDescription ?? undefined;
@@ -111,7 +120,7 @@ export function buildWebPageSchema({ siteUrl, seoData }: { siteUrl: string; seoD
 /**
  * Build ProfilePage schema from Sanity data with fallback values
  */
-export function buildProfilePageSchema({ siteUrl, seoData }: { siteUrl: string; seoData: SeoQueryResult | null }) {
+export function buildProfilePageSchema({ siteUrl, seoData }: { siteUrl: string; seoData: SeoQueryResult | null }): ProfilePage {
   const name = seoData?.personalInfo?.name ?? undefined;
   const description = seoData?.seo?.metaDescription ?? undefined;
 
@@ -130,7 +139,13 @@ export function buildProfilePageSchema({ siteUrl, seoData }: { siteUrl: string; 
 /**
  * Build Organization schema from Sanity data (optional)
  */
-export function buildOrganizationSchema({ siteUrl, seoData }: { siteUrl: string; seoData: SeoQueryResult | null }) {
+export function buildOrganizationSchema({
+  siteUrl,
+  seoData
+}: {
+  siteUrl: string;
+  seoData: SeoQueryResult | null;
+}): Organization {
   const name = seoData?.seo?.organizationName ?? undefined;
   const logo = seoData?.seo?.organizationLogo?.asset?.url;
   const sameAsUrls = seoData?.seo?.sameAsUrls ?? [];
@@ -153,7 +168,7 @@ export function buildOrganizationSchema({ siteUrl, seoData }: { siteUrl: string;
 /**
  * Build BreadcrumbList schema (static)
  */
-export function buildBreadcrumbSchema({ siteUrl }: { siteUrl: string }) {
+export function buildBreadcrumbSchema({ siteUrl }: { siteUrl: string }): BreadcrumbList {
   return {
     "@type": "BreadcrumbList",
     itemListElement: [
@@ -181,6 +196,29 @@ export function buildBreadcrumbSchema({ siteUrl }: { siteUrl: string }) {
         name: "Contact",
         item: `${siteUrl}#contact`
       }
+    ]
+  };
+}
+
+/**
+ * Build complete JSON-LD graph for the website.
+ */
+export function buildStructuredDataGraph({
+  siteUrl,
+  seoData
+}: {
+  siteUrl: string;
+  seoData: SeoQueryResult | null;
+}): Graph {
+  return {
+    "@context": "https://schema.org",
+    "@graph": [
+      buildPersonSchema({ siteUrl, seoData }),
+      buildWebsiteSchema({ siteUrl, seoData }),
+      buildWebPageSchema({ siteUrl, seoData }),
+      buildProfilePageSchema({ siteUrl, seoData }),
+      buildBreadcrumbSchema({ siteUrl }),
+      buildOrganizationSchema({ siteUrl, seoData })
     ]
   };
 }
