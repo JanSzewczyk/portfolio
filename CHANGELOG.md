@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.8.1](https://github.com/JanSzewczyk/portfolio/compare/v1.8.0...v1.8.1) (2026-03-04)
+
+### Bug Fixes
+
+* restore schema-dts dependency in package.json and package-lock.json ([54ace7a](https://github.com/JanSzewczyk/portfolio/commit/54ace7a366e19243df8e3eab49bd8de8bc811f0c))
+* update conditional rendering in education card and experience section for clarity ([6ee2d5a](https://github.com/JanSzewczyk/portfolio/commit/6ee2d5ae33d9620f9a1d2bd89c22b9cdbab7659a))
+* update structured data handling and add schema-dts dependency ([46e0f9f](https://github.com/JanSzewczyk/portfolio/commit/46e0f9f99c862b01bf8f31f785bf4deec8302cb7))
+
 ## [1.8.0](https://github.com/JanSzewczyk/portfolio/compare/v1.7.0...v1.8.0) (2026-03-03)
 
 ### Features
