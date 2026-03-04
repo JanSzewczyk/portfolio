@@ -1,11 +1,7 @@
 import { type SeoQueryResult } from "~/lib/sanity/types";
 import {
-  buildBreadcrumbSchema,
-  buildOrganizationSchema,
-  buildPersonSchema,
-  buildProfilePageSchema,
-  buildWebPageSchema,
-  buildWebsiteSchema
+  buildStructuredDataGraph,
+  serializeJsonLd
 } from "~/lib/seo/structured-data";
 
 interface StructuredDataProps {
@@ -14,23 +10,8 @@ interface StructuredDataProps {
 }
 
 export function StructuredData({ siteUrl, seoData }: StructuredDataProps) {
-  const graph = {
-    "@context": "https://schema.org",
-    "@graph": [
-      buildPersonSchema({ siteUrl, seoData }),
-      buildWebsiteSchema({ siteUrl, seoData }),
-      buildWebPageSchema({ siteUrl, seoData }),
-      buildProfilePageSchema({ siteUrl, seoData }),
-      buildBreadcrumbSchema({ siteUrl }),
-      buildOrganizationSchema({ siteUrl, seoData })
-    ]
-  };
+  const graph = buildStructuredDataGraph({ siteUrl, seoData });
+  const jsonLd = serializeJsonLd(graph);
 
-  return (
-    <script
-      id="structured-data"
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(graph) }}
-    />
-  );
+  return <script id="structured-data" type="application/ld+json">{jsonLd}</script>;
 }
