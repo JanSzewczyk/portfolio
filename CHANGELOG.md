@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.8.2](https://github.com/JanSzewczyk/portfolio/compare/v1.8.1...v1.8.2) (2026-03-04)
+
+### Bug Fixes
+
+* enhance button accessibility and styling in education card ([18f6857](https://github.com/JanSzewczyk/portfolio/commit/18f68577377b9d67cb9847539398e4f0c267104a))
+
 ## [1.8.1](https://github.com/JanSzewczyk/portfolio/compare/v1.8.0...v1.8.1) (2026-03-04)
 
 ### Bug Fixes
