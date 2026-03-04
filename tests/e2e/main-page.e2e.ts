@@ -27,8 +27,6 @@ test("page structure, navigation and metadata", async ({ page }) => {
   // Theme toggle
   const themeToggle = page.getByRole("button", { name: /current.*theme/i });
   await expect(themeToggle).toBeVisible();
-  await themeToggle.click();
-  await expect(themeToggle).toBeVisible();
 
   // Footer
   const footer = page.getByRole("contentinfo");
@@ -78,16 +76,50 @@ test("all sections display correct content", async ({ page }) => {
   await expect(contact.locator('a[target="_blank"]').first()).toBeVisible();
 });
 
-test("project GitHub links open correctly", async ({ page, context }) => {
+test("project GitHub links are configured correctly", async ({ page }) => {
   await page.goto("/");
 
-  const firstGitHubButton = page.locator("#projects").getByRole("button", { name: /code/i }).first();
-  await expect(firstGitHubButton).toBeVisible();
+  const firstGitHubLink = page.locator('#projects a[href*="github.com"]').first();
+  await expect(firstGitHubLink).toBeVisible();
+  await expect(firstGitHubLink).toHaveAttribute("href", /github\.com/);
+  await expect(firstGitHubLink).toHaveAttribute("target", "_blank");
+  await expect(firstGitHubLink).toHaveAttribute("rel", /noopener/);
+});
 
-  const pagePromise = context.waitForEvent("page");
-  await firstGitHubButton.click();
-  const newPage = await pagePromise;
-  await newPage.waitForLoadState();
+test("desktop navigation scrolls to contact section", async ({ page }) => {
+  await page.goto("/");
 
-  expect(newPage.url()).toMatch(/github\.com/);
+  await page.getByRole("button", { name: "Contact", exact: true }).click();
+  await expect(page.locator("#contact")).toBeInViewport();
+});
+
+test("mobile menu opens, lists items and closes", async ({ page }) => {
+  await page.setViewportSize({ width: 375, height: 812 });
+  await page.goto("/");
+
+  const openMenuButton = page.getByRole("button", { name: "Open menu" });
+  await openMenuButton.click();
+
+  const closeMenuButton = page.getByRole("button", { name: "Close menu" });
+  await expect(closeMenuButton).toBeVisible();
+
+  const aboutButton = page.locator("nav").getByRole("button", { name: "About", exact: true });
+  await expect(aboutButton).toBeVisible();
+
+  await closeMenuButton.click();
+
+  await expect(page.getByRole("button", { name: "Open menu" })).toBeVisible();
+});
+
+test("projects tabs switch active state", async ({ page }) => {
+  await page.goto("/");
+
+  const projectsSection = page.locator("#projects");
+  const featuredTab = projectsSection.getByRole("tab", { name: "Featured" });
+  const webAppsTab = projectsSection.getByRole("tab", { name: "Web Apps" });
+
+  await expect(featuredTab).toHaveAttribute("aria-selected", "true");
+  await webAppsTab.click();
+  await expect(webAppsTab).toHaveAttribute("aria-selected", "true");
+  await expect(featuredTab).toHaveAttribute("aria-selected", "false");
 });

@@ -4,7 +4,11 @@ import { Button } from "@szum-tech/design-system";
 import Link from "next/link";
 import { useIsPresentationTool } from "next-sanity/hooks";
 
-export function DisableDraftMode() {
+type DisableDraftModeProps = {
+  disableUrl: string;
+};
+
+export function DisableDraftMode({ disableUrl }: DisableDraftModeProps) {
   const isPresentationTool = useIsPresentationTool();
 
   if (isPresentationTool === true) {
@@ -14,7 +18,7 @@ export function DisableDraftMode() {
   return (
     <div className="fixed right-4 bottom-4 z-50">
       <Button asChild>
-        <Link href="/api/draft-mode/disable">Disable Draft Mode</Link>
+        <Link href={disableUrl}>Disable Draft Mode</Link>
       </Button>
     </div>
   );

@@ -21,8 +21,6 @@ export async function sendContactEmail(formData: ContactFormData): ActionRespons
     // Log the attempt
     logger.info(
       {
-        name: formData.name,
-        email: formData.email,
         messageLength: formData.message.length
       },
       "Attempting to send contact email"
@@ -41,8 +39,7 @@ export async function sendContactEmail(formData: ContactFormData): ActionRespons
       logger.error(
         {
           errorMessage: error.message,
-          errorName: error.name,
-          senderEmail: formData.email
+          errorName: error.name
         },
         "Failed to send contact email via Resend"
       );
@@ -55,9 +52,7 @@ export async function sendContactEmail(formData: ContactFormData): ActionRespons
 
     logger.info(
       {
-        emailId: data?.id,
-        senderName: formData.name,
-        senderEmail: formData.email
+        emailId: data?.id
       },
       "Contact email sent successfully"
     );

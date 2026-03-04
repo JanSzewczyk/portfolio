@@ -7,7 +7,7 @@ import { env } from "./data/env/server";
 import packageJson from "./package.json";
 
 const config: NextConfig = {
-  productionBrowserSourceMaps: true,
+  productionBrowserSourceMaps: env.NODE_ENV !== "production",
   reactStrictMode: true,
   env: {
     NEXT_PUBLIC_APP_VERSION: packageJson.version

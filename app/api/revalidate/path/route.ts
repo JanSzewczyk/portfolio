@@ -16,22 +16,22 @@ export async function POST(req: NextRequest) {
 
     if (!isValidSignature) {
       const message = "Invalid signature";
-      revalidateLogger.warn({ isValidSignature, body }, "Invalid webhook signature");
-      return new Response(JSON.stringify({ message, isValidSignature, body }), {
+      revalidateLogger.warn("Invalid webhook signature");
+      return new Response(JSON.stringify({ message }), {
         status: 401
       });
     }
 
     if (!body?.path) {
       const message = "Bad Request";
-      revalidateLogger.warn({ body }, "Missing path in webhook payload");
-      return new Response(JSON.stringify({ message, body }), { status: 400 });
+      revalidateLogger.warn("Missing path in webhook payload");
+      return new Response(JSON.stringify({ message }), { status: 400 });
     }
 
     revalidatePath(body.path);
     const message = `Updated route: ${body.path}`;
     revalidateLogger.info({ path: body.path }, "Route revalidated successfully");
-    return NextResponse.json({ body, message });
+    return NextResponse.json({ message });
   } catch (err) {
     revalidateLogger.error({ err }, "Error during revalidation");
     return new Response((err as Error).message, { status: 500 });

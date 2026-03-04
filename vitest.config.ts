@@ -36,6 +36,12 @@ export default defineConfig({
         "**/*.{types,styles,stories}.?(c|m)[jt]s?(x)",
         "**/env.ts",
         "**/app/{sitemap,robots,icon,manifest}.ts?(x)",
+        // Framework shell and platform metadata pages (not business logic)
+        "**/app/{layout,error,global-error,not-found,opengraph-image}.tsx",
+        "**/app/\\(app\\)/layout.tsx",
+        "**/app/studio/**",
+        // Sanity CMS schema/configuration files
+        "**/lib/sanity/configuration/**",
         "**/tests/**",
         "**/test?(s)/**",
         "test?(-*).?(c|m)[jt]s?(x)",

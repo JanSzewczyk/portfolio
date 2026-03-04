@@ -92,9 +92,9 @@ export function ContactForm({ onSubmitAction, contactFormContent }: ContactFormP
               </div>
 
               <Field data-invalid={!!form.formState.errors.name}>
-                <FieldLabel htmlFor="username">Username</FieldLabel>
+                <FieldLabel htmlFor="name">Name</FieldLabel>
                 <Input
-                  id="username"
+                  id="name"
                   placeholder="Your name"
                   invalid={!!form.formState.errors.name}
                   {...form.register("name")}
@@ -125,7 +125,7 @@ export function ContactForm({ onSubmitAction, contactFormContent }: ContactFormP
               </Field>
 
               <Button type="submit" fullWidth loading={form.formState.isSubmitting} startIcon={<SendIcon />}>
-                Send Message
+                {contactFormContent?.submitButtonText ?? "Send Message"}
               </Button>
             </FieldGroup>
           </form>
