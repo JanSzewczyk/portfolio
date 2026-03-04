@@ -1,6 +1,14 @@
 import "server-only";
 
-import { type BreadcrumbList, type Graph, type Organization, type Person, type ProfilePage, type WebPage, type WebSite } from "schema-dts";
+import {
+  type BreadcrumbList,
+  type Graph,
+  type Organization,
+  type Person,
+  type ProfilePage,
+  type WebPage,
+  type WebSite
+} from "schema-dts";
 
 import { type SeoQueryResult } from "~/lib/sanity/types";
 
@@ -120,7 +128,13 @@ export function buildWebPageSchema({ siteUrl, seoData }: { siteUrl: string; seoD
 /**
  * Build ProfilePage schema from Sanity data with fallback values
  */
-export function buildProfilePageSchema({ siteUrl, seoData }: { siteUrl: string; seoData: SeoQueryResult | null }): ProfilePage {
+export function buildProfilePageSchema({
+  siteUrl,
+  seoData
+}: {
+  siteUrl: string;
+  seoData: SeoQueryResult | null;
+}): ProfilePage {
   const name = seoData?.personalInfo?.name ?? undefined;
   const description = seoData?.seo?.metaDescription ?? undefined;
 
