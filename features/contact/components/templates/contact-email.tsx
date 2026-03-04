@@ -58,9 +58,6 @@ export function ContactEmail({ name, email, message }: ContactFormData) {
   );
 }
 
-// Export as default for Resend compatibility
-export default ContactEmail;
-
 /**
  * Minimal inline styles for email compatibility
  */

@@ -145,8 +145,8 @@ export function ExperienceSection({ experience, documentId, documentType }: Expe
 
                         <Accordion type="single" collapsible>
                           {exp.responsibilities && exp.responsibilities.length > 0 && (
-                            <AccordionItem value="responsibilities" className="border-none">
-                              <AccordionTrigger className="py-2 text-sm">Key Responsibilities</AccordionTrigger>
+                            <AccordionItem value="responsibilities">
+                              <AccordionTrigger>Key Responsibilities</AccordionTrigger>
                               <AccordionContent>
                                 <ul
                                   className="text-muted-foreground ml-4 list-disc space-y-1"
@@ -163,8 +163,8 @@ export function ExperienceSection({ experience, documentId, documentType }: Expe
                           )}
 
                           {exp.achievements && exp.achievements.length > 0 && (
-                            <AccordionItem value="achievements" className="border-none">
-                              <AccordionTrigger className="py-2 text-sm">Key Achievements</AccordionTrigger>
+                            <AccordionItem value="achievements">
+                              <AccordionTrigger>Key Achievements</AccordionTrigger>
                               <AccordionContent>
                                 <ul
                                   className="text-muted-foreground ml-4 list-disc space-y-1"
