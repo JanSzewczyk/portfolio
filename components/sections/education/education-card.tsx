@@ -12,7 +12,10 @@ import {
   CardContent,
   CardDescription,
   CardHeader,
-  CardTitle
+  CardTitle,
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger
 } from "@szum-tech/design-system";
 import { ReactIcon } from "~/components/ui/react-icon";
 import { type PortfolioPageQueryResult } from "~/lib/sanity/types";
@@ -36,6 +39,10 @@ function formatPeriod(startDate: string, endDate?: string): string {
 
 export function EducationCard({ education }: EducationCardProps) {
   const thesisTechnologies = education.thesis?.project?.technologies ?? education.thesis?.technologies ?? [];
+  const hasThesisActions =
+    Boolean(education.thesis?.project?.links?.live) ||
+    Boolean(education.thesis?.project?.links?.github) ||
+    Boolean(education.thesis?.url);
 
   return (
     <Card>
@@ -61,7 +68,7 @@ export function EducationCard({ education }: EducationCardProps) {
           )}
           {education.location ? (
             <>
-              {" · "}
+              {" | "}
               {education.location}
             </>
           ) : null}
@@ -91,54 +98,61 @@ export function EducationCard({ education }: EducationCardProps) {
                 <h4 className="text-mute">Related Project</h4>
                 <p className="text-heading-h4 mb-2">{education.thesis.project.title}</p>
                 <p className="text-body-xs text-muted-foreground mb-2">{education.thesis.project.description}</p>
-                <div className="flex flex-wrap gap-2">
-                  {education.thesis.project.links?.live ? (
-                    <Button size="sm" startIcon={<ExternalLinkIcon />} asChild>
-                      <a
-                        href={stegaClean(education.thesis.project.links.live)}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        Live
-                      </a>
-                    </Button>
-                  ) : null}
-                  {education.thesis.project.links?.github ? (
-                    <Button size="sm" variant="outline" asChild>
-                      <a
-                        href={stegaClean(education.thesis.project.links?.github)}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-2"
-                      >
-                        <ReactIcon name="SiGithub" size={14} />
-                        <span>Code</span>
-                      </a>
-                    </Button>
-                  ) : null}
-                  {education.thesis.url ? (
-                    <Button startIcon={<FileTextIcon />} size="sm" variant="outline" asChild>
-                      <a href={stegaClean(education.thesis.url)} target="_blank" rel="noopener noreferrer">
-                        Thesis
-                      </a>
-                    </Button>
-                  ) : null}
-                </div>
               </div>
             ) : null}
-            {!education.thesis.project && education.thesis.url ? (
-              <div className="flex flex-wrap gap-2">
-                <Button size="sm" variant="outline" asChild>
-                  <a
-                    href={stegaClean(education.thesis.url)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center gap-2"
-                  >
-                    <FileTextIcon size={14} />
-                    <span>Thesis</span>
-                  </a>
-                </Button>
+            {hasThesisActions ? (
+              <div className="flex justify-end gap-1.5 pt-3">
+                {education.thesis.project?.links?.live ? (
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button size="icon" variant="ghost" asChild>
+                        <a
+                          href={stegaClean(education.thesis.project.links.live)}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label="Open live project"
+                        >
+                          <ExternalLinkIcon className="size-4" />
+                        </a>
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent side="top">Live project</TooltipContent>
+                  </Tooltip>
+                ) : null}
+                {education.thesis.project?.links?.github ? (
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button size="icon" variant="ghost" asChild>
+                        <a
+                          href={stegaClean(education.thesis.project.links.github)}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label="Open source code"
+                        >
+                          <ReactIcon name="SiGithub" size={14} />
+                        </a>
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent side="top">Source code</TooltipContent>
+                  </Tooltip>
+                ) : null}
+                {education.thesis.url ? (
+                  <Tooltip>
+                    <TooltipTrigger asChild>
+                      <Button size="icon" variant="ghost" asChild>
+                        <a
+                          href={stegaClean(education.thesis.url)}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          aria-label="Open thesis document"
+                        >
+                          <FileTextIcon className="size-4" />
+                        </a>
+                      </Button>
+                    </TooltipTrigger>
+                    <TooltipContent side="top">Thesis document</TooltipContent>
+                  </Tooltip>
+                ) : null}
               </div>
             ) : null}
           </div>

@@ -94,26 +94,33 @@ WithThesisAndProject.test("Renders thesis section with title and description", a
   await expect(thesisTitle).toBeVisible();
 });
 
-WithThesisAndProject.test("Renders related project with action buttons", async ({ canvas }) => {
+WithThesisAndProject.test("Renders related project with icon action buttons", async ({ canvas }) => {
   const projectHeading = canvas.getByText("Related Project");
   await expect(projectHeading).toBeVisible();
 
   const projectTitle = canvas.getByText("CollabCode");
   await expect(projectTitle).toBeVisible();
 
-  const liveButton = canvas.getByRole("button", { name: /live/i });
-  const codeButton = canvas.getByRole("button", { name: /code/i });
-  const thesisButton = canvas.getByRole("button", { name: /thesis/i });
+  const projectDescription = canvas.getByText(
+    "A real-time collaborative code editor with syntax highlighting and multi-cursor support."
+  );
+  const liveButton = canvas.getByRole("button", { name: "Open live project" });
+  const codeButton = canvas.getByRole("button", { name: "Open source code" });
+  const thesisButton = canvas.getByRole("button", { name: "Open thesis document" });
 
   await expect(liveButton).toBeVisible();
   await expect(codeButton).toBeVisible();
   await expect(thesisButton).toBeVisible();
+  await expect(canvas.queryByRole("button", { name: /^Live$/ })).not.toBeInTheDocument();
+  await expect(canvas.queryByRole("button", { name: /^Code$/ })).not.toBeInTheDocument();
+  await expect(canvas.queryByRole("button", { name: /^Thesis$/ })).not.toBeInTheDocument();
+  await expect(projectDescription.compareDocumentPosition(liveButton) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
 });
 
 WithThesisAndProject.test("Project links have correct href values", async ({ canvas }) => {
-  const liveButton = canvas.getByRole("button", { name: /live/i });
-  const codeButton = canvas.getByRole("button", { name: /code/i });
-  const thesisButton = canvas.getByRole("button", { name: /thesis/i });
+  const liveButton = canvas.getByRole("button", { name: "Open live project" });
+  const codeButton = canvas.getByRole("button", { name: "Open source code" });
+  const thesisButton = canvas.getByRole("button", { name: "Open thesis document" });
 
   await expect(liveButton).toHaveAttribute("href", "https://collabcode.example.com");
   await expect(codeButton).toHaveAttribute("href", "https://github.com/example/collabcode");
@@ -167,7 +174,7 @@ export const ThesisWithoutProject = meta.story({
 });
 
 ThesisWithoutProject.test("Renders thesis URL button without related project section", async ({ canvas }) => {
-  const thesisButton = canvas.getByRole("button", { name: /thesis/i });
+  const thesisButton = canvas.getByRole("button", { name: "Open thesis document" });
   await expect(thesisButton).toBeVisible();
   await expect(thesisButton).toHaveAttribute("href", "https://example.com/bachelor-thesis.pdf");
 
@@ -176,8 +183,8 @@ ThesisWithoutProject.test("Renders thesis URL button without related project sec
 });
 
 ThesisWithoutProject.test("Does not render Live or Code buttons", async ({ canvas }) => {
-  const liveButton = canvas.queryByRole("button", { name: /live/i });
-  const codeButton = canvas.queryByRole("button", { name: /code/i });
+  const liveButton = canvas.queryByRole("button", { name: "Open live project" });
+  const codeButton = canvas.queryByRole("button", { name: "Open source code" });
 
   await expect(liveButton).not.toBeInTheDocument();
   await expect(codeButton).not.toBeInTheDocument();
@@ -266,12 +273,12 @@ export const ProjectGithubOnly = meta.story({
   }
 });
 
-ProjectGithubOnly.test("Renders only Code button when only GitHub link exists", async ({ canvas }) => {
-  const codeButton = canvas.getByRole("button", { name: /code/i });
+ProjectGithubOnly.test("Renders only source code icon button when only GitHub link exists", async ({ canvas }) => {
+  const codeButton = canvas.getByRole("button", { name: "Open source code" });
   await expect(codeButton).toBeVisible();
 
-  const liveButton = canvas.queryByRole("button", { name: /live/i });
-  const thesisButton = canvas.queryByRole("button", { name: /thesis/i });
+  const liveButton = canvas.queryByRole("button", { name: "Open live project" });
+  const thesisButton = canvas.queryByRole("button", { name: "Open thesis document" });
   await expect(liveButton).not.toBeInTheDocument();
   await expect(thesisButton).not.toBeInTheDocument();
 });
