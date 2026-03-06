@@ -3,6 +3,13 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.8.4](https://github.com/JanSzewczyk/portfolio/compare/v1.8.3...v1.8.4) (2026-03-06)
+
+### Bug Fixes
+
+* rename action-types to server-action.types and update import paths ([aaf0e0f](https://github.com/JanSzewczyk/portfolio/commit/aaf0e0f0d57efc901a078e6a420c8a3e3e93a03a))
+* update import paths and enhance client-side rendering in education card ([74ab86d](https://github.com/JanSzewczyk/portfolio/commit/74ab86d785d76d53c10a8c4ee537420bfd9b12c6))
+
 ## [1.8.3](https://github.com/JanSzewczyk/portfolio/compare/v1.8.2...v1.8.3) (2026-03-05)
 
 ### Bug Fixes
