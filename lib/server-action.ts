@@ -57,12 +57,12 @@ export type RedirectAction = Promise<never | ActionStateFailed>;
  * Type guard for action success
  */
 export function isActionSuccess<T>(result: Awaited<ActionResponse<T>>): result is ActionStateSuccess<T> {
-  return result.success === true;
+  return result.success;
 }
 
 /**
  * Type guard for action failure
  */
 export function isActionFailed(result: Awaited<ActionResponse<unknown>>): result is ActionStateFailed {
-  return result.success === false;
+  return !result.success;
 }
