@@ -225,7 +225,7 @@ export const EmptySkills = meta.story({
   }
 });
 
-EmptySkills.test("Handles empty technology groups gracefully", async ({ canvas, canvasElement }) => {
+EmptySkills.test("Handles empty technology groups gracefully", async ({ canvas }) => {
   const heading = canvas.getByRole("heading", { level: 2 });
   await expect(heading).toBeVisible();
 
