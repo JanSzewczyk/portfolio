@@ -23,8 +23,8 @@ import {
   toast
 } from "@szum-tech/design-system";
 import { type ContactFormData, contactFormSchema } from "~/features/contact/schemas/contact.schema";
-import { type ActionResponse } from "~/lib/action-types";
 import { type PortfolioPageQueryResult } from "~/lib/sanity/types";
+import { type ActionResponse } from "~/lib/server-action";
 
 export type ContactFormProps = {
   onSubmitAction(data: ContactFormData): ActionResponse<CreateEmailResponseSuccess>;
