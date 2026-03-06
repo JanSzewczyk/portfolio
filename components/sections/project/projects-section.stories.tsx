@@ -1,4 +1,5 @@
 import { expect } from "storybook/test";
+import { ProjectsSection } from "~/components/sections";
 import {
   portfolioPageBuilder,
   portfolioPageProjectsBuilder,
@@ -6,8 +7,6 @@ import {
   projectGroupBuilder,
   technologyBuilder
 } from "~/tests/builders/portfolio-page.builder";
-
-import { ProjectsSection } from "./projects-section";
 
 import preview from "~/.storybook/preview";
 

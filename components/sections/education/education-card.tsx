@@ -1,3 +1,5 @@
+"use client";
+
 import { ExternalLinkIcon, FileTextIcon } from "lucide-react";
 import { stegaClean } from "next-sanity";
 
