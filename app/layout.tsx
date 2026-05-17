@@ -32,8 +32,6 @@ export const viewport: Viewport = {
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const [, seoData] = await getCachedSeoData();
 
-  console.log('sdf sdf dafasdf')
-
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
