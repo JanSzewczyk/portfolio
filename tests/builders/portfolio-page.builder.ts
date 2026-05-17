@@ -140,7 +140,7 @@ export const portfolioPagePersonalInfoBuilder = build<NonNullable<PortfolioPageQ
         _key: faker.string.uuid(),
         platform: "LinkedIn",
         url: faker.internet.url(),
-        icon: "SiLinkedin",
+        icon: "TbBrandLinkedin",
         username: faker.internet.username()
       },
       {
