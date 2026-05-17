@@ -1,8 +1,7 @@
 "use client";
 
-import * as React from "react";
-
 import { cn } from "@szum-tech/design-system/utils";
+import type * as React from "react";
 
 interface GridBackgroundProps {
   className?: string;
@@ -38,7 +37,7 @@ export function GridBackground({
           backgroundSize: "var(--grid-size) var(--grid-size)"
         }}
       />
-      {fade ? <div className="from-background to-background absolute inset-0 bg-linear-to-b via-transparent" /> : null}
+      {fade ? <div className="absolute inset-0 bg-linear-to-b from-background via-transparent to-background" /> : null}
     </div>
   );
 }

@@ -4,7 +4,7 @@ import { Card, CardContent, CountingNumber } from "@szum-tech/design-system";
 import { LocationCard } from "~/components/sections/about/location-card";
 import { SectionHeading } from "~/components/ui/section-heading";
 import { Section } from "~/constants/sections";
-import { type PortfolioPageQueryResult } from "~/lib/sanity/types";
+import type { PortfolioPageQueryResult } from "~/lib/sanity/types";
 import { buildSanityAttribute } from "~/lib/sanity/utils";
 
 type AboutSectionProps = {
@@ -14,7 +14,10 @@ type AboutSectionProps = {
 };
 
 export function AboutSection({ about, documentId, documentType }: AboutSectionProps) {
-  const { createSanityAttribute } = buildSanityAttribute({ documentId, documentType });
+  const { createSanityAttribute } = buildSanityAttribute({
+    documentId,
+    documentType
+  });
 
   return (
     <section id={Section.ABOUT} className="bg-muted/30 py-24">
@@ -46,7 +49,7 @@ export function AboutSection({ about, documentId, documentType }: AboutSectionPr
                       once
                     />
                   </div>
-                  <p className="text-muted-foreground text-body-lg mt-2">{stat.label}</p>
+                  <p className="mt-2 text-body-lg text-muted-foreground">{stat.label}</p>
                 </CardContent>
               </Card>
             ))}

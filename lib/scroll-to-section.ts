@@ -1,4 +1,4 @@
-import { type Section, type SectionHref } from "~/constants/sections";
+import type { Section, SectionHref } from "~/constants/sections";
 
 /**
  * Options for the scrollToSection utility function.

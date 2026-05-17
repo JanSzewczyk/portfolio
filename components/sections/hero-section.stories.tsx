@@ -1,9 +1,7 @@
 import { expect } from "storybook/test";
-import { portfolioPageHeroBuilder, portfolioPagePersonalInfoBuilder } from "~/tests/builders/portfolio-page.builder";
-
-import { HeroSection } from "./hero-section";
-
 import preview from "~/.storybook/preview";
+import { portfolioPageHeroBuilder, portfolioPagePersonalInfoBuilder } from "~/tests/builders/portfolio-page.builder";
+import { HeroSection } from "./hero-section";
 
 const meta = preview.meta({
   title: "Components/Sections/Hero Section",
@@ -12,7 +10,9 @@ const meta = preview.meta({
     layout: "fullscreen"
   },
   args: {
-    personalInfo: portfolioPagePersonalInfoBuilder.one({ traits: ["withAvatar"] }),
+    personalInfo: portfolioPagePersonalInfoBuilder.one({
+      traits: ["withAvatar"]
+    }),
     hero: portfolioPageHeroBuilder.one(),
     documentId: "test-portfolio",
     documentType: "portfolioPage"
@@ -120,8 +120,12 @@ HeroSectionWithAvatar.test("Section has correct heading hierarchy", async ({ can
 
 // Test 9: Keyboard Accessibility
 HeroSectionWithAvatar.test("All interactive elements are keyboard accessible", async ({ canvas }) => {
-  const getInTouchButton = canvas.getByRole("button", { name: /get in touch/i });
-  const viewProjectsButton = canvas.getByRole("button", { name: /view projects/i });
+  const getInTouchButton = canvas.getByRole("button", {
+    name: /get in touch/i
+  });
+  const viewProjectsButton = canvas.getByRole("button", {
+    name: /view projects/i
+  });
 
   // Verify buttons can receive focus
   getInTouchButton.focus();
@@ -219,8 +223,12 @@ HeroSectionWithoutAvatar.test("Still renders all other content correctly without
   }
 
   // Verify both buttons
-  const getInTouchButton = canvas.getByRole("button", { name: /get in touch/i });
-  const viewProjectsButton = canvas.getByRole("button", { name: /view projects/i });
+  const getInTouchButton = canvas.getByRole("button", {
+    name: /get in touch/i
+  });
+  const viewProjectsButton = canvas.getByRole("button", {
+    name: /view projects/i
+  });
 
   await expect(getInTouchButton).toBeVisible();
   await expect(viewProjectsButton).toBeVisible();

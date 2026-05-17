@@ -5,7 +5,7 @@ import { cache } from "react";
 import { createLogger } from "~/lib/logger";
 import { sanityFetch } from "~/lib/sanity/live";
 import { seoQuery } from "~/lib/sanity/queries";
-import { type SeoQueryResult } from "~/lib/sanity/types";
+import type { SeoQueryResult } from "~/lib/sanity/types";
 
 const logger = createLogger({ module: "sanity-service", service: "seo" });
 

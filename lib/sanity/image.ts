@@ -1,4 +1,4 @@
-import { type SanityImageSource, createImageUrlBuilder } from "@sanity/image-url";
+import { createImageUrlBuilder, type SanityImageSource } from "@sanity/image-url";
 import { env } from "~/data/env/client";
 
 // https://www.sanity.io/docs/image-url

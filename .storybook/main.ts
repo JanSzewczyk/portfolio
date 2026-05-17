@@ -1,7 +1,6 @@
-import tsConfigPaths from "vite-tsconfig-paths";
-
 import { defineMain } from "@storybook/nextjs-vite/node";
-import { type PresetValue, type TagsOptions } from "storybook/internal/types";
+import type { PresetValue, TagsOptions } from "storybook/internal/types";
+import tsConfigPaths from "vite-tsconfig-paths";
 
 process.env.STORYBOOK = "true";
 

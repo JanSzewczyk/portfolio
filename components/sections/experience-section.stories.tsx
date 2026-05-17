@@ -1,9 +1,7 @@
 import { expect, waitFor } from "storybook/test";
-import { experienceBuilder, portfolioPageExperienceBuilder } from "~/tests/builders/portfolio-page.builder";
-
-import { ExperienceSection } from "./experience-section";
-
 import preview from "~/.storybook/preview";
+import { experienceBuilder, portfolioPageExperienceBuilder } from "~/tests/builders/portfolio-page.builder";
+import { ExperienceSection } from "./experience-section";
 
 const meta = preview.meta({
   title: "Components/Sections/Experience Section",
@@ -106,7 +104,9 @@ ExperienceSection_Default.test("Displays period and employment type badges", asy
 
 // Test 6: Accordion for responsibilities works
 ExperienceSection_Default.test("Expands responsibilities accordion", async ({ canvas, userEvent, args }) => {
-  const responsibilitiesButtons = canvas.getAllByRole("button", { name: /key responsibilities/i });
+  const responsibilitiesButtons = canvas.getAllByRole("button", {
+    name: /key responsibilities/i
+  });
 
   if (responsibilitiesButtons.length === 0) {
     return;
@@ -178,7 +178,9 @@ WithoutLogos.test("Displays company logo fallback with first letter", async ({ c
   for (const exp of experiences) {
     if (!exp.companyLogo && exp.company) {
       const firstLetter = exp.company.charAt(0).toUpperCase();
-      const fallbackLogos = canvas.getAllByText(firstLetter, { selector: "span" });
+      const fallbackLogos = canvas.getAllByText(firstLetter, {
+        selector: "span"
+      });
       await expect(fallbackLogos.length).toBeGreaterThan(0);
     }
   }

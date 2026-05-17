@@ -1,8 +1,6 @@
 import { expect } from "storybook/test";
-
-import { ContactEmail } from "./contact-email";
-
 import preview from "~/.storybook/preview";
+import { ContactEmail } from "./contact-email";
 
 const meta = preview.meta({
   title: "Features/Contact/Templates/Contact Email",
@@ -51,14 +49,18 @@ ContactEmailStory.test("Renders sender name, email, and message", async ({ canva
 
 // Test: Email is a clickable mailto link
 ContactEmailStory.test("Email is rendered as mailto link", async ({ canvas }) => {
-  const emailLink = canvas.getByRole("link", { name: /john.doe@example.com/i });
+  const emailLink = canvas.getByRole("link", {
+    name: /john.doe@example.com/i
+  });
   await expect(emailLink).toBeVisible();
   await expect(emailLink).toHaveAttribute("href", "mailto:john.doe@example.com");
 });
 
 // Test: Header is visible
 ContactEmailStory.test("Displays header with title", async ({ canvas }) => {
-  const header = canvas.getByRole("heading", { name: /New Contact Form Submission/i });
+  const header = canvas.getByRole("heading", {
+    name: /New Contact Form Submission/i
+  });
   await expect(header).toBeVisible();
 });
 
@@ -176,7 +178,9 @@ export const ComplexEmail = meta.story({
 });
 
 ComplexEmail.test("Complex email renders correctly as mailto link", async ({ canvas }) => {
-  const emailLink = canvas.getByRole("link", { name: /complex.email\+tag@sub-domain.example.com/i });
+  const emailLink = canvas.getByRole("link", {
+    name: /complex.email\+tag@sub-domain.example.com/i
+  });
   await expect(emailLink).toBeVisible();
   await expect(emailLink).toHaveAttribute("href", "mailto:complex.email+tag@sub-domain.example.com");
 });

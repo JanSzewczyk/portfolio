@@ -1,9 +1,8 @@
 "use client";
 
-import { MapPin } from "lucide-react";
-import { Map, Marker, type MapProps } from "pigeon-maps";
-
 import { Card, CardContent } from "@szum-tech/design-system";
+import { MapPin } from "lucide-react";
+import { Map, type MapProps, Marker } from "pigeon-maps";
 
 type LocationCardProps = {
   city: string;
@@ -29,13 +28,13 @@ export function LocationCard({ city, coordinates }: LocationCardProps) {
         <div className="relative h-48 w-full">
           <Map {...mapOptions} boxClassname="grayscale-50">
             <Marker width={20} anchor={[lat, lng]}>
-              <MapPin className="text-primary size-5" />
+              <MapPin className="size-5 text-primary" />
             </Marker>
           </Map>
 
           {/* Location Content Overlay */}
-          <div className="bg-card absolute -bottom-1 -left-1 flex items-center gap-3 rounded-tr p-4">
-            <div className="bg-primary flex size-10 shrink-0 items-center justify-center rounded-full shadow-lg transition-transform duration-300 group-hover:scale-110">
+          <div className="absolute -bottom-1 -left-1 flex items-center gap-3 rounded-tr bg-card p-4">
+            <div className="flex size-10 shrink-0 items-center justify-center rounded-full bg-primary shadow-lg transition-transform duration-300 group-hover:scale-110">
               <MapPin className="size-5" />
             </div>
             <div>

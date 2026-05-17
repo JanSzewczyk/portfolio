@@ -1,6 +1,5 @@
-import { defineField, defineType } from "sanity";
-
 import { FolderIcon } from "@sanity/icons";
+import { defineField, defineType } from "sanity";
 
 export const projectGroup = defineType({
   name: "projectGroup",

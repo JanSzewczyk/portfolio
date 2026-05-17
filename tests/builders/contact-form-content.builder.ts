@@ -1,7 +1,6 @@
-import { build } from "mimicry-js";
-
 import { faker } from "@faker-js/faker";
-import { type PortfolioPageQueryResult } from "~/lib/sanity/types";
+import { build } from "mimicry-js";
+import type { PortfolioPageQueryResult } from "~/lib/sanity/types";
 
 /**
  * Type definition for ContactForm content from Sanity CMS.

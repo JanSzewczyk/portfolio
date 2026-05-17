@@ -6,7 +6,10 @@ import { createLogger } from "~/lib/logger";
 
 type WebhookPayload = { path?: string };
 
-const revalidateLogger = createLogger({ module: "api", endpoint: "/api/revalidate/path" });
+const revalidateLogger = createLogger({
+  module: "api",
+  endpoint: "/api/revalidate/path"
+});
 
 export async function POST(req: NextRequest) {
   revalidateLogger.info("Revalidate webhook received");

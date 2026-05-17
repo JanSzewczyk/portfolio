@@ -3,9 +3,12 @@ import "server-only";
 import { createLogger } from "~/lib/logger";
 import { sanityFetch } from "~/lib/sanity/live";
 import { portfolioPageQuery } from "~/lib/sanity/queries";
-import { type PortfolioPageQueryResult } from "~/lib/sanity/types";
+import type { PortfolioPageQueryResult } from "~/lib/sanity/types";
 
-const logger = createLogger({ module: "sanity-service", service: "portfolio-page" });
+const logger = createLogger({
+  module: "sanity-service",
+  service: "portfolio-page"
+});
 
 /**
  * Retrieves portfolio page data from Sanity CMS.

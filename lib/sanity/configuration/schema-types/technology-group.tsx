@@ -1,6 +1,5 @@
-import { defineField, defineType } from "sanity";
-
 import { ComponentIcon } from "@sanity/icons";
+import { defineField, defineType } from "sanity";
 
 import { IconSearchInput } from "./components/icon-search-input";
 

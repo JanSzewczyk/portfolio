@@ -1,7 +1,7 @@
 import { Timeline, TimelineConnector, TimelineContent, TimelineDot, TimelineItem } from "@szum-tech/design-system";
 import { SectionHeading } from "~/components/ui/section-heading";
 import { Section } from "~/constants/sections";
-import { type PortfolioPageQueryResult } from "~/lib/sanity/types";
+import type { PortfolioPageQueryResult } from "~/lib/sanity/types";
 
 import { EducationCard } from "./education-card";
 

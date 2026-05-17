@@ -1,22 +1,36 @@
 import { expect } from "storybook/test";
-import { technologyBuilder, technologyGroupBuilder } from "~/tests/builders/portfolio-page.builder";
-
-import { SkillsSection } from "./skills-section";
-
 import preview from "~/.storybook/preview";
+import { technologyBuilder, technologyGroupBuilder } from "~/tests/builders/portfolio-page.builder";
+import { SkillsSection } from "./skills-section";
 
 // Create deterministic test data
 const testTechReact = technologyBuilder.one({
-  overrides: { name: "React", icon: "SiReact", description: "A JavaScript library for building user interfaces" }
+  overrides: {
+    name: "React",
+    icon: "SiReact",
+    description: "A JavaScript library for building user interfaces"
+  }
 });
 const testTechTypeScript = technologyBuilder.one({
-  overrides: { name: "TypeScript", icon: "SiTypescript", description: "JavaScript with syntax for types" }
+  overrides: {
+    name: "TypeScript",
+    icon: "SiTypescript",
+    description: "JavaScript with syntax for types"
+  }
 });
 const testTechNode = technologyBuilder.one({
-  overrides: { name: "Node.js", icon: "SiNodedotjs", description: "JavaScript runtime" }
+  overrides: {
+    name: "Node.js",
+    icon: "SiNodedotjs",
+    description: "JavaScript runtime"
+  }
 });
 const testTechTailwind = technologyBuilder.one({
-  overrides: { name: "Tailwind CSS", icon: "SiTailwindcss", description: "Utility-first CSS framework" }
+  overrides: {
+    name: "Tailwind CSS",
+    icon: "SiTailwindcss",
+    description: "Utility-first CSS framework"
+  }
 });
 
 const testGroupFrontend = technologyGroupBuilder.one({

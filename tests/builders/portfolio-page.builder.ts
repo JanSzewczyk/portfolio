@@ -1,11 +1,6 @@
-import { build, oneOf, bool, int } from "mimicry-js";
-
 import { faker } from "@faker-js/faker";
-import {
-  type PortfolioPageQueryResult,
-  type SanityImageAssetReference,
-  type SanityImageDimensions
-} from "~/lib/sanity/types";
+import { bool, build, int, oneOf } from "mimicry-js";
+import type { PortfolioPageQueryResult, SanityImageAssetReference, SanityImageDimensions } from "~/lib/sanity/types";
 
 // Extracted types from query result for type-safe builders
 type PortfolioPage = NonNullable<PortfolioPageQueryResult>;

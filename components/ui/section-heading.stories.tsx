@@ -1,8 +1,6 @@
 import { expect } from "storybook/test";
-
-import { SectionHeading } from "./section-heading";
-
 import preview from "~/.storybook/preview";
+import { SectionHeading } from "./section-heading";
 
 const meta = preview.meta({
   title: "Components/UI/SectionHeading",

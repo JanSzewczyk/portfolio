@@ -1,17 +1,18 @@
 "use client";
 
-import { useState } from "react";
+import { Button, Header } from "@szum-tech/design-system";
 
 import { MenuIcon, XIcon } from "lucide-react";
-
-import { Button, Header } from "@szum-tech/design-system";
 import Link from "next/link";
+import { useState } from "react";
 import { ThemeToggle } from "~/components/ui/theme-toggle";
 import { NAV_ITEMS } from "~/constants/navigation";
-import { type PortfolioPageQueryResult } from "~/lib/sanity/types";
+import type { PortfolioPageQueryResult } from "~/lib/sanity/types";
 import { scrollToSection } from "~/lib/scroll-to-section";
 
-type NavigationProps = { personalInfo: NonNullable<PortfolioPageQueryResult>["personalInfo"] };
+type NavigationProps = {
+  personalInfo: NonNullable<PortfolioPageQueryResult>["personalInfo"];
+};
 
 export function Navigation({ personalInfo }: NavigationProps) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -20,7 +21,7 @@ export function Navigation({ personalInfo }: NavigationProps) {
     <>
       <Header>
         <div className="flex w-full items-center justify-between">
-          <Link href="/" className="hover:text-primary text-heading-h3 transition-colors">
+          <Link href="/" className="text-heading-h3 transition-colors hover:text-primary">
             {personalInfo?.name}
           </Link>
 
@@ -64,7 +65,7 @@ export function Navigation({ personalInfo }: NavigationProps) {
 
       {/* Mobile Menu */}
       {isMobileMenuOpen ? (
-        <div className="bg-background fixed top-16 right-0 left-0 z-40 border-b md:hidden">
+        <div className="fixed top-16 right-0 left-0 z-40 border-b bg-background md:hidden">
           <nav className="container flex flex-col gap-2 py-4">
             {NAV_ITEMS.map((item) => (
               <Button

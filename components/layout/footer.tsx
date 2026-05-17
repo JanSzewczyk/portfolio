@@ -1,7 +1,7 @@
 import { Button } from "@szum-tech/design-system";
 import { type IconName, ReactIcon } from "~/components/ui/react-icon";
 import { env } from "~/data/env/client";
-import { type PortfolioPageQueryResult } from "~/lib/sanity/types";
+import type { PortfolioPageQueryResult } from "~/lib/sanity/types";
 
 type FooterProps = {
   footer: NonNullable<PortfolioPageQueryResult>["footer"];
@@ -12,7 +12,7 @@ export function Footer({ footer, personalInfo }: FooterProps) {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-muted/30 border-t">
+    <footer className="border-t bg-muted/30">
       <div className="container py-12">
         <div className="flex flex-col items-center justify-between gap-6 md:flex-row">
           <div className="text-center md:text-left">
@@ -40,7 +40,7 @@ export function Footer({ footer, personalInfo }: FooterProps) {
           </div>
         </div>
 
-        <div className="text-muted-foreground mt-8 flex flex-col items-center justify-between gap-4 border-t pt-8 text-sm md:flex-row">
+        <div className="mt-8 flex flex-col items-center justify-between gap-4 border-t pt-8 text-muted-foreground text-sm md:flex-row">
           <p>{footer?.copyrightText ? `© ${currentYear} ${footer.copyrightText}` : null}</p>
           <p className="text-muted-foreground/60">v{env.NEXT_PUBLIC_APP_VERSION}</p>
         </div>

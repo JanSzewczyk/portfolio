@@ -1,8 +1,5 @@
 "use client";
 
-import { ArrowDownIcon } from "lucide-react";
-import { stegaClean } from "next-sanity";
-
 import {
   Avatar,
   AvatarFallback,
@@ -14,10 +11,12 @@ import {
   TypingText,
   WordRotate
 } from "@szum-tech/design-system";
+import { ArrowDownIcon } from "lucide-react";
+import { stegaClean } from "next-sanity";
 import { GridBackground } from "~/components/ui/grid-background";
 import { Section } from "~/constants/sections";
 import { urlFor } from "~/lib/sanity/image";
-import { type PortfolioPageQueryResult } from "~/lib/sanity/types";
+import type { PortfolioPageQueryResult } from "~/lib/sanity/types";
 import { buildSanityAttribute } from "~/lib/sanity/utils";
 import { scrollToSection } from "~/lib/scroll-to-section";
 
@@ -29,7 +28,10 @@ type HeroSectionProps = {
 };
 
 export function HeroSection({ personalInfo, hero, documentId, documentType }: HeroSectionProps) {
-  const { createSanityAttribute } = buildSanityAttribute({ documentId, documentType });
+  const { createSanityAttribute } = buildSanityAttribute({
+    documentId,
+    documentType
+  });
 
   const initials = personalInfo?.name
     ?.split(" ")
@@ -62,17 +64,17 @@ export function HeroSection({ personalInfo, hero, documentId, documentType }: He
             </Status>
           </div>
 
-          <h1 className="text-display-lg mb-4" data-sanity={createSanityAttribute("personalInfo.name")}>
+          <h1 className="mb-4 text-display-lg" data-sanity={createSanityAttribute("personalInfo.name")}>
             <TypingText text={`Hi I'm ${stegaClean(personalInfo?.name)}`} speed={80} />
           </h1>
 
           {hero?.alternativeTitles && hero.alternativeTitles.length > 0 && (
-            <div className="text-primary text-heading-h1 mb-6">
+            <div className="mb-6 text-heading-h1 text-primary">
               <WordRotate words={hero.alternativeTitles} duration={3000} animationStyle={"slide-up"} />
             </div>
           )}
 
-          <p className="text-body-lg text-muted-foreground mb-8 max-w-2xl">{hero?.tagline}</p>
+          <p className="mb-8 max-w-2xl text-body-lg text-muted-foreground">{hero?.tagline}</p>
 
           <div className="flex flex-col gap-4 sm:flex-row">
             <Button size="lg" onClick={() => scrollToSection(Section.CONTACT)}>
@@ -92,7 +94,7 @@ export function HeroSection({ personalInfo, hero, documentId, documentType }: He
 
       {/* Scroll indicator */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-        <ArrowDownIcon className="text-muted-foreground size-6" />
+        <ArrowDownIcon className="size-6 text-muted-foreground" />
       </div>
     </section>
   );
