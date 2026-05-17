@@ -128,3 +128,4 @@ src/styles
 
 # Claude
 /.claude/*.local.*
+/bash.exe.stackdump
