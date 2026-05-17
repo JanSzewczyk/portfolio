@@ -1,6 +1,5 @@
 import { defineMain } from "@storybook/nextjs-vite/node";
 import type { PresetValue, TagsOptions } from "storybook/internal/types";
-import tsConfigPaths from "vite-tsconfig-paths";
 
 process.env.STORYBOOK = "true";
 
@@ -35,7 +34,9 @@ export default defineMain({
     const { mergeConfig } = await import("vite");
 
     return mergeConfig(config, {
-      plugins: [tsConfigPaths()]
+      resolve: {
+        tsconfigPaths: true
+      }
     });
   }
 });
