@@ -1,17 +1,17 @@
-import withBundleAnalyzer from "@next/bundle-analyzer";
 import type { NextConfig } from "next";
-import withPlugins from "next-compose-plugins";
 
-import { env } from "./data/env/server";
 import packageJson from "./package.json";
 
-const config: NextConfig = {
+export default {
   productionBrowserSourceMaps: true,
   reactStrictMode: true,
   env: {
     NEXT_PUBLIC_APP_VERSION: packageJson.version
   },
   serverExternalPackages: ["pino", "pino-pretty"],
+  logging: {
+    browserToTerminal: true
+  },
   reactCompiler: true,
   images: {
     remotePatterns: [
@@ -38,6 +38,4 @@ const config: NextConfig = {
       { source: "/ping", destination: "/api/health" }
     ];
   }
-};
-
-export default withPlugins([withBundleAnalyzer({ enabled: env.ANALYZE }), config]);
+} satisfies NextConfig;
