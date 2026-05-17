@@ -1,2 +1,9 @@
-export { portfolioPageAboutBuilder, portfolioPageBuilder, portfolioPageHeroBuilder } from "./portfolio-page.builder";
-export { contactFormContentBuilder, type ContactFormContent } from "./contact-form-content.builder";
+export {
+  type ContactFormContent,
+  contactFormContentBuilder
+} from "./contact-form-content.builder";
+export {
+  portfolioPageAboutBuilder,
+  portfolioPageBuilder,
+  portfolioPageHeroBuilder
+} from "./portfolio-page.builder";

@@ -1,8 +1,6 @@
 import { expect } from "storybook/test";
-
-import { GridBackground } from "./grid-background";
-
 import preview from "~/.storybook/preview";
+import { GridBackground } from "./grid-background";
 
 const meta = preview.meta({
   title: "Components/UI/Grid Background",

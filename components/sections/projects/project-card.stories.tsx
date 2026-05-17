@@ -1,9 +1,7 @@
 import { expect } from "storybook/test";
-import { projectBuilder } from "~/tests/builders/portfolio-page.builder";
-
-import { type ProjectCardProps, ProjectCard } from "./project-card";
-
 import preview from "~/.storybook/preview";
+import { projectBuilder } from "~/tests/builders/portfolio-page.builder";
+import { ProjectCard, type ProjectCardProps } from "./project-card";
 
 const meta = preview.meta({
   title: "Components/Project Card",

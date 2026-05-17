@@ -1,5 +1,5 @@
 import { Body, Container, Head, Heading, Html, Link, Section, Text } from "@react-email/components";
-import { type ContactFormData } from "~/features/contact/schemas/contact.schema";
+import type { ContactFormData } from "~/features/contact/schemas/contact.schema";
 
 /**
  * Minimal React Email component for contact form submissions

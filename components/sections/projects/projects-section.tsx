@@ -1,11 +1,10 @@
 "use client";
 
-import { stegaClean } from "next-sanity";
-
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@szum-tech/design-system";
+import { stegaClean } from "next-sanity";
 import { SectionHeading } from "~/components/ui/section-heading";
 import { Section } from "~/constants/sections";
-import { type PortfolioPageQueryResult } from "~/lib/sanity/types";
+import type { PortfolioPageQueryResult } from "~/lib/sanity/types";
 import { buildSanityAttribute } from "~/lib/sanity/utils";
 
 import { ProjectCard, type ProjectData } from "./project-card";
@@ -28,7 +27,10 @@ export type ProjectsSectionProps = {
 };
 
 export function ProjectsSection({ projects, documentId, documentType }: ProjectsSectionProps) {
-  const { createSanityAttribute } = buildSanityAttribute({ documentId, documentType });
+  const { createSanityAttribute } = buildSanityAttribute({
+    documentId,
+    documentType
+  });
 
   // Get project groups from the data
   const projectGroups = projects?.projectGroups ?? [];

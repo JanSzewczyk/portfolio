@@ -1,4 +1,4 @@
-import { isActionFailed, isActionSuccess, type ActionStateFailed } from "~/lib/server-action";
+import { type ActionStateFailed, isActionFailed, isActionSuccess } from "~/lib/server-action";
 
 describe("server-action type guards", () => {
   describe("isActionSuccess", () => {

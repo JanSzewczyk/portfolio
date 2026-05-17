@@ -1,13 +1,12 @@
-import { Mail } from "lucide-react";
-
 import { Button, Card, CardContent, CardHeader, CardTitle } from "@szum-tech/design-system";
 import { cn } from "@szum-tech/design-system/utils";
-import { ReactIcon, type IconName } from "~/components/ui/react-icon";
+import { Mail } from "lucide-react";
+import { type IconName, ReactIcon } from "~/components/ui/react-icon";
 import { SectionHeading } from "~/components/ui/section-heading";
 import { Section } from "~/constants/sections";
 import { ContactForm } from "~/features/contact/components/contact-form";
 import { sendContactEmail } from "~/features/contact/server/actions/send-contact-email";
-import { type PortfolioPageQueryResult } from "~/lib/sanity/types";
+import type { PortfolioPageQueryResult } from "~/lib/sanity/types";
 
 type ContactSectionProps = {
   personalInfo: NonNullable<PortfolioPageQueryResult>["personalInfo"];
@@ -32,8 +31,8 @@ export function ContactSection({ personalInfo, contact }: ContactSectionProps) {
           <div className="space-y-6">
             <Card>
               <CardContent className="flex gap-4">
-                <div className="bg-primary/10 flex size-12 items-center justify-center rounded-full">
-                  <Mail className="text-primary size-6" />
+                <div className="flex size-12 items-center justify-center rounded-full bg-primary/10">
+                  <Mail className="size-6 text-primary" />
                 </div>
                 <div>
                   <p className="font-medium">Email</p>
@@ -71,12 +70,12 @@ export function ContactSection({ personalInfo, contact }: ContactSectionProps) {
             ) : null}
 
             {contact?.quickChat ? (
-              <Card className="bg-primary/5 border-primary/20">
+              <Card className="border-primary/20 bg-primary/5">
                 <CardHeader>
                   <CardTitle>{contact?.quickChat.title}</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-muted-foreground text-body-sm">{contact?.quickChat?.description}</p>
+                  <p className="text-body-sm text-muted-foreground">{contact?.quickChat?.description}</p>
                 </CardContent>
               </Card>
             ) : null}

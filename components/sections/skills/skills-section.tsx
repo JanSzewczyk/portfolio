@@ -1,13 +1,12 @@
 "use client";
 
-import { ArrowDownIcon } from "lucide-react";
-
-import { Badge, Card, CardHeader, Marquee, CardTitle, CardContent, CardDescription } from "@szum-tech/design-system";
+import { Badge, Card, CardContent, CardDescription, CardHeader, CardTitle, Marquee } from "@szum-tech/design-system";
 import { cn } from "@szum-tech/design-system/utils";
-import { ReactIcon, type IconName } from "~/components/ui/react-icon";
+import { ArrowDownIcon } from "lucide-react";
+import { type IconName, ReactIcon } from "~/components/ui/react-icon";
 import { SectionHeading } from "~/components/ui/section-heading";
 import { Section } from "~/constants/sections";
-import { type PortfolioPageQueryResult } from "~/lib/sanity/types";
+import type { PortfolioPageQueryResult } from "~/lib/sanity/types";
 import { buildSanityAttribute } from "~/lib/sanity/utils";
 
 import { TechLogo } from "./tech-logo";
@@ -19,7 +18,10 @@ type SkillsSectionProps = {
 };
 
 export function SkillsSection({ skills, documentId, documentType }: SkillsSectionProps) {
-  const { createSanityAttribute } = buildSanityAttribute({ documentId, documentType });
+  const { createSanityAttribute } = buildSanityAttribute({
+    documentId,
+    documentType
+  });
 
   // Collect all technologies from all groups for the marquee (deduplicated by _id)
   const allTechnologies =
@@ -50,8 +52,8 @@ export function SkillsSection({ skills, documentId, documentType }: SkillsSectio
                 />
               ))}
             </Marquee>
-            <div className="from-background/95 pointer-events-none absolute inset-y-0 left-0 w-1/6 bg-linear-to-r to-transparent" />
-            <div className="from-background/95 pointer-events-none absolute inset-y-0 right-0 w-1/6 bg-linear-to-l to-transparent" />
+            <div className="pointer-events-none absolute inset-y-0 left-0 w-1/6 bg-linear-to-r from-background/95 to-transparent" />
+            <div className="pointer-events-none absolute inset-y-0 right-0 w-1/6 bg-linear-to-l from-background/95 to-transparent" />
           </div>
         )}
 
@@ -76,12 +78,12 @@ export function SkillsSection({ skills, documentId, documentType }: SkillsSectio
                   <div className="absolute top-0 right-4">
                     {isFeatured && (
                       <ArrowDownIcon
-                        className="text-muted-foreground group-hover:text-foreground transition-transform group-hover:-rotate-45"
+                        className="text-muted-foreground transition-transform group-hover:-rotate-45 group-hover:text-foreground"
                         size={20}
                       />
                     )}
                   </div>
-                  <div className="bg-muted mb-2 flex size-10 items-center justify-center rounded">
+                  <div className="mb-2 flex size-10 items-center justify-center rounded bg-muted">
                     {groupIcon ? <ReactIcon name={groupIcon} className="size-6" /> : null}
                   </div>
                   <CardTitle className="text-heading-h4">{group.label}</CardTitle>
@@ -115,7 +117,7 @@ export function SkillsSection({ skills, documentId, documentType }: SkillsSectio
 
         {/* Decorative bottom text */}
         <div className="mt-16 text-center">
-          <p className="text-muted-foreground text-body-sm">{skills?.decorativeBottomText}</p>
+          <p className="text-body-sm text-muted-foreground">{skills?.decorativeBottomText}</p>
         </div>
       </div>
     </section>

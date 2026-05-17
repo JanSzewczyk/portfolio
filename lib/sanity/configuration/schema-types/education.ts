@@ -1,6 +1,5 @@
-import { defineField, defineType } from "sanity";
-
 import { MasterDetailIcon } from "@sanity/icons";
+import { defineField, defineType } from "sanity";
 
 export const education = defineType({
   name: "education",

@@ -1,10 +1,9 @@
-import { type CreateEmailResponseSuccess } from "resend";
+import type { CreateEmailResponseSuccess } from "resend";
 
 import { expect, fn, waitFor } from "storybook/test";
+import preview from "~/.storybook/preview";
 import { ContactForm } from "~/features/contact/components/contact-form";
 import { contactFormContentBuilder } from "~/tests/builders";
-
-import preview from "~/.storybook/preview";
 
 const meta = preview.meta({
   title: "Features/Contact/Contact Form",
@@ -108,7 +107,9 @@ ContactForm_.test("Shows success state after successful submission", async ({ ca
   });
 
   await step("Verify send another button is visible", async () => {
-    const sendAnotherButton = canvas.getByRole("button", { name: /send another message/i });
+    const sendAnotherButton = canvas.getByRole("button", {
+      name: /send another message/i
+    });
     await expect(sendAnotherButton).toBeVisible();
   });
 });
@@ -121,7 +122,9 @@ ContactForm_.test(
       const nameInput = canvas.getByLabelText(/username/i);
       const emailInput = canvas.getByLabelText(/email/i);
       const messageInput = canvas.getByLabelText(/message/i);
-      const submitButton = canvas.getByRole("button", { name: /send message/i });
+      const submitButton = canvas.getByRole("button", {
+        name: /send message/i
+      });
 
       await userEvent.type(nameInput, "John Doe");
       await userEvent.type(emailInput, "john@example.com");
@@ -139,7 +142,9 @@ ContactForm_.test(
     });
 
     await step("Click send another message", async () => {
-      const sendAnotherButton = canvas.getByRole("button", { name: /send another message/i });
+      const sendAnotherButton = canvas.getByRole("button", {
+        name: /send another message/i
+      });
       await userEvent.click(sendAnotherButton);
 
       // Wait for form to reappear
@@ -156,7 +161,9 @@ ContactForm_.test(
       const nameInput = canvas.getByLabelText(/username/i);
       const emailInput = canvas.getByLabelText(/email/i);
       const messageInput = canvas.getByLabelText(/message/i);
-      const submitButton = canvas.getByRole("button", { name: /send message/i });
+      const submitButton = canvas.getByRole("button", {
+        name: /send message/i
+      });
 
       // Fill form again with different data
       await userEvent.type(nameInput, "Jane Smith");

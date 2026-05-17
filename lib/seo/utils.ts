@@ -1,8 +1,8 @@
 import "server-only";
 
-import { type Metadata } from "next";
+import type { Metadata } from "next";
 
-import { type SeoQueryResult } from "~/lib/sanity/types";
+import type { SeoQueryResult } from "~/lib/sanity/types";
 
 /**
  * Build metadata from Sanity data with fallback values

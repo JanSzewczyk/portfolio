@@ -1,7 +1,5 @@
 "use client";
 
-import { stegaClean } from "next-sanity";
-
 import {
   Accordion,
   AccordionContent,
@@ -22,10 +20,11 @@ import {
   TimelineDot,
   TimelineItem
 } from "@szum-tech/design-system";
+import { stegaClean } from "next-sanity";
 import { SectionHeading } from "~/components/ui/section-heading";
 import { Section } from "~/constants/sections";
 import { urlFor } from "~/lib/sanity/image";
-import { type PortfolioPageQueryResult } from "~/lib/sanity/types";
+import type { PortfolioPageQueryResult } from "~/lib/sanity/types";
 import { buildSanityAttribute } from "~/lib/sanity/utils";
 
 type ExperienceSectionProps = {
@@ -46,7 +45,10 @@ function formatPeriod(startDate: string, endDate?: string | null): string {
 }
 
 export function ExperienceSection({ experience, documentId, documentType }: ExperienceSectionProps) {
-  const { createSanityAttribute } = buildSanityAttribute({ documentId, documentType });
+  const { createSanityAttribute } = buildSanityAttribute({
+    documentId,
+    documentType
+  });
 
   if (!experience?.experiences || experience.experiences.length === 0) {
     return null;
@@ -149,7 +151,7 @@ export function ExperienceSection({ experience, documentId, documentType }: Expe
                               <AccordionTrigger>Key Responsibilities</AccordionTrigger>
                               <AccordionContent>
                                 <ul
-                                  className="text-muted-foreground ml-4 list-disc space-y-1"
+                                  className="ml-4 list-disc space-y-1 text-muted-foreground"
                                   data-sanity={createSanityAttribute(
                                     `experience.experiences[${index}].responsibilities`
                                   )}
@@ -167,7 +169,7 @@ export function ExperienceSection({ experience, documentId, documentType }: Expe
                               <AccordionTrigger>Key Achievements</AccordionTrigger>
                               <AccordionContent>
                                 <ul
-                                  className="text-muted-foreground ml-4 list-disc space-y-1"
+                                  className="ml-4 list-disc space-y-1 text-muted-foreground"
                                   data-sanity={createSanityAttribute(`experience.experiences[${index}].achievements`)}
                                 >
                                   {exp.achievements.map((achievement) => (

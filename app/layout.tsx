@@ -1,8 +1,7 @@
-import * as React from "react";
-
-import { type Metadata, type Viewport } from "next";
-
 import { Analytics } from "@vercel/analytics/next";
+
+import type { Metadata, Viewport } from "next";
+import type * as React from "react";
 import { ThemeProvider } from "~/components/providers/theme-provider";
 import { StructuredData } from "~/components/seo/structured-data";
 import { getCachedSeoData } from "~/lib/sanity/services";

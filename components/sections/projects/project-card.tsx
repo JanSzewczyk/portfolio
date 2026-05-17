@@ -1,6 +1,3 @@
-import { ExternalLinkIcon } from "lucide-react";
-import { stegaClean } from "next-sanity";
-
 import {
   Badge,
   Button,
@@ -12,10 +9,12 @@ import {
   CardTitle
 } from "@szum-tech/design-system";
 import { cn } from "@szum-tech/design-system/utils";
+import { ExternalLinkIcon } from "lucide-react";
 import Image from "next/image";
+import { stegaClean } from "next-sanity";
 import { ReactIcon } from "~/components/ui/react-icon";
 import { urlFor } from "~/lib/sanity/image";
-import { type PortfolioPageQueryResult } from "~/lib/sanity/types";
+import type { PortfolioPageQueryResult } from "~/lib/sanity/types";
 
 type ProjectGroupData =
   NonNullable<NonNullable<NonNullable<PortfolioPageQueryResult>["projects"]>["projectGroups"]> extends (infer T)[]
@@ -36,7 +35,7 @@ export function ProjectCard({ project, dataSanity }: ProjectCardProps) {
       data-sanity={dataSanity}
     >
       <CardHeader>
-        <div className="bg-muted mb-4 aspect-video overflow-hidden rounded">
+        <div className="mb-4 aspect-video overflow-hidden rounded bg-muted">
           {project.thumbnail ? (
             <Image
               src={urlFor(project.thumbnail).auto("format").width(800).height(450).url()}
@@ -50,8 +49,8 @@ export function ProjectCard({ project, dataSanity }: ProjectCardProps) {
             <div
               className={cn(
                 "flex h-full w-full items-center justify-center",
-                "from-primary/10 to-primary/5 bg-linear-to-br",
-                "text-primary/20 text-4xl font-bold"
+                "bg-linear-to-br from-primary/10 to-primary/5",
+                "font-bold text-4xl text-primary/20"
               )}
             >
               {project.title?.charAt(0)}
@@ -64,8 +63,8 @@ export function ProjectCard({ project, dataSanity }: ProjectCardProps) {
 
       <CardContent className="flex-1">
         <div className="flex flex-wrap gap-1.5">
-          {project.technologies?.slice(0, 4).map((tech: { _id: string; name: string | null }, techIndex: number) => (
-            <Badge key={`${project._id}-${tech._id}-${techIndex}`} variant="secondary">
+          {project.technologies?.slice(0, 4).map((tech: { _id: string; name: string | null }) => (
+            <Badge key={`${project._id}-${tech._id}`} variant="secondary">
               {tech.name}
             </Badge>
           ))}

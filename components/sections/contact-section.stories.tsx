@@ -1,9 +1,7 @@
 import { expect } from "storybook/test";
-import { portfolioPageContactBuilder, portfolioPagePersonalInfoBuilder } from "~/tests/builders/portfolio-page.builder";
-
-import { ContactSection } from "./contact-section";
-
 import preview from "~/.storybook/preview";
+import { portfolioPageContactBuilder, portfolioPagePersonalInfoBuilder } from "~/tests/builders/portfolio-page.builder";
+import { ContactSection } from "./contact-section";
 
 const meta = preview.meta({
   title: "Components/Sections/Contact Section",
@@ -25,7 +23,10 @@ export const ContactSection_ = meta.story({});
 // Test 1: Section heading
 ContactSection_.test("Renders section heading with title and description", async ({ canvas, args }) => {
   if (args.contact?.heading?.title) {
-    const heading = canvas.getByRole("heading", { level: 2, name: args.contact.heading.title });
+    const heading = canvas.getByRole("heading", {
+      level: 2,
+      name: args.contact.heading.title
+    });
     await expect(heading).toBeVisible();
   }
 
@@ -39,7 +40,9 @@ ContactSection_.test("Renders section heading with title and description", async
 ContactSection_.test("Displays email contact information", async ({ canvas, args }) => {
   if (args.personalInfo?.email) {
     // Find the email link directly
-    const emailLink = canvas.getByRole("link", { name: args.personalInfo.email });
+    const emailLink = canvas.getByRole("link", {
+      name: args.personalInfo.email
+    });
     await expect(emailLink).toBeVisible();
     await expect(emailLink).toHaveAttribute("href", `mailto:${args.personalInfo.email}`);
   }

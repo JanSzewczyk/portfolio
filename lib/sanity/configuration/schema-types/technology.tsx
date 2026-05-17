@@ -1,6 +1,5 @@
-import { defineField, defineType } from "sanity";
-
 import { CodeIcon } from "@sanity/icons";
+import { defineField, defineType } from "sanity";
 
 import { ReactIcon } from "../../../../components/ui/react-icon";
 

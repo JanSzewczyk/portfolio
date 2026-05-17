@@ -1,9 +1,7 @@
 import { expect, waitFor } from "storybook/test";
-import { portfolioPagePersonalInfoBuilder } from "~/tests/builders/portfolio-page.builder";
-
-import { Navigation } from "./navigation";
-
 import preview from "~/.storybook/preview";
+import { portfolioPagePersonalInfoBuilder } from "~/tests/builders/portfolio-page.builder";
+import { Navigation } from "./navigation";
 
 const meta = preview.meta({
   title: "Components/Layout/Navigation",
@@ -28,7 +26,9 @@ export const NavigationStory = meta.story({});
 
 NavigationStory.test("Renders personal name as clickable logo link", async ({ canvas, args }) => {
   // Verify logo link exists with correct href and uses dynamic data
-  const logoLink = canvas.getByRole("link", { name: args.personalInfo?.name ?? "" });
+  const logoLink = canvas.getByRole("link", {
+    name: args.personalInfo?.name ?? ""
+  });
   await expect(logoLink).toBeVisible();
   await expect(logoLink).toHaveAttribute("href", "/");
 });
@@ -141,7 +141,9 @@ MobileNavigationStory.test(
     });
 
     await step("Verify close button is now visible", async () => {
-      const closeMenuButton = canvas.getByRole("button", { name: "Close menu" });
+      const closeMenuButton = canvas.getByRole("button", {
+        name: "Close menu"
+      });
       await expect(closeMenuButton).toBeVisible();
       await expect(closeMenuButton).toHaveAttribute("aria-label", "Close menu");
     });
@@ -162,7 +164,9 @@ MobileNavigationStory.test(
     });
 
     await step("Click close button", async () => {
-      const closeMenuButton = canvas.getByRole("button", { name: "Close menu" });
+      const closeMenuButton = canvas.getByRole("button", {
+        name: "Close menu"
+      });
       await userEvent.click(closeMenuButton);
     });
 
@@ -191,7 +195,9 @@ MobileNavigationStory.test("Mobile menu button has correct ARIA label states", a
     await userEvent.click(openButton);
 
     await waitFor(async () => {
-      const closeButton = canvas.getByRole("button", { name: "Close menu" });
+      const closeButton = canvas.getByRole("button", {
+        name: "Close menu"
+      });
       await expect(closeButton).toHaveAttribute("aria-label", "Close menu");
     });
   });

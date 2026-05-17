@@ -1,6 +1,5 @@
-import { type ReactNode } from "react";
-
 import { cn } from "@szum-tech/design-system/utils";
+import type { ReactNode } from "react";
 
 interface SectionHeadingProps {
   title: string;
@@ -25,7 +24,7 @@ export function SectionHeading({
       data-sanity={dataSanity}
     >
       <h2 className="text-heading-h2">{title}</h2>
-      {description ? <p className="text-body-lg text-muted-foreground mx-auto max-w-2xl">{description}</p> : null}
+      {description ? <p className="mx-auto max-w-2xl text-body-lg text-muted-foreground">{description}</p> : null}
       {children}
     </div>
   );

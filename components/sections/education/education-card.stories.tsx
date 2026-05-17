@@ -1,9 +1,7 @@
 import { expect, waitFor } from "storybook/test";
-import { educationBuilder, technologyBuilder } from "~/tests/builders/portfolio-page.builder";
-
-import { type EducationCardProps, EducationCard } from "./education-card";
-
 import preview from "~/.storybook/preview";
+import { educationBuilder, technologyBuilder } from "~/tests/builders/portfolio-page.builder";
+import { EducationCard, type EducationCardProps } from "./education-card";
 
 const meta = preview.meta({
   title: "Components/Sections/Education/Education Card",
@@ -40,18 +38,30 @@ export const WithThesisAndProject = meta.story({
           description:
             "Design and implementation of a real-time collaborative code editing platform leveraging Conflict-free Replicated Data Types for consistency.",
           technologies: [
-            technologyBuilder.one({ overrides: { name: "TypeScript", icon: "SiTypescript" } }),
-            technologyBuilder.one({ overrides: { name: "React", icon: "SiReact" } }),
-            technologyBuilder.one({ overrides: { name: "Node.js", icon: "SiNodedotjs" } })
+            technologyBuilder.one({
+              overrides: { name: "TypeScript", icon: "SiTypescript" }
+            }),
+            technologyBuilder.one({
+              overrides: { name: "React", icon: "SiReact" }
+            }),
+            technologyBuilder.one({
+              overrides: { name: "Node.js", icon: "SiNodedotjs" }
+            })
           ],
           project: {
             _id: "project-1",
             title: "CollabCode",
             description: "A real-time collaborative code editor with syntax highlighting and multi-cursor support.",
             technologies: [
-              technologyBuilder.one({ overrides: { name: "TypeScript", icon: "SiTypescript" } }),
-              technologyBuilder.one({ overrides: { name: "Next.js", icon: "SiNextdotjs" } }),
-              technologyBuilder.one({ overrides: { name: "Tailwind CSS", icon: "SiTailwindcss" } })
+              technologyBuilder.one({
+                overrides: { name: "TypeScript", icon: "SiTypescript" }
+              }),
+              technologyBuilder.one({
+                overrides: { name: "Next.js", icon: "SiNextdotjs" }
+              }),
+              technologyBuilder.one({
+                overrides: { name: "Tailwind CSS", icon: "SiTailwindcss" }
+              })
             ],
             links: {
               live: "https://collabcode.example.com",
@@ -87,7 +97,10 @@ WithThesisAndProject.test("Renders institution and field of study", async ({ can
 });
 
 WithThesisAndProject.test("Renders thesis section with title and description", async ({ canvas }) => {
-  const thesisHeading = canvas.getByRole("heading", { name: "Thesis", level: 3 });
+  const thesisHeading = canvas.getByRole("heading", {
+    name: "Thesis",
+    level: 3
+  });
   await expect(thesisHeading).toBeVisible();
 
   const thesisTitle = canvas.getByText("Real-time Collaborative Code Editor Using CRDTs");
@@ -104,9 +117,13 @@ WithThesisAndProject.test("Renders related project with icon action buttons", as
   const projectDescription = canvas.getByText(
     "A real-time collaborative code editor with syntax highlighting and multi-cursor support."
   );
-  const liveButton = canvas.getByRole("button", { name: "Open live project" });
+  const liveButton = canvas.getByRole("button", {
+    name: "Open live project"
+  });
   const codeButton = canvas.getByRole("button", { name: "Open source code" });
-  const thesisButton = canvas.getByRole("button", { name: "Open thesis document" });
+  const thesisButton = canvas.getByRole("button", {
+    name: "Open thesis document"
+  });
 
   await expect(liveButton).toBeVisible();
   await expect(codeButton).toBeVisible();
@@ -118,9 +135,13 @@ WithThesisAndProject.test("Renders related project with icon action buttons", as
 });
 
 WithThesisAndProject.test("Project links have correct href values", async ({ canvas }) => {
-  const liveButton = canvas.getByRole("button", { name: "Open live project" });
+  const liveButton = canvas.getByRole("button", {
+    name: "Open live project"
+  });
   const codeButton = canvas.getByRole("button", { name: "Open source code" });
-  const thesisButton = canvas.getByRole("button", { name: "Open thesis document" });
+  const thesisButton = canvas.getByRole("button", {
+    name: "Open thesis document"
+  });
 
   await expect(liveButton).toHaveAttribute("href", "https://collabcode.example.com");
   await expect(codeButton).toHaveAttribute("href", "https://github.com/example/collabcode");
@@ -160,8 +181,12 @@ export const ThesisWithoutProject = meta.story({
           title: "Automated Testing Framework for React Applications",
           description: "Design of a testing framework combining unit, integration, and visual regression testing.",
           technologies: [
-            technologyBuilder.one({ overrides: { name: "React", icon: "SiReact" } }),
-            technologyBuilder.one({ overrides: { name: "Vitest", icon: "SiVitest" } })
+            technologyBuilder.one({
+              overrides: { name: "React", icon: "SiReact" }
+            }),
+            technologyBuilder.one({
+              overrides: { name: "Vitest", icon: "SiVitest" }
+            })
           ],
           project: null,
           url: "https://example.com/bachelor-thesis.pdf"
@@ -174,7 +199,9 @@ export const ThesisWithoutProject = meta.story({
 });
 
 ThesisWithoutProject.test("Renders thesis URL button without related project section", async ({ canvas }) => {
-  const thesisButton = canvas.getByRole("button", { name: "Open thesis document" });
+  const thesisButton = canvas.getByRole("button", {
+    name: "Open thesis document"
+  });
   await expect(thesisButton).toBeVisible();
   await expect(thesisButton).toHaveAttribute("href", "https://example.com/bachelor-thesis.pdf");
 
@@ -183,8 +210,12 @@ ThesisWithoutProject.test("Renders thesis URL button without related project sec
 });
 
 ThesisWithoutProject.test("Does not render Live or Code buttons", async ({ canvas }) => {
-  const liveButton = canvas.queryByRole("button", { name: "Open live project" });
-  const codeButton = canvas.queryByRole("button", { name: "Open source code" });
+  const liveButton = canvas.queryByRole("button", {
+    name: "Open live project"
+  });
+  const codeButton = canvas.queryByRole("button", {
+    name: "Open source code"
+  });
 
   await expect(liveButton).not.toBeInTheDocument();
   await expect(codeButton).not.toBeInTheDocument();
@@ -252,12 +283,20 @@ export const ProjectGithubOnly = meta.story({
         thesis: () => ({
           title: "Neural Architecture Search for Edge Computing",
           description: "Optimizing neural network architectures for deployment on resource-constrained edge devices.",
-          technologies: [technologyBuilder.one({ overrides: { name: "Python", icon: "SiPython" } })],
+          technologies: [
+            technologyBuilder.one({
+              overrides: { name: "Python", icon: "SiPython" }
+            })
+          ],
           project: {
             _id: "project-2",
             title: "EdgeNAS",
             description: "Neural Architecture Search toolkit optimized for edge deployment.",
-            technologies: [technologyBuilder.one({ overrides: { name: "Python", icon: "SiPython" } })],
+            technologies: [
+              technologyBuilder.one({
+                overrides: { name: "Python", icon: "SiPython" }
+              })
+            ],
             links: {
               live: undefined,
               github: "https://github.com/example/edgenas",
@@ -277,8 +316,12 @@ ProjectGithubOnly.test("Renders only source code icon button when only GitHub li
   const codeButton = canvas.getByRole("button", { name: "Open source code" });
   await expect(codeButton).toBeVisible();
 
-  const liveButton = canvas.queryByRole("button", { name: "Open live project" });
-  const thesisButton = canvas.queryByRole("button", { name: "Open thesis document" });
+  const liveButton = canvas.queryByRole("button", {
+    name: "Open live project"
+  });
+  const thesisButton = canvas.queryByRole("button", {
+    name: "Open thesis document"
+  });
   await expect(liveButton).not.toBeInTheDocument();
   await expect(thesisButton).not.toBeInTheDocument();
 });
@@ -339,7 +382,9 @@ AccordionInteraction.test("Expands and collapses achievements accordion", async 
 });
 
 AccordionInteraction.test("Expands and collapses coursework accordion", async ({ canvas, step, userEvent }) => {
-  const trigger = canvas.getByRole("button", { name: /Relevant Coursework/i });
+  const trigger = canvas.getByRole("button", {
+    name: /Relevant Coursework/i
+  });
 
   await step("Initially collapsed", async () => {
     await expect(trigger).toHaveAttribute("aria-expanded", "false");

@@ -1,9 +1,7 @@
 import { expect } from "storybook/test";
-import { portfolioPageAboutBuilder } from "~/tests/builders/portfolio-page.builder";
-
-import { AboutSection as AboutSectionComponent } from "./about-section";
-
 import preview from "~/.storybook/preview";
+import { portfolioPageAboutBuilder } from "~/tests/builders/portfolio-page.builder";
+import { AboutSection as AboutSectionComponent } from "./about-section";
 
 const meta = preview.meta({
   title: "Components/Sections/About Section",

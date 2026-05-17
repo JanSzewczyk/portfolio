@@ -1,11 +1,5 @@
 "use client";
 
-import * as React from "react";
-
-import { SendIcon, MailboxIcon } from "lucide-react";
-import { useForm } from "react-hook-form";
-import { type CreateEmailResponseSuccess } from "resend";
-
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Button,
@@ -22,9 +16,13 @@ import {
   Textarea,
   toast
 } from "@szum-tech/design-system";
+import { MailboxIcon, SendIcon } from "lucide-react";
+import * as React from "react";
+import { useForm } from "react-hook-form";
+import type { CreateEmailResponseSuccess } from "resend";
 import { type ContactFormData, contactFormSchema } from "~/features/contact/schemas/contact.schema";
-import { type PortfolioPageQueryResult } from "~/lib/sanity/types";
-import { type ActionResponse } from "~/lib/server-action";
+import type { PortfolioPageQueryResult } from "~/lib/sanity/types";
+import type { ActionResponse } from "~/lib/server-action";
 
 export type ContactFormProps = {
   onSubmitAction(data: ContactFormData): ActionResponse<CreateEmailResponseSuccess>;
@@ -75,9 +73,9 @@ export function ContactForm({ onSubmitAction, contactFormContent }: ContactFormP
       <CardContent>
         {isSubmitted ? (
           <div className="flex flex-col items-center justify-center py-8 text-center">
-            <MailboxIcon className="text-input size-24" />
-            <h3 className="text-foreground text-heading-h2 mt-8 mb-2">{contactFormContent?.successView?.title}</h3>
-            <p className="text-muted-foreground mb-8 max-w-md">{contactFormContent?.successView?.description}</p>
+            <MailboxIcon className="size-24 text-input" />
+            <h3 className="mt-8 mb-2 text-foreground text-heading-h2">{contactFormContent?.successView?.title}</h3>
+            <p className="mb-8 max-w-md text-muted-foreground">{contactFormContent?.successView?.description}</p>
             <Button onClick={handleSendAnother} variant="secondary">
               {contactFormContent?.successView?.buttonText}
             </Button>

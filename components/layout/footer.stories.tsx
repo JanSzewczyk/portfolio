@@ -1,9 +1,7 @@
 import { expect } from "storybook/test";
-import { portfolioPageFooterBuilder, portfolioPagePersonalInfoBuilder } from "~/tests/builders/portfolio-page.builder";
-
-import { Footer } from "./footer";
-
 import preview from "~/.storybook/preview";
+import { portfolioPageFooterBuilder, portfolioPagePersonalInfoBuilder } from "~/tests/builders/portfolio-page.builder";
+import { Footer } from "./footer";
 
 const meta = preview.meta({
   title: "Components/Layout/Footer",

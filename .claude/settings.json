@@ -1,19 +1,5 @@
 {
-  "enableAllProjectMcpServers": true,
-  "enabledMcpjsonServers": [
-    "context7"
-  ],
   "hooks": {
-    "SessionStart": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "echo '🚀 Session started in: $CLAUDE_PROJECT_DIR' >&2"
-          }
-        ]
-      }
-    ],
     "PreToolUse": [
       {
         "matcher": "Bash",
@@ -41,23 +27,10 @@
         "hooks": [
           {
             "type": "command",
-            "command": "echo '✅ Session complete in: $CLAUDE_PROJECT_DIR' >&2"
+            "command": "cd \"$CLAUDE_PROJECT_DIR\" && output=$(npm run type-check 2>&1); code=$?; if [ $code -ne 0 ]; then echo \"$output\" | grep -E '(error TS|\\([0-9]+,[0-9]+\\))' | head -15 >&2; exit 2; fi"
           }
         ]
       }
     ]
-  },
-  "statusLine": {
-    "type": "command",
-    "command": ".claude/statusline.sh",
-    "padding": 0
-  },
-  "enabledPlugins": {
-    "ralph-wiggum@claude-code-plugins": true,
-    "nextjs-react@szum-tech": true,
-    "code-quality@szum-tech": true,
-    "dev-experience@szum-tech": true,
-    "testing@szum-tech": true,
-    "firebase-auth@szum-tech": true
   }
 }

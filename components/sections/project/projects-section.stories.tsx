@@ -1,4 +1,5 @@
 import { expect } from "storybook/test";
+import preview from "~/.storybook/preview";
 import { ProjectsSection } from "~/components/sections";
 import {
   portfolioPageBuilder,
@@ -8,12 +9,16 @@ import {
   technologyBuilder
 } from "~/tests/builders/portfolio-page.builder";
 
-import preview from "~/.storybook/preview";
-
 // Create deterministic test data to avoid flaky tests
-const testTech1 = technologyBuilder.one({ overrides: { name: "React", icon: "SiReact" } });
-const testTech2 = technologyBuilder.one({ overrides: { name: "TypeScript", icon: "SiTypescript" } });
-const testTech3 = technologyBuilder.one({ overrides: { name: "Node.js", icon: "SiNodedotjs" } });
+const testTech1 = technologyBuilder.one({
+  overrides: { name: "React", icon: "SiReact" }
+});
+const testTech2 = technologyBuilder.one({
+  overrides: { name: "TypeScript", icon: "SiTypescript" }
+});
+const testTech3 = technologyBuilder.one({
+  overrides: { name: "Node.js", icon: "SiNodedotjs" }
+});
 
 const testProject = projectBuilder.one({
   overrides: {
@@ -72,7 +77,10 @@ export const ProjectsSection_ = meta.story({});
 
 // Test: Renders section heading
 ProjectsSection_.test("Renders section heading with title and description", async ({ canvas, args }) => {
-  const heading = canvas.getByRole("heading", { level: 2, name: args.projects?.heading?.title ?? "" });
+  const heading = canvas.getByRole("heading", {
+    level: 2,
+    name: args.projects?.heading?.title ?? ""
+  });
   await expect(heading).toBeVisible();
 
   if (args.projects?.heading?.description) {
@@ -88,7 +96,9 @@ ProjectsSection_.test("Renders project group tabs", async ({ canvas, args }) => 
 
   const firstGroup = args.projects?.projectGroups?.[0];
   if (firstGroup?.label) {
-    const firstTab = canvas.getByRole("tab", { name: new RegExp(firstGroup.label, "i") });
+    const firstTab = canvas.getByRole("tab", {
+      name: new RegExp(firstGroup.label, "i")
+    });
     await expect(firstTab).toBeVisible();
   }
 });

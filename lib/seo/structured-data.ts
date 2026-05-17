@@ -1,16 +1,8 @@
 import "server-only";
 
-import {
-  type BreadcrumbList,
-  type Graph,
-  type Organization,
-  type Person,
-  type ProfilePage,
-  type WebPage,
-  type WebSite
-} from "schema-dts";
+import type { BreadcrumbList, Graph, Organization, Person, ProfilePage, WebPage, WebSite } from "schema-dts";
 
-import { type SeoQueryResult } from "~/lib/sanity/types";
+import type { SeoQueryResult } from "~/lib/sanity/types";
 
 /**
  * Serialize JSON-LD for safe inline script rendering.

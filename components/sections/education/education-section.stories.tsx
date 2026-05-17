@@ -1,9 +1,7 @@
 import { expect, waitFor } from "storybook/test";
-import { portfolioPageEducationBuilder } from "~/tests/builders/portfolio-page.builder";
-
-import { EducationSection } from "./education-section";
-
 import preview from "~/.storybook/preview";
+import { portfolioPageEducationBuilder } from "~/tests/builders/portfolio-page.builder";
+import { EducationSection } from "./education-section";
 
 const meta = preview.meta({
   title: "Components/Sections/Education",
@@ -26,7 +24,10 @@ export const EducationSection_ = meta.story({});
 
 // Test: Section heading
 EducationSection_.test("Renders section heading with title and description", async ({ canvas, args }) => {
-  const heading = canvas.getByRole("heading", { name: args.education?.heading?.title ?? "", level: 2 });
+  const heading = canvas.getByRole("heading", {
+    name: args.education?.heading?.title ?? "",
+    level: 2
+  });
   await expect(heading).toBeVisible();
 
   if (args.education?.heading?.description) {
@@ -51,7 +52,9 @@ EducationSection_.test("Displays education institution and details", async ({ ca
 // Test: Accordion expand/collapse for achievements
 // Using play function because this is a multi-step user flow
 EducationSection_.test("Expands and collapses achievements accordion", async ({ canvas, step, userEvent }) => {
-  const achievementsTriggers = canvas.queryAllByRole("button", { name: /Key Achievements/i });
+  const achievementsTriggers = canvas.queryAllByRole("button", {
+    name: /Key Achievements/i
+  });
 
   if (achievementsTriggers.length === 0) {
     return; // Skip if no achievements accordion present
@@ -101,7 +104,9 @@ EducationSection_.test("Expands and collapses achievements accordion", async ({ 
 
 // Test: Accordion expand/collapse for coursework
 EducationSection_.test("Expands and collapses coursework accordion", async ({ canvas, step, userEvent }) => {
-  const courseworkTriggers = canvas.queryAllByRole("button", { name: /Relevant Coursework/i });
+  const courseworkTriggers = canvas.queryAllByRole("button", {
+    name: /Relevant Coursework/i
+  });
 
   if (courseworkTriggers.length === 0) {
     return; // Skip if no coursework accordion present

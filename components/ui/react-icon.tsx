@@ -1,6 +1,6 @@
 "use client";
 
-import { type IconType } from "react-icons";
+import type { IconType } from "react-icons";
 
 import * as SimpleIcons from "react-icons/si";
 import * as TablerIcons from "react-icons/tb";
@@ -19,7 +19,7 @@ export type DynamicIconProps = {
 export function ReactIcon({ name, className, size }: DynamicIconProps) {
   const Icon = ICONS[name] as IconType | undefined;
   if (!Icon) {
-    // eslint-disable-next-line
+    // biome-ignore lint/suspicious/noConsole: for dev exp
     console.warn(`Icon "${name}" not found in react-icons`);
     return null;
   }

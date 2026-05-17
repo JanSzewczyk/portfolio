@@ -1,5 +1,5 @@
 import { Card } from "@szum-tech/design-system";
-import { ReactIcon, type IconName } from "~/components/ui/react-icon";
+import { type IconName, ReactIcon } from "~/components/ui/react-icon";
 
 export type Technology = {
   _id: string;
@@ -23,12 +23,12 @@ export function TechLogo({ tech, dataSanity }: TechLogoProps) {
         {tech.icon ? (
           <ReactIcon
             name={tech.icon as IconName}
-            className="text-primary relative z-10 size-8 opacity-40 transition-opacity duration-300 group-hover:opacity-70"
+            className="relative z-10 size-8 text-primary opacity-40 transition-opacity duration-300 group-hover:opacity-70"
           />
         ) : null}
       </div>
 
-      <span className="text-foreground text-body-xs relative z-10 text-center">{tech.name}</span>
+      <span className="relative z-10 text-center text-body-xs text-foreground">{tech.name}</span>
     </Card>
   );
 }

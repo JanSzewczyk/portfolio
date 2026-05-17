@@ -5,9 +5,9 @@ import { createElement } from "react";
 import { type CreateEmailResponseSuccess, Resend } from "resend";
 
 import { env } from "~/data/env/server";
-import { type ContactFormData } from "~/features/contact/schemas/contact.schema";
+import type { ContactFormData } from "~/features/contact/schemas/contact.schema";
 import { createLogger } from "~/lib/logger";
-import { type ActionResponse } from "~/lib/server-action";
+import type { ActionResponse } from "~/lib/server-action";
 
 import { ContactEmail } from "../../components/templates/contact-email";
 
