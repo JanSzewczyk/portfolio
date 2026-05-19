@@ -39,9 +39,9 @@ export const AllLinks = meta.story({
 });
 
 AllLinks.test("Renders all three link buttons", async ({ canvas }) => {
-  const liveButton = canvas.getByRole("button", { name: /live/i });
-  const codeButton = canvas.getByRole("button", { name: /code/i });
-  const npmButton = canvas.getByRole("button", { name: /npm/i });
+  const liveButton = canvas.getByRole("link", { name: /live/i });
+  const codeButton = canvas.getByRole("link", { name: /code/i });
+  const npmButton = canvas.getByRole("link", { name: /npm/i });
 
   await expect(liveButton).toBeVisible();
   await expect(codeButton).toBeVisible();
@@ -51,9 +51,9 @@ AllLinks.test("Renders all three link buttons", async ({ canvas }) => {
 AllLinks.test(
   "All buttons have correct security attributes",
   async ({ canvas }) => {
-    const liveButton = canvas.getByRole("button", { name: /live/i });
-    const codeButton = canvas.getByRole("button", { name: /code/i });
-    const npmButton = canvas.getByRole("button", { name: /npm/i });
+    const liveButton = canvas.getByRole("link", { name: /live/i });
+    const codeButton = canvas.getByRole("link", { name: /code/i });
+    const npmButton = canvas.getByRole("link", { name: /npm/i });
 
     await expect(liveButton).toHaveAttribute("target", "_blank");
     await expect(liveButton).toHaveAttribute("rel", "noopener noreferrer");
@@ -67,9 +67,9 @@ AllLinks.test(
 );
 
 AllLinks.test("All buttons have correct href values", async ({ canvas }) => {
-  const liveButton = canvas.getByRole("button", { name: /live/i });
-  const codeButton = canvas.getByRole("button", { name: /code/i });
-  const npmButton = canvas.getByRole("button", { name: /npm/i });
+  const liveButton = canvas.getByRole("link", { name: /live/i });
+  const codeButton = canvas.getByRole("link", { name: /code/i });
+  const npmButton = canvas.getByRole("link", { name: /npm/i });
 
   await expect(liveButton).toHaveAttribute(
     "href",
@@ -106,12 +106,12 @@ export const NpmLinkOnly = meta.story({
 });
 
 NpmLinkOnly.test("Renders only NPM button", async ({ canvas }) => {
-  const npmButton = canvas.getByRole("button", { name: /npm/i });
+  const npmButton = canvas.getByRole("link", { name: /npm/i });
   await expect(npmButton).toBeVisible();
 
   // Live and Code buttons should not be present
-  const liveButton = canvas.queryByRole("button", { name: /live/i });
-  const codeButton = canvas.queryByRole("button", { name: /code/i });
+  const liveButton = canvas.queryByRole("link", { name: /live/i });
+  const codeButton = canvas.queryByRole("link", { name: /code/i });
   await expect(liveButton).not.toBeInTheDocument();
   await expect(codeButton).not.toBeInTheDocument();
 });
@@ -137,14 +137,14 @@ export const GithubAndNpm = meta.story({
 });
 
 GithubAndNpm.test("Renders GitHub and NPM buttons", async ({ canvas }) => {
-  const codeButton = canvas.getByRole("button", { name: /code/i });
-  const npmButton = canvas.getByRole("button", { name: /npm/i });
+  const codeButton = canvas.getByRole("link", { name: /code/i });
+  const npmButton = canvas.getByRole("link", { name: /npm/i });
 
   await expect(codeButton).toBeVisible();
   await expect(npmButton).toBeVisible();
 
   // Live button should not be present
-  const liveButton = canvas.queryByRole("button", { name: /live/i });
+  const liveButton = canvas.queryByRole("link", { name: /live/i });
   await expect(liveButton).not.toBeInTheDocument();
 });
 
@@ -171,14 +171,14 @@ export const NoNpmLink = meta.story({
 NoNpmLink.test(
   "NPM button is not rendered when npm link is null",
   async ({ canvas }) => {
-    const liveButton = canvas.getByRole("button", { name: /live/i });
-    const codeButton = canvas.getByRole("button", { name: /code/i });
+    const liveButton = canvas.getByRole("link", { name: /live/i });
+    const codeButton = canvas.getByRole("link", { name: /code/i });
 
     await expect(liveButton).toBeVisible();
     await expect(codeButton).toBeVisible();
 
     // NPM button should not be present
-    const npmButton = canvas.queryByRole("button", { name: /npm/i });
+    const npmButton = canvas.queryByRole("link", { name: /npm/i });
     await expect(npmButton).not.toBeInTheDocument();
   },
 );
@@ -203,9 +203,9 @@ export const NoLinks = meta.story({
 });
 
 NoLinks.test("No link buttons are rendered", async ({ canvas }) => {
-  const liveButton = canvas.queryByRole("button", { name: /live/i });
-  const codeButton = canvas.queryByRole("button", { name: /code/i });
-  const npmButton = canvas.queryByRole("button", { name: /npm/i });
+  const liveButton = canvas.queryByRole("link", { name: /live/i });
+  const codeButton = canvas.queryByRole("link", { name: /code/i });
+  const npmButton = canvas.queryByRole("link", { name: /npm/i });
 
   await expect(liveButton).not.toBeInTheDocument();
   await expect(codeButton).not.toBeInTheDocument();
@@ -235,9 +235,9 @@ export const LongContent = meta.story({
 LongContent.test(
   "All buttons remain visible with long content",
   async ({ canvas }) => {
-    const liveButton = canvas.getByRole("button", { name: /live/i });
-    const codeButton = canvas.getByRole("button", { name: /code/i });
-    const npmButton = canvas.getByRole("button", { name: /npm/i });
+    const liveButton = canvas.getByRole("link", { name: /live/i });
+    const codeButton = canvas.getByRole("link", { name: /code/i });
+    const npmButton = canvas.getByRole("link", { name: /npm/i });
 
     await expect(liveButton).toBeVisible();
     await expect(codeButton).toBeVisible();

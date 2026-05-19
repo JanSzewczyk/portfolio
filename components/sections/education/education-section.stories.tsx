@@ -1,13 +1,47 @@
 import { expect, waitFor } from "storybook/test";
 import preview from "~/.storybook/preview";
-import { portfolioPageEducationBuilder } from "~/tests/builders/portfolio-page.builder";
+import {
+  educationBuilder,
+  portfolioPageEducationBuilder,
+} from "~/tests/builders/portfolio-page.builder";
 import { EducationSection } from "./education-section";
 
 const meta = preview.meta({
-  title: "Components/Sections/Education",
+  title: "Components/Sections/Education Section",
   component: EducationSection,
   args: {
-    education: portfolioPageEducationBuilder.one(),
+    education: portfolioPageEducationBuilder.one({
+      overrides: {
+        heading: {
+          title: "Education",
+          description: "My academic background and achievements",
+        },
+        education: [
+          educationBuilder.one({
+            overrides: {
+              institution: "Warsaw University of Technology",
+              institutionUrl: "https://www.pw.edu.pl",
+              location: "Warsaw, Poland",
+              degree: "Master's Degree",
+              fieldOfStudy: "Computer Science",
+              startDate: "2018-10-01",
+              endDate: "2020-06-30",
+              grade: "4.0",
+              thesis: null,
+              achievements: () => [
+                "Graduated with honors",
+                "Published research paper",
+              ],
+              coursework: () => [
+                "Distributed Systems",
+                "Advanced Algorithms",
+                "Machine Learning",
+              ],
+            },
+          }),
+        ],
+      },
+    }),
     documentId: "test-portfolio-id",
     documentType: "portfolioPage",
   },
@@ -16,60 +50,46 @@ const meta = preview.meta({
   },
 });
 
-/**
- * Default story showing the EducationSection component with full education data.
- * Displays timeline with education history, thesis information, achievements, and coursework.
- */
-export const EducationSection_ = meta.story({});
+export const EducationSectionStory = meta.story({
+  name: "Education Section",
+});
 
 // Test: Section heading
-EducationSection_.test(
+EducationSectionStory.test(
   "Renders section heading with title and description",
-  async ({ canvas, args }) => {
+  async ({ canvas }) => {
     const heading = canvas.getByRole("heading", {
-      name: args.education?.heading?.title ?? "",
+      name: "Education",
       level: 2,
     });
     await expect(heading).toBeVisible();
 
-    if (args.education?.heading?.description) {
-      const description = canvas.getByText(args.education.heading.description);
-      await expect(description).toBeVisible();
-    }
+    const description = canvas.getByText(
+      "My academic background and achievements",
+    );
+    await expect(description).toBeVisible();
   },
 );
 
 // Test: Education card
-EducationSection_.test(
-  "Displays education institution and details",
-  async ({ canvas, args }) => {
-    const educationList = args.education?.education ?? [];
+EducationSectionStory.test(
+  "Displays education institution and field of study",
+  async ({ canvas }) => {
+    const institution = canvas.getByText("Warsaw University of Technology");
+    await expect(institution).toBeVisible();
 
-    if (educationList.length > 0) {
-      const firstEdu = educationList[0];
-      if (firstEdu?.institution) {
-        const institution = canvas.getByText(firstEdu.institution);
-        await expect(institution).toBeVisible();
-      }
-    }
+    const fieldOfStudy = canvas.getByText("Computer Science");
+    await expect(fieldOfStudy).toBeVisible();
   },
 );
 
 // Test: Accordion expand/collapse for achievements
-// Using play function because this is a multi-step user flow
-EducationSection_.test(
+EducationSectionStory.test(
   "Expands and collapses achievements accordion",
   async ({ canvas, step, userEvent }) => {
-    const achievementsTriggers = canvas.queryAllByRole("button", {
+    const achievementsTrigger = canvas.getByRole("button", {
       name: /Key Achievements/i,
     });
-
-    if (achievementsTriggers.length === 0) {
-      return; // Skip if no achievements accordion present
-    }
-
-    // Test the first achievements accordion
-    const achievementsTrigger = achievementsTriggers[0]!;
 
     await step("Verify accordion is initially collapsed", async () => {
       await expect(achievementsTrigger).toHaveAttribute(
@@ -93,12 +113,10 @@ EducationSection_.test(
     });
 
     await step("Verify content is visible", async () => {
-      // Wait for accordion content to expand and list items to be visible
       await waitFor(
         async () => {
-          // Query for list items within the accordion content
-          const accordionContent = canvas.getAllByRole("region")[0];
-          await expect(accordionContent).toBeVisible();
+          const regions = canvas.getAllByRole("region");
+          await expect(regions[0]).toBeVisible();
         },
         { timeout: 2000 },
       );
@@ -121,19 +139,12 @@ EducationSection_.test(
 );
 
 // Test: Accordion expand/collapse for coursework
-EducationSection_.test(
+EducationSectionStory.test(
   "Expands and collapses coursework accordion",
   async ({ canvas, step, userEvent }) => {
-    const courseworkTriggers = canvas.queryAllByRole("button", {
+    const courseworkTrigger = canvas.getByRole("button", {
       name: /Relevant Coursework/i,
     });
-
-    if (courseworkTriggers.length === 0) {
-      return; // Skip if no coursework accordion present
-    }
-
-    // Test the first coursework accordion
-    const courseworkTrigger = courseworkTriggers[0]!;
 
     await step("Verify accordion is initially collapsed", async () => {
       await expect(courseworkTrigger).toHaveAttribute("aria-expanded", "false");

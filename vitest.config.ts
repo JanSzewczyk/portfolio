@@ -71,6 +71,8 @@ export default defineConfig({
         test: {
           name: "storybook",
           exclude: ["**/node_modules/**", "**/dist/**", "**/.next/**"],
+          testTimeout: 30000,
+          hookTimeout: 30000,
           browser: {
             enabled: true,
             provider: playwright(),

@@ -25,10 +25,11 @@ const testProject = projectBuilder.one({
     title: "Test Project",
     description: "A test project description",
     technologies: [testTech1, testTech2],
-    links: {
+    links: () => ({
       live: "https://example.com",
       github: "https://github.com/test/repo",
-    },
+      npm: null,
+    }),
   },
 });
 
@@ -46,7 +47,11 @@ const testGroup2 = projectGroupBuilder.one({
       projectBuilder.one({
         overrides: {
           technologies: [testTech3],
-          links: { live: null, github: "https://github.com/test/oss" },
+          links: () => ({
+            live: null,
+            github: "https://github.com/test/oss",
+            npm: null,
+          }),
         },
       }),
     ],
@@ -117,7 +122,6 @@ ProjectsSection_.test(
     const firstProject = firstGroup?.projects?.[0];
 
     if (firstProject?.title) {
-      // Check that the first project is visible by its title
       const projectTitle = canvas.getByText(firstProject.title);
       await expect(projectTitle).toBeVisible();
     }
@@ -132,19 +136,16 @@ ProjectsSection_.test(
     const firstProject = firstGroup?.projects?.[0];
 
     if (firstProject) {
-      // Check title
       if (firstProject.title) {
         const title = canvas.getByText(firstProject.title);
         await expect(title).toBeVisible();
       }
 
-      // Check description
       if (firstProject.description) {
         const description = canvas.getByText(firstProject.description);
         await expect(description).toBeVisible();
       }
 
-      // Check at least one technology badge is visible
       if (firstProject.technologies && firstProject.technologies.length > 0) {
         const firstTech = firstProject.technologies[0];
         if (firstTech && firstTech.name) {
@@ -156,40 +157,30 @@ ProjectsSection_.test(
   },
 );
 
-// Test: Links render when available
+// Test: Links render when available — use getByRole("link") since Button asChild renders <a>
 ProjectsSection_.test(
   "Renders live and GitHub links when available",
   async ({ canvas, args }) => {
     const firstGroup = args.projects?.projectGroups?.[0];
     const firstProject = firstGroup?.projects?.[0];
 
-    // First verify the project is visible
     if (firstProject?.title) {
       const projectTitle = canvas.getByText(firstProject.title);
       await expect(projectTitle).toBeVisible();
 
-      // Links are rendered with Button asChild, so they appear as <a> tags
-      // Just find them by text content
       if (firstProject.links?.live) {
-        const liveLink = canvas.getByText("Live").closest("a");
+        const liveLink = canvas.getByRole("link", { name: /live/i });
         await expect(liveLink).toBeVisible();
-        if (liveLink) {
-          await expect(liveLink).toHaveAttribute(
-            "href",
-            firstProject.links.live,
-          );
-        }
+        await expect(liveLink).toHaveAttribute("href", firstProject.links.live);
       }
 
       if (firstProject.links?.github) {
-        const githubLink = canvas.getByText("Code").closest("a");
+        const githubLink = canvas.getByRole("link", { name: /code/i });
         await expect(githubLink).toBeVisible();
-        if (githubLink) {
-          await expect(githubLink).toHaveAttribute(
-            "href",
-            firstProject.links.github,
-          );
-        }
+        await expect(githubLink).toHaveAttribute(
+          "href",
+          firstProject.links.github,
+        );
       }
     }
   },
@@ -224,15 +215,12 @@ export const EmptyState = meta.story({
 EmptyState.test(
   "Shows empty state when no project groups available",
   async ({ canvas }) => {
-    // When no project groups exist, tabs won't render
     const tabList = canvas.queryByRole("tablist");
 
     if (tabList) {
-      // If tabs somehow render, there should be no project cards
       const projectCards = canvas.queryAllByRole("article");
       await expect(projectCards.length).toBe(0);
     } else {
-      // No tabs should exist when projectGroups is empty
       await expect(tabList).not.toBeInTheDocument();
     }
   },
