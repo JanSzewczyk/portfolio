@@ -32,10 +32,16 @@ export default defineMain({
   staticDirs: ["../public"],
   viteFinal: async (config) => {
     const { mergeConfig } = await import("vite");
+    const path = await import("node:path");
+    const url = await import("node:url");
+
+    const here = path.dirname(url.fileURLToPath(import.meta.url));
+    const nextImageMock = path.resolve(here, "mocks/next-image.tsx");
 
     return mergeConfig(config, {
       resolve: {
         tsconfigPaths: true,
+        alias: [{ find: /^next\/image$/, replacement: nextImageMock }],
       },
     });
   },

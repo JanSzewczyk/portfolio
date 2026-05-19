@@ -10,8 +10,39 @@ const meta = preview.meta({
   title: "Components/Sections/Contact Section",
   component: ContactSection,
   args: {
-    personalInfo: portfolioPagePersonalInfoBuilder.one(),
-    contact: portfolioPageContactBuilder.one(),
+    personalInfo: portfolioPagePersonalInfoBuilder.one({
+      overrides: {
+        email: "jan@example.com",
+        socialLinks: [
+          {
+            _key: "key-github",
+            platform: "GitHub",
+            url: "https://github.com/test",
+            icon: "SiGithub",
+            username: "test-user",
+          },
+          {
+            _key: "key-linkedin",
+            platform: "LinkedIn",
+            url: "https://linkedin.com/in/test",
+            icon: "TbBrandLinkedin",
+            username: "test-user",
+          },
+        ],
+      },
+    }),
+    contact: portfolioPageContactBuilder.one({
+      overrides: {
+        heading: {
+          title: "Get In Touch",
+          description: "Have a question or want to work together?",
+        },
+        quickChat: {
+          title: "Quick Chat",
+          description: "Feel free to reach out anytime.",
+        },
+      },
+    }),
     documentId: "test-portfolio-id",
     documentType: "portfolioPage",
   },
@@ -20,89 +51,70 @@ const meta = preview.meta({
   },
 });
 
-// Story named after component (CSF Next best practice)
-export const ContactSection_ = meta.story({});
+export const ContactSectionStory = meta.story({
+  name: "Contact Section",
+});
 
 // Test 1: Section heading
-ContactSection_.test(
+ContactSectionStory.test(
   "Renders section heading with title and description",
-  async ({ canvas, args }) => {
-    if (args.contact?.heading?.title) {
-      const heading = canvas.getByRole("heading", {
-        level: 2,
-        name: args.contact.heading.title,
-      });
-      await expect(heading).toBeVisible();
-    }
+  async ({ canvas }) => {
+    const heading = canvas.getByRole("heading", {
+      level: 2,
+      name: "Get In Touch",
+    });
+    await expect(heading).toBeVisible();
 
-    if (args.contact?.heading?.description) {
-      const description = canvas.getByText(args.contact.heading.description);
-      await expect(description).toBeVisible();
-    }
+    const description = canvas.getByText(
+      "Have a question or want to work together?",
+    );
+    await expect(description).toBeVisible();
   },
 );
 
 // Test 2: Email card
-ContactSection_.test(
+ContactSectionStory.test(
   "Displays email contact information",
-  async ({ canvas, args }) => {
-    if (args.personalInfo?.email) {
-      // Find the email link directly
-      const emailLink = canvas.getByRole("link", {
-        name: args.personalInfo.email,
-      });
-      await expect(emailLink).toBeVisible();
-      await expect(emailLink).toHaveAttribute(
-        "href",
-        `mailto:${args.personalInfo.email}`,
-      );
-    }
+  async ({ canvas }) => {
+    const emailLink = canvas.getByRole("link", { name: "jan@example.com" });
+    await expect(emailLink).toBeVisible();
+    await expect(emailLink).toHaveAttribute("href", "mailto:jan@example.com");
   },
 );
 
 // Test 3: Social links
-ContactSection_.test("Renders social media links", async ({ canvas, args }) => {
-  const socialLinks = args.personalInfo?.socialLinks ?? [];
+ContactSectionStory.test("Renders social media links", async ({ canvas }) => {
+  const githubLink = canvas.getByLabelText("GitHub");
+  await expect(githubLink).toBeVisible();
+  await expect(githubLink).toHaveAttribute("target", "_blank");
+  await expect(githubLink).toHaveAttribute("rel", "noopener noreferrer");
 
-  if (socialLinks.length > 0) {
-    // Verify each social link is rendered
-    for (const link of socialLinks) {
-      if (link.platform) {
-        // Social links use Button asChild, so they have aria-label
-        const socialLink = canvas.getByLabelText(link.platform);
-        await expect(socialLink).toBeVisible();
-        await expect(socialLink).toHaveAttribute("target", "_blank");
-        await expect(socialLink).toHaveAttribute("rel", "noopener noreferrer");
-      }
-    }
-  }
+  const linkedinLink = canvas.getByLabelText("LinkedIn");
+  await expect(linkedinLink).toBeVisible();
+  await expect(linkedinLink).toHaveAttribute("target", "_blank");
+  await expect(linkedinLink).toHaveAttribute("rel", "noopener noreferrer");
 });
 
 // Test 4: Quick chat card
-ContactSection_.test(
-  "Displays quick chat card when enabled",
-  async ({ canvas, args }) => {
-    if (args.contact?.quickChat?.title) {
-      // Quick chat title appears as a heading, but use getByText for dynamic faker content
-      const quickChatTitle = canvas.getByText(args.contact.quickChat.title);
-      await expect(quickChatTitle).toBeVisible();
-    }
+ContactSectionStory.test("Displays quick chat card", async ({ canvas }) => {
+  const quickChatTitle = canvas.getByText("Quick Chat");
+  await expect(quickChatTitle).toBeVisible();
 
-    if (args.contact?.quickChat?.description) {
-      const quickChatDescription = canvas.getByText(
-        args.contact.quickChat.description,
-      );
-      await expect(quickChatDescription).toBeVisible();
-    }
-  },
-);
+  const quickChatDescription = canvas.getByText(
+    "Feel free to reach out anytime.",
+  );
+  await expect(quickChatDescription).toBeVisible();
+});
 
 // Story: Without form
 export const WithoutForm = meta.story({
   args: {
-    personalInfo: portfolioPagePersonalInfoBuilder.one(),
     contact: portfolioPageContactBuilder.one({
       overrides: {
+        heading: {
+          title: "Get In Touch",
+          description: "Have a question or want to work together?",
+        },
         form: {
           enabled: false,
           title: null,
@@ -110,6 +122,10 @@ export const WithoutForm = meta.story({
           successMessage: null,
           submitButtonText: null,
           successView: null,
+        },
+        quickChat: {
+          title: "Quick Chat",
+          description: "Feel free to reach out anytime.",
         },
       },
     }),
@@ -125,6 +141,6 @@ WithoutForm.test(
 
     // Form fields should not be present
     const nameInput = canvas.queryByLabelText(/username/i);
-    await expect(nameInput).not.toBeInTheDocument();
+    await expect(nameInput).toBeNull();
   },
 );
