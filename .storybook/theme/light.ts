@@ -20,5 +20,5 @@ export default create({
   barTextColor: "#585757",
   barSelectedColor: "#0085FF",
 
-  textColor: "#1C1C1C"
+  textColor: "#1C1C1C",
 });

@@ -8,20 +8,26 @@ type WebhookPayload = { path?: string };
 
 const revalidateLogger = createLogger({
   module: "api",
-  endpoint: "/api/revalidate/path"
+  endpoint: "/api/revalidate/path",
 });
 
 export async function POST(req: NextRequest) {
   revalidateLogger.info("Revalidate webhook received");
 
   try {
-    const { isValidSignature, body } = await parseBody<WebhookPayload>(req, env.SANITY_REVALIDATE_SECRET);
+    const { isValidSignature, body } = await parseBody<WebhookPayload>(
+      req,
+      env.SANITY_REVALIDATE_SECRET,
+    );
 
     if (!isValidSignature) {
       const message = "Invalid signature";
-      revalidateLogger.warn({ isValidSignature, body }, "Invalid webhook signature");
+      revalidateLogger.warn(
+        { isValidSignature, body },
+        "Invalid webhook signature",
+      );
       return new Response(JSON.stringify({ message, isValidSignature, body }), {
-        status: 401
+        status: 401,
       });
     }
 
@@ -33,7 +39,10 @@ export async function POST(req: NextRequest) {
 
     revalidatePath(body.path);
     const message = `Updated route: ${body.path}`;
-    revalidateLogger.info({ path: body.path }, "Route revalidated successfully");
+    revalidateLogger.info(
+      { path: body.path },
+      "Route revalidated successfully",
+    );
     return NextResponse.json({ body, message });
   } catch (err) {
     revalidateLogger.error({ err }, "Error during revalidation");

@@ -6,14 +6,14 @@ process.env.STORYBOOK = "true";
 const tags: PresetValue<TagsOptions | undefined> = {
   "test-only": {
     excludeFromDocsStories: true,
-    excludeFromSidebar: false
-  }
+    excludeFromSidebar: false,
+  },
 };
 
 export default defineMain({
   stories: ["../**/*.mdx", "../**/*.stories.@(js|jsx|ts|tsx)"],
   features: {
-    experimentalTestSyntax: true
+    experimentalTestSyntax: true,
   },
   addons: [
     "@storybook/addon-a11y",
@@ -21,12 +21,12 @@ export default defineMain({
     "@storybook/addon-vitest",
     "@storybook/addon-docs",
     "@storybook-community/storybook-dark-mode",
-    "storybook-addon-tag-badges"
+    "storybook-addon-tag-badges",
   ],
   framework: "@storybook/nextjs-vite",
   typescript: {
     reactDocgen: "react-docgen-typescript",
-    check: true
+    check: true,
   },
   tags,
   staticDirs: ["../public"],
@@ -35,8 +35,8 @@ export default defineMain({
 
     return mergeConfig(config, {
       resolve: {
-        tsconfigPaths: true
-      }
+        tsconfigPaths: true,
+      },
     });
-  }
+  },
 });

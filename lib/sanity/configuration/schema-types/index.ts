@@ -24,6 +24,6 @@ export const schema: SanitySchema = {
     project,
     projectGroup,
     experience,
-    education
-  ]
+    education,
+  ],
 };

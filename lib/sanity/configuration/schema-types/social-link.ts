@@ -17,42 +17,43 @@ export const socialLink = defineType({
       name: "platform",
       title: "Platform",
       type: "string",
-      description: "Social media platform name (e.g., 'GitHub', 'LinkedIn', 'Twitter')",
-      validation: (rule) => rule.required()
+      description:
+        "Social media platform name (e.g., 'GitHub', 'LinkedIn', 'Twitter')",
+      validation: (rule) => rule.required(),
     },
     {
       name: "url",
       title: "URL",
       type: "url",
-      validation: (rule) => rule.required()
+      validation: (rule) => rule.required(),
     },
     defineField({
       name: "icon",
       title: "Icon",
       type: "string",
       components: {
-        input: IconSearchInput
+        input: IconSearchInput,
       },
-      validation: (rule) => rule.required()
+      validation: (rule) => rule.required(),
     }),
     {
       name: "username",
       title: "Username",
       type: "string",
-      description: "Optional username/handle to display"
-    }
+      description: "Optional username/handle to display",
+    },
   ],
   preview: {
     select: {
       platform: "platform",
       url: "url",
-      username: "username"
+      username: "username",
     },
     prepare({ platform, url, username }) {
       return {
         title: platform,
-        subtitle: username || url
+        subtitle: username || url,
       };
-    }
-  }
+    },
+  },
 });

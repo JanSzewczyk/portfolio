@@ -14,7 +14,9 @@ const logger = createLogger({ module: "sanity-service", service: "seo" });
  *
  * @returns Tuple [error, data] - error is null on success, data is null on error
  */
-async function getSeoData(): Promise<[null, NonNullable<SeoQueryResult>] | [Error, null]> {
+async function getSeoData(): Promise<
+  [null, NonNullable<SeoQueryResult>] | [Error, null]
+> {
   const fnLogger = logger.child({ query: "seoQuery" });
   fnLogger.debug("Fetching SEO data from Sanity");
 
@@ -25,9 +27,9 @@ async function getSeoData(): Promise<[null, NonNullable<SeoQueryResult>] | [Erro
       const error = new Error("No SEO data returned from Sanity");
       fnLogger.warn(
         {
-          reason: "noData"
+          reason: "noData",
         },
-        error.message
+        error.message,
       );
       return [error, null];
     }
@@ -40,19 +42,22 @@ async function getSeoData(): Promise<[null, NonNullable<SeoQueryResult>] | [Erro
       hasTwitterImage: !!data.seo?.twitterImage?.asset?.url,
       hasOrganization: !!data.seo?.organizationName,
       hasPersonalInfo: !!data.personalInfo?.name,
-      keywordsCount: data.seo?.keywords?.length ?? 0
+      keywordsCount: data.seo?.keywords?.length ?? 0,
     };
 
     fnLogger.info({ summary }, "Successfully fetched SEO data from Sanity");
 
     return [null, data];
   } catch (error) {
-    const apiError = error instanceof Error ? error : new Error("Unknown error fetching SEO data");
+    const apiError =
+      error instanceof Error
+        ? error
+        : new Error("Unknown error fetching SEO data");
     fnLogger.error(
       {
-        error: { message: apiError.message, name: apiError.name }
+        error: { message: apiError.message, name: apiError.name },
       },
-      "Failed to fetch SEO data from Sanity"
+      "Failed to fetch SEO data from Sanity",
     );
 
     return [apiError, null];

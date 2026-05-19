@@ -1,9 +1,9 @@
 export {
   type ContactFormContent,
-  contactFormContentBuilder
+  contactFormContentBuilder,
 } from "./contact-form-content.builder";
 export {
   portfolioPageAboutBuilder,
   portfolioPageBuilder,
-  portfolioPageHeroBuilder
+  portfolioPageHeroBuilder,
 } from "./portfolio-page.builder";

@@ -12,7 +12,14 @@ describe("logger", () => {
   });
 
   test("logger has correct level methods", () => {
-    const levels = ["info", "error", "warn", "debug", "fatal", "trace"] as const;
+    const levels = [
+      "info",
+      "error",
+      "warn",
+      "debug",
+      "fatal",
+      "trace",
+    ] as const;
 
     for (const level of levels) {
       expect(logger[level]).toBeDefined();
@@ -40,7 +47,14 @@ describe("createLogger", () => {
   test("child logger inherits parent level methods", () => {
     const childLogger = createLogger({ module: "test" });
 
-    const levels = ["info", "error", "warn", "debug", "fatal", "trace"] as const;
+    const levels = [
+      "info",
+      "error",
+      "warn",
+      "debug",
+      "fatal",
+      "trace",
+    ] as const;
     for (const level of levels) {
       expect(typeof childLogger[level]).toBe("function");
     }
@@ -50,7 +64,9 @@ describe("createLogger", () => {
     const childLogger = createLogger({ module: "test" });
 
     expect(() => childLogger.info("test message")).not.toThrow();
-    expect(() => childLogger.error({ err: new Error("test") }, "error occurred")).not.toThrow();
+    expect(() =>
+      childLogger.error({ err: new Error("test") }, "error occurred"),
+    ).not.toThrow();
     expect(() => childLogger.warn({ key: "value" }, "warning")).not.toThrow();
   });
 

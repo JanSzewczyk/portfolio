@@ -30,7 +30,10 @@ export interface ScrollToSectionOptions {
   block?: ScrollLogicalPosition;
 }
 
-export function scrollToSection(section: Section, options: ScrollToSectionOptions = {}): void {
+export function scrollToSection(
+  section: Section,
+  options: ScrollToSectionOptions = {},
+): void {
   const { onAfterScroll, behavior = "smooth", block = "start" } = options;
 
   const element = document.querySelector(getSectionHref(section));

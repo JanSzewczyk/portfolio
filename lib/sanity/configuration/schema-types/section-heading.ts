@@ -16,25 +16,25 @@ export const sectionHeading = defineType({
       name: "title",
       title: "Title",
       type: "string",
-      validation: (rule) => rule.required()
+      validation: (rule) => rule.required(),
     },
     {
       name: "description",
       title: "Description",
       type: "text",
-      rows: 2
-    }
+      rows: 2,
+    },
   ],
   preview: {
     select: {
       title: "title",
-      description: "description"
+      description: "description",
     },
     prepare({ title, description }) {
       return {
         title: title || "Section Heading",
-        subtitle: description || ""
+        subtitle: description || "",
       };
-    }
-  }
+    },
+  },
 });

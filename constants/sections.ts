@@ -5,7 +5,7 @@ export const Section = {
   PROJECTS: "projects",
   EXPERIENCE: "experience",
   EDUCATION: "education",
-  CONTACT: "contact"
+  CONTACT: "contact",
 } as const;
 
 export type Section = (typeof Section)[keyof typeof Section];

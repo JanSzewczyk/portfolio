@@ -21,20 +21,19 @@ export function IconSearchInput(props: StringInputProps) {
     (newValue: string) => {
       onChange(newValue ? set(newValue) : unset());
     },
-    [onChange]
+    [onChange],
   );
 
   const handleQueryChange = React.useCallback((query: string | null) => {
     setSearchQuery(query ?? "");
   }, []);
 
-  const filteredOptions = ICON_NAMES.filter((name) => name.toLowerCase().includes(searchQuery.toLowerCase())).slice(
-    0,
-    100
-  ); // Limit to 100 results for performance
+  const filteredOptions = ICON_NAMES.filter((name) =>
+    name.toLowerCase().includes(searchQuery.toLowerCase()),
+  ).slice(0, 100); // Limit to 100 results for performance
 
   const options = filteredOptions.map((name) => ({
-    value: name
+    value: name,
   }));
 
   const IconComponent = value ? (ICONS[value as IconName] as IconType) : null;
@@ -57,7 +56,7 @@ export function IconSearchInput(props: StringInputProps) {
     (_value: string, option?: { value: string }) => {
       return option?.value || value || "";
     },
-    [value]
+    [value],
   );
 
   return (

@@ -10,9 +10,9 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/api/", "/_next/", "/storybook-static/"]
-      }
+        disallow: ["/api/", "/_next/", "/storybook-static/"],
+      },
     ],
-    sitemap: `${baseUrl}/sitemap.xml`
+    sitemap: `${baseUrl}/sitemap.xml`,
   };
 }

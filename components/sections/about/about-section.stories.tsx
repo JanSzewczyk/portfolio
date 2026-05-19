@@ -9,25 +9,28 @@ const meta = preview.meta({
   args: {
     about: portfolioPageAboutBuilder.one(),
     documentId: "test-portfolio-id",
-    documentType: "portfolioPage"
+    documentType: "portfolioPage",
   },
   parameters: {
-    layout: "fullscreen"
-  }
+    layout: "fullscreen",
+  },
 });
 
 export const AboutSection = meta.story({});
 
-AboutSection.test("Renders section heading with title and description", async ({ canvas, args }) => {
-  const heading = canvas.getByRole("heading", { level: 2 });
-  await expect(heading).toBeVisible();
-  await expect(heading).toHaveTextContent(args.about?.heading?.title ?? "");
+AboutSection.test(
+  "Renders section heading with title and description",
+  async ({ canvas, args }) => {
+    const heading = canvas.getByRole("heading", { level: 2 });
+    await expect(heading).toBeVisible();
+    await expect(heading).toHaveTextContent(args.about?.heading?.title ?? "");
 
-  if (args.about?.heading?.description) {
-    const description = canvas.getByText(args.about.heading.description);
-    await expect(description).toBeVisible();
-  }
-});
+    if (args.about?.heading?.description) {
+      const description = canvas.getByText(args.about.heading.description);
+      await expect(description).toBeVisible();
+    }
+  },
+);
 
 AboutSection.test("Renders bio paragraphs", async ({ canvas, args }) => {
   const bioParagraphs = args.about?.bio?.split("\n\n") ?? [];
@@ -38,27 +41,30 @@ AboutSection.test("Renders bio paragraphs", async ({ canvas, args }) => {
   }
 });
 
-AboutSection.test("Renders all stats with counting numbers", async ({ canvas, args }) => {
-  const stats = args.about?.stats ?? [];
+AboutSection.test(
+  "Renders all stats with counting numbers",
+  async ({ canvas, args }) => {
+    const stats = args.about?.stats ?? [];
 
-  for (const stat of stats) {
-    if (stat.label) {
-      const label = canvas.getByText(stat.label);
-      await expect(label).toBeVisible();
+    for (const stat of stats) {
+      if (stat.label) {
+        const label = canvas.getByText(stat.label);
+        await expect(label).toBeVisible();
+      }
     }
-  }
 
-  await expect(stats.length).toBe(4);
-});
+    await expect(stats.length).toBe(4);
+  },
+);
 
 export const EmptyBio = meta.story({
   args: {
     about: portfolioPageAboutBuilder.one({
       overrides: {
-        bio: ""
-      }
-    })
-  }
+        bio: "",
+      },
+    }),
+  },
 });
 
 EmptyBio.test("Handles empty bio gracefully", async ({ canvas }) => {
@@ -70,10 +76,10 @@ export const NoStats = meta.story({
   args: {
     about: portfolioPageAboutBuilder.one({
       overrides: {
-        stats: []
-      }
-    })
-  }
+        stats: [],
+      },
+    }),
+  },
 });
 
 NoStats.test("Handles empty stats array", async ({ canvas }) => {

@@ -10,16 +10,16 @@ const dataset = process.env.SANITY_STUDIO_API_DATASET;
 export default defineCliConfig({
   api: { projectId, dataset },
   deployment: {
-    appId: process.env.SANITY_STUDIO_DEPLOYMENT_APP_ID
+    appId: process.env.SANITY_STUDIO_DEPLOYMENT_APP_ID,
   },
 
   schemaExtraction: {
-    path: "lib/sanity/schema.json"
+    path: "lib/sanity/schema.json",
   },
   typegen: {
     path: "lib/sanity/**/*.{ts,tsx,js,jsx}",
     schema: "lib/sanity/schema.json",
     generates: "lib/sanity/types.ts",
-    overloadClientMethods: true
-  }
+    overloadClientMethods: true,
+  },
 });
