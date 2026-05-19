@@ -7,7 +7,7 @@ import {
   ExperienceSection,
   HeroSection,
   ProjectsSection,
-  SkillsSection
+  SkillsSection,
 } from "~/components/sections";
 import { getPortfolioPageData } from "~/lib/sanity/services";
 
@@ -24,6 +24,8 @@ async function loadData() {
 export default async function HomePage() {
   const { portfolioPage } = await loadData();
 
+  console.log(JSON.stringify(portfolioPage, null, 2));
+
   return (
     <>
       <Navigation personalInfo={portfolioPage.personalInfo} />
@@ -34,7 +36,11 @@ export default async function HomePage() {
           documentId={portfolioPage._id}
           documentType={portfolioPage._type}
         />
-        <AboutSection about={portfolioPage.about} documentId={portfolioPage._id} documentType={portfolioPage._type} />
+        <AboutSection
+          about={portfolioPage.about}
+          documentId={portfolioPage._id}
+          documentType={portfolioPage._type}
+        />
         <SkillsSection
           skills={portfolioPage.skills}
           documentId={portfolioPage._id}
@@ -62,7 +68,10 @@ export default async function HomePage() {
           documentType={portfolioPage._type}
         />
       </main>
-      <Footer personalInfo={portfolioPage.personalInfo} footer={portfolioPage.footer} />
+      <Footer
+        personalInfo={portfolioPage.personalInfo}
+        footer={portfolioPage.footer}
+      />
     </>
   );
 }

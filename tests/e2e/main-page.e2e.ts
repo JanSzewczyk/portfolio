@@ -1,6 +1,14 @@
 import { expect, test } from "@playwright/test";
 
-const SECTIONS = ["hero", "about", "skills", "projects", "experience", "education", "contact"] as const;
+const SECTIONS = [
+  "hero",
+  "about",
+  "skills",
+  "projects",
+  "experience",
+  "education",
+  "contact",
+] as const;
 
 test("page structure, navigation and metadata", async ({ page }) => {
   await page.goto("/");
@@ -14,9 +22,19 @@ test("page structure, navigation and metadata", async ({ page }) => {
   }
 
   // Navigation buttons
-  const navLabels = ["Home", "About", "Skills", "Projects", "Experience", "Education", "Contact"];
+  const navLabels = [
+    "Home",
+    "About",
+    "Skills",
+    "Projects",
+    "Experience",
+    "Education",
+    "Contact",
+  ];
   for (const label of navLabels) {
-    await expect(page.getByRole("button", { name: label, exact: true })).toBeVisible();
+    await expect(
+      page.getByRole("button", { name: label, exact: true }),
+    ).toBeVisible();
   }
 
   // Logo link
@@ -33,7 +51,9 @@ test("page structure, navigation and metadata", async ({ page }) => {
   // Footer
   const footer = page.getByRole("contentinfo");
   await expect(footer).toBeVisible();
-  await expect(footer.getByText(new Date().getFullYear().toString())).toBeVisible();
+  await expect(
+    footer.getByText(new Date().getFullYear().toString()),
+  ).toBeVisible();
 });
 
 test("all sections display correct content", async ({ page }) => {
@@ -43,8 +63,12 @@ test("all sections display correct content", async ({ page }) => {
   const hero = page.locator("#hero");
   await expect(hero.getByRole("heading", { level: 1 })).toBeVisible();
   await expect(hero.getByRole("img").first()).toBeVisible();
-  await expect(hero.getByRole("button", { name: /get in touch/i })).toBeVisible();
-  await expect(hero.getByRole("button", { name: /view projects/i })).toBeVisible();
+  await expect(
+    hero.getByRole("button", { name: /get in touch/i }),
+  ).toBeVisible();
+  await expect(
+    hero.getByRole("button", { name: /view projects/i }),
+  ).toBeVisible();
 
   // --- About ---
   const about = page.locator("#about");
@@ -74,14 +98,19 @@ test("all sections display correct content", async ({ page }) => {
   await expect(contact.getByLabel(/name/i)).toBeVisible();
   await expect(contact.getByLabel(/email/i)).toBeVisible();
   await expect(contact.getByLabel(/message/i)).toBeVisible();
-  await expect(contact.getByRole("button", { name: /send message/i })).toBeVisible();
+  await expect(
+    contact.getByRole("button", { name: /send message/i }),
+  ).toBeVisible();
   await expect(contact.locator('a[target="_blank"]').first()).toBeVisible();
 });
 
 test("project GitHub links open correctly", async ({ page, context }) => {
   await page.goto("/");
 
-  const firstGitHubButton = page.locator("#projects").getByRole("button", { name: /code/i }).first();
+  const firstGitHubButton = page
+    .locator("#projects")
+    .getByRole("button", { name: /code/i })
+    .first();
   await expect(firstGitHubButton).toBeVisible();
 
   const pagePromise = context.waitForEvent("page");

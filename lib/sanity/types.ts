@@ -809,7 +809,12 @@ export type SeoQueryResult = {
     } | null;
     ogTitle: string | null;
     ogDescription: string | null;
-    twitterCardType: "app" | "player" | "summary_large_image" | "summary" | null;
+    twitterCardType:
+      | "app"
+      | "player"
+      | "summary_large_image"
+      | "summary"
+      | null;
     twitterSite: string | null;
     twitterCreator: string | null;
     twitterImage: {

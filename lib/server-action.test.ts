@@ -1,4 +1,8 @@
-import { type ActionStateFailed, isActionFailed, isActionSuccess } from "~/lib/server-action";
+import {
+  type ActionStateFailed,
+  isActionFailed,
+  isActionSuccess,
+} from "~/lib/server-action";
 
 describe("server-action type guards", () => {
   describe("isActionSuccess", () => {
@@ -6,7 +10,7 @@ describe("server-action type guards", () => {
       const result = {
         success: true as const,
         data: { id: "user-1", name: "Jan" },
-        message: "Saved successfully"
+        message: "Saved successfully",
       };
 
       expect(isActionSuccess(result)).toBe(true);
@@ -15,7 +19,7 @@ describe("server-action type guards", () => {
     test("returns false for failed action result", () => {
       const result: ActionStateFailed = {
         success: false,
-        error: "Validation failed"
+        error: "Validation failed",
       };
 
       expect(isActionSuccess(result)).toBe(false);
@@ -28,8 +32,8 @@ describe("server-action type guards", () => {
         success: false,
         error: "Unexpected error",
         fieldErrors: {
-          email: ["Invalid email address"]
-        }
+          email: ["Invalid email address"],
+        },
       };
 
       expect(isActionFailed(result)).toBe(true);
@@ -38,7 +42,7 @@ describe("server-action type guards", () => {
     test("returns false for successful action result", () => {
       const result = {
         success: true as const,
-        data: { created: true }
+        data: { created: true },
       };
 
       expect(isActionFailed(result)).toBe(false);

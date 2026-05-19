@@ -13,10 +13,14 @@ type AboutSectionProps = {
   documentType: string;
 };
 
-export function AboutSection({ about, documentId, documentType }: AboutSectionProps) {
+export function AboutSection({
+  about,
+  documentId,
+  documentType,
+}: AboutSectionProps) {
   const { createSanityAttribute } = buildSanityAttribute({
     documentId,
-    documentType
+    documentType,
   });
 
   return (
@@ -29,7 +33,10 @@ export function AboutSection({ about, documentId, documentType }: AboutSectionPr
         />
 
         <div className="grid gap-12 lg:grid-cols-2">
-          <div className="space-y-6" data-sanity={createSanityAttribute("about.bio")}>
+          <div
+            className="space-y-6"
+            data-sanity={createSanityAttribute("about.bio")}
+          >
             {about?.bio?.split("\n\n").map((paragraph) => (
               <p key={paragraph} className="text-muted-foreground">
                 {paragraph}
@@ -39,25 +46,38 @@ export function AboutSection({ about, documentId, documentType }: AboutSectionPr
 
           <div className="grid grid-cols-2 gap-4">
             {about?.stats?.map((stat, index) => (
-              <Card key={stat._key} data-sanity={createSanityAttribute(`about.stats[${index}]`)}>
+              <Card
+                key={stat._key}
+                data-sanity={createSanityAttribute(`about.stats[${index}]`)}
+              >
                 <CardContent className="flex flex-1 flex-col items-center justify-center text-center">
                   <div className="text-display-sm text-primary">
                     <CountingNumber
                       to={stat.value ?? 0}
                       duration={2}
-                      format={(value) => `${Math.round(value)}${stat.suffix ?? ""}`}
+                      format={(value) =>
+                        `${Math.round(value)}${stat.suffix ?? ""}`
+                      }
                       once
                     />
                   </div>
-                  <p className="mt-2 text-body-lg text-muted-foreground">{stat.label}</p>
+                  <p className="mt-2 text-body-lg text-muted-foreground">
+                    {stat.label}
+                  </p>
                 </CardContent>
               </Card>
             ))}
 
             {/* Location Card */}
             {about?.location ? (
-              <div className="col-span-2" data-sanity={createSanityAttribute("about.location")}>
-                <LocationCard city={about.location.city ?? ""} coordinates={about.location.coordinates ?? {}} />
+              <div
+                className="col-span-2"
+                data-sanity={createSanityAttribute("about.location")}
+              >
+                <LocationCard
+                  city={about.location.city ?? ""}
+                  coordinates={about.location.coordinates ?? {}}
+                />
               </div>
             ) : null}
           </div>

@@ -4,7 +4,13 @@ import { useEffect } from "react";
 
 import logger from "~/lib/logger";
 
-export default function ErrorPage({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
+export default function ErrorPage({
+  error,
+  reset,
+}: {
+  error: Error & { digest?: string };
+  reset: () => void;
+}) {
   useEffect(() => {
     // Log the error to the console and logging service
     logger.error(
@@ -12,10 +18,10 @@ export default function ErrorPage({ error, reset }: { error: Error & { digest?: 
         error: {
           message: error.message,
           stack: error.stack,
-          digest: error.digest
-        }
+          digest: error.digest,
+        },
       },
-      "Application error occurred"
+      "Application error occurred",
     );
   }, [error]);
 

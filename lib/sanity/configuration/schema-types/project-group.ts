@@ -11,15 +11,16 @@ export const projectGroup = defineType({
       name: "label",
       title: "Label",
       type: "string",
-      description: "Display name for the project group (e.g., 'Web Applications', 'Mobile Apps')",
-      validation: (rule) => rule.required()
+      description:
+        "Display name for the project group (e.g., 'Web Applications', 'Mobile Apps')",
+      validation: (rule) => rule.required(),
     }),
     defineField({
       name: "description",
       title: "Description",
       type: "text",
       description: "Optional description of this project category",
-      rows: 3
+      rows: 3,
     }),
     defineField({
       name: "projects",
@@ -28,23 +29,23 @@ export const projectGroup = defineType({
       of: [
         {
           type: "reference",
-          to: [{ type: "project" }]
-        }
+          to: [{ type: "project" }],
+        },
       ],
-      validation: (rule) => rule.required().min(1)
-    })
+      validation: (rule) => rule.required().min(1),
+    }),
   ],
   preview: {
     select: {
       title: "label",
       subtitle: "description",
-      projects: "projects"
+      projects: "projects",
     },
     prepare({ title, subtitle, projects }) {
       return {
         title,
-        subtitle: subtitle || `${projects.length || 0} projects`
+        subtitle: subtitle || `${projects.length || 0} projects`,
       };
-    }
-  }
+    },
+  },
 });

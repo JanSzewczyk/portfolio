@@ -1,4 +1,7 @@
-import { defineLocations, type PresentationPluginOptions } from "sanity/presentation";
+import {
+  defineLocations,
+  type PresentationPluginOptions,
+} from "sanity/presentation";
 
 export const resolve: PresentationPluginOptions["resolve"] = {
   locations: {
@@ -6,93 +9,93 @@ export const resolve: PresentationPluginOptions["resolve"] = {
     portfolioPage: defineLocations({
       select: {
         heroName: "hero.name",
-        heroTitle: "hero.title"
+        heroTitle: "hero.title",
       },
       resolve: (doc) => ({
         locations: [
           {
             title: doc?.heroName || "Portfolio",
-            href: "/"
-          }
-        ]
-      })
+            href: "/",
+          },
+        ],
+      }),
     }),
 
     // Technology - referenced in skills section
     technology: defineLocations({
       select: {
-        name: "name"
+        name: "name",
       },
       resolve: (doc) => ({
         locations: [
           {
             title: doc?.name || "Technology",
-            href: "/#skills"
-          }
-        ]
-      })
+            href: "/#skills",
+          },
+        ],
+      }),
     }),
 
     // Technology Group - referenced in skills section
     technologyGroup: defineLocations({
       select: {
-        label: "label"
+        label: "label",
       },
       resolve: (doc) => ({
         locations: [
           {
             title: doc?.label || "Technology Group",
-            href: "/#skills"
-          }
-        ]
-      })
+            href: "/#skills",
+          },
+        ],
+      }),
     }),
 
     // Project - referenced in projects section
     project: defineLocations({
       select: {
-        title: "title"
+        title: "title",
       },
       resolve: (doc) => ({
         locations: [
           {
             title: doc?.title || "Project",
-            href: "/#projects"
-          }
-        ]
-      })
+            href: "/#projects",
+          },
+        ],
+      }),
     }),
 
     // Experience - referenced in experience section
     experience: defineLocations({
       select: {
         role: "role",
-        company: "company"
+        company: "company",
       },
       resolve: (doc) => ({
         locations: [
           {
             title: doc?.role ? `${doc.role} @ ${doc.company}` : "Experience",
-            href: "/#experience"
-          }
-        ]
-      })
+            href: "/#experience",
+          },
+        ],
+      }),
     }),
 
     // Education - referenced in education section
     education: defineLocations({
       select: {
         institution: "institution",
-        degree: "degree"
+        degree: "degree",
       },
       resolve: (doc) => ({
         locations: [
           {
             title: doc?.institution || "Education",
-            href: "/#education"
-          }
-        ]
-      })
-    })
-  }
+            href: "/#education",
+          },
+        ],
+      }),
+    }),
+  },
 };

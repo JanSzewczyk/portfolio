@@ -36,7 +36,9 @@ export type ActionStateFailed = {
  * }
  * ```
  */
-export type ActionResponse<T = unknown> = Promise<ActionStateSuccess<T> | ActionStateFailed>;
+export type ActionResponse<T = unknown> = Promise<
+  ActionStateSuccess<T> | ActionStateFailed
+>;
 
 /**
  * Response type for actions that redirect on success
@@ -56,13 +58,17 @@ export type RedirectAction = Promise<never | ActionStateFailed>;
 /**
  * Type guard for action success
  */
-export function isActionSuccess<T>(result: Awaited<ActionResponse<T>>): result is ActionStateSuccess<T> {
+export function isActionSuccess<T>(
+  result: Awaited<ActionResponse<T>>,
+): result is ActionStateSuccess<T> {
   return result.success;
 }
 
 /**
  * Type guard for action failure
  */
-export function isActionFailed(result: Awaited<ActionResponse<unknown>>): result is ActionStateFailed {
+export function isActionFailed(
+  result: Awaited<ActionResponse<unknown>>,
+): result is ActionStateFailed {
   return !result.success;
 }

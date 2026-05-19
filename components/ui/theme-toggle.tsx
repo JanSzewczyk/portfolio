@@ -1,6 +1,11 @@
 "use client";
 
-import { Button, Tooltip, TooltipContent, TooltipTrigger } from "@szum-tech/design-system";
+import {
+  Button,
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@szum-tech/design-system";
 
 import { MonitorIcon, MoonIcon, SunIcon } from "lucide-react";
 import { useTheme } from "next-themes";
@@ -13,7 +18,7 @@ const THEME_CYCLE: Theme[] = ["system", "light", "dark"];
 const THEME_LABELS: Record<Theme, string> = {
   system: "System theme",
   light: "Light theme",
-  dark: "Dark theme"
+  dark: "Dark theme",
 };
 
 function ThemeIcon({ theme }: { theme: Theme }) {
@@ -64,7 +69,7 @@ export function ThemeToggle() {
         cycleTheme();
       }
     },
-    [cycleTheme]
+    [cycleTheme],
   );
 
   // Render placeholder during SSR to prevent hydration mismatch

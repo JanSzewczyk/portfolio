@@ -10,11 +10,11 @@ const meta = preview.meta({
       <div className="flex items-center justify-center p-8">
         <Story />
       </div>
-    )
+    ),
   ],
   parameters: {
-    layout: "centered"
-  }
+    layout: "centered",
+  },
 });
 
 /**
@@ -34,36 +34,45 @@ Default.test("Theme cycling behavior", async ({ canvas, step, userEvent }) => {
 
   const initialTheme = getThemeFromLabel();
 
-  await step(`Starting from ${initialTheme} theme, click to cycle to next theme`, async () => {
-    await userEvent.click(button);
+  await step(
+    `Starting from ${initialTheme} theme, click to cycle to next theme`,
+    async () => {
+      await userEvent.click(button);
 
-    await waitFor(async () => {
-      const newTheme = getThemeFromLabel();
-      await expect(newTheme).not.toBe(initialTheme);
-    });
-  });
+      await waitFor(async () => {
+        const newTheme = getThemeFromLabel();
+        await expect(newTheme).not.toBe(initialTheme);
+      });
+    },
+  );
 
   const secondTheme = getThemeFromLabel();
 
-  await step(`From ${secondTheme} theme, click to cycle to next theme`, async () => {
-    await userEvent.click(button);
+  await step(
+    `From ${secondTheme} theme, click to cycle to next theme`,
+    async () => {
+      await userEvent.click(button);
 
-    await waitFor(async () => {
-      const newTheme = getThemeFromLabel();
-      await expect(newTheme).not.toBe(secondTheme);
-    });
-  });
+      await waitFor(async () => {
+        const newTheme = getThemeFromLabel();
+        await expect(newTheme).not.toBe(secondTheme);
+      });
+    },
+  );
 
   const thirdTheme = getThemeFromLabel();
 
-  await step(`From ${thirdTheme} theme, click to cycle back to initial theme`, async () => {
-    await userEvent.click(button);
+  await step(
+    `From ${thirdTheme} theme, click to cycle back to initial theme`,
+    async () => {
+      await userEvent.click(button);
 
-    await waitFor(async () => {
-      const newTheme = getThemeFromLabel();
-      await expect(newTheme).toBe(initialTheme);
-    });
-  });
+      await waitFor(async () => {
+        const newTheme = getThemeFromLabel();
+        await expect(newTheme).toBe(initialTheme);
+      });
+    },
+  );
 });
 
 Default.test("Button Has Correct Role", async ({ canvas, step }) => {
@@ -104,13 +113,18 @@ export const InitialState = meta.story({
       await expect(svg).toBeInTheDocument();
     });
 
-    await step("Verify aria-label is present with theme information", async () => {
-      const button = canvas.getByRole("button");
-      const ariaLabel = button.getAttribute("aria-label");
-      await expect(ariaLabel).toMatch(/Current: (System|Light|Dark) theme/);
-      await expect(ariaLabel).toMatch(/Click to switch to (System|Light|Dark) theme/);
-    });
-  }
+    await step(
+      "Verify aria-label is present with theme information",
+      async () => {
+        const button = canvas.getByRole("button");
+        const ariaLabel = button.getAttribute("aria-label");
+        await expect(ariaLabel).toMatch(/Current: (System|Light|Dark) theme/);
+        await expect(ariaLabel).toMatch(
+          /Click to switch to (System|Light|Dark) theme/,
+        );
+      },
+    );
+  },
 });
 
 /**
@@ -165,7 +179,7 @@ export const FullThemeCycle = meta.story({
       await expect(themesVisited).toContain("Light");
       await expect(themesVisited).toContain("Dark");
     });
-  }
+  },
 });
 
 /**
@@ -206,7 +220,7 @@ export const KeyboardAccessibilityEnter = meta.story({
         await expect(newTheme).not.toBe(secondTheme);
       });
     });
-  }
+  },
 });
 
 /**
@@ -247,7 +261,7 @@ export const KeyboardAccessibilitySpace = meta.story({
         await expect(newTheme).not.toBe(secondTheme);
       });
     });
-  }
+  },
 });
 
 /**
@@ -281,7 +295,7 @@ export const TooltipDisplayOnHover = meta.story({
         }
       });
     });
-  }
+  },
 });
 
 /**
@@ -337,7 +351,7 @@ export const TooltipShowsThemeName = meta.story({
         await expect(tooltip).toHaveTextContent(`${currentTheme} theme`);
       });
     });
-  }
+  },
 });
 
 /**
@@ -351,19 +365,24 @@ export const AccessibleAriaLabels = meta.story({
     const getThemeInfo = () => {
       const label = button.getAttribute("aria-label") || "";
       const currentMatch = label.match(/Current: (System|Light|Dark) theme/);
-      const nextMatch = label.match(/Click to switch to (System|Light|Dark) theme/);
+      const nextMatch = label.match(
+        /Click to switch to (System|Light|Dark) theme/,
+      );
       return {
         current: currentMatch ? currentMatch[1] : null,
-        next: nextMatch ? nextMatch[1] : null
+        next: nextMatch ? nextMatch[1] : null,
       };
     };
 
-    await step("Verify aria-label contains current and next theme info", async () => {
-      const { current, next } = getThemeInfo();
-      await expect(current).toBeTruthy();
-      await expect(next).toBeTruthy();
-      await expect(current).not.toBe(next);
-    });
+    await step(
+      "Verify aria-label contains current and next theme info",
+      async () => {
+        const { current, next } = getThemeInfo();
+        await expect(current).toBeTruthy();
+        await expect(next).toBeTruthy();
+        await expect(current).not.toBe(next);
+      },
+    );
 
     await step("Click and verify aria-label updates correctly", async () => {
       const beforeClick = getThemeInfo();
@@ -378,16 +397,19 @@ export const AccessibleAriaLabels = meta.story({
       });
     });
 
-    await step("Click again and verify aria-label continues updating", async () => {
-      const beforeClick = getThemeInfo();
-      await userEvent.click(button);
+    await step(
+      "Click again and verify aria-label continues updating",
+      async () => {
+        const beforeClick = getThemeInfo();
+        await userEvent.click(button);
 
-      await waitFor(async () => {
-        const afterClick = getThemeInfo();
-        await expect(afterClick.current).toBe(beforeClick.next);
-      });
-    });
-  }
+        await waitFor(async () => {
+          const afterClick = getThemeInfo();
+          await expect(afterClick.current).toBe(beforeClick.next);
+        });
+      },
+    );
+  },
 });
 
 /**
@@ -403,16 +425,19 @@ export const IconChangesWithTheme = meta.story({
       await expect(svg).toBeInTheDocument();
     });
 
-    await step("Click and verify icon updates (SVG content changes)", async () => {
-      const initialIcon = button.querySelector("svg")?.outerHTML;
+    await step(
+      "Click and verify icon updates (SVG content changes)",
+      async () => {
+        const initialIcon = button.querySelector("svg")?.outerHTML;
 
-      await userEvent.click(button);
+        await userEvent.click(button);
 
-      await waitFor(async () => {
-        const newIcon = button.querySelector("svg")?.outerHTML;
-        // The SVG should change as different icons are rendered for different themes
-        await expect(newIcon).not.toBe(initialIcon);
-      });
-    });
-  }
+        await waitFor(async () => {
+          const newIcon = button.querySelector("svg")?.outerHTML;
+          // The SVG should change as different icons are rendered for different themes
+          await expect(newIcon).not.toBe(initialIcon);
+        });
+      },
+    );
+  },
 });

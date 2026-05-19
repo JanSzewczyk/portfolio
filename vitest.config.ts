@@ -18,7 +18,7 @@ export default defineConfig({
         "components/**/*.{js,jsx,ts,tsx}",
         "features/**/*.{js,jsx,ts,tsx}",
         "lib/**/*.{js,ts}",
-        "utils/**/*.{js,ts}"
+        "utils/**/*.{js,ts}",
       ],
       exclude: [
         "**/{node_modules,coverage,storybook-static}/**",
@@ -44,29 +44,29 @@ export default defineConfig({
         "**/data/**",
         "**/lib/{sanity,seo}/**",
         "**/lib/scroll-to-section.ts",
-        "app/studio/**"
-      ]
+        "app/studio/**",
+      ],
     },
     projects: [
       // Unit tests project - runs in Node environment
       {
         plugins: [],
         resolve: {
-          tsconfigPaths: true
+          tsconfigPaths: true,
         },
         test: {
           name: "unit",
           globals: true,
           include: ["**/*.{test,spec}.{ts,tsx}"],
           environment: "node",
-          setupFiles: ["tests/unit/vitest.setup.ts"]
-        }
+          setupFiles: ["tests/unit/vitest.setup.ts"],
+        },
       },
       // Storybook tests project - runs in browser with Playwright
       {
         plugins: [storybookTest()],
         resolve: {
-          tsconfigPaths: true
+          tsconfigPaths: true,
         },
         test: {
           name: "storybook",
@@ -77,13 +77,13 @@ export default defineConfig({
             instances: [
               {
                 browser: "chromium",
-                headless: true
-              }
-            ]
+                headless: true,
+              },
+            ],
           },
-          setupFiles: ["tests/integration/vitest.setup.tsx"]
-        }
-      }
-    ]
-  }
+          setupFiles: ["tests/integration/vitest.setup.tsx"],
+        },
+      },
+    ],
+  },
 });

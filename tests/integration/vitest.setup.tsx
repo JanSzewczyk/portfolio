@@ -6,16 +6,16 @@ import preview from "../../.storybook/preview";
 vi.mock("~/features/contact/server/actions/send-contact-email", () => ({
   sendContactEmail: vi.fn(async () => ({
     success: true,
-    data: { id: "mock-email-id" }
-  }))
+    data: { id: "mock-email-id" },
+  })),
 }));
 
 // Mock Sanity Live (uses server-side env vars)
 vi.mock("~/lib/sanity/live", () => ({
   sanityFetch: vi.fn(async () => ({
-    data: null
+    data: null,
   })),
-  SanityLive: () => null
+  SanityLive: () => null,
 }));
 
 // Mock Sanity image URL builder to avoid environment variable issues in tests
@@ -24,11 +24,11 @@ const mockUrlBuilder = {
   auto: vi.fn(() => mockUrlBuilder),
   width: vi.fn(() => mockUrlBuilder),
   height: vi.fn(() => mockUrlBuilder),
-  url: vi.fn(() => "https://example.com/mock-image.jpg")
+  url: vi.fn(() => "https://example.com/mock-image.jpg"),
 };
 
 vi.mock("~/lib/sanity/image", () => ({
-  urlFor: vi.fn(() => mockUrlBuilder)
+  urlFor: vi.fn(() => mockUrlBuilder),
 }));
 
 beforeAll(preview.composed.beforeAll);

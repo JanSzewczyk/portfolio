@@ -14,7 +14,7 @@ export function GridBackground({
   className,
   gridSize = 40,
   gridColor = "var(--border)",
-  fade = true
+  fade = true,
 }: GridBackgroundProps) {
   return (
     <div
@@ -23,7 +23,7 @@ export function GridBackground({
       style={
         {
           "--grid-size": `${gridSize}px`,
-          "--grid-color": gridColor
+          "--grid-color": gridColor,
         } as React.CSSProperties
       }
     >
@@ -34,10 +34,12 @@ export function GridBackground({
             linear-gradient(var(--grid-color) 1px, transparent 1px),
             linear-gradient(90deg, var(--grid-color) 1px, transparent 1px)
           `,
-          backgroundSize: "var(--grid-size) var(--grid-size)"
+          backgroundSize: "var(--grid-size) var(--grid-size)",
         }}
       />
-      {fade ? <div className="absolute inset-0 bg-linear-to-b from-background via-transparent to-background" /> : null}
+      {fade ? (
+        <div className="absolute inset-0 bg-linear-to-b from-background via-transparent to-background" />
+      ) : null}
     </div>
   );
 }

@@ -16,16 +16,18 @@ const logger = createLogger({ module: "contact-actions" });
 // Initialize Resend client
 const resend = new Resend(env.RESEND_API_KEY);
 
-export async function sendContactEmail(formData: ContactFormData): ActionResponse<CreateEmailResponseSuccess> {
+export async function sendContactEmail(
+  formData: ContactFormData,
+): ActionResponse<CreateEmailResponseSuccess> {
   try {
     // Log the attempt
     logger.info(
       {
         name: formData.name,
         email: formData.email,
-        messageLength: formData.message.length
+        messageLength: formData.message.length,
       },
-      "Attempting to send contact email"
+      "Attempting to send contact email",
     );
 
     // Send email via Resend
@@ -34,7 +36,7 @@ export async function sendContactEmail(formData: ContactFormData): ActionRespons
       to: env.RESEND_TO_EMAIL,
       replyTo: formData.email,
       subject: `Portfolio Contact: ${formData.name}`,
-      react: createElement(ContactEmail, formData)
+      react: createElement(ContactEmail, formData),
     });
 
     if (error) {
@@ -42,14 +44,15 @@ export async function sendContactEmail(formData: ContactFormData): ActionRespons
         {
           errorMessage: error.message,
           errorName: error.name,
-          senderEmail: formData.email
+          senderEmail: formData.email,
         },
-        "Failed to send contact email via Resend"
+        "Failed to send contact email via Resend",
       );
 
       return {
         success: false,
-        error: "Failed to send email. Please try again later or contact me directly via email."
+        error:
+          "Failed to send email. Please try again later or contact me directly via email.",
       };
     }
 
@@ -57,28 +60,28 @@ export async function sendContactEmail(formData: ContactFormData): ActionRespons
       {
         emailId: data?.id,
         senderName: formData.name,
-        senderEmail: formData.email
+        senderEmail: formData.email,
       },
-      "Contact email sent successfully"
+      "Contact email sent successfully",
     );
 
     return {
       success: true,
-      data
+      data,
     };
   } catch (error) {
     logger.error(
       {
         errorMessage: error instanceof Error ? error.message : "Unknown error",
-        errorStack: error instanceof Error ? error.stack : undefined
+        errorStack: error instanceof Error ? error.stack : undefined,
       },
-      "Unexpected error sending contact email"
+      "Unexpected error sending contact email",
     );
 
     // Generic error message for unexpected failures
     return {
       success: false,
-      error: "An unexpected error occurred. Please try again later."
+      error: "An unexpected error occurred. Please try again later.",
     };
   }
 }

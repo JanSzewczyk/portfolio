@@ -9,10 +9,11 @@ const meta = preview.meta({
     layout: "fullscreen",
     docs: {
       description: {
-        component: "Minimal React Email component for contact form submissions."
-      }
-    }
-  }
+        component:
+          "Minimal React Email component for contact form submissions.",
+      },
+    },
+  },
 });
 
 /**
@@ -24,42 +25,51 @@ export const ContactEmailStory = meta.story({
     name: "John Doe",
     email: "john.doe@example.com",
     message:
-      "Hello! I'm interested in discussing a potential project collaboration. I was impressed by your portfolio and would love to chat about working together.\n\nPlease let me know when you're available for a call.\n\nBest regards,\nJohn"
-  }
+      "Hello! I'm interested in discussing a potential project collaboration. I was impressed by your portfolio and would love to chat about working together.\n\nPlease let me know when you're available for a call.\n\nBest regards,\nJohn",
+  },
 });
 
 // Test: Renders all required fields
-ContactEmailStory.test("Renders sender name, email, and message", async ({ canvas }) => {
-  // Check labels exist (use exact text to avoid matching footer)
-  const fromLabel = canvas.getByText("FROM");
-  const emailLabel = canvas.getByText("EMAIL");
-  const messageLabel = canvas.getByText("MESSAGE");
+ContactEmailStory.test(
+  "Renders sender name, email, and message",
+  async ({ canvas }) => {
+    // Check labels exist (use exact text to avoid matching footer)
+    const fromLabel = canvas.getByText("FROM");
+    const emailLabel = canvas.getByText("EMAIL");
+    const messageLabel = canvas.getByText("MESSAGE");
 
-  await expect(fromLabel).toBeVisible();
-  await expect(emailLabel).toBeVisible();
-  await expect(messageLabel).toBeVisible();
+    await expect(fromLabel).toBeVisible();
+    await expect(emailLabel).toBeVisible();
+    await expect(messageLabel).toBeVisible();
 
-  // Check values
-  const name = canvas.getByText("John Doe");
-  const email = canvas.getByText("john.doe@example.com");
+    // Check values
+    const name = canvas.getByText("John Doe");
+    const email = canvas.getByText("john.doe@example.com");
 
-  await expect(name).toBeVisible();
-  await expect(email).toBeVisible();
-});
+    await expect(name).toBeVisible();
+    await expect(email).toBeVisible();
+  },
+);
 
 // Test: Email is a clickable mailto link
-ContactEmailStory.test("Email is rendered as mailto link", async ({ canvas }) => {
-  const emailLink = canvas.getByRole("link", {
-    name: /john.doe@example.com/i
-  });
-  await expect(emailLink).toBeVisible();
-  await expect(emailLink).toHaveAttribute("href", "mailto:john.doe@example.com");
-});
+ContactEmailStory.test(
+  "Email is rendered as mailto link",
+  async ({ canvas }) => {
+    const emailLink = canvas.getByRole("link", {
+      name: /john.doe@example.com/i,
+    });
+    await expect(emailLink).toBeVisible();
+    await expect(emailLink).toHaveAttribute(
+      "href",
+      "mailto:john.doe@example.com",
+    );
+  },
+);
 
 // Test: Header is visible
 ContactEmailStory.test("Displays header with title", async ({ canvas }) => {
   const header = canvas.getByRole("heading", {
-    name: /New Contact Form Submission/i
+    name: /New Contact Form Submission/i,
   });
   await expect(header).toBeVisible();
 });
@@ -77,8 +87,9 @@ export const ShortMessage = meta.story({
   args: {
     name: "Alice Smith",
     email: "alice@startup.io",
-    message: "Quick question about your availability for a consultation. Are you free next week?"
-  }
+    message:
+      "Quick question about your availability for a consultation. Are you free next week?",
+  },
 });
 
 /**
@@ -113,8 +124,8 @@ Looking forward to hearing from you.
 Best regards,
 Robert Anderson
 Senior Engineering Manager
-Tech Innovations Inc.`
-  }
+Tech Innovations Inc.`,
+  },
 });
 
 /**
@@ -134,8 +145,8 @@ Quelques détails techniques:
 • Tests complets
 
 Cordialement,
-François`
-  }
+François`,
+  },
 });
 
 /**
@@ -145,15 +156,19 @@ export const SpecialCharacters = meta.story({
   args: {
     name: "Test User <script>",
     email: "test@example.com",
-    message: 'Message with "quotes" and <brackets> & ampersands that should be properly escaped.'
-  }
+    message:
+      'Message with "quotes" and <brackets> & ampersands that should be properly escaped.',
+  },
 });
 
-SpecialCharacters.test("Special characters are properly escaped", async ({ canvas }) => {
-  // Should display the raw text, not execute as HTML
-  const name = canvas.getByText(/Test User <script>/i);
-  await expect(name).toBeVisible();
-});
+SpecialCharacters.test(
+  "Special characters are properly escaped",
+  async ({ canvas }) => {
+    // Should display the raw text, not execute as HTML
+    const name = canvas.getByText(/Test User <script>/i);
+    await expect(name).toBeVisible();
+  },
+);
 
 /**
  * Email with minimal content to test edge case
@@ -162,8 +177,8 @@ export const MinimalContent = meta.story({
   args: {
     name: "Bo",
     email: "bo@me.co",
-    message: "Hey, let's talk!"
-  }
+    message: "Hey, let's talk!",
+  },
 });
 
 /**
@@ -173,14 +188,21 @@ export const ComplexEmail = meta.story({
   args: {
     name: "Developer Name",
     email: "complex.email+tag@sub-domain.example.com",
-    message: "Testing complex email address rendering and mailto link functionality."
-  }
+    message:
+      "Testing complex email address rendering and mailto link functionality.",
+  },
 });
 
-ComplexEmail.test("Complex email renders correctly as mailto link", async ({ canvas }) => {
-  const emailLink = canvas.getByRole("link", {
-    name: /complex.email\+tag@sub-domain.example.com/i
-  });
-  await expect(emailLink).toBeVisible();
-  await expect(emailLink).toHaveAttribute("href", "mailto:complex.email+tag@sub-domain.example.com");
-});
+ComplexEmail.test(
+  "Complex email renders correctly as mailto link",
+  async ({ canvas }) => {
+    const emailLink = canvas.getByRole("link", {
+      name: /complex.email\+tag@sub-domain.example.com/i,
+    });
+    await expect(emailLink).toBeVisible();
+    await expect(emailLink).toHaveAttribute(
+      "href",
+      "mailto:complex.email+tag@sub-domain.example.com",
+    );
+  },
+);

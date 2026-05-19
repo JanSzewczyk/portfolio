@@ -13,7 +13,10 @@ export const env = createEnv({
       .optional()
       .transform((value) => value === "true" || value === "1"),
     VERCEL_URL: z.string().optional(),
-    LOG_LEVEL: z.enum(["fatal", "error", "warn", "info", "debug", "trace"]).optional().default("info"),
+    LOG_LEVEL: z
+      .enum(["fatal", "error", "warn", "info", "debug", "trace"])
+      .optional()
+      .default("info"),
     // Sanity
     SANITY_API_READ_TOKEN: z.string().min(1),
     SANITY_REVALIDATE_SECRET: z.string().min(1),
@@ -24,7 +27,7 @@ export const env = createEnv({
     // Resend
     RESEND_API_KEY: z.string().min(1),
     RESEND_FROM_EMAIL: z.email(),
-    RESEND_TO_EMAIL: z.email()
+    RESEND_TO_EMAIL: z.email(),
   },
   experimental__runtimeEnv: process.env,
   /**
@@ -36,5 +39,5 @@ export const env = createEnv({
    * Makes it so that empty strings are treated as undefined. `SOME_VAR: z.string()` and
    * `SOME_VAR=''` will throw an error.
    */
-  emptyStringAsUndefined: true
+  emptyStringAsUndefined: true,
 });
