@@ -109,7 +109,7 @@ test("project GitHub links open correctly", async ({ page, context }) => {
 
   const firstGitHubButton = page
     .locator("#projects")
-    .getByRole("button", { name: /code/i })
+    .getByRole("link", { name: /code/i })
     .first();
   await expect(firstGitHubButton).toBeVisible();
 
