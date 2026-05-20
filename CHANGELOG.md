@@ -3,6 +3,44 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.9.0](https://github.com/JanSzewczyk/portfolio/compare/v1.8.4...v1.9.0) (2026-05-20)
+
+### Features
+
+* enhance contact and education sections with detailed mock data and improve story structure ([0329867](https://github.com/JanSzewczyk/portfolio/commit/03298672f82c08f06ab67335a5a2045ce23410b0))
+
+### Bug Fixes
+
+* add console log for debugging in RootLayout component ([0c7e279](https://github.com/JanSzewczyk/portfolio/commit/0c7e27953b67080ac185a4bcd861a6d971d41443))
+* add missing commas for consistent syntax across multiple files ([97672cb](https://github.com/JanSzewczyk/portfolio/commit/97672cb5bc956510eb0663ab956f8e8de3010ed9))
+* add missing commas for consistent syntax across multiple files ([119f33b](https://github.com/JanSzewczyk/portfolio/commit/119f33b91caf4f971fa435ff8974d6483308d3f4))
+* add missing commas in various files to ensure proper syntax ([cf6da1c](https://github.com/JanSzewczyk/portfolio/commit/cf6da1c5311b298ab68e6ffec63fa43f30d8a249))
+* remove trailing commas in various files for consistent syntax ([247560f](https://github.com/JanSzewczyk/portfolio/commit/247560f7339aa2106376755dea08a05ad8e30331))
+* remove unused dependencies and update configuration for Next.js and Playwright ([2ef3ded](https://github.com/JanSzewczyk/portfolio/commit/2ef3deda3b808b3a91041a8524454d088b017a38))
+* remove vite-tsconfig-paths dependency and update configuration for TypeScript path resolution ([c59548c](https://github.com/JanSzewczyk/portfolio/commit/c59548cccb40d13457d4df55bb61780beb990a52))
+* reorder exports and update import statements for consistency ([4ea26dd](https://github.com/JanSzewczyk/portfolio/commit/4ea26dddb4d45f07407d6bdfd4d70d45336421fc))
+* update button roles to links for project navigation in education card and main page ([6c5eb0b](https://github.com/JanSzewczyk/portfolio/commit/6c5eb0b69b80abc326c0b95fd41111aade6d19f2))
+* update import path for routes and change LinkedIn icon in portfolio page builder ([97f3513](https://github.com/JanSzewczyk/portfolio/commit/97f351353068aa284fbfa5643e1e219e250fb0b4))
+
+### Miscellaneous Chores
+
+* **deps:** bump actions/dependency-review-action ([14b8a2d](https://github.com/JanSzewczyk/portfolio/commit/14b8a2d750d4a97c7aedaf58b591e29cfff5dc87))
+* **deps:** bump the project-dependencies group across 1 directory with 10 updates ([a426c16](https://github.com/JanSzewczyk/portfolio/commit/a426c1643859b357217ec033d92ed71b93b8a28e))
+
+### Tests
+
+* add unit tests for server-action type guards ([b285396](https://github.com/JanSzewczyk/portfolio/commit/b285396c03350dc80a8804c0b364f5d622be7cba))
+
+### Build System
+
+* **deps:** update dependencies in package.json and add bash.exe.stackdump to .gitignore ([1ec94cd](https://github.com/JanSzewczyk/portfolio/commit/1ec94cd4f983884c906951921ee90f29c8017c83))
+* **deps:** update next-sanity and storybook dependencies in package.json; adjust routes import in next-env.d.ts ([0d996ab](https://github.com/JanSzewczyk/portfolio/commit/0d996abeefc7fb03fe02651e3e1372cee509baae))
+* update test scripts in package.json for improved coverage reporting ([d9e53ea](https://github.com/JanSzewczyk/portfolio/commit/d9e53ea7f03446e8f5b18e411bb71a22dd15ccac))
+
+### Continuous Integration
+
+* enhance CI workflow with unit and Storybook test stages; add coverage reporting ([ee6efc9](https://github.com/JanSzewczyk/portfolio/commit/ee6efc9fe569d4fcdabddafcaa36d187de2d7be8))
+
 ## [1.8.4](https://github.com/JanSzewczyk/portfolio/compare/v1.8.3...v1.8.4) (2026-03-06)
 
 ### Bug Fixes
