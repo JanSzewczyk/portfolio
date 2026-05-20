@@ -1,0 +1,494 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jan R. Szewczyk - Frontend Engineer</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #f8fafc;
+      }
+      @media print {
+        body {
+          background-color: #ffffff;
+        }
+        .page-container {
+          box-shadow: none;
+          max-width: 100%;
+          margin: 0;
+          padding: 0;
+        }
+        .no-print {
+          display: none;
+        }
+        a {
+          text-decoration: none !important;
+          color: #2563eb !important;
+        }
+      }
+      .page-container {
+        max-width: 210mm;
+        min-height: 297mm;
+      }
+    </style>
+  </head>
+  <body class="text-slate-800 flex justify-center py-8 print:py-0">
+    <div
+      class="page-container bg-white shadow-xl flex flex-col md:flex-row overflow-hidden print:shadow-none print:w-full"
+    >
+      <!-- LEFT COLUMN -->
+      <aside
+        class="w-full md:w-[32%] bg-slate-50 p-6 border-r border-slate-200 flex flex-col gap-5 print:bg-slate-50 print:border-r print:border-slate-200 print:w-[32%]"
+      >
+        <!-- Contact -->
+        <section>
+          <h2
+            class="text-[14px] font-bold text-slate-900 border-b-2 border-blue-500 pb-1 mb-3 uppercase tracking-wider"
+          >
+            Contact
+          </h2>
+          <ul class="text-[11.5px] flex flex-col gap-2">
+            <li class="flex items-center gap-2">
+              <span class="text-blue-600 font-bold w-4 text-center">✉</span>
+              <span>szum.tech@gmail.com</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="text-blue-600 font-bold w-4 text-center">☎</span>
+              <span>+48 516 605 828</span>
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="text-blue-600 font-bold w-4 text-center">in</span>
+              <a
+                href="https://www.linkedin.com/in/janszewczyk/"
+                class="text-blue-600 hover:underline"
+                >linkedin.com/in/janszewczyk</a
+              >
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="text-blue-600 font-bold w-4 text-center">GH</span>
+              <a
+                href="https://github.com/JanSzewczyk"
+                class="text-blue-600 hover:underline"
+                >github.com/JanSzewczyk</a
+              >
+            </li>
+            <li class="flex items-center gap-2">
+              <span class="text-blue-600 font-bold w-4 text-center">🌐</span>
+              <a
+                href="https://jan-szewczyk.vercel.app/"
+                class="text-blue-600 hover:underline"
+                >jan-szewczyk.vercel.app</a
+              >
+            </li>
+          </ul>
+        </section>
+
+        <!-- Skills -->
+        <section>
+          <h2
+            class="text-[14px] font-bold text-slate-900 border-b-2 border-blue-500 pb-1 mb-3 uppercase tracking-wider"
+          >
+            Skills & Tech
+          </h2>
+
+          <div class="mb-3">
+            <h3
+              class="text-[10px] font-bold text-slate-500 uppercase tracking-wide mb-1.5"
+            >
+              Web Ecosystem
+            </h3>
+            <div class="flex flex-wrap gap-1 text-[11px]">
+              <span
+                class="bg-blue-100 px-1.5 py-0.5 rounded text-blue-800 font-medium"
+                >React</span
+              >
+              <span
+                class="bg-blue-100 px-1.5 py-0.5 rounded text-blue-800 font-medium"
+                >Next.js</span
+              >
+              <span
+                class="bg-blue-100 px-1.5 py-0.5 rounded text-blue-800 font-medium"
+                >Remix</span
+              >
+              <span
+                class="bg-blue-100 px-1.5 py-0.5 rounded text-blue-800 font-medium"
+                >TypeScript</span
+              >
+              <span class="bg-slate-200 px-1.5 py-0.5 rounded text-slate-700"
+                >Tailwind CSS</span
+              >
+              <span class="bg-slate-200 px-1.5 py-0.5 rounded text-slate-700"
+                >React Query</span
+              >
+              <span class="bg-slate-200 px-1.5 py-0.5 rounded text-slate-700"
+                >Zod</span
+              >
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <h3
+              class="text-[10px] font-bold text-slate-500 uppercase tracking-wide mb-1.5"
+            >
+              Architecture & Quality
+            </h3>
+            <div class="flex flex-wrap gap-1 text-[11px]">
+              <span class="bg-slate-200 px-1.5 py-0.5 rounded text-slate-700"
+                >Monorepo (Nx / Turbo)</span
+              >
+              <span class="bg-slate-200 px-1.5 py-0.5 rounded text-slate-700"
+                >Domain-Driven Design</span
+              >
+              <span class="bg-slate-200 px-1.5 py-0.5 rounded text-slate-700"
+                >Vitest / Jest / RTL</span
+              >
+              <span class="bg-slate-200 px-1.5 py-0.5 rounded text-slate-700"
+                >Playwright (E2E)</span
+              >
+              <span class="bg-slate-200 px-1.5 py-0.5 rounded text-slate-700"
+                >Storybook</span
+              >
+              <span class="bg-slate-200 px-1.5 py-0.5 rounded text-slate-700"
+                >Semantic Release</span
+              >
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <h3
+              class="text-[10px] font-bold text-slate-500 uppercase tracking-wide mb-1.5"
+            >
+              AI & DX Automation
+            </h3>
+            <div class="flex flex-wrap gap-1 text-[11px]">
+              <span class="bg-slate-200 px-1.5 py-0.5 rounded text-slate-700"
+                >Claude (Anthropic)</span
+              >
+              <span class="bg-slate-200 px-1.5 py-0.5 rounded text-slate-700"
+                >CodeRabbit</span
+              >
+              <span class="bg-slate-200 px-1.5 py-0.5 rounded text-slate-700"
+                >Prompt Engineering</span
+              >
+            </div>
+          </div>
+
+          <div>
+            <h3
+              class="text-[10px] font-bold text-slate-500 uppercase tracking-wide mb-1.5"
+            >
+              Platform Ecosystem
+            </h3>
+            <div class="flex flex-wrap gap-1 text-[11px]">
+              <span class="bg-slate-200 px-1.5 py-0.5 rounded text-slate-700"
+                >React Native / Expo</span
+              >
+              <span class="bg-slate-200 px-1.5 py-0.5 rounded text-slate-700"
+                >Firebase / Appwrite</span
+              >
+              <span class="bg-slate-200 px-1.5 py-0.5 rounded text-slate-700"
+                >Storyblok / Sanity</span
+              >
+              <span class="bg-slate-200 px-1.5 py-0.5 rounded text-slate-700"
+                >Datadog</span
+              >
+            </div>
+          </div>
+        </section>
+
+        <!-- Languages -->
+        <section>
+          <h2
+            class="text-[14px] font-bold text-slate-900 border-b-2 border-blue-500 pb-1 mb-3 uppercase tracking-wider"
+          >
+            Languages
+          </h2>
+          <ul class="text-[11.5px] space-y-1">
+            <li class="flex justify-between">
+              <span>English</span>
+              <span class="font-bold text-slate-600"
+                >Upper-Intermediate (B2)</span
+              >
+            </li>
+            <li class="flex justify-between">
+              <span>Polish</span>
+              <span class="font-bold text-slate-600">Native</span>
+            </li>
+          </ul>
+        </section>
+
+        <!-- Open Source -->
+        <section>
+          <h2
+            class="text-[14px] font-bold text-slate-900 border-b-2 border-blue-500 pb-1 mb-3 uppercase tracking-wider"
+          >
+            Open Source
+          </h2>
+
+          <div class="flex flex-col gap-3">
+            <div>
+              <h3 class="text-[11.5px] font-bold text-slate-900">
+                Claude Plugins
+              </h3>
+              <p class="text-[10.5px] text-slate-700 mt-0.5">
+                A toolkit extending Claude Code CLI. Features custom AI Agents
+                and Skills for Next.js, testing, Code Review, and Firebase
+                automation, enhancing daily developer workflows.
+              </p>
+            </div>
+            <div>
+              <h3 class="text-[11.5px] font-bold text-slate-900">
+                Szum-Tech Ecosystem
+              </h3>
+              <p class="text-[10.5px] text-slate-700 mt-0.5">
+                Creator of an ecosystem including
+                <strong>Next.js/React Native Szumplates</strong>
+                (production-ready templates with Vitest, Playwright, CI/CD) and
+                a complete <strong>Design System</strong> published on NPM.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <!-- GDPR / RODO Clause -->
+        <div
+          class="mt-auto pt-4 text-[9px] leading-tight text-slate-400 text-justify"
+        >
+          I agree to the processing of personal data provided in this document
+          for realising the recruitment process pursuant to the Personal Data
+          Protection Act of 10 May 2018 (Journal of Laws 2018, item 1000) and in
+          agreement with Regulation (EU) 2016/679 of the European Parliament and
+          of the Council of 27 April 2016 (GDPR).
+        </div>
+      </aside>
+
+      <!-- RIGHT COLUMN -->
+      <main class="w-full md:w-[68%] p-6 flex flex-col gap-5 print:w-[68%]">
+        <header>
+          <h1 class="text-3xl font-extrabold text-slate-900 tracking-tight">
+            Jan R. Szewczyk
+          </h1>
+          <h2 class="text-[16px] font-medium text-blue-600 mt-1">
+            Senior Frontend Engineer
+          </h2>
+        </header>
+
+        <section>
+          <h2
+            class="text-[14px] font-bold text-slate-900 border-b-2 border-slate-200 pb-1 mb-2 uppercase tracking-wider"
+          >
+            Professional Summary
+          </h2>
+          <p class="text-[12px] leading-relaxed text-slate-700">
+            Frontend Engineer with over 5 years of commercial experience
+            specializing in the React, Next.js, and Remix ecosystems. Proven
+            track record in enterprise Fintech environments, architecting
+            scalable Monorepos and driving Domain-Driven Design (DDD)
+            transformations. Deeply passionate about Developer Experience (DX),
+            code quality, and leveraging next-generation AI tools (Claude,
+            CodeRabbit) to maintain the highest standards of clean code and
+            automate development processes.
+          </p>
+        </section>
+
+        <section>
+          <h2
+            class="text-[14px] font-bold text-slate-900 border-b-2 border-slate-200 pb-1 mb-3 uppercase tracking-wider"
+          >
+            Experience
+          </h2>
+
+          <div class="mb-4">
+            <div
+              class="flex flex-col sm:flex-row sm:justify-between sm:items-baseline mb-0.5"
+            >
+              <h3 class="text-[13px] font-bold text-slate-900">
+                Software Developer (Platform Engineering)
+              </h3>
+              <span class="text-[11px] font-semibold text-slate-500"
+                >Mar 2026 – Present</span
+              >
+            </div>
+            <div class="text-[12px] font-medium text-blue-600 mb-1.5">
+              Remote Poland Sp. z o.o | Cracow
+            </div>
+            <ul
+              class="list-disc list-outside ml-4 text-[11.5px] text-slate-700 space-y-1"
+            >
+              <li>
+                <strong>DDD Architecture Transformation:</strong> Spearheaded
+                the modularization of a 70,000+ LOC legacy monolith into 8
+                strictly isolated domain packages within an enterprise Fintech
+                environment.
+              </li>
+              <li>
+                <strong>CI/CD & DX Optimization:</strong> Enforced architectural
+                boundaries using Nx tags, resulting in a
+                <strong>3x–10x acceleration</strong> in CI pipeline execution
+                and reducing domain test times to under 30 seconds.
+              </li>
+              <li>
+                <strong>Platform Observability:</strong> Engineered a
+                comprehensive observability layer (Real User Monitoring,
+                structured logging, Datadog) to drastically reduce incident
+                response times.
+              </li>
+              <li>
+                <strong>Security & Product Delivery:</strong> Designed and
+                implemented highly secure B2B/B2B2C modules, managing complex
+                session states and Role-Based Access Control (RBAC).
+              </li>
+            </ul>
+          </div>
+
+          <div class="mb-4">
+            <div
+              class="flex flex-col sm:flex-row sm:justify-between sm:items-baseline mb-0.5"
+            >
+              <h3 class="text-[13px] font-bold text-slate-900">
+                Frontend Engineer (B2B Contract)
+              </h3>
+              <span class="text-[11px] font-semibold text-slate-500"
+                >Feb 2022 – Feb 2026</span
+              >
+            </div>
+            <div class="text-[12px] font-medium text-blue-600 mb-1.5">
+              Jaris, inc. | Burlingame, California (Remote)
+            </div>
+            <ul
+              class="list-disc list-outside ml-4 text-[11.5px] text-slate-700 space-y-1"
+            >
+              <li>
+                <strong>Monorepo & SSR Migration:</strong> Architected the
+                global migration of all applications into an Nx workspace.
+                Seamlessly migrated complex client SPAs to Remix / React Router,
+                improving state management and load times.
+              </li>
+              <li>
+                <strong>AI-Driven Code Quality:</strong> Integrated CodeRabbit
+                to automate pull request analysis, providing contextual feedback
+                to the team. Utilized Claude for advanced prompt engineering,
+                assisting in complex architectural refactoring and boilerplate
+                reduction.
+              </li>
+              <li>
+                <strong>DX & Tooling Standardization:</strong> Designed and
+                maintained corporate NPM packages, an internal Design System
+                (Atomic Design), and strict quality pipelines (ESLint, Prettier,
+                Playwright).
+              </li>
+              <li>
+                <strong>Advanced UI:</strong> Architected a fully programmable,
+                dynamically configurable multi-step form engine adapting to
+                complex business settings and CMS integrations (Storyblok).
+              </li>
+            </ul>
+          </div>
+
+          <div class="mb-4">
+            <div
+              class="flex flex-col sm:flex-row sm:justify-between sm:items-baseline mb-0.5"
+            >
+              <h3 class="text-[13px] font-bold text-slate-900">
+                Software Developer
+              </h3>
+              <span class="text-[11px] font-semibold text-slate-500"
+                >Mar 2020 – Jan 2022</span
+              >
+            </div>
+            <div class="text-[12px] font-medium text-blue-600 mb-1.5">
+              Idealogic Sp. z o.o | Cracow
+            </div>
+            <ul
+              class="list-disc list-outside ml-4 text-[11.5px] text-slate-700 space-y-1"
+            >
+              <li>
+                <strong>Greenfield Development:</strong> Architected two core
+                SPAs for a banking platform: a high-security administrative
+                dashboard (RBAC) and an end-to-end client loan processing
+                portal.
+              </li>
+              <li>
+                <strong>UI Standardization:</strong> Created a proprietary UI
+                Component Library to standardize development across teams,
+                drastically reducing designer-developer hand-off friction.
+              </li>
+              <li>
+                <strong>Quality Culture:</strong> Drove the adoption of
+                automated testing (Jest, React Testing Library) and strict Code
+                Review standards within the Scrum framework.
+              </li>
+            </ul>
+          </div>
+
+          <div class="mb-2">
+            <div
+              class="flex flex-col sm:flex-row sm:justify-between sm:items-baseline mb-0.5"
+            >
+              <h3 class="text-[13px] font-bold text-slate-900">
+                Junior Software Developer (Internship)
+              </h3>
+              <span class="text-[11px] font-semibold text-slate-500"
+                >Jul 2019 – Sep 2019</span
+              >
+            </div>
+            <div class="text-[12px] font-medium text-blue-600 mb-1">
+              Ericsson | Cracow
+            </div>
+            <ul
+              class="list-disc list-outside ml-4 text-[11.5px] text-slate-700 space-y-1"
+            >
+              <li>
+                Developed a React-based interactive dashboard replacing static
+                documentation, collaborating tightly with the Java/Spring Boot
+                backend team.
+              </li>
+            </ul>
+          </div>
+        </section>
+
+        <section>
+          <h2
+            class="text-[14px] font-bold text-slate-900 border-b-2 border-slate-200 pb-1 mb-3 uppercase tracking-wider"
+          >
+            Education
+          </h2>
+
+          <div class="mb-2">
+            <div class="flex justify-between items-baseline">
+              <h3 class="text-[12.5px] font-bold text-slate-900">
+                Master's Degree, Data Science (GPA: 5.0)
+              </h3>
+              <span class="text-[11px] font-semibold text-slate-500"
+                >2019 – 2024</span
+              >
+            </div>
+            <div class="text-[11.5px] text-slate-700">
+              Cracow University of Technology
+            </div>
+          </div>
+
+          <div>
+            <div class="flex justify-between items-baseline">
+              <h3 class="text-[12.5px] font-bold text-slate-900">
+                Bachelor's Degree, Computer Science (GPA: 4.5)
+              </h3>
+              <span class="text-[11px] font-semibold text-slate-500"
+                >2016 – 2020</span
+              >
+            </div>
+            <div class="text-[11.5px] text-slate-700">
+              Cracow University of Technology
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

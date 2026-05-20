@@ -1,8 +1,8 @@
 import "server-only";
 
-import type {Metadata} from "next";
+import type { Metadata } from "next";
 
-import type {SeoQueryResult} from "~/lib/sanity/types";
+import type { SeoQueryResult } from "~/lib/sanity/types";
 
 /**
  * Build metadata from Sanity data with fallback values
@@ -39,7 +39,7 @@ export function buildMetadata({ siteUrl, seoData }: { siteUrl: string; seoData: 
     description: metaDescription,
     keywords,
 
-    authors: [{name, url: siteUrl}],
+    authors: [{ name, url: siteUrl }],
 
     creator: name,
     generator: "Next.js",
@@ -59,13 +59,13 @@ export function buildMetadata({ siteUrl, seoData }: { siteUrl: string; seoData: 
       description: ogDescription,
       images: [
         ogImage
-            ? {
+          ? {
               url: ogImage,
               width: seoData?.seo?.ogImage?.asset?.metadata?.dimensions?.width ?? 1200,
               height: seoData?.seo?.ogImage?.asset?.metadata?.dimensions?.height ?? 630,
               alt: seoData?.seo?.ogImage?.alt ?? `${name} - ${title}`
             }
-            : {
+          : {
               url: fallbackOgImageUrl,
               width: 1200,
               height: 630,
@@ -99,13 +99,13 @@ export function buildMetadata({ siteUrl, seoData }: { siteUrl: string; seoData: 
     alternates: {
       canonical: seoData?.seo?.canonicalUrl ?? siteUrl,
       languages: seoData?.seo?.alternateUrls?.reduce(
-          (acc, alternate) => {
-            if (alternate.hreflang && alternate.url) {
-              acc[alternate.hreflang] = alternate.url;
-            }
-            return acc;
-          },
-          {} as Record<string, string>
+        (acc, alternate) => {
+          if (alternate.hreflang && alternate.url) {
+            acc[alternate.hreflang] = alternate.url;
+          }
+          return acc;
+        },
+        {} as Record<string, string>
       )
     }
   };
