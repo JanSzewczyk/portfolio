@@ -4,13 +4,7 @@ import { Button } from "@szum-tech/design-system";
 import { useEffect } from "react";
 import logger from "~/lib/logger";
 
-export default function GlobalError({
-  error,
-  reset,
-}: {
-  error: Error & { digest?: string };
-  reset: () => void;
-}) {
+export default function GlobalError({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
   useEffect(() => {
     // Log the error to the console and logging service
     logger.error(
@@ -18,10 +12,10 @@ export default function GlobalError({
         error: {
           message: error.message,
           stack: error.stack,
-          digest: error.digest,
-        },
+          digest: error.digest
+        }
       },
-      "Global error occurred",
+      "Global error occurred"
     );
   }, [error]);
 

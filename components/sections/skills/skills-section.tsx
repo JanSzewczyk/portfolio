@@ -1,14 +1,6 @@
 "use client";
 
-import {
-  Badge,
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-  Marquee,
-} from "@szum-tech/design-system";
+import { Badge, Card, CardContent, CardDescription, CardHeader, CardTitle, Marquee } from "@szum-tech/design-system";
 import { cn } from "@szum-tech/design-system/utils";
 import { ArrowDownIcon } from "lucide-react";
 import { type IconName, ReactIcon } from "~/components/ui/react-icon";
@@ -25,24 +17,16 @@ type SkillsSectionProps = {
   documentType: string;
 };
 
-export function SkillsSection({
-  skills,
-  documentId,
-  documentType,
-}: SkillsSectionProps) {
+export function SkillsSection({ skills, documentId, documentType }: SkillsSectionProps) {
   const { createSanityAttribute } = buildSanityAttribute({
     documentId,
-    documentType,
+    documentType
   });
 
   // Collect all technologies from all groups for the marquee (deduplicated by _id)
   const allTechnologies =
-    skills?.technologyGroups?.flatMap(
-      (group) => group.technologies?.filter((tech) => tech.name) ?? [],
-    ) ?? [];
-  const uniqueTechnologies = Array.from(
-    new Map(allTechnologies.map((tech) => [tech._id, tech])).values(),
-  );
+    skills?.technologyGroups?.flatMap((group) => group.technologies?.filter((tech) => tech.name) ?? []) ?? [];
+  const uniqueTechnologies = Array.from(new Map(allTechnologies.map((tech) => [tech._id, tech])).values());
 
   return (
     <section id={Section.SKILLS} className="py-24">
@@ -64,9 +48,7 @@ export function SkillsSection({
                 <TechLogo
                   key={tech._id}
                   tech={tech}
-                  dataSanity={createSanityAttribute(
-                    `skills.technologyGroups[_key=="${tech._id}"]`,
-                  )}
+                  dataSanity={createSanityAttribute(`skills.technologyGroups[_key=="${tech._id}"]`)}
                 />
               ))}
             </Marquee>
@@ -88,11 +70,9 @@ export function SkillsSection({
                 key={group._id}
                 className={cn(
                   isFeatured ? "md:col-span-2" : "md:col-span-1",
-                  "group transition-all duration-300 hover:-translate-y-1 hover:shadow-lg",
+                  "group transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
                 )}
-                data-sanity={createSanityAttribute(
-                  `skills.technologyGroups[${groupIndex}]`,
-                )}
+                data-sanity={createSanityAttribute(`skills.technologyGroups[${groupIndex}]`)}
               >
                 <CardHeader className="relative">
                   <div className="absolute top-0 right-4">
@@ -104,18 +84,12 @@ export function SkillsSection({
                     )}
                   </div>
                   <div className="mb-2 flex size-10 items-center justify-center rounded bg-muted">
-                    {groupIcon ? (
-                      <ReactIcon name={groupIcon} className="size-6" />
-                    ) : null}
+                    {groupIcon ? <ReactIcon name={groupIcon} className="size-6" /> : null}
                   </div>
-                  <CardTitle className="text-heading-h4">
-                    {group.label}
-                  </CardTitle>
+                  <CardTitle className="text-heading-h4">{group.label}</CardTitle>
 
                   {isFeatured && group.description ? (
-                    <CardDescription className="">
-                      {group.description}
-                    </CardDescription>
+                    <CardDescription className="">{group.description}</CardDescription>
                   ) : null}
                 </CardHeader>
 
@@ -126,7 +100,7 @@ export function SkillsSection({
                       <Badge
                         key={tech._id}
                         data-sanity={createSanityAttribute(
-                          `skills.technologyGroups[${groupIndex}].technologies[${techIndex}]`,
+                          `skills.technologyGroups[${groupIndex}].technologies[${techIndex}]`
                         )}
                         variant="outline"
                         className="text-body-lg"
@@ -143,9 +117,7 @@ export function SkillsSection({
 
         {/* Decorative bottom text */}
         <div className="mt-16 text-center">
-          <p className="text-body-sm text-muted-foreground">
-            {skills?.decorativeBottomText}
-          </p>
+          <p className="text-body-sm text-muted-foreground">{skills?.decorativeBottomText}</p>
         </div>
       </div>
     </section>

@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@szum-tech/design-system";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@szum-tech/design-system";
 import { stegaClean } from "next-sanity";
 import { SectionHeading } from "~/components/ui/section-heading";
 import { Section } from "~/constants/sections";
@@ -31,14 +26,10 @@ export type ProjectsSectionProps = {
   documentType: string;
 };
 
-export function ProjectsSection({
-  projects,
-  documentId,
-  documentType,
-}: ProjectsSectionProps) {
+export function ProjectsSection({ projects, documentId, documentType }: ProjectsSectionProps) {
   const { createSanityAttribute } = buildSanityAttribute({
     documentId,
-    documentType,
+    documentType
   });
 
   // Get project groups from the data
@@ -53,7 +44,7 @@ export function ProjectsSection({
       if (project.featured) {
         featuredProjects.push({
           data: project,
-          sanityPath: `projects.projectGroups[${groupIndex}].projects[${projectIndex}]`,
+          sanityPath: `projects.projectGroups[${groupIndex}].projects[${projectIndex}]`
         });
       }
     });
@@ -64,7 +55,7 @@ export function ProjectsSection({
     tabs.push({
       value: "featured",
       label: "Featured",
-      projects: featuredProjects,
+      projects: featuredProjects
     });
   }
 
@@ -73,13 +64,13 @@ export function ProjectsSection({
     const groupProjects =
       group.projects?.map((project, projectIndex) => ({
         data: project,
-        sanityPath: `projects.projectGroups[${groupIndex}].projects[${projectIndex}]`,
+        sanityPath: `projects.projectGroups[${groupIndex}].projects[${projectIndex}]`
       })) ?? [];
 
     tabs.push({
       value: `group-${groupIndex}`,
       label: stegaClean(group.label) ?? `Group ${groupIndex + 1}`,
-      projects: groupProjects,
+      projects: groupProjects
     });
   });
 

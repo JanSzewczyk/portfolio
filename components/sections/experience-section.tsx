@@ -18,7 +18,7 @@ import {
   TimelineConnector,
   TimelineContent,
   TimelineDot,
-  TimelineItem,
+  TimelineItem
 } from "@szum-tech/design-system";
 import { stegaClean } from "next-sanity";
 import { SectionHeading } from "~/components/ui/section-heading";
@@ -44,14 +44,10 @@ function formatPeriod(startDate: string, endDate?: string | null): string {
   return `${start} - ${end}`;
 }
 
-export function ExperienceSection({
-  experience,
-  documentId,
-  documentType,
-}: ExperienceSectionProps) {
+export function ExperienceSection({ experience, documentId, documentType }: ExperienceSectionProps) {
   const { createSanityAttribute } = buildSanityAttribute({
     documentId,
-    documentType,
+    documentType
   });
 
   if (!experience?.experiences || experience.experiences.length === 0) {
@@ -71,39 +67,23 @@ export function ExperienceSection({
           <Timeline>
             {experience.experiences.map((exp, index) => {
               const companyLogoUrl = exp.companyLogo?.asset?.url
-                ? urlFor(exp.companyLogo)
-                    .auto("format")
-                    .width(40)
-                    .height(40)
-                    .url()
+                ? urlFor(exp.companyLogo).auto("format").width(40).height(40).url()
                 : undefined;
 
-              const companyInitial = exp.company
-                ? stegaClean(exp.company).charAt(0).toUpperCase()
-                : "?";
+              const companyInitial = exp.company ? stegaClean(exp.company).charAt(0).toUpperCase() : "?";
 
               return (
                 <TimelineItem key={exp._id}>
-                  <TimelineDot
-                    className={
-                      index === 0 ? "border-primary bg-primary" : undefined
-                    }
-                  />
+                  <TimelineDot className={index === 0 ? "border-primary bg-primary" : undefined} />
                   <TimelineConnector />
                   <TimelineContent>
-                    <Card
-                      data-sanity={createSanityAttribute(
-                        `experience.experiences[${index}]`,
-                      )}
-                    >
+                    <Card data-sanity={createSanityAttribute(`experience.experiences[${index}]`)}>
                       <CardHeader>
                         <div className="flex flex-wrap items-center gap-2">
                           {exp.startDate && (
                             <Badge
                               variant="outline"
-                              data-sanity={createSanityAttribute(
-                                `experience.experiences[${index}].startDate`,
-                              )}
+                              data-sanity={createSanityAttribute(`experience.experiences[${index}].startDate`)}
                             >
                               {formatPeriod(exp.startDate, exp.endDate)}
                             </Badge>
@@ -111,9 +91,7 @@ export function ExperienceSection({
                           {exp.type && (
                             <Badge
                               variant="secondary"
-                              data-sanity={createSanityAttribute(
-                                `experience.experiences[${index}].type`,
-                              )}
+                              data-sanity={createSanityAttribute(`experience.experiences[${index}].type`)}
                             >
                               {exp.type}
                             </Badge>
@@ -121,9 +99,7 @@ export function ExperienceSection({
                         </div>
                         <CardTitle
                           className="mt-2"
-                          data-sanity={createSanityAttribute(
-                            `experience.experiences[${index}].role`,
-                          )}
+                          data-sanity={createSanityAttribute(`experience.experiences[${index}].role`)}
                         >
                           {exp.role}
                         </CardTitle>
@@ -131,24 +107,13 @@ export function ExperienceSection({
                           <div className="flex items-center gap-3">
                             <Avatar
                               className="size-10 rounded-lg"
-                              data-sanity={createSanityAttribute(
-                                `experience.experiences[${index}].companyLogo`,
-                              )}
+                              data-sanity={createSanityAttribute(`experience.experiences[${index}].companyLogo`)}
                             >
-                              <AvatarImage
-                                src={companyLogoUrl}
-                                alt={`${stegaClean(exp.company)} logo`}
-                              />
-                              <AvatarFallback className="rounded-lg">
-                                {companyInitial}
-                              </AvatarFallback>
+                              <AvatarImage src={companyLogoUrl} alt={`${stegaClean(exp.company)} logo`} />
+                              <AvatarFallback className="rounded-lg">{companyInitial}</AvatarFallback>
                             </Avatar>
                             <div className="flex flex-col">
-                              <div
-                                data-sanity={createSanityAttribute(
-                                  `experience.experiences[${index}].company`,
-                                )}
-                              >
+                              <div data-sanity={createSanityAttribute(`experience.experiences[${index}].company`)}>
                                 {exp.companyUrl ? (
                                   <a
                                     href={exp.companyUrl}
@@ -164,9 +129,7 @@ export function ExperienceSection({
                               </div>
                               <div
                                 className="text-sm"
-                                data-sanity={createSanityAttribute(
-                                  `experience.experiences[${index}].location`,
-                                )}
+                                data-sanity={createSanityAttribute(`experience.experiences[${index}].location`)}
                               >
                                 {exp.location}
                               </div>
@@ -177,50 +140,37 @@ export function ExperienceSection({
                       <CardContent className="space-y-4">
                         <p
                           className="text-muted-foreground"
-                          data-sanity={createSanityAttribute(
-                            `experience.experiences[${index}].summary`,
-                          )}
+                          data-sanity={createSanityAttribute(`experience.experiences[${index}].summary`)}
                         >
                           {exp.summary}
                         </p>
 
                         <Accordion type="single" collapsible>
-                          {exp.responsibilities &&
-                            exp.responsibilities.length > 0 && (
-                              <AccordionItem value="responsibilities">
-                                <AccordionTrigger>
-                                  Key Responsibilities
-                                </AccordionTrigger>
-                                <AccordionContent>
-                                  <ul
-                                    className="ml-4 list-disc space-y-1 text-muted-foreground"
-                                    data-sanity={createSanityAttribute(
-                                      `experience.experiences[${index}].responsibilities`,
-                                    )}
-                                  >
-                                    {exp.responsibilities.map(
-                                      (responsibility) => (
-                                        <li key={responsibility}>
-                                          {responsibility}
-                                        </li>
-                                      ),
-                                    )}
-                                  </ul>
-                                </AccordionContent>
-                              </AccordionItem>
-                            )}
-
-                          {exp.achievements && exp.achievements.length > 0 && (
-                            <AccordionItem value="achievements">
-                              <AccordionTrigger>
-                                Key Achievements
-                              </AccordionTrigger>
+                          {exp.responsibilities && exp.responsibilities.length > 0 && (
+                            <AccordionItem value="responsibilities">
+                              <AccordionTrigger>Key Responsibilities</AccordionTrigger>
                               <AccordionContent>
                                 <ul
                                   className="ml-4 list-disc space-y-1 text-muted-foreground"
                                   data-sanity={createSanityAttribute(
-                                    `experience.experiences[${index}].achievements`,
+                                    `experience.experiences[${index}].responsibilities`
                                   )}
+                                >
+                                  {exp.responsibilities.map((responsibility) => (
+                                    <li key={responsibility}>{responsibility}</li>
+                                  ))}
+                                </ul>
+                              </AccordionContent>
+                            </AccordionItem>
+                          )}
+
+                          {exp.achievements && exp.achievements.length > 0 && (
+                            <AccordionItem value="achievements">
+                              <AccordionTrigger>Key Achievements</AccordionTrigger>
+                              <AccordionContent>
+                                <ul
+                                  className="ml-4 list-disc space-y-1 text-muted-foreground"
+                                  data-sanity={createSanityAttribute(`experience.experiences[${index}].achievements`)}
                                 >
                                   {exp.achievements.map((achievement) => (
                                     <li key={achievement}>{achievement}</li>
@@ -234,16 +184,10 @@ export function ExperienceSection({
                         {exp.technologies && exp.technologies.length > 0 && (
                           <div
                             className="flex flex-wrap gap-1.5 pt-2"
-                            data-sanity={createSanityAttribute(
-                              `experience.experiences[${index}].technologies`,
-                            )}
+                            data-sanity={createSanityAttribute(`experience.experiences[${index}].technologies`)}
                           >
                             {exp.technologies.map((tech) => (
-                              <Badge
-                                key={tech._id}
-                                variant="secondary"
-                                className="text-xs"
-                              >
+                              <Badge key={tech._id} variant="secondary" className="text-xs">
                                 {tech.name}
                               </Badge>
                             ))}

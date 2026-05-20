@@ -6,7 +6,7 @@ import {
   CardDescription,
   CardFooter,
   CardHeader,
-  CardTitle,
+  CardTitle
 } from "@szum-tech/design-system";
 import { cn } from "@szum-tech/design-system/utils";
 import { ExternalLinkIcon } from "lucide-react";
@@ -17,16 +17,11 @@ import { urlFor } from "~/lib/sanity/image";
 import type { PortfolioPageQueryResult } from "~/lib/sanity/types";
 
 type ProjectGroupData =
-  NonNullable<
-    NonNullable<
-      NonNullable<PortfolioPageQueryResult>["projects"]
-    >["projectGroups"]
-  > extends (infer T)[]
+  NonNullable<NonNullable<NonNullable<PortfolioPageQueryResult>["projects"]>["projectGroups"]> extends (infer T)[]
     ? T
     : never;
 
-export type ProjectData =
-  NonNullable<ProjectGroupData["projects"]> extends (infer T)[] ? T : never;
+export type ProjectData = NonNullable<ProjectGroupData["projects"]> extends (infer T)[] ? T : never;
 
 export type ProjectCardProps = {
   project: ProjectData;
@@ -43,11 +38,7 @@ export function ProjectCard({ project, dataSanity }: ProjectCardProps) {
         <div className="mb-4 aspect-video overflow-hidden rounded bg-muted">
           {project.thumbnail ? (
             <Image
-              src={urlFor(project.thumbnail)
-                .auto("format")
-                .width(800)
-                .height(450)
-                .url()}
+              src={urlFor(project.thumbnail).auto("format").width(800).height(450).url()}
               alt={stegaClean(project.thumbnail?.alt) || "Project thumbnail"}
               className="size-full object-cover transition-transform duration-300 group-hover:scale-105"
               width={800}
@@ -59,7 +50,7 @@ export function ProjectCard({ project, dataSanity }: ProjectCardProps) {
               className={cn(
                 "flex h-full w-full items-center justify-center",
                 "bg-linear-to-br from-primary/10 to-primary/5",
-                "font-bold text-4xl text-primary/20",
+                "font-bold text-4xl text-primary/20"
               )}
             >
               {project.title?.charAt(0)}
@@ -72,17 +63,13 @@ export function ProjectCard({ project, dataSanity }: ProjectCardProps) {
 
       <CardContent className="flex-1">
         <div className="flex flex-wrap gap-1.5">
-          {project.technologies
-            ?.slice(0, 4)
-            .map((tech: { _id: string; name: string | null }) => (
-              <Badge key={`${project._id}-${tech._id}`} variant="secondary">
-                {tech.name}
-              </Badge>
-            ))}
-          {project.technologies && project.technologies.length > 4 && (
-            <Badge variant="secondary">
-              +{project.technologies.length - 4}
+          {project.technologies?.slice(0, 4).map((tech: { _id: string; name: string | null }) => (
+            <Badge key={`${project._id}-${tech._id}`} variant="secondary">
+              {tech.name}
             </Badge>
+          ))}
+          {project.technologies && project.technologies.length > 4 && (
+            <Badge variant="secondary">+{project.technologies.length - 4}</Badge>
           )}
         </div>
       </CardContent>
@@ -90,43 +77,21 @@ export function ProjectCard({ project, dataSanity }: ProjectCardProps) {
       <CardFooter className="gap-2">
         {project.links?.live && (
           <Button size="sm" startIcon={<ExternalLinkIcon />} asChild>
-            <a
-              href={stegaClean(project.links.live)}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <a href={stegaClean(project.links.live)} target="_blank" rel="noopener noreferrer">
               Live
             </a>
           </Button>
         )}
         {project.links?.github && (
-          <Button
-            startIcon={<ReactIcon name="SiGithub" />}
-            size="sm"
-            variant="outline"
-            asChild
-          >
-            <a
-              href={stegaClean(project.links.github)}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+          <Button startIcon={<ReactIcon name="SiGithub" />} size="sm" variant="outline" asChild>
+            <a href={stegaClean(project.links.github)} target="_blank" rel="noopener noreferrer">
               Code
             </a>
           </Button>
         )}
         {project.links?.npm && (
-          <Button
-            startIcon={<ReactIcon name="SiNpm" />}
-            size="sm"
-            variant="outline"
-            asChild
-          >
-            <a
-              href={stegaClean(project.links.npm)}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+          <Button startIcon={<ReactIcon name="SiNpm" />} size="sm" variant="outline" asChild>
+            <a href={stegaClean(project.links.npm)} target="_blank" rel="noopener noreferrer">
               NPM
             </a>
           </Button>

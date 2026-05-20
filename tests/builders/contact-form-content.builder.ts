@@ -7,9 +7,7 @@ import type { PortfolioPageQueryResult } from "~/lib/sanity/types";
  *
  * This is the exact type from the Sanity query result for contact.form
  */
-export type ContactFormContent = NonNullable<
-  NonNullable<PortfolioPageQueryResult>["contact"]
->["form"];
+export type ContactFormContent = NonNullable<NonNullable<PortfolioPageQueryResult>["contact"]>["form"];
 
 /**
  * Builder for ContactFormContent test data.
@@ -39,16 +37,14 @@ export const contactFormContentBuilder = build<ContactFormContent>({
   fields: {
     enabled: true,
     title: "Send a Message",
-    description:
-      "Fill out the form and I'll get back to you as soon as possible.",
+    description: "Fill out the form and I'll get back to you as soon as possible.",
     successMessage: "Thank you! Your message has been sent successfully.",
     submitButtonText: "Send Message",
     successView: {
       title: "Thank you for your message!",
-      description:
-        "I'll get back to you within 24-48 hours. Thank you for reaching out!",
-      buttonText: "Send another message",
-    },
+      description: "I'll get back to you within 24-48 hours. Thank you for reaching out!",
+      buttonText: "Send another message"
+    }
   },
   traits: {
     /**
@@ -56,8 +52,8 @@ export const contactFormContentBuilder = build<ContactFormContent>({
      */
     disabled: {
       overrides: {
-        enabled: false,
-      },
+        enabled: false
+      }
     },
 
     /**
@@ -72,9 +68,9 @@ export const contactFormContentBuilder = build<ContactFormContent>({
         successView: {
           title: () => faker.lorem.words(5),
           description: () => faker.lorem.paragraphs(1),
-          buttonText: () => faker.lorem.words(3),
-        },
-      },
+          buttonText: () => faker.lorem.words(3)
+        }
+      }
     },
 
     /**
@@ -87,8 +83,8 @@ export const contactFormContentBuilder = build<ContactFormContent>({
         description: null,
         successMessage: null,
         submitButtonText: null,
-        successView: null,
-      },
-    },
-  },
+        successView: null
+      }
+    }
+  }
 });

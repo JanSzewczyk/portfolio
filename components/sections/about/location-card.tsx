@@ -18,7 +18,7 @@ export function LocationCard({ city, coordinates }: LocationCardProps) {
     defaultZoom: 7,
     minZoom: 7,
     maxZoom: 7,
-    attribution: false,
+    attribution: false
   };
 
   return (
@@ -38,9 +38,7 @@ export function LocationCard({ city, coordinates }: LocationCardProps) {
               <MapPin className="size-5" />
             </div>
             <div>
-              <p className="text-body-xs text-muted-foreground uppercase">
-                Based in
-              </p>
+              <p className="text-body-xs text-muted-foreground uppercase">Based in</p>
               <p className="text-body-lg">{city}</p>
             </div>
           </div>

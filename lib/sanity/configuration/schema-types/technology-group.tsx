@@ -13,30 +13,29 @@ export const technologyGroup = defineType({
       name: "label",
       title: "Label",
       type: "string",
-      validation: (rule) => rule.required(),
+      validation: (rule) => rule.required()
     }),
     defineField({
       name: "description",
       title: "Description",
-      type: "text",
+      type: "text"
     }),
     defineField({
       name: "featured",
       title: "Featured",
       type: "boolean",
-      description:
-        "Defines if the technology group is featured (e.g., displayed prominently).",
+      description: "Defines if the technology group is featured (e.g., displayed prominently).",
       initialValue: true,
-      validation: (rule) => rule.required(),
+      validation: (rule) => rule.required()
     }),
     defineField({
       name: "icon",
       title: "Icon",
       type: "string",
       components: {
-        input: IconSearchInput,
+        input: IconSearchInput
       },
-      validation: (rule) => rule.required(),
+      validation: (rule) => rule.required()
     }),
     defineField({
       name: "technologies",
@@ -45,16 +44,16 @@ export const technologyGroup = defineType({
       of: [
         {
           type: "reference",
-          to: [{ type: "technology" }],
-        },
+          to: [{ type: "technology" }]
+        }
       ],
-      validation: (rule) => rule.required().min(1),
-    }),
+      validation: (rule) => rule.required().min(1)
+    })
   ],
   preview: {
     select: {
       title: "label",
-      subtitle: "category",
-    },
-  },
+      subtitle: "category"
+    }
+  }
 });

@@ -93,10 +93,7 @@
       }
     },
     {
-      "includes": [
-        "**/*.stories.{ts,tsx,js,jsx,mjs,cjs}",
-        "**/*.story.{ts,tsx,js,jsx,mjs,cjs}"
-      ],
+      "includes": ["**/*.stories.{ts,tsx,js,jsx,mjs,cjs}", "**/*.story.{ts,tsx,js,jsx,mjs,cjs}"],
       "linter": {
         "rules": {
           "correctness": {

@@ -10,7 +10,7 @@ export function proxy(request: NextRequest) {
     requestId,
     method: request.method,
     url: request.url,
-    userAgent: request.headers.get("user-agent"),
+    userAgent: request.headers.get("user-agent")
   });
 
   requestLogger.info("Incoming request");
@@ -26,9 +26,9 @@ export function proxy(request: NextRequest) {
   requestLogger.info(
     {
       status: response.status,
-      duration,
+      duration
     },
-    "Request completed",
+    "Request completed"
   );
 
   return response;
@@ -40,6 +40,6 @@ export const config = {
     // Skip Next.js internals and all static files, unless found in search params
     "/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)",
     // Always run for API routes
-    "/(api|trpc)(.*)",
-  ],
+    "/(api|trpc)(.*)"
+  ]
 };

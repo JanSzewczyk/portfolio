@@ -1,10 +1,4 @@
-import {
-  Button,
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@szum-tech/design-system";
+import { Button, Card, CardContent, CardHeader, CardTitle } from "@szum-tech/design-system";
 import { cn } from "@szum-tech/design-system/utils";
 import { Mail } from "lucide-react";
 import { type IconName, ReactIcon } from "~/components/ui/react-icon";
@@ -25,23 +19,12 @@ export function ContactSection({ personalInfo, contact }: ContactSectionProps) {
   return (
     <section id={Section.CONTACT} className="py-24">
       <div className="container">
-        <SectionHeading
-          title={contact?.heading?.title ?? ""}
-          description={contact?.heading?.description ?? ""}
-        />
+        <SectionHeading title={contact?.heading?.title ?? ""} description={contact?.heading?.description ?? ""} />
 
-        <div
-          className={cn(
-            "mx-auto grid gap-8",
-            contact?.form?.enabled ? "max-w-4xl lg:grid-cols-2" : "max-w-lg",
-          )}
-        >
+        <div className={cn("mx-auto grid gap-8", contact?.form?.enabled ? "max-w-4xl lg:grid-cols-2" : "max-w-lg")}>
           {/* Contact Form */}
           {contact?.form?.enabled ? (
-            <ContactForm
-              contactFormContent={contact.form}
-              onSubmitAction={sendContactEmail}
-            />
+            <ContactForm contactFormContent={contact.form} onSubmitAction={sendContactEmail} />
           ) : null}
 
           {/* Contact Info */}
@@ -53,18 +36,14 @@ export function ContactSection({ personalInfo, contact }: ContactSectionProps) {
                 </div>
                 <div>
                   <p className="font-medium">Email</p>
-                  <a
-                    href={`mailto:${personalInfo?.email}`}
-                    className="text-muted-foreground hover:text-primary"
-                  >
+                  <a href={`mailto:${personalInfo?.email}`} className="text-muted-foreground hover:text-primary">
                     {personalInfo?.email}
                   </a>
                 </div>
               </CardContent>
             </Card>
 
-            {personalInfo?.socialLinks &&
-            personalInfo.socialLinks.length > 0 ? (
+            {personalInfo?.socialLinks && personalInfo.socialLinks.length > 0 ? (
               <Card>
                 <CardHeader>
                   <CardTitle>Connect with me</CardTitle>
@@ -73,12 +52,7 @@ export function ContactSection({ personalInfo, contact }: ContactSectionProps) {
                   <div className="flex gap-4">
                     {personalInfo.socialLinks.map((link) => {
                       return (
-                        <Button
-                          key={link._key}
-                          variant="outline"
-                          size="icon"
-                          asChild
-                        >
+                        <Button key={link._key} variant="outline" size="icon" asChild>
                           <a
                             href={link.url ?? "#"}
                             target="_blank"
@@ -101,9 +75,7 @@ export function ContactSection({ personalInfo, contact }: ContactSectionProps) {
                   <CardTitle>{contact?.quickChat.title}</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-body-sm text-muted-foreground">
-                    {contact?.quickChat?.description}
-                  </p>
+                  <p className="text-body-sm text-muted-foreground">{contact?.quickChat?.description}</p>
                 </CardContent>
               </Card>
             ) : null}

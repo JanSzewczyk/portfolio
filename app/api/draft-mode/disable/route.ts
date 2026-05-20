@@ -4,7 +4,7 @@ import { createLogger } from "~/lib/logger";
 
 const draftModeLogger = createLogger({
   module: "api",
-  endpoint: "/api/draft-mode/disable",
+  endpoint: "/api/draft-mode/disable"
 });
 
 export async function GET(request: NextRequest) {
