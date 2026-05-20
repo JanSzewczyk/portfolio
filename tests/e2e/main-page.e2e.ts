@@ -89,5 +89,5 @@ test("project GitHub links open correctly", async ({ page, context }) => {
   const newPage = await pagePromise;
   await newPage.waitForLoadState();
 
-  expect(newPage.url()).toMatch(/github\.com/);
+  expect(newPage.url()).toMatch(/^https?:\/\/(?:www\.)?github\.com(?:[:/?#]|$)/i);
 });
