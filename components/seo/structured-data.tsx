@@ -1,8 +1,5 @@
 import type { SeoQueryResult } from "~/lib/sanity/types";
-import {
-  buildStructuredDataGraph,
-  serializeJsonLd,
-} from "~/lib/seo/structured-data";
+import { buildStructuredDataGraph, serializeJsonLd } from "~/lib/seo/structured-data";
 
 interface StructuredDataProps {
   siteUrl: string;
@@ -19,7 +16,7 @@ export function StructuredData({ siteUrl, seoData }: StructuredDataProps) {
       type="application/ld+json"
       // biome-ignore lint/security/noDangerouslySetInnerHtml: seo purposes
       dangerouslySetInnerHTML={{
-        __html: jsonLd,
+        __html: jsonLd
       }}
     />
   );

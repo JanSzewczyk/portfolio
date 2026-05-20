@@ -11,25 +11,25 @@ export const project = defineType({
       name: "title",
       title: "Title",
       type: "string",
-      validation: (rule) => rule.required(),
+      validation: (rule) => rule.required()
     }),
     defineField({
       name: "description",
       title: "Description",
       type: "text",
-      validation: (rule) => rule.required(),
+      validation: (rule) => rule.required()
     }),
     defineField({
       name: "longDescription",
       title: "Long Description",
-      type: "text",
+      type: "text"
     }),
     defineField({
       name: "thumbnail",
       title: "Thumbnail",
       type: "image",
       options: {
-        hotspot: true,
+        hotspot: true
       },
       validation: (rule) => rule.required(),
       fields: [
@@ -41,12 +41,10 @@ export const project = defineType({
             rule.custom((value, context) => {
               const parent = context?.parent as { asset?: { _ref?: string } };
 
-              return !value && parent?.asset?._ref
-                ? "Alt text is required when an image is present"
-                : true;
-            }),
-        }),
-      ],
+              return !value && parent?.asset?._ref ? "Alt text is required when an image is present" : true;
+            })
+        })
+      ]
     }),
     defineField({
       name: "technologies",
@@ -55,10 +53,10 @@ export const project = defineType({
       of: [
         {
           type: "reference",
-          to: [{ type: "technology" }],
-        },
+          to: [{ type: "technology" }]
+        }
       ],
-      validation: (rule) => rule.required().min(1),
+      validation: (rule) => rule.required().min(1)
     }),
     defineField({
       name: "links",
@@ -68,32 +66,32 @@ export const project = defineType({
         defineField({
           name: "live",
           title: "Live URL",
-          type: "url",
+          type: "url"
         }),
         defineField({
           name: "github",
           title: "GitHub URL",
-          type: "url",
+          type: "url"
         }),
         defineField({
           name: "npm",
           title: "NPM URL",
-          type: "url",
-        }),
-      ],
+          type: "url"
+        })
+      ]
     }),
     defineField({
       name: "featured",
       title: "Featured",
       type: "boolean",
-      initialValue: false,
-    }),
+      initialValue: false
+    })
   ],
   preview: {
     select: {
       title: "title",
       subtitle: "category",
-      media: "thumbnail",
-    },
-  },
+      media: "thumbnail"
+    }
+  }
 });

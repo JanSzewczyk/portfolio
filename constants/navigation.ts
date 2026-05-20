@@ -19,5 +19,5 @@ export const NAV_ITEMS: Array<NavItem> = [
   { label: "Projects", section: Section.PROJECTS },
   { label: "Experience", section: Section.EXPERIENCE },
   { label: "Education", section: Section.EDUCATION },
-  { label: "Contact", section: Section.CONTACT },
+  { label: "Contact", section: Section.CONTACT }
 ];

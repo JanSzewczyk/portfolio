@@ -1,9 +1,6 @@
 import { expect } from "storybook/test";
 import preview from "~/.storybook/preview";
-import {
-  portfolioPageContactBuilder,
-  portfolioPagePersonalInfoBuilder,
-} from "~/tests/builders/portfolio-page.builder";
+import { portfolioPageContactBuilder, portfolioPagePersonalInfoBuilder } from "~/tests/builders/portfolio-page.builder";
 import { ContactSection } from "./contact-section";
 
 const meta = preview.meta({
@@ -19,68 +16,60 @@ const meta = preview.meta({
             platform: "GitHub",
             url: "https://github.com/test",
             icon: "SiGithub",
-            username: "test-user",
+            username: "test-user"
           },
           {
             _key: "key-linkedin",
             platform: "LinkedIn",
             url: "https://linkedin.com/in/test",
             icon: "TbBrandLinkedin",
-            username: "test-user",
-          },
-        ],
-      },
+            username: "test-user"
+          }
+        ]
+      }
     }),
     contact: portfolioPageContactBuilder.one({
       overrides: {
         heading: {
           title: "Get In Touch",
-          description: "Have a question or want to work together?",
+          description: "Have a question or want to work together?"
         },
         quickChat: {
           title: "Quick Chat",
-          description: "Feel free to reach out anytime.",
-        },
-      },
+          description: "Feel free to reach out anytime."
+        }
+      }
     }),
     documentId: "test-portfolio-id",
-    documentType: "portfolioPage",
+    documentType: "portfolioPage"
   },
   parameters: {
-    layout: "fullscreen",
-  },
+    layout: "fullscreen"
+  }
 });
 
 export const ContactSectionStory = meta.story({
-  name: "Contact Section",
+  name: "Contact Section"
 });
 
 // Test 1: Section heading
-ContactSectionStory.test(
-  "Renders section heading with title and description",
-  async ({ canvas }) => {
-    const heading = canvas.getByRole("heading", {
-      level: 2,
-      name: "Get In Touch",
-    });
-    await expect(heading).toBeVisible();
+ContactSectionStory.test("Renders section heading with title and description", async ({ canvas }) => {
+  const heading = canvas.getByRole("heading", {
+    level: 2,
+    name: "Get In Touch"
+  });
+  await expect(heading).toBeVisible();
 
-    const description = canvas.getByText(
-      "Have a question or want to work together?",
-    );
-    await expect(description).toBeVisible();
-  },
-);
+  const description = canvas.getByText("Have a question or want to work together?");
+  await expect(description).toBeVisible();
+});
 
 // Test 2: Email card
-ContactSectionStory.test(
-  "Displays email contact information",
-  async ({ canvas }) => {
-    const emailLink = canvas.getByRole("link", { name: "jan@example.com" });
-    await expect(emailLink).toBeVisible();
-    await expect(emailLink).toHaveAttribute("href", "mailto:jan@example.com");
-  },
-);
+ContactSectionStory.test("Displays email contact information", async ({ canvas }) => {
+  const emailLink = canvas.getByRole("link", { name: "jan@example.com" });
+  await expect(emailLink).toBeVisible();
+  await expect(emailLink).toHaveAttribute("href", "mailto:jan@example.com");
+});
 
 // Test 3: Social links
 ContactSectionStory.test("Renders social media links", async ({ canvas }) => {
@@ -100,9 +89,7 @@ ContactSectionStory.test("Displays quick chat card", async ({ canvas }) => {
   const quickChatTitle = canvas.getByText("Quick Chat");
   await expect(quickChatTitle).toBeVisible();
 
-  const quickChatDescription = canvas.getByText(
-    "Feel free to reach out anytime.",
-  );
+  const quickChatDescription = canvas.getByText("Feel free to reach out anytime.");
   await expect(quickChatDescription).toBeVisible();
 });
 
@@ -113,7 +100,7 @@ export const WithoutForm = meta.story({
       overrides: {
         heading: {
           title: "Get In Touch",
-          description: "Have a question or want to work together?",
+          description: "Have a question or want to work together?"
         },
         form: {
           enabled: false,
@@ -121,26 +108,23 @@ export const WithoutForm = meta.story({
           description: null,
           successMessage: null,
           submitButtonText: null,
-          successView: null,
+          successView: null
         },
         quickChat: {
           title: "Quick Chat",
-          description: "Feel free to reach out anytime.",
-        },
-      },
-    }),
-  },
+          description: "Feel free to reach out anytime."
+        }
+      }
+    })
+  }
 });
 
-WithoutForm.test(
-  "Renders correctly without contact form",
-  async ({ canvas }) => {
-    // Email card should still be visible
-    const emailLabel = canvas.getByText("Email");
-    await expect(emailLabel).toBeVisible();
+WithoutForm.test("Renders correctly without contact form", async ({ canvas }) => {
+  // Email card should still be visible
+  const emailLabel = canvas.getByText("Email");
+  await expect(emailLabel).toBeVisible();
 
-    // Form fields should not be present
-    const nameInput = canvas.queryByLabelText(/username/i);
-    await expect(nameInput).toBeNull();
-  },
-);
+  // Form fields should not be present
+  const nameInput = canvas.queryByLabelText(/username/i);
+  await expect(nameInput).toBeNull();
+});

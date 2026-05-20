@@ -15,35 +15,35 @@ export const technology = defineType({
       name: "name",
       title: "Name",
       type: "string",
-      validation: (rule) => rule.required(),
+      validation: (rule) => rule.required()
     }),
     defineField({
       name: "icon",
       title: "Icon",
       type: "string",
       components: {
-        input: IconSearchInput,
+        input: IconSearchInput
       },
-      validation: (rule) => rule.required(),
+      validation: (rule) => rule.required()
     }),
     defineField({
       name: "description",
       title: "Description",
-      type: "text",
-    }),
+      type: "text"
+    })
   ],
   preview: {
     select: {
       title: "name",
       subtitle: "category",
-      icon: "icon",
+      icon: "icon"
     },
     prepare({ title, subtitle, icon }) {
       return {
         title,
         subtitle,
-        media: <ReactIcon name={icon} />,
+        media: <ReactIcon name={icon} />
       };
-    },
-  },
+    }
+  }
 });

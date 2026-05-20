@@ -9,7 +9,7 @@ import {
   StatusIndicator,
   StatusLabel,
   TypingText,
-  WordRotate,
+  WordRotate
 } from "@szum-tech/design-system";
 import { ArrowDownIcon } from "lucide-react";
 import { stegaClean } from "next-sanity";
@@ -27,15 +27,10 @@ type HeroSectionProps = {
   documentType: string;
 };
 
-export function HeroSection({
-  personalInfo,
-  hero,
-  documentId,
-  documentType,
-}: HeroSectionProps) {
+export function HeroSection({ personalInfo, hero, documentId, documentType }: HeroSectionProps) {
   const { createSanityAttribute } = buildSanityAttribute({
     documentId,
-    documentType,
+    documentType
   });
 
   const initials = personalInfo?.name
@@ -44,10 +39,7 @@ export function HeroSection({
     .join("");
 
   return (
-    <section
-      id={Section.HERO}
-      className="relative min-h-[calc(100vh-4rem)] scroll-m-16 overflow-hidden"
-    >
+    <section id={Section.HERO} className="relative min-h-[calc(100vh-4rem)] scroll-m-16 overflow-hidden">
       <GridBackground />
 
       <div className="container flex min-h-[calc(100vh-4rem)] items-center py-20">
@@ -68,37 +60,21 @@ export function HeroSection({
               data-sanity={createSanityAttribute("hero.isAvailable")}
             >
               <StatusIndicator />
-              <StatusLabel>
-                {hero?.isAvailable
-                  ? "Available for opportunities"
-                  : "Currently unavailable"}
-              </StatusLabel>
+              <StatusLabel>{hero?.isAvailable ? "Available for opportunities" : "Currently unavailable"}</StatusLabel>
             </Status>
           </div>
 
-          <h1
-            className="mb-4 text-display-lg"
-            data-sanity={createSanityAttribute("personalInfo.name")}
-          >
-            <TypingText
-              text={`Hi I'm ${stegaClean(personalInfo?.name)}`}
-              speed={80}
-            />
+          <h1 className="mb-4 text-display-lg" data-sanity={createSanityAttribute("personalInfo.name")}>
+            <TypingText text={`Hi I'm ${stegaClean(personalInfo?.name)}`} speed={80} />
           </h1>
 
           {hero?.alternativeTitles && hero.alternativeTitles.length > 0 && (
             <div className="mb-6 text-heading-h1 text-primary">
-              <WordRotate
-                words={hero.alternativeTitles}
-                duration={3000}
-                animationStyle={"slide-up"}
-              />
+              <WordRotate words={hero.alternativeTitles} duration={3000} animationStyle={"slide-up"} />
             </div>
           )}
 
-          <p className="mb-8 max-w-2xl text-body-lg text-muted-foreground">
-            {hero?.tagline}
-          </p>
+          <p className="mb-8 max-w-2xl text-body-lg text-muted-foreground">{hero?.tagline}</p>
 
           <div className="flex flex-col gap-4 sm:flex-row">
             <Button size="lg" onClick={() => scrollToSection(Section.CONTACT)}>

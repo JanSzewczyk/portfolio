@@ -31,27 +31,27 @@ export const portfolioPage = defineType({
       description: "Core personal information used across the portfolio",
       options: {
         collapsible: true,
-        collapsed: false,
+        collapsed: false
       },
       fields: [
         defineField({
           name: "name",
           title: "Full Name",
           type: "string",
-          validation: (rule) => rule.required(),
+          validation: (rule) => rule.required()
         }),
         defineField({
           name: "title",
           title: "Primary Title",
           type: "string",
           description: "Main professional title (e.g., 'Frontend Engineer')",
-          validation: (rule) => rule.required(),
+          validation: (rule) => rule.required()
         }),
         defineField({
           name: "company",
           title: "Company",
           type: "string",
-          description: "Current company or organization",
+          description: "Current company or organization"
         }),
         defineField({
           name: "email",
@@ -64,11 +64,8 @@ export const portfolioPage = defineType({
               .email()
               .custom((email) => {
                 if (!email) return true;
-                return (
-                  /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ||
-                  "Invalid email format"
-                );
-              }),
+                return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) || "Invalid email format";
+              })
         }),
         defineField({
           name: "avatar",
@@ -76,7 +73,7 @@ export const portfolioPage = defineType({
           type: "image",
           description: "Profile picture",
           options: {
-            hotspot: true,
+            hotspot: true
           },
           validation: (rule) => rule.required(),
           fields: [
@@ -90,27 +87,25 @@ export const portfolioPage = defineType({
                     asset?: { _ref?: string };
                   };
 
-                  return !value && parent?.asset?._ref
-                    ? "Alt text is required when an image is present"
-                    : true;
-                }),
-            }),
-          ],
+                  return !value && parent?.asset?._ref ? "Alt text is required when an image is present" : true;
+                })
+            })
+          ]
         }),
         defineField({
           name: "location",
           title: "Location",
           type: "string",
-          description: "Current location (e.g., 'Cracow, Poland')",
+          description: "Current location (e.g., 'Cracow, Poland')"
         }),
         defineField({
           name: "socialLinks",
           title: "Social Links",
           type: "array",
           description: "Social media profiles (used in contact and footer)",
-          of: [{ type: "socialLink" }],
-        }),
-      ],
+          of: [{ type: "socialLink" }]
+        })
+      ]
     }),
 
     // ============================================
@@ -123,7 +118,7 @@ export const portfolioPage = defineType({
       description: "Main landing section with introduction and CTA buttons",
       options: {
         collapsible: true,
-        collapsed: true,
+        collapsed: true
       },
       fields: [
         defineField({
@@ -132,7 +127,7 @@ export const portfolioPage = defineType({
           type: "array",
           description: "Rotating titles displayed in hero section",
           of: [{ type: "string" }],
-          validation: (rule) => rule.required().min(1),
+          validation: (rule) => rule.required().min(1)
         }),
         defineField({
           name: "tagline",
@@ -140,16 +135,16 @@ export const portfolioPage = defineType({
           type: "text",
           description: "Short description displayed below the title",
           rows: 2,
-          validation: (rule) => rule.required().max(200),
+          validation: (rule) => rule.required().max(200)
         }),
         defineField({
           name: "isAvailable",
           title: "Available for Opportunities",
           type: "boolean",
           description: "Shows availability status badge",
-          initialValue: true,
-        }),
-      ],
+          initialValue: true
+        })
+      ]
     }),
 
     // ============================================
@@ -162,7 +157,7 @@ export const portfolioPage = defineType({
       description: "About me section with bio and statistics",
       options: {
         collapsible: true,
-        collapsed: true,
+        collapsed: true
       },
       fields: [
         defineField({
@@ -171,8 +166,8 @@ export const portfolioPage = defineType({
           type: "sectionHeading",
           initialValue: {
             title: "About Me",
-            description: "Get to know me a little better.",
-          },
+            description: "Get to know me a little better."
+          }
         }),
         defineField({
           name: "bio",
@@ -180,7 +175,7 @@ export const portfolioPage = defineType({
           type: "text",
           description: "Extended biography text",
           rows: 10,
-          validation: (rule) => rule.required(),
+          validation: (rule) => rule.required()
         }),
 
         defineField({
@@ -196,37 +191,37 @@ export const portfolioPage = defineType({
                   name: "label",
                   title: "Label",
                   type: "string",
-                  validation: (rule) => rule.required(),
+                  validation: (rule) => rule.required()
                 }),
                 defineField({
                   name: "value",
                   title: "Value",
                   type: "number",
-                  validation: (rule) => rule.required().positive(),
+                  validation: (rule) => rule.required().positive()
                 }),
                 defineField({
                   name: "suffix",
                   title: "Suffix",
                   type: "string",
                   description: "Optional suffix (e.g., '+', 'k')",
-                  placeholder: "+",
-                }),
+                  placeholder: "+"
+                })
               ],
               preview: {
                 select: {
                   label: "label",
                   value: "value",
-                  suffix: "suffix",
+                  suffix: "suffix"
                 },
                 prepare({ label, value, suffix }) {
                   return {
                     title: label,
-                    subtitle: `${value}${suffix || ""}`,
+                    subtitle: `${value}${suffix || ""}`
                   };
-                },
-              },
-            },
-          ],
+                }
+              }
+            }
+          ]
         }),
         defineField({
           name: "location",
@@ -239,18 +234,18 @@ export const portfolioPage = defineType({
               title: "City Name",
               type: "string",
               description: "City name to display (e.g., 'Warsaw, Poland')",
-              validation: (rule) => rule.required(),
+              validation: (rule) => rule.required()
             }),
             defineField({
               name: "coordinates",
               title: "Coordinates",
               type: "geopoint",
               description: "Geographic coordinates for the map marker",
-              validation: (rule) => rule.required(),
-            }),
-          ],
-        }),
-      ],
+              validation: (rule) => rule.required()
+            })
+          ]
+        })
+      ]
     }),
 
     // ============================================
@@ -263,7 +258,7 @@ export const portfolioPage = defineType({
       description: "Skills and technologies organized by groups",
       options: {
         collapsible: true,
-        collapsed: true,
+        collapsed: true
       },
       fields: [
         defineField({
@@ -272,23 +267,21 @@ export const portfolioPage = defineType({
           type: "sectionHeading",
           initialValue: {
             title: "Skills & Technologies",
-            description:
-              "The tools and technologies I work with to bring ideas to life.",
-          },
+            description: "The tools and technologies I work with to bring ideas to life."
+          }
         }),
         defineField({
           name: "technologyGroups",
           title: "Technology Groups",
           type: "array",
-          description:
-            "Reference to technology groups (frontend, backend, mobile, etc.)",
+          description: "Reference to technology groups (frontend, backend, mobile, etc.)",
           of: [
             {
               type: "reference",
-              to: [{ type: "technologyGroup" }],
-            },
+              to: [{ type: "technologyGroup" }]
+            }
           ],
-          validation: (rule) => rule.required().min(1),
+          validation: (rule) => rule.required().min(1)
         }),
         defineField({
           name: "decorativeBottomText",
@@ -296,9 +289,9 @@ export const portfolioPage = defineType({
           type: "text",
           description:
             'Optional decorative text displayed at the bottom of the skills section (e.g., "And many more...")',
-          initialValue: "And many more...",
-        }),
-      ],
+          initialValue: "And many more..."
+        })
+      ]
     }),
 
     // ============================================
@@ -311,7 +304,7 @@ export const portfolioPage = defineType({
       description: "Portfolio projects and case studies",
       options: {
         collapsible: true,
-        collapsed: true,
+        collapsed: true
       },
       fields: [
         defineField({
@@ -321,24 +314,23 @@ export const portfolioPage = defineType({
           initialValue: {
             title: "Featured Projects",
             description:
-              "A selection of projects I've worked on, from open source libraries to full-stack applications.",
-          },
+              "A selection of projects I've worked on, from open source libraries to full-stack applications."
+          }
         }),
         defineField({
           name: "projectGroups",
           title: "Project Groups",
           type: "array",
-          description:
-            "Organized groups of projects (e.g., Featured, Web Apps, Mobile Apps)",
+          description: "Organized groups of projects (e.g., Featured, Web Apps, Mobile Apps)",
           of: [
             {
               type: "reference",
-              to: [{ type: "projectGroup" }],
-            },
+              to: [{ type: "projectGroup" }]
+            }
           ],
-          validation: (rule) => rule.required().min(1),
-        }),
-      ],
+          validation: (rule) => rule.required().min(1)
+        })
+      ]
     }),
 
     // ============================================
@@ -351,7 +343,7 @@ export const portfolioPage = defineType({
       description: "Professional work experience",
       options: {
         collapsible: true,
-        collapsed: true,
+        collapsed: true
       },
       fields: [
         defineField({
@@ -360,9 +352,8 @@ export const portfolioPage = defineType({
           type: "sectionHeading",
           initialValue: {
             title: "Experience",
-            description:
-              "My professional journey and the roles that shaped my career.",
-          },
+            description: "My professional journey and the roles that shaped my career."
+          }
         }),
         defineField({
           name: "experiences",
@@ -372,12 +363,12 @@ export const portfolioPage = defineType({
           of: [
             {
               type: "reference",
-              to: [{ type: "experience" }],
-            },
+              to: [{ type: "experience" }]
+            }
           ],
-          validation: (rule) => rule.required().min(1),
-        }),
-      ],
+          validation: (rule) => rule.required().min(1)
+        })
+      ]
     }),
 
     // ============================================
@@ -390,7 +381,7 @@ export const portfolioPage = defineType({
       description: "Academic background and education",
       options: {
         collapsible: true,
-        collapsed: true,
+        collapsed: true
       },
       fields: [
         defineField({
@@ -399,9 +390,8 @@ export const portfolioPage = defineType({
           type: "sectionHeading",
           initialValue: {
             title: "Education",
-            description:
-              "My academic journey and the knowledge that built my foundation.",
-          },
+            description: "My academic journey and the knowledge that built my foundation."
+          }
         }),
         defineField({
           name: "education",
@@ -411,12 +401,12 @@ export const portfolioPage = defineType({
           of: [
             {
               type: "reference",
-              to: [{ type: "education" }],
-            },
+              to: [{ type: "education" }]
+            }
           ],
-          validation: (rule) => rule.required().min(1),
-        }),
-      ],
+          validation: (rule) => rule.required().min(1)
+        })
+      ]
     }),
 
     // ============================================
@@ -429,7 +419,7 @@ export const portfolioPage = defineType({
       description: "Contact information and form settings",
       options: {
         collapsible: true,
-        collapsed: true,
+        collapsed: true
       },
       fields: [
         defineField({
@@ -438,9 +428,8 @@ export const portfolioPage = defineType({
           type: "sectionHeading",
           initialValue: {
             title: "Get in Touch",
-            description:
-              "Have a project in mind or just want to say hello? I'd love to hear from you.",
-          },
+            description: "Have a project in mind or just want to say hello? I'd love to hear from you."
+          }
         }),
         defineField({
           name: "form",
@@ -449,7 +438,7 @@ export const portfolioPage = defineType({
           description: "Configuration for the contact form",
           options: {
             collapsible: true,
-            collapsed: true,
+            collapsed: true
           },
           fields: [
             defineField({
@@ -457,68 +446,64 @@ export const portfolioPage = defineType({
               title: "Enable Contact Form",
               type: "boolean",
               description: "Show/hide the contact form",
-              initialValue: true,
+              initialValue: true
             }),
             defineField({
               name: "title",
               title: "Contact Form Title",
               type: "string",
-              initialValue: "Send a Message",
+              initialValue: "Send a Message"
             }),
             defineField({
               name: "description",
               title: "Contact Form Description",
               type: "text",
               rows: 2,
-              initialValue:
-                "Fill out the form and I'll get back to you as soon as possible.",
+              initialValue: "Fill out the form and I'll get back to you as soon as possible."
             }),
             defineField({
               name: "successMessage",
               title: "Success Message",
               type: "text",
               rows: 2,
-              initialValue:
-                "Thank you for your message! I'll get back to you soon.",
+              initialValue: "Thank you for your message! I'll get back to you soon."
             }),
 
             defineField({
               name: "submitButtonText",
               title: "Submit Button Text",
               type: "string",
-              initialValue: "Send Message",
+              initialValue: "Send Message"
             }),
 
             defineField({
               name: "successView",
               title: "Success View Settings",
               type: "object",
-              description:
-                "Configuration for the success message after form submission",
+              description: "Configuration for the success message after form submission",
               fields: [
                 defineField({
                   name: "title",
                   title: "Success Title",
                   type: "string",
-                  initialValue: "Thank you for your message!",
+                  initialValue: "Thank you for your message!"
                 }),
                 defineField({
                   name: "description",
                   title: "Success Description",
                   type: "text",
                   rows: 2,
-                  initialValue:
-                    "Thank you for your message! I'll get back to you soon.",
+                  initialValue: "Thank you for your message! I'll get back to you soon."
                 }),
                 defineField({
                   name: "buttonText",
                   title: "Send Another Button Text",
                   type: "string",
-                  initialValue: "Send another message",
-                }),
-              ],
-            }),
-          ],
+                  initialValue: "Send another message"
+                })
+              ]
+            })
+          ]
         }),
 
         defineField({
@@ -528,7 +513,7 @@ export const portfolioPage = defineType({
           description: "Configuration for the quick chat",
           options: {
             collapsible: true,
-            collapsed: true,
+            collapsed: true
           },
           fields: [
             defineField({
@@ -536,7 +521,7 @@ export const portfolioPage = defineType({
               title: "Quick Chat Title",
               type: "string",
               description: "Title for the quick chat call-out card",
-              initialValue: "Prefer a quick chat?",
+              initialValue: "Prefer a quick chat?"
             }),
             defineField({
               name: "description",
@@ -544,12 +529,11 @@ export const portfolioPage = defineType({
               type: "text",
               description: "Description for the quick chat call-out card",
               rows: 2,
-              initialValue:
-                "Feel free to reach out on LinkedIn or Twitter for a faster response.",
-            }),
-          ],
-        }),
-      ],
+              initialValue: "Feel free to reach out on LinkedIn or Twitter for a faster response."
+            })
+          ]
+        })
+      ]
     }),
 
     // ============================================
@@ -562,7 +546,7 @@ export const portfolioPage = defineType({
       description: "Footer section configuration",
       options: {
         collapsible: true,
-        collapsed: true,
+        collapsed: true
       },
       fields: [
         defineField({
@@ -570,9 +554,9 @@ export const portfolioPage = defineType({
           title: "Copyright Text",
           type: "string",
           description: "Copyright notice (year will be added automatically)",
-          placeholder: "Jan Szewczyk. All rights reserved.",
-        }),
-      ],
+          placeholder: "Jan Szewczyk. All rights reserved."
+        })
+      ]
     }),
 
     // ============================================
@@ -585,7 +569,7 @@ export const portfolioPage = defineType({
       description: "Search engine optimization settings",
       options: {
         collapsible: true,
-        collapsed: true,
+        collapsed: true
       },
       fields: [
         defineField({
@@ -593,7 +577,7 @@ export const portfolioPage = defineType({
           title: "Meta Title",
           type: "string",
           description: "Browser tab and search result title",
-          validation: (rule) => rule.max(60),
+          validation: (rule) => rule.max(60)
         }),
         defineField({
           name: "metaDescription",
@@ -601,46 +585,43 @@ export const portfolioPage = defineType({
           type: "text",
           description: "Search result description snippet",
           rows: 2,
-          validation: (rule) => rule.max(160),
+          validation: (rule) => rule.max(160)
         }),
         defineField({
           name: "keywords",
           title: "Keywords",
           type: "array",
           description: "SEO keywords",
-          of: [{ type: "string" }],
+          of: [{ type: "string" }]
         }),
         defineField({
           name: "ogImage",
           title: "Open Graph Image",
           type: "image",
-          description:
-            "Image shown when sharing on social media (1200x630px recommended)",
+          description: "Image shown when sharing on social media (1200x630px recommended)",
           options: {
-            hotspot: true,
+            hotspot: true
           },
           fields: [
             defineField({
               name: "alt",
               type: "string",
-              title: "Alternative text",
-            }),
-          ],
+              title: "Alternative text"
+            })
+          ]
         }),
         defineField({
           name: "ogTitle",
           title: "Open Graph Title",
           type: "string",
-          description:
-            "Title for Open Graph (defaults to meta title if not provided)",
+          description: "Title for Open Graph (defaults to meta title if not provided)"
         }),
         defineField({
           name: "ogDescription",
           title: "Open Graph Description",
           type: "text",
-          description:
-            "Description for Open Graph (defaults to meta description if not provided)",
-          rows: 2,
+          description: "Description for Open Graph (defaults to meta description if not provided)",
+          rows: 2
         }),
         defineField({
           name: "twitterCardType",
@@ -653,63 +634,61 @@ export const portfolioPage = defineType({
               { title: "Summary Large Image", value: "summary_large_image" },
               { title: "Summary", value: "summary" },
               { title: "App", value: "app" },
-              { title: "Player", value: "player" },
-            ],
-          },
+              { title: "Player", value: "player" }
+            ]
+          }
         }),
         defineField({
           name: "twitterSite",
           title: "Twitter Site",
           type: "string",
-          description: "Twitter site handle (e.g., @username)",
+          description: "Twitter site handle (e.g., @username)"
         }),
         defineField({
           name: "twitterCreator",
           title: "Twitter Creator",
           type: "string",
-          description: "Twitter creator handle (e.g., @username)",
+          description: "Twitter creator handle (e.g., @username)"
         }),
         defineField({
           name: "twitterImage",
           title: "Twitter Image",
           type: "image",
-          description:
-            "Image shown when sharing on Twitter (1200x630px recommended)",
+          description: "Image shown when sharing on Twitter (1200x630px recommended)",
           options: {
-            hotspot: true,
+            hotspot: true
           },
           fields: [
             defineField({
               name: "alt",
               type: "string",
-              title: "Alternative text",
-            }),
-          ],
+              title: "Alternative text"
+            })
+          ]
         }),
         defineField({
           name: "noindex",
           title: "No Index",
           type: "boolean",
-          description: "Prevent this page from being indexed by search engines",
+          description: "Prevent this page from being indexed by search engines"
         }),
         defineField({
           name: "nofollow",
           title: "No Follow",
           type: "boolean",
-          description: "Tell search engines not to follow links on this page",
+          description: "Tell search engines not to follow links on this page"
         }),
         defineField({
           name: "noarchive",
           title: "No Archive",
           type: "boolean",
-          description: "Prevent search engines from caching this page",
+          description: "Prevent search engines from caching this page"
         }),
         defineField({
           name: "canonicalUrl",
           title: "Canonical URL",
           type: "string",
-          description:
-            "Canonical URL for this page (defaults to site URL if not provided)",
+          description: "Canonical URL for this page (defaults to site URL if not provided)"
         }),
         defineField({
           name: "alternateUrls",
@@ -725,24 +704,24 @@ export const portfolioPage = defineType({
                   title: "Hreflang",
                   type: "string",
                   description: "Language code (e.g., en-US, pl-PL)",
-                  validation: (rule) => rule.required(),
+                  validation: (rule) => rule.required()
                 }),
                 defineField({
                   name: "url",
                   title: "URL",
                   type: "url",
                   description: "Alternate page URL",
-                  validation: (rule) => rule.required(),
-                }),
-              ],
-            },
-          ],
+                  validation: (rule) => rule.required()
+                })
+              ]
+            }
+          ]
         }),
         defineField({
           name: "organizationName",
           title: "Organization Name",
           type: "string",
-          description: "Organization name for structured data",
+          description: "Organization name for structured data"
         }),
         defineField({
           name: "organizationLogo",
@@ -750,23 +729,22 @@ export const portfolioPage = defineType({
           type: "image",
           description: "Organization logo for structured data",
           options: {
-            hotspot: true,
+            hotspot: true
           },
           fields: [
             defineField({
               name: "alt",
               type: "string",
-              title: "Alternative text",
-            }),
-          ],
+              title: "Alternative text"
+            })
+          ]
         }),
         defineField({
           name: "sameAsUrls",
           title: "Same As URLs",
           type: "array",
-          description:
-            "Additional URLs associated with the organization or person (e.g., social profiles)",
-          of: [{ type: "url" }],
+          description: "Additional URLs associated with the organization or person (e.g., social profiles)",
+          of: [{ type: "url" }]
         }),
 
         // ============================================
@@ -776,43 +754,42 @@ export const portfolioPage = defineType({
           name: "alternateNames",
           title: "Alternate Names",
           type: "array",
-          description:
-            "Alternative names for the person (e.g., 'Jan Szewczyk', 'JanSzewczyk')",
-          of: [{ type: "string" }],
+          description: "Alternative names for the person (e.g., 'Jan Szewczyk', 'JanSzewczyk')",
+          of: [{ type: "string" }]
         }),
         defineField({
           name: "addressLocality",
           title: "Address Locality",
           type: "string",
-          description: "City name (e.g., 'Cracow')",
+          description: "City name (e.g., 'Cracow')"
         }),
         defineField({
           name: "addressCountry",
           title: "Address Country",
           type: "string",
-          description: "ISO country code (e.g., 'PL' for Poland)",
+          description: "ISO country code (e.g., 'PL' for Poland)"
         }),
         defineField({
           name: "knowsAbout",
           title: "Knows About",
           type: "array",
           description: "Skills and areas of expertise for structured data",
-          of: [{ type: "string" }],
-        }),
-      ],
-    }),
+          of: [{ type: "string" }]
+        })
+      ]
+    })
   ],
 
   preview: {
     select: {
       name: "hero.name",
-      title: "hero.title",
+      title: "hero.title"
     },
     prepare({ name, title }) {
       return {
         title: name || "Portfolio Page",
-        subtitle: title || "Main portfolio configuration",
+        subtitle: title || "Main portfolio configuration"
       };
-    },
-  },
+    }
+  }
 });

@@ -1,9 +1,6 @@
 import addonA11y from "@storybook/addon-a11y";
 import addonDocs from "@storybook/addon-docs";
-import {
-  DocsContainer,
-  type DocsContainerProps,
-} from "@storybook/addon-docs/blocks";
+import { DocsContainer, type DocsContainerProps } from "@storybook/addon-docs/blocks";
 import { definePreview } from "@storybook/nextjs-vite";
 import { DARK_MODE_EVENT_NAME } from "@storybook-community/storybook-dark-mode";
 import * as React from "react";
@@ -20,8 +17,7 @@ export function DarkModeDocsContainer(props: DocsContainerProps) {
   React.useEffect(() => {
     props.context.channel.on(DARK_MODE_EVENT_NAME, setDark);
 
-    return () =>
-      props.context.channel.removeListener(DARK_MODE_EVENT_NAME, setDark);
+    return () => props.context.channel.removeListener(DARK_MODE_EVENT_NAME, setDark);
   }, [props.context.channel]);
   return <DocsContainer {...props} theme={isDark ? dark : light} />;
 }
@@ -39,10 +35,7 @@ function ThemeDecorator({ children }: { children: React.ReactNode }) {
       window as unknown as {
         __STORYBOOK_ADDONS_CHANNEL__?: {
           on: (event: string, callback: (isDark: boolean) => void) => void;
-          removeListener: (
-            event: string,
-            callback: (isDark: boolean) => void,
-          ) => void;
+          removeListener: (event: string, callback: (isDark: boolean) => void) => void;
         };
       }
     ).__STORYBOOK_ADDONS_CHANNEL__;
@@ -72,22 +65,22 @@ export default definePreview({
       light,
       current: "dark",
       classTarget: "html",
-      stylePreview: true,
+      stylePreview: true
     },
     nextjs: {
-      appDirectory: true,
+      appDirectory: true
     },
     controls: {
       matchers: {
         color: /(background|color)$/i,
-        date: /Date$/,
-      },
+        date: /Date$/
+      }
     },
     docs: {
       controls: {
-        sort: "requiredFirst",
+        sort: "requiredFirst"
       },
-      container: DarkModeDocsContainer,
+      container: DarkModeDocsContainer
     },
     a11y: {
       // 'todo' - show a11y violations in the test UI only
@@ -95,16 +88,16 @@ export default definePreview({
       // 'off' - skip a11y checks entirely
       test: "todo",
       options: {
-        xpath: true,
-      },
-    },
+        xpath: true
+      }
+    }
   },
   decorators: [
     (Story) => (
       <ThemeDecorator>
         <Story />
       </ThemeDecorator>
-    ),
+    )
   ],
-  addons: [addonA11y(), addonDocs()],
+  addons: [addonA11y(), addonDocs()]
 });

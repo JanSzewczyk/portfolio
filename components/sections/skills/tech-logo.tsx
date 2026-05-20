@@ -28,9 +28,7 @@ export function TechLogo({ tech, dataSanity }: TechLogoProps) {
         ) : null}
       </div>
 
-      <span className="relative z-10 text-center text-body-xs text-foreground">
-        {tech.name}
-      </span>
+      <span className="relative z-10 text-center text-body-xs text-foreground">{tech.name}</span>
     </Card>
   );
 }

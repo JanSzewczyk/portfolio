@@ -17,9 +17,7 @@ export function Footer({ footer, personalInfo }: FooterProps) {
         <div className="flex flex-col items-center justify-between gap-6 md:flex-row">
           <div className="text-center md:text-left">
             <p className="font-semibold">{personalInfo?.name}</p>
-            <p className="text-muted-foreground text-sm">
-              {personalInfo?.title}
-            </p>
+            <p className="text-muted-foreground text-sm">{personalInfo?.title}</p>
           </div>
 
           <div className="flex items-center gap-2">
@@ -34,10 +32,7 @@ export function Footer({ footer, personalInfo }: FooterProps) {
                       rel="noopener noreferrer"
                       aria-label={link.platform ?? ""}
                     >
-                      <ReactIcon
-                        name={link.icon as IconName}
-                        className="size-5"
-                      />
+                      <ReactIcon name={link.icon as IconName} className="size-5" />
                     </a>
                   </Button>
                 );
@@ -46,14 +41,8 @@ export function Footer({ footer, personalInfo }: FooterProps) {
         </div>
 
         <div className="mt-8 flex flex-col items-center justify-between gap-4 border-t pt-8 text-muted-foreground text-sm md:flex-row">
-          <p>
-            {footer?.copyrightText
-              ? `© ${currentYear} ${footer.copyrightText}`
-              : null}
-          </p>
-          <p className="text-muted-foreground/60">
-            v{env.NEXT_PUBLIC_APP_VERSION}
-          </p>
+          <p>{footer?.copyrightText ? `© ${currentYear} ${footer.copyrightText}` : null}</p>
+          <p className="text-muted-foreground/60">v{env.NEXT_PUBLIC_APP_VERSION}</p>
         </div>
       </div>
     </footer>

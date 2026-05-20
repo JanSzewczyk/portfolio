@@ -8,7 +8,7 @@ describe("contactFormSchema", () => {
       const result = contactFormSchema.safeParse({
         name: "John Doe",
         email: "john@example.com",
-        message: "Hello, this is a test message!",
+        message: "Hello, this is a test message!"
       });
 
       expect(result.success).toBe(true);
@@ -23,7 +23,7 @@ describe("contactFormSchema", () => {
       const result = contactFormSchema.safeParse({
         name: "  John Doe  ",
         email: "  john@example.com  ",
-        message: "  Hello, this is a test message!  ",
+        message: "  Hello, this is a test message!  "
       });
 
       expect(result.success).toBe(true);
@@ -38,7 +38,7 @@ describe("contactFormSchema", () => {
       const result = contactFormSchema.safeParse({
         name: "John Doe",
         email: "JOHN@EXAMPLE.COM",
-        message: "Hello, this is a test message!",
+        message: "Hello, this is a test message!"
       });
 
       expect(result.success).toBe(true);
@@ -53,14 +53,12 @@ describe("contactFormSchema", () => {
       const result = contactFormSchema.safeParse({
         name: "J",
         email: "john@example.com",
-        message: "Hello, this is a test message!",
+        message: "Hello, this is a test message!"
       });
 
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.issues[0]?.message).toBe(
-          "Name must be at least 2 characters",
-        );
+        expect(result.error.issues[0]?.message).toBe("Name must be at least 2 characters");
       }
     });
 
@@ -68,14 +66,12 @@ describe("contactFormSchema", () => {
       const result = contactFormSchema.safeParse({
         name: "A".repeat(101),
         email: "john@example.com",
-        message: "Hello, this is a test message!",
+        message: "Hello, this is a test message!"
       });
 
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.issues[0]?.message).toBe(
-          "Name must be less than 100 characters",
-        );
+        expect(result.error.issues[0]?.message).toBe("Name must be less than 100 characters");
       }
     });
   });
@@ -85,14 +81,12 @@ describe("contactFormSchema", () => {
       const result = contactFormSchema.safeParse({
         name: "John Doe",
         email: "not-an-email",
-        message: "Hello, this is a test message!",
+        message: "Hello, this is a test message!"
       });
 
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.issues[0]?.message).toBe(
-          "Please enter a valid email address",
-        );
+        expect(result.error.issues[0]?.message).toBe("Please enter a valid email address");
       }
     });
 
@@ -100,7 +94,7 @@ describe("contactFormSchema", () => {
       const result = contactFormSchema.safeParse({
         name: "John Doe",
         email: "john@",
-        message: "Hello, this is a test message!",
+        message: "Hello, this is a test message!"
       });
 
       expect(result.success).toBe(false);
@@ -110,7 +104,7 @@ describe("contactFormSchema", () => {
       const result = contactFormSchema.safeParse({
         name: "John Doe",
         email: "johnexample.com",
-        message: "Hello, this is a test message!",
+        message: "Hello, this is a test message!"
       });
 
       expect(result.success).toBe(false);
@@ -122,14 +116,12 @@ describe("contactFormSchema", () => {
       const result = contactFormSchema.safeParse({
         name: "John Doe",
         email: "john@example.com",
-        message: "Short",
+        message: "Short"
       });
 
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.issues[0]?.message).toBe(
-          "Message must be at least 10 characters",
-        );
+        expect(result.error.issues[0]?.message).toBe("Message must be at least 10 characters");
       }
     });
 
@@ -137,14 +129,12 @@ describe("contactFormSchema", () => {
       const result = contactFormSchema.safeParse({
         name: "John Doe",
         email: "john@example.com",
-        message: "A".repeat(1001),
+        message: "A".repeat(1001)
       });
 
       expect(result.success).toBe(false);
       if (!result.success) {
-        expect(result.error.issues[0]?.message).toBe(
-          "Message must be less than 1000 characters",
-        );
+        expect(result.error.issues[0]?.message).toBe("Message must be less than 1000 characters");
       }
     });
 
@@ -152,7 +142,7 @@ describe("contactFormSchema", () => {
       const result = contactFormSchema.safeParse({
         name: "John Doe",
         email: "john@example.com",
-        message: "1234567890",
+        message: "1234567890"
       });
 
       expect(result.success).toBe(true);
@@ -162,7 +152,7 @@ describe("contactFormSchema", () => {
       const result = contactFormSchema.safeParse({
         name: "John Doe",
         email: "john@example.com",
-        message: "A".repeat(1000),
+        message: "A".repeat(1000)
       });
 
       expect(result.success).toBe(true);
@@ -174,7 +164,7 @@ describe("contactFormSchema", () => {
       const result = contactFormSchema.safeParse({
         name: "",
         email: "john@example.com",
-        message: "Hello, this is a test message!",
+        message: "Hello, this is a test message!"
       });
 
       expect(result.success).toBe(false);
@@ -184,7 +174,7 @@ describe("contactFormSchema", () => {
       const result = contactFormSchema.safeParse({
         name: "John Doe",
         email: "",
-        message: "Hello, this is a test message!",
+        message: "Hello, this is a test message!"
       });
 
       expect(result.success).toBe(false);
@@ -194,7 +184,7 @@ describe("contactFormSchema", () => {
       const result = contactFormSchema.safeParse({
         name: "John Doe",
         email: "john@example.com",
-        message: "",
+        message: ""
       });
 
       expect(result.success).toBe(false);
@@ -204,7 +194,7 @@ describe("contactFormSchema", () => {
       const result = contactFormSchema.safeParse({
         name: "   ",
         email: "john@example.com",
-        message: "Hello, this is a test message!",
+        message: "Hello, this is a test message!"
       });
 
       expect(result.success).toBe(false);

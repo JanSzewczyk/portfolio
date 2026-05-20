@@ -4,8 +4,7 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: "Jan Szewczyk - Frontend Engineer Portfolio",
     short_name: "Jan Szewczyk",
-    description:
-      "Frontend Engineer from Cracow, Poland specializing in React, Next.js, TypeScript, and React Native.",
+    description: "Frontend Engineer from Cracow, Poland specializing in React, Next.js, TypeScript, and React Native.",
     start_url: "/",
     display: "standalone",
     background_color: "#111111",
@@ -18,17 +17,17 @@ export default function manifest(): MetadataRoute.Manifest {
         src: "/android-chrome-192x192.png",
         sizes: "192x192",
         type: "image/png",
-        purpose: "maskable",
+        purpose: "maskable"
       },
       {
         src: "/android-chrome-512x512.png",
         sizes: "512x512",
         type: "image/png",
-        purpose: "maskable",
-      },
+        purpose: "maskable"
+      }
     ],
     categories: ["portfolio", "developer", "technology"],
     lang: "en-US",
-    dir: "ltr",
+    dir: "ltr"
   };
 }

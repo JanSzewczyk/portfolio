@@ -14,16 +14,14 @@ import {
   CardTitle,
   Tooltip,
   TooltipContent,
-  TooltipTrigger,
+  TooltipTrigger
 } from "@szum-tech/design-system";
 import { ExternalLinkIcon, FileTextIcon } from "lucide-react";
 import { stegaClean } from "next-sanity";
 import { ReactIcon } from "~/components/ui/react-icon";
 import type { PortfolioPageQueryResult } from "~/lib/sanity/types";
 
-type EducationData = NonNullable<
-  NonNullable<NonNullable<PortfolioPageQueryResult>["education"]>["education"]
->[number];
+type EducationData = NonNullable<NonNullable<NonNullable<PortfolioPageQueryResult>["education"]>["education"]>[number];
 
 export type EducationCardProps = {
   education: EducationData;
@@ -41,10 +39,7 @@ function formatPeriod(startDate: string, endDate?: string): string {
 }
 
 export function EducationCard({ education }: EducationCardProps) {
-  const thesisTechnologies =
-    education.thesis?.project?.technologies ??
-    education.thesis?.technologies ??
-    [];
+  const thesisTechnologies = education.thesis?.project?.technologies ?? education.thesis?.technologies ?? [];
   const hasThesisActions =
     Boolean(education.thesis?.project?.links?.live) ||
     Boolean(education.thesis?.project?.links?.github) ||
@@ -54,16 +49,9 @@ export function EducationCard({ education }: EducationCardProps) {
     <Card>
       <CardHeader>
         <div className="mb-2 flex flex-wrap items-center gap-2">
-          <Badge variant="outline">
-            {formatPeriod(
-              education.startDate ?? "",
-              education.endDate ?? undefined,
-            )}
-          </Badge>
+          <Badge variant="outline">{formatPeriod(education.startDate ?? "", education.endDate ?? undefined)}</Badge>
           <Badge variant="secondary">{education.degree}</Badge>
-          {education.grade && (
-            <Badge variant="secondary">GPA: {education.grade}</Badge>
-          )}
+          {education.grade && <Badge variant="secondary">GPA: {education.grade}</Badge>}
         </div>
         <CardTitle>{education.fieldOfStudy}</CardTitle>
         <CardDescription>
@@ -92,17 +80,11 @@ export function EducationCard({ education }: EducationCardProps) {
           <div className="rounded border bg-muted/50 p-4">
             <h3 className="text-mute">Thesis</h3>
             <p className="mb-2 text-heading-h3">{education.thesis.title}</p>
-            <p className="mb-3 text-body-sm text-muted-foreground">
-              {education.thesis.description}
-            </p>
+            <p className="mb-3 text-body-sm text-muted-foreground">{education.thesis.description}</p>
             {thesisTechnologies.length > 0 && (
               <div className="mb-3 flex flex-wrap gap-1.5">
                 {thesisTechnologies.map((tech) => (
-                  <Badge
-                    key={`${education._id}-thesis-${tech._id}`}
-                    variant="outline"
-                    className="text-body-xs"
-                  >
+                  <Badge key={`${education._id}-thesis-${tech._id}`} variant="outline" className="text-body-xs">
                     {tech.name}
                   </Badge>
                 ))}
@@ -111,12 +93,8 @@ export function EducationCard({ education }: EducationCardProps) {
             {education.thesis.project ? (
               <div className="border-t pt-3">
                 <h4 className="text-mute">Related Project</h4>
-                <p className="mb-2 text-heading-h4">
-                  {education.thesis.project.title}
-                </p>
-                <p className="mb-2 text-body-xs text-muted-foreground">
-                  {education.thesis.project.description}
-                </p>
+                <p className="mb-2 text-heading-h4">{education.thesis.project.title}</p>
+                <p className="mb-2 text-body-xs text-muted-foreground">{education.thesis.project.description}</p>
               </div>
             ) : null}
             {hasThesisActions ? (
@@ -143,9 +121,7 @@ export function EducationCard({ education }: EducationCardProps) {
                     <TooltipTrigger asChild>
                       <Button size="icon" variant="ghost" asChild>
                         <a
-                          href={stegaClean(
-                            education.thesis.project.links.github,
-                          )}
+                          href={stegaClean(education.thesis.project.links.github)}
                           target="_blank"
                           rel="noopener noreferrer"
                           aria-label="Open source code"

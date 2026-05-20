@@ -1,14 +1,6 @@
 import "server-only";
 
-import type {
-  BreadcrumbList,
-  Graph,
-  Organization,
-  Person,
-  ProfilePage,
-  WebPage,
-  WebSite,
-} from "schema-dts";
+import type { BreadcrumbList, Graph, Organization, Person, ProfilePage, WebPage, WebSite } from "schema-dts";
 
 import type { SeoQueryResult } from "~/lib/sanity/types";
 
@@ -22,13 +14,7 @@ export function serializeJsonLd(data: unknown): string {
 /**
  * Build Person schema from Sanity data with fallback values
  */
-export function buildPersonSchema({
-  siteUrl,
-  seoData,
-}: {
-  siteUrl: string;
-  seoData: SeoQueryResult | null;
-}): Person {
+export function buildPersonSchema({ siteUrl, seoData }: { siteUrl: string; seoData: SeoQueryResult | null }): Person {
   // Get personal info from Sanity or fallback
   const name = seoData?.personalInfo?.name ?? undefined;
   const title = seoData?.personalInfo?.title ?? undefined;
@@ -57,7 +43,7 @@ export function buildPersonSchema({
       ? {
           "@type": "ImageObject",
           url: avatar,
-          caption: `${name} - ${title}`,
+          caption: `${name} - ${title}`
         }
       : undefined,
     url: siteUrl,
@@ -67,7 +53,7 @@ export function buildPersonSchema({
         ? {
             "@type": "PostalAddress",
             addressLocality,
-            addressCountry,
+            addressCountry
           }
         : undefined,
     sameAs: sameAsUrls,
@@ -75,22 +61,16 @@ export function buildPersonSchema({
     worksFor: company
       ? {
           "@type": "Organization",
-          name: company,
+          name: company
         }
-      : undefined,
+      : undefined
   };
 }
 
 /**
  * Build WebSite schema from Sanity data with fallback values
  */
-export function buildWebsiteSchema({
-  siteUrl,
-  seoData,
-}: {
-  siteUrl: string;
-  seoData: SeoQueryResult | null;
-}): WebSite {
+export function buildWebsiteSchema({ siteUrl, seoData }: { siteUrl: string; seoData: SeoQueryResult | null }): WebSite {
   const name = seoData?.personalInfo?.name ?? undefined;
   const title = seoData?.personalInfo?.title ?? undefined;
   const description = seoData?.seo?.metaDescription ?? undefined;
@@ -102,27 +82,20 @@ export function buildWebsiteSchema({
     name: name && title ? `${name} - ${title} Portfolio` : undefined,
     description,
     publisher: {
-      "@id": `${siteUrl}#person`,
+      "@id": `${siteUrl}#person`
     },
-    inLanguage: "en-US",
+    inLanguage: "en-US"
   };
 }
 
 /**
  * Build WebPage schema from Sanity data with fallback values
  */
-export function buildWebPageSchema({
-  siteUrl,
-  seoData,
-}: {
-  siteUrl: string;
-  seoData: SeoQueryResult | null;
-}): WebPage {
+export function buildWebPageSchema({ siteUrl, seoData }: { siteUrl: string; seoData: SeoQueryResult | null }): WebPage {
   const name = seoData?.personalInfo?.name ?? undefined;
   const title = seoData?.personalInfo?.title ?? undefined;
   const description = seoData?.seo?.metaDescription ?? undefined;
-  const ogImage =
-    seoData?.seo?.ogImage?.asset?.url ?? `${siteUrl}/opengraph-image`;
+  const ogImage = seoData?.seo?.ogImage?.asset?.url ?? `${siteUrl}/opengraph-image`;
 
   return {
     "@type": "WebPage",
@@ -131,16 +104,16 @@ export function buildWebPageSchema({
     name: name && title ? `${name} | ${title}` : undefined,
     description,
     isPartOf: {
-      "@id": `${siteUrl}#website`,
+      "@id": `${siteUrl}#website`
     },
     about: {
-      "@id": `${siteUrl}#person`,
+      "@id": `${siteUrl}#person`
     },
     inLanguage: "en-US",
     primaryImageOfPage: {
       "@type": "ImageObject",
-      url: ogImage,
-    },
+      url: ogImage
+    }
   };
 }
 
@@ -149,7 +122,7 @@ export function buildWebPageSchema({
  */
 export function buildProfilePageSchema({
   siteUrl,
-  seoData,
+  seoData
 }: {
   siteUrl: string;
   seoData: SeoQueryResult | null;
@@ -164,8 +137,8 @@ export function buildProfilePageSchema({
     name: name ? `${name} - Portfolio` : undefined,
     description,
     mainEntity: {
-      "@id": `${siteUrl}#person`,
-    },
+      "@id": `${siteUrl}#person`
+    }
   };
 }
 
@@ -174,7 +147,7 @@ export function buildProfilePageSchema({
  */
 export function buildOrganizationSchema({
   siteUrl,
-  seoData,
+  seoData
 }: {
   siteUrl: string;
   seoData: SeoQueryResult | null;
@@ -192,20 +165,16 @@ export function buildOrganizationSchema({
     logo: logo
       ? {
           "@type": "ImageObject",
-          url: logo,
+          url: logo
         }
-      : undefined,
+      : undefined
   };
 }
 
 /**
  * Build BreadcrumbList schema (static)
  */
-export function buildBreadcrumbSchema({
-  siteUrl,
-}: {
-  siteUrl: string;
-}): BreadcrumbList {
+export function buildBreadcrumbSchema({ siteUrl }: { siteUrl: string }): BreadcrumbList {
   return {
     "@type": "BreadcrumbList",
     itemListElement: [
@@ -213,27 +182,27 @@ export function buildBreadcrumbSchema({
         "@type": "ListItem",
         position: 1,
         name: "Home",
-        item: siteUrl,
+        item: siteUrl
       },
       {
         "@type": "ListItem",
         position: 2,
         name: "About",
-        item: `${siteUrl}#about`,
+        item: `${siteUrl}#about`
       },
       {
         "@type": "ListItem",
         position: 3,
         name: "Projects",
-        item: `${siteUrl}#projects`,
+        item: `${siteUrl}#projects`
       },
       {
         "@type": "ListItem",
         position: 4,
         name: "Contact",
-        item: `${siteUrl}#contact`,
-      },
-    ],
+        item: `${siteUrl}#contact`
+      }
+    ]
   };
 }
 
@@ -242,7 +211,7 @@ export function buildBreadcrumbSchema({
  */
 export function buildStructuredDataGraph({
   siteUrl,
-  seoData,
+  seoData
 }: {
   siteUrl: string;
   seoData: SeoQueryResult | null;
@@ -255,7 +224,7 @@ export function buildStructuredDataGraph({
       buildWebPageSchema({ siteUrl, seoData }),
       buildProfilePageSchema({ siteUrl, seoData }),
       buildBreadcrumbSchema({ siteUrl }),
-      buildOrganizationSchema({ siteUrl, seoData }),
-    ],
+      buildOrganizationSchema({ siteUrl, seoData })
+    ]
   };
 }

@@ -21,10 +21,7 @@ export function Navigation({ personalInfo }: NavigationProps) {
     <>
       <Header>
         <div className="flex w-full items-center justify-between">
-          <Link
-            href="/"
-            className="text-heading-h3 transition-colors hover:text-primary"
-          >
+          <Link href="/" className="text-heading-h3 transition-colors hover:text-primary">
             {personalInfo?.name}
           </Link>
 
@@ -38,7 +35,7 @@ export function Navigation({ personalInfo }: NavigationProps) {
                   size="sm"
                   onClick={() =>
                     scrollToSection(item.section, {
-                      onAfterScroll: () => setIsMobileMenuOpen(false),
+                      onAfterScroll: () => setIsMobileMenuOpen(false)
                     })
                   }
                 >
@@ -59,11 +56,7 @@ export function Navigation({ personalInfo }: NavigationProps) {
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
               >
-                {isMobileMenuOpen ? (
-                  <XIcon className="size-5" />
-                ) : (
-                  <MenuIcon className="size-5" />
-                )}
+                {isMobileMenuOpen ? <XIcon className="size-5" /> : <MenuIcon className="size-5" />}
               </Button>
             </div>
           </div>
@@ -81,7 +74,7 @@ export function Navigation({ personalInfo }: NavigationProps) {
                 className="justify-start"
                 onClick={() =>
                   scrollToSection(item.section, {
-                    onAfterScroll: () => setIsMobileMenuOpen(false),
+                    onAfterScroll: () => setIsMobileMenuOpen(false)
                   })
                 }
               >
