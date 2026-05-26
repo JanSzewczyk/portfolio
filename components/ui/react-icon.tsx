@@ -2,13 +2,11 @@
 
 import type { IconType } from "react-icons";
 
-import * as SimpleIcons from "react-icons/si";
-import * as TablerIcons from "react-icons/tb";
-import * as VSCodeIcons from "react-icons/vsc";
+// Curated, tree-shakeable icon map. Avoids the `import * as X from "react-icons/*"` barrel that
+// pulled the whole icon sets (~4.7 MB) into the client bundle. Add new icons in icon-registry.ts.
+import { ICONS, type IconName } from "~/components/ui/icon-registry";
 
-const ICONS = { ...SimpleIcons, ...TablerIcons, ...VSCodeIcons } as const;
-
-export type IconName = keyof typeof ICONS;
+export type { IconName };
 
 export type DynamicIconProps = {
   name: IconName;

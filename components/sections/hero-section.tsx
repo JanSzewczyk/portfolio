@@ -3,7 +3,6 @@
 import {
   Avatar,
   AvatarFallback,
-  AvatarImage,
   Button,
   Status,
   StatusIndicator,
@@ -12,6 +11,7 @@ import {
   WordRotate
 } from "@szum-tech/design-system";
 import { ArrowDownIcon } from "lucide-react";
+import Image from "next/image";
 import { stegaClean } from "next-sanity";
 import { GridBackground } from "~/components/ui/grid-background";
 import { Section } from "~/constants/sections";
@@ -45,13 +45,20 @@ export function HeroSection({ personalInfo, hero, documentId, documentType }: He
       <div className="container flex min-h-[calc(100vh-4rem)] items-center py-20">
         <div className="mx-auto flex max-w-4xl flex-col items-center text-center">
           <Avatar className="size-32">
+            {/* Rendered via next/image so the browser fetches from /_next/image (same origin)
+                instead of cdn.sanity.io directly, avoiding the third-party `sanitySession` cookie. */}
             {personalInfo?.avatar ? (
-              <AvatarImage
-                src={urlFor(personalInfo.avatar).auto("format").url()}
-                alt={personalInfo?.avatar?.alt ?? undefined}
+              <Image
+                src={urlFor(personalInfo.avatar).width(128).height(128).url()}
+                alt={personalInfo?.avatar?.alt ?? ""}
+                width={128}
+                height={128}
+                priority
+                className="aspect-square size-full object-cover"
               />
-            ) : null}
-            <AvatarFallback className="text-3xl">{initials}</AvatarFallback>
+            ) : (
+              <AvatarFallback className="text-3xl">{initials}</AvatarFallback>
+            )}
           </Avatar>
 
           <div className="mt-2 mb-4">

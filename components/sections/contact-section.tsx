@@ -75,7 +75,7 @@ export function ContactSection({ personalInfo, contact }: ContactSectionProps) {
                   <CardTitle>{contact?.quickChat.title}</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-body-sm text-muted-foreground">{contact?.quickChat?.description}</p>
+                  <p className="text-body-sm text-card-foreground">{contact?.quickChat?.description}</p>
                 </CardContent>
               </Card>
             ) : null}

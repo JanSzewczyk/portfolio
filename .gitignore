@@ -129,3 +129,4 @@ src/styles
 # Claude
 /.claude/*.local.*
 /bash.exe.stackdump
+/.claude/agent-memory

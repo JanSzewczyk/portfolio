@@ -42,7 +42,7 @@ export function Footer({ footer, personalInfo }: FooterProps) {
 
         <div className="mt-8 flex flex-col items-center justify-between gap-4 border-t pt-8 text-muted-foreground text-sm md:flex-row">
           <p>{footer?.copyrightText ? `© ${currentYear} ${footer.copyrightText}` : null}</p>
-          <p className="text-muted-foreground/60">v{env.NEXT_PUBLIC_APP_VERSION}</p>
+          <p className="text-muted-foreground">v{env.NEXT_PUBLIC_APP_VERSION}</p>
         </div>
       </div>
     </footer>

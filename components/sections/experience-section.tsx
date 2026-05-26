@@ -20,6 +20,7 @@ import {
   TimelineDot,
   TimelineItem
 } from "@szum-tech/design-system";
+import Image from "next/image";
 import { stegaClean } from "next-sanity";
 import { SectionHeading } from "~/components/ui/section-heading";
 import { Section } from "~/constants/sections";
@@ -106,11 +107,22 @@ export function ExperienceSection({ experience, documentId, documentType }: Expe
                         <CardDescription>
                           <div className="flex items-center gap-3">
                             <Avatar
-                              className="size-10 rounded-lg"
+                              className="size-10"
                               data-sanity={createSanityAttribute(`experience.experiences[${index}].companyLogo`)}
                             >
-                              <AvatarImage src={companyLogoUrl} alt={`${stegaClean(exp.company)} logo`} />
-                              <AvatarFallback className="rounded-lg">{companyInitial}</AvatarFallback>
+                              {/* next/image proxies the logo through /_next/image (same origin),
+                                  avoiding the third-party `sanitySession` cookie from cdn.sanity.io. */}
+                              {companyLogoUrl ? (
+                                <Image
+                                  src={companyLogoUrl}
+                                  alt={`${stegaClean(exp.company)} logo`}
+                                  width={40}
+                                  height={40}
+                                  className="size-full object-cover"
+                                />
+                              ) : (
+                                <AvatarFallback>{companyInitial}</AvatarFallback>
+                              )}
                             </Avatar>
                             <div className="flex flex-col">
                               <div data-sanity={createSanityAttribute(`experience.experiences[${index}].company`)}>

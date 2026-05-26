@@ -73,6 +73,7 @@ export default defineConfig({
           exclude: ["**/node_modules/**", "**/dist/**", "**/.next/**"],
           testTimeout: 30000,
           hookTimeout: 30000,
+          isolate: false,
           browser: {
             enabled: true,
             provider: playwright(),

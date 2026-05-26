@@ -3,12 +3,9 @@
 import { Autocomplete, Box, Card, Flex, Text } from "@sanity/ui";
 import * as React from "react";
 import type { IconType } from "react-icons";
-import * as SimpleIcons from "react-icons/si";
-import * as TablerIcons from "react-icons/tb";
-import * as VSCodeIcons from "react-icons/vsc";
 import { type StringInputProps, set, unset } from "sanity";
+import { ICONS } from "~/components/ui/icon-registry";
 
-const ICONS = { ...SimpleIcons, ...TablerIcons, ...VSCodeIcons } as const;
 const ICON_NAMES = Object.keys(ICONS);
 
 type IconName = keyof typeof ICONS;
