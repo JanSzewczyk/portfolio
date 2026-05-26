@@ -1,11 +1,19 @@
 "use client";
 
-import { Card, CardContent, CountingNumber } from "@szum-tech/design-system";
-import { LocationCard } from "~/components/sections/about/location-card";
+import { Card, CardContent, CountingNumber, Skeleton } from "@szum-tech/design-system";
+import dynamic from "next/dynamic";
 import { SectionHeading } from "~/components/ui/section-heading";
 import { Section } from "~/constants/sections";
 import type { PortfolioPageQueryResult } from "~/lib/sanity/types";
 import { buildSanityAttribute } from "~/lib/sanity/utils";
+
+// pigeon-maps is heavy and the map sits below the fold, so it is loaded lazily
+// (client-only) to keep it out of the initial bundle. The h-48 skeleton matches
+// the rendered map height to avoid layout shift (CLS).
+const LocationCard = dynamic(() => import("~/components/sections/about/location-card").then((m) => m.LocationCard), {
+  ssr: false,
+  loading: () => <Skeleton className="h-48 w-full rounded-xl" />
+});
 
 type AboutSectionProps = {
   about: NonNullable<PortfolioPageQueryResult>["about"];

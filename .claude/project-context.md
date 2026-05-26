@@ -5,59 +5,59 @@ When using this configuration in other projects, update this file with your proj
 
 ## Tech Stack
 
-| Category | Technology | Version | Status |
-|----------|------------|---------|--------|
-| Framework | Next.js | 16.1 (App Router) | ✅ Installed |
-| UI Library | React | 19.2 (with React Compiler) | ✅ Installed |
-| Styling | Tailwind CSS | 4.2 | ✅ Installed |
-| Design System | @szum-tech/design-system | 3.12 (shadcn/ui based) | ✅ Installed |
-| Type Safety | TypeScript | 5.9 (strict mode) | ✅ Installed |
-| Env Validation | T3 Env | @t3-oss/env-nextjs 0.13 | ✅ Installed |
-| Logging | Pino | 10.3 (pretty-printing in dev) | ✅ Installed |
-| Forms | React Hook Form | 7.71 | ✅ Installed |
-| Validation | Zod | 4.3 | ✅ Installed |
-| Email | Resend | 6.9 (with @react-email/components) | ✅ Installed |
-| CMS | Sanity | 5.12 (with next-sanity 12.0) | ✅ Installed |
+| Category       | Technology               | Version                            | Status       |
+| -------------- | ------------------------ | ---------------------------------- | ------------ |
+| Framework      | Next.js                  | 16.1 (App Router)                  | ✅ Installed |
+| UI Library     | React                    | 19.2 (with React Compiler)         | ✅ Installed |
+| Styling        | Tailwind CSS             | 4.2                                | ✅ Installed |
+| Design System  | @szum-tech/design-system | 3.12 (shadcn/ui based)             | ✅ Installed |
+| Type Safety    | TypeScript               | 5.9 (strict mode)                  | ✅ Installed |
+| Env Validation | T3 Env                   | @t3-oss/env-nextjs 0.13            | ✅ Installed |
+| Logging        | Pino                     | 10.3 (pretty-printing in dev)      | ✅ Installed |
+| Forms          | React Hook Form          | 7.71                               | ✅ Installed |
+| Validation     | Zod                      | 4.3                                | ✅ Installed |
+| Email          | Resend                   | 6.9 (with @react-email/components) | ✅ Installed |
+| CMS            | Sanity                   | 5.12 (with next-sanity 12.0)       | ✅ Installed |
 
 ### Optional Integrations (Not Yet Installed)
 
 These are recommended patterns documented in skills but require installation:
 
-| Category | Technology | Skill Documentation |
-|----------|------------|---------------------|
-| Authentication | Clerk | `clerk-auth-proxy` skill |
-| Database | Firebase Firestore | `firebase-firestore` skill |
-| Toast System | Cookie-based toasts | `toast-notifications` skill |
+| Category       | Technology          | Skill Documentation         |
+| -------------- | ------------------- | --------------------------- |
+| Authentication | Clerk               | `clerk-auth-proxy` skill    |
+| Database       | Firebase Firestore  | `firebase-firestore` skill  |
+| Toast System   | Cookie-based toasts | `toast-notifications` skill |
 
 > **Note:** When you add these integrations, update this table and uncomment relevant sections below.
 
 ## Testing Stack
 
-| Type | Tool | Location | Command |
-|------|------|----------|---------|
-| Unit | Vitest 4.0 | `features/`, `components/`, `tests/unit/` | `npm run test:unit` |
-| Component | Storybook 10.2 + Vitest | `*.stories.tsx` | `npm run test:storybook` |
-| E2E | Playwright 1.58 | `tests/e2e/` | `npm run test:e2e` |
-| Test Data | mimicry-js 3.1 | `tests/builders/` | Builders for mock data |
-| All | Vitest | - | `npm run test` |
+| Type      | Tool                    | Location                                  | Command                  |
+| --------- | ----------------------- | ----------------------------------------- | ------------------------ |
+| Unit      | Vitest 4.0              | `features/`, `components/`, `tests/unit/` | `npm run test:unit`      |
+| Component | Storybook 10.2 + Vitest | `*.stories.tsx`                           | `npm run test:storybook` |
+| E2E       | Playwright 1.58         | `tests/e2e/`                              | `npm run test:e2e`       |
+| Test Data | mimicry-js 3.1          | `tests/builders/`                         | Builders for mock data   |
+| All       | Vitest                  | -                                         | `npm run test`           |
 
 ## Key Files
 
-| Purpose | File |
-|---------|------|
-| Next.js config | `next.config.ts` |
-| Request logging | `proxy.ts` |
-| ESLint config | `eslint.config.ts` |
-| Prettier config | `prettier.config.ts` |
-| Dependencies | `package.json` |
-| TypeScript | `tsconfig.json` |
-| Tailwind | `app/globals.css` (CSS-first config) |
-| Sanity config | `sanity.config.ts`, `sanity.cli.ts` |
-| Playwright | `playwright.config.ts` |
-| Semantic Release | `release.config.js` |
+| Purpose          | File                                       |
+| ---------------- | ------------------------------------------ |
+| Next.js config   | `next.config.ts`                           |
+| Request logging  | `proxy.ts`                                 |
+| ESLint config    | `eslint.config.ts`                         |
+| Prettier config  | `prettier.config.ts`                       |
+| Dependencies     | `package.json`                             |
+| TypeScript       | `tsconfig.json`                            |
+| Tailwind         | `app/globals.css` (CSS-first config)       |
+| Sanity config    | `sanity.config.ts`, `sanity.cli.ts`        |
+| Playwright       | `playwright.config.ts`                     |
+| Semantic Release | `release.config.js`                        |
 | Environment vars | `data/env/server.ts`, `data/env/client.ts` |
-| Vitest config | `vitest.config.ts` |
-| Storybook | `.storybook/` |
+| Vitest config    | `vitest.config.ts`                         |
+| Storybook        | `.storybook/`                              |
 
 ## Import Conventions
 
@@ -119,6 +119,7 @@ The project uses `@t3-oss/env-nextjs` for type-safe environment variables.
 - **Client-side**: `data/env/client.ts` (must be prefixed with `NEXT_PUBLIC_`)
 
 ### Key Variables
+
 - `NEXT_PUBLIC_APP_VERSION`: Exposed application version from `package.json` at build time.
 - `SKIP_ENV_VALIDATION`: Set to `true` to skip validation during build/dev.
 
@@ -136,6 +137,7 @@ The project uses `@t3-oss/env-nextjs` for type-safe environment variables.
 ### React Compiler
 
 The project has React Compiler enabled in `next.config.ts`:
+
 - **Remove unnecessary memoization** - Compiler handles `useMemo`, `useCallback`, `React.memo`
 - **Keep memoization only for** - External library callbacks, complex context values, >100ms computations
 
@@ -187,6 +189,7 @@ function SubmitButton() {
 ```
 
 **Related Skills:**
+
 - `react-19-compiler` - Complete React 19 patterns, hooks, Server/Client Components
 
 ## Form Pattern
@@ -270,6 +273,7 @@ export const userBuilder = build<User>({
 ```
 
 **Key Methods:**
+
 - `.one()` - Generate single instance
 - `.many(count)` - Generate array of instances
 - `sequence()` - Auto-increment (1, 2, 3...)
@@ -284,6 +288,7 @@ These are frequent mistakes to avoid when working with this stack:
 ### React Components
 
 ❌ **Don't:** Add 'use client' unnecessarily
+
 ```typescript
 // ❌ WRONG - No interactivity needed
 'use client'
@@ -293,6 +298,7 @@ export function UserProfile({ user }) {
 ```
 
 ✅ **Do:** Default to Server Components
+
 ```typescript
 // ✅ CORRECT - Server Component by default
 export function UserProfile({ user }) {
@@ -303,12 +309,14 @@ export function UserProfile({ user }) {
 ### Memoization
 
 ❌ **Don't:** Use unnecessary memoization with React Compiler
+
 ```typescript
 // ❌ WRONG - Compiler handles this automatically
 const sorted = useMemo(() => items.sort(), [items]);
 ```
 
 ✅ **Do:** Let compiler optimize
+
 ```typescript
 // ✅ CORRECT - Compiler handles memoization
 const sorted = [...items].sort((a, b) => a.name.localeCompare(b.name));
@@ -317,12 +325,14 @@ const sorted = [...items].sort((a, b) => a.name.localeCompare(b.name));
 ### Imports
 
 ❌ **Don't:** Use relative imports for project files
+
 ```typescript
 // ❌ WRONG
 import { something } from "../../../lib/utils";
 ```
 
 ✅ **Do:** Use path aliases
+
 ```typescript
 // ✅ CORRECT
 import { something } from "~/lib/utils";
@@ -331,12 +341,14 @@ import { something } from "~/lib/utils";
 ### Logging
 
 ❌ **Don't:** Use console.log in production code
+
 ```typescript
 // ❌ WRONG
 console.log("User created:", userId);
 ```
 
 ✅ **Do:** Use structured logging with Pino
+
 ```typescript
 // ✅ CORRECT
 logger.info({ userId, operation: "create" }, "User created");
@@ -345,6 +357,7 @@ logger.info({ userId, operation: "create" }, "User created");
 ### useFormStatus
 
 ❌ **Don't:** Use useFormStatus in the same component as form
+
 ```typescript
 // ❌ WRONG - useFormStatus won't work
 function Form() {
@@ -354,6 +367,7 @@ function Form() {
 ```
 
 ✅ **Do:** Use useFormStatus in a child component
+
 ```typescript
 // ✅ CORRECT
 function SubmitButton() {
@@ -365,22 +379,24 @@ function SubmitButton() {
 ### Test Data Builders (mimicry-js)
 
 ❌ **Don't:** Use `oneOf()` inside nested arrow functions
+
 ```typescript
 // ❌ WRONG - oneOf inside nested function
 links: () => ({
-  live: () => oneOf([faker.internet.url(), null])
-})
+  live: () => oneOf([faker.internet.url(), null]),
+});
 ```
 
 ✅ **Do:** Use `oneOf()` at field level or `faker.helpers.arrayElement()` inside functions
+
 ```typescript
 // ✅ CORRECT - oneOf at field level
-status: oneOf("active", "inactive")
+status: oneOf("active", "inactive");
 
 // ✅ CORRECT - faker.helpers.arrayElement inside function
 links: () => ({
-  live: faker.helpers.arrayElement([faker.internet.url(), null])
-})
+  live: faker.helpers.arrayElement([faker.internet.url(), null]),
+});
 ```
 
 <!--
@@ -466,31 +482,32 @@ export async function protectedAction() {
 
 Skills provide detailed documentation and patterns. Located in `.claude/skills/`.
 
-| Skill                 | Description                                                  | Use When                                       |
-|-----------------------|--------------------------------------------------------------|------------------------------------------------|
-| `react-19-compiler`   | React 19 hooks, React Compiler optimization guidance         | Forms with useActionState, memoization decisions |
-| `server-actions`      | Server Actions patterns, types, validation, React integration | Creating/updating server actions, form handling |
-| `storybook-testing`   | Component testing with Storybook play functions (CSF Next)   | Writing component interaction tests            |
-| `tailwind-css-4`      | Tailwind v4 CSS-first config, design system integration      | Styling components, responsive design, theming |
-| `t3-env-validation`   | Type-safe env vars with @t3-oss/env-nextjs and Zod           | Environment configuration, validation          |
-| `structured-logging`  | Pino logging with context enrichment and log levels          | Server-side logging, debugging, monitoring     |
-| `builder-factory`     | Test data builders with mimicry-js and Faker.js              | Creating mock data for tests/stories           |
-| `api-test`            | API endpoint testing with Playwright                         | Testing route handlers, API endpoints          |
-| `accessibility-audit` | WCAG accessibility audits                                    | Auditing components for a11y                   |
-| `performance-optimization` | Bundle analysis, React rendering, DB query optimization | Performance issues, slow pages, large bundles  |
+| Skill                      | Description                                                   | Use When                                         |
+| -------------------------- | ------------------------------------------------------------- | ------------------------------------------------ |
+| `react-19-compiler`        | React 19 hooks, React Compiler optimization guidance          | Forms with useActionState, memoization decisions |
+| `server-actions`           | Server Actions patterns, types, validation, React integration | Creating/updating server actions, form handling  |
+| `storybook-testing`        | Component testing with Storybook play functions (CSF Next)    | Writing component interaction tests              |
+| `tailwind-css-4`           | Tailwind v4 CSS-first config, design system integration       | Styling components, responsive design, theming   |
+| `t3-env-validation`        | Type-safe env vars with @t3-oss/env-nextjs and Zod            | Environment configuration, validation            |
+| `structured-logging`       | Pino logging with context enrichment and log levels           | Server-side logging, debugging, monitoring       |
+| `builder-factory`          | Test data builders with mimicry-js and Faker.js               | Creating mock data for tests/stories             |
+| `api-test`                 | API endpoint testing with Playwright                          | Testing route handlers, API endpoints            |
+| `accessibility-audit`      | WCAG accessibility audits                                     | Auditing components for a11y                     |
+| `performance-optimization` | Bundle analysis, React rendering, DB query optimization       | Performance issues, slow pages, large bundles    |
 
 ### Skills for Optional Integrations
 
 These skills document patterns for technologies not yet installed:
 
-| Skill                 | Technology Required | Description                                    |
-|-----------------------|---------------------|------------------------------------------------|
-| `clerk-auth-proxy`    | @clerk/nextjs       | Clerk auth with Next.js 16 proxy pattern       |
-| `firebase-firestore`  | firebase-admin      | Firebase queries, types, error handling        |
-| `db-migration`        | firebase-admin      | Database migration scripts                     |
-| `toast-notifications` | Custom setup        | Cookie-based toast system                      |
-| `error-handling`      | Custom setup        | DbError patterns, error boundaries             |
+| Skill                 | Technology Required | Description                              |
+| --------------------- | ------------------- | ---------------------------------------- |
+| `clerk-auth-proxy`    | @clerk/nextjs       | Clerk auth with Next.js 16 proxy pattern |
+| `firebase-firestore`  | firebase-admin      | Firebase queries, types, error handling  |
+| `db-migration`        | firebase-admin      | Database migration scripts               |
+| `toast-notifications` | Custom setup        | Cookie-based toast system                |
+| `error-handling`      | Custom setup        | DbError patterns, error boundaries       |
 
 **Invoking Skills:**
+
 - User: `/skill-name` (e.g., `/server-actions`)
 - Agent: Listed in agent's `skills` array in frontmatter
