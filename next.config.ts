@@ -17,7 +17,7 @@ export default {
     // react-icons ships each set as one giant barrel (si/index.mjs ~8 MB); Turbopack does not
     // tree-shake unused named exports from it, so the full set leaked into the client bundle.
     // This rewrites named imports to direct per-icon references, shipping only the icons we use.
-    optimizePackageImports: ["react-icons/si", "react-icons/tb", "react-icons/vsc"]
+    optimizePackageImports: ["react-icons/si", "react-icons/tb", "react-icons/vsc", "@szum-tech/design-system"]
   },
   images: {
     remotePatterns: [
