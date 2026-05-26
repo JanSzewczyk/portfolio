@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.10.1](https://github.com/JanSzewczyk/portfolio/compare/v1.10.0...v1.10.1) (2026-05-26)
+
+### Bug Fixes
+
+* lazy load SanityLive component to optimize initial bundle size and reduce LCP ([4e17799](https://github.com/JanSzewczyk/portfolio/commit/4e177991bec24f2700306313fa857911b2706ef9))
+
 ## [1.10.0](https://github.com/JanSzewczyk/portfolio/compare/v1.9.0...v1.10.0) (2026-05-26)
 
 ### Features
