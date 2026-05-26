@@ -1,4 +1,24 @@
 <!-- markdownlint-disable --><!-- textlint-disable -->
+# 📓 Changelog
+All notable changes to this project will be documented in this file. See
+[Conventional Commits](https://conventionalcommits.org) for commit guidelines.
+
+## [1.10.0](https://github.com/JanSzewczyk/portfolio/compare/v1.9.0...v1.10.0) (2026-05-26)
+
+### Features
+
+* optimize build process by enhancing icon imports and updating configuration files ([f74a74d](https://github.com/JanSzewczyk/portfolio/commit/f74a74d313ac78777b5ce17406f3bcdc70cdca0a))
+
+### Miscellaneous Chores
+
+* **deps:** bump the project-dependencies group across 1 directory with 10 updates ([40def15](https://github.com/JanSzewczyk/portfolio/commit/40def153ad872ff60ebd89b3e800cac1f36e96d0))
+* **deps:** update dependencies to latest versions for improved stability ([b465277](https://github.com/JanSzewczyk/portfolio/commit/b465277c38615a68f8e280d189837bc8e6338982))
+
+### Continuous Integration
+
+* enhance CI workflow by optimizing coverage report generation and artifact handling ([46ddb01](https://github.com/JanSzewczyk/portfolio/commit/46ddb01ae4e7e22cf4af04eda1a2b7de5baa449e))
+
+<!-- markdownlint-disable --><!-- textlint-disable -->
 
 # 📓 Changelog
 
