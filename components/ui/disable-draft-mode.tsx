@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@szum-tech/design-system";
+import { Button } from "@szum-tech/design-system/components/button";
 import Link from "next/link";
 import { useIsPresentationTool } from "next-sanity/hooks";
 

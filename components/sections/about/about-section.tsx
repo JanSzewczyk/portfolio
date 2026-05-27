@@ -1,6 +1,8 @@
 "use client";
 
-import { Card, CardContent, CountingNumber, Skeleton } from "@szum-tech/design-system";
+import { Card, CardContent } from "@szum-tech/design-system/components/card";
+import { CountingNumber } from "@szum-tech/design-system/components/counting-number";
+import { Skeleton } from "@szum-tech/design-system/components/skeleton";
 import dynamic from "next/dynamic";
 import { SectionHeading } from "~/components/ui/section-heading";
 import { Section } from "~/constants/sections";

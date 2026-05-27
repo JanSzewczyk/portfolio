@@ -1,4 +1,4 @@
-import { Button } from "@szum-tech/design-system";
+import { Button } from "@szum-tech/design-system/components/button";
 import { type IconName, ReactIcon } from "~/components/ui/react-icon";
 import { env } from "~/data/env/client";
 import type { PortfolioPageQueryResult } from "~/lib/sanity/types";

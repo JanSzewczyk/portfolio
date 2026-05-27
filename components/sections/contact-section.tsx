@@ -1,4 +1,5 @@
-import { Button, Card, CardContent, CardHeader, CardTitle } from "@szum-tech/design-system";
+import { Button } from "@szum-tech/design-system/components/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@szum-tech/design-system/components/card";
 import { cn } from "@szum-tech/design-system/utils";
 import { Mail } from "lucide-react";
 import { type IconName, ReactIcon } from "~/components/ui/react-icon";

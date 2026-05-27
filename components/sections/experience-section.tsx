@@ -4,22 +4,18 @@ import {
   Accordion,
   AccordionContent,
   AccordionItem,
-  AccordionTrigger,
-  Avatar,
-  AvatarFallback,
-  AvatarImage,
-  Badge,
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
+  AccordionTrigger
+} from "@szum-tech/design-system/components/accordion";
+import { Avatar, AvatarFallback } from "@szum-tech/design-system/components/avatar";
+import { Badge } from "@szum-tech/design-system/components/badge";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@szum-tech/design-system/components/card";
+import {
   Timeline,
   TimelineConnector,
   TimelineContent,
   TimelineDot,
   TimelineItem
-} from "@szum-tech/design-system";
+} from "@szum-tech/design-system/components/timeline";
 import Image from "next/image";
 import { stegaClean } from "next-sanity";
 import { SectionHeading } from "~/components/ui/section-heading";

@@ -1,6 +1,7 @@
 "use client";
 
-import { Button, Tooltip, TooltipContent, TooltipTrigger } from "@szum-tech/design-system";
+import { Button } from "@szum-tech/design-system/components/button";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@szum-tech/design-system/components/tooltip";
 
 import { MonitorIcon, MoonIcon, SunIcon } from "lucide-react";
 import { useTheme } from "next-themes";

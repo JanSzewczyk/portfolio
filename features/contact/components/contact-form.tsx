@@ -1,25 +1,16 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import {
-  Button,
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-  Field,
-  FieldError,
-  FieldGroup,
-  FieldLabel,
-  Input,
-  Textarea,
-  toast
-} from "@szum-tech/design-system";
+import { Button } from "@szum-tech/design-system/components/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@szum-tech/design-system/components/card";
+import { Field, FieldError, FieldGroup, FieldLabel } from "@szum-tech/design-system/components/field";
+import { Input } from "@szum-tech/design-system/components/input";
+import { Textarea } from "@szum-tech/design-system/components/textarea";
 import { MailboxIcon, SendIcon } from "lucide-react";
 import * as React from "react";
 import { useForm } from "react-hook-form";
 import type { CreateEmailResponseSuccess } from "resend";
+import { toast } from "sonner";
 import { type ContactFormData, contactFormSchema } from "~/features/contact/schemas/contact.schema";
 import type { PortfolioPageQueryResult } from "~/lib/sanity/types";
 import type { ActionResponse } from "~/lib/server-action";
