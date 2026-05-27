@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.10.2](https://github.com/JanSzewczyk/portfolio/compare/v1.10.1...v1.10.2) (2026-05-27)
+
+### Bug Fixes
+
+* refactor imports to use specific component paths from design system for improved clarity ([9c0777d](https://github.com/JanSzewczyk/portfolio/commit/9c0777d407859b366987ab7cd8985d926c05edb8))
+
 ## [1.10.1](https://github.com/JanSzewczyk/portfolio/compare/v1.10.0...v1.10.1) (2026-05-26)
 
 ### Bug Fixes
