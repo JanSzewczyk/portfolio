@@ -1,15 +1,10 @@
 "use client";
 
-import {
-  Avatar,
-  AvatarFallback,
-  Button,
-  Status,
-  StatusIndicator,
-  StatusLabel,
-  TypingText,
-  WordRotate
-} from "@szum-tech/design-system";
+import { Avatar, AvatarFallback } from "@szum-tech/design-system/components/avatar";
+import { Button } from "@szum-tech/design-system/components/button";
+import { Status, StatusIndicator, StatusLabel } from "@szum-tech/design-system/components/status";
+import { TypingText } from "@szum-tech/design-system/components/typing-text";
+import { WordRotate } from "@szum-tech/design-system/components/word-rotate";
 import { ArrowDownIcon } from "lucide-react";
 import Image from "next/image";
 import { stegaClean } from "next-sanity";

@@ -1,4 +1,4 @@
-import { Card } from "@szum-tech/design-system";
+import { Card } from "@szum-tech/design-system/components/card";
 import { type IconName, ReactIcon } from "~/components/ui/react-icon";
 
 export type Technology = {

@@ -1,6 +1,8 @@
 "use client";
 
-import { Badge, Card, CardContent, CardDescription, CardHeader, CardTitle, Marquee } from "@szum-tech/design-system";
+import { Badge } from "@szum-tech/design-system/components/badge";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@szum-tech/design-system/components/card";
+import { Marquee } from "@szum-tech/design-system/components/marquee";
 import { cn } from "@szum-tech/design-system/utils";
 import { ArrowDownIcon } from "lucide-react";
 import { type IconName, ReactIcon } from "~/components/ui/react-icon";

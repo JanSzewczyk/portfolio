@@ -4,18 +4,12 @@ import {
   Accordion,
   AccordionContent,
   AccordionItem,
-  AccordionTrigger,
-  Badge,
-  Button,
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger
-} from "@szum-tech/design-system";
+  AccordionTrigger
+} from "@szum-tech/design-system/components/accordion";
+import { Badge } from "@szum-tech/design-system/components/badge";
+import { Button } from "@szum-tech/design-system/components/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@szum-tech/design-system/components/card";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@szum-tech/design-system/components/tooltip";
 import { ExternalLinkIcon, FileTextIcon } from "lucide-react";
 import { stegaClean } from "next-sanity";
 import { ReactIcon } from "~/components/ui/react-icon";

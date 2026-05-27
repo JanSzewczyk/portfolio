@@ -1,6 +1,7 @@
 "use client";
 
-import { Button, Header } from "@szum-tech/design-system";
+import { Button } from "@szum-tech/design-system/components/button";
+import { Header } from "@szum-tech/design-system/components/header";
 
 import { MenuIcon, XIcon } from "lucide-react";
 import Link from "next/link";

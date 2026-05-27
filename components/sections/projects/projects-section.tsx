@@ -1,6 +1,6 @@
 "use client";
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@szum-tech/design-system";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@szum-tech/design-system/components/tabs";
 import { stegaClean } from "next-sanity";
 import { SectionHeading } from "~/components/ui/section-heading";
 import { Section } from "~/constants/sections";

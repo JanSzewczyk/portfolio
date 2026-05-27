@@ -1,6 +1,6 @@
 "use client";
 
-import { Button } from "@szum-tech/design-system";
+import { Button } from "@szum-tech/design-system/components/button";
 import { useEffect } from "react";
 import logger from "~/lib/logger";
 

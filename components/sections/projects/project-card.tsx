@@ -1,13 +1,13 @@
+import { Badge } from "@szum-tech/design-system/components/badge";
+import { Button } from "@szum-tech/design-system/components/button";
 import {
-  Badge,
-  Button,
   Card,
   CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
   CardTitle
-} from "@szum-tech/design-system";
+} from "@szum-tech/design-system/components/card";
 import { cn } from "@szum-tech/design-system/utils";
 import { ExternalLinkIcon } from "lucide-react";
 import Image from "next/image";

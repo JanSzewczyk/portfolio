@@ -1,6 +1,6 @@
 "use client";
 
-import { Card, CardContent } from "@szum-tech/design-system";
+import { Card, CardContent } from "@szum-tech/design-system/components/card";
 import { MapPin } from "lucide-react";
 import { Map, type MapProps, Marker } from "pigeon-maps";
 
