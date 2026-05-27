@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.10.3](https://github.com/JanSzewczyk/portfolio/compare/v1.10.2...v1.10.3) (2026-05-27)
+
+### Bug Fixes
+
+* **deps:** update @szum-tech/design-system to version 3.21.4 and bump package version to 1.10.2 ([a064f54](https://github.com/JanSzewczyk/portfolio/commit/a064f543874f5a979a6267f7d20c8c0291f204b9))
+
 ## [1.10.2](https://github.com/JanSzewczyk/portfolio/compare/v1.10.1...v1.10.2) (2026-05-27)
 
 ### Bug Fixes
