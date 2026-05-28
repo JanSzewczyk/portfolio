@@ -46,14 +46,14 @@ export const EducationSectionStory = meta.story({
 
 // Test: Section heading
 EducationSectionStory.test("Renders section heading with title and description", async ({ canvas }) => {
+  const label = canvas.getByText("Education");
+  await expect(label).toBeVisible();
+
   const heading = canvas.getByRole("heading", {
-    name: "Education",
+    name: "My academic background and achievements",
     level: 2
   });
   await expect(heading).toBeVisible();
-
-  const description = canvas.getByText("My academic background and achievements");
-  await expect(description).toBeVisible();
 });
 
 // Test: Education card

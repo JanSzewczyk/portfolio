@@ -41,7 +41,13 @@ export default defineMain({
     return mergeConfig(config, {
       resolve: {
         tsconfigPaths: true,
-        alias: [{ find: /^next\/image$/, replacement: nextImageMock }]
+        alias: [
+          { find: /^next\/image$/, replacement: nextImageMock },
+          {
+            find: /^react\/compiler-runtime$/,
+            replacement: path.resolve(here, "../node_modules/react/compiler-runtime.js")
+          }
+        ]
       }
     });
   }

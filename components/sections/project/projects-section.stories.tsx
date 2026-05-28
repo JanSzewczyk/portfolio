@@ -82,15 +82,17 @@ export const ProjectsSection_ = meta.story({});
 
 // Test: Renders section heading
 ProjectsSection_.test("Renders section heading with title and description", async ({ canvas, args }) => {
-  const heading = canvas.getByRole("heading", {
-    level: 2,
-    name: args.projects?.heading?.title ?? ""
-  });
-  await expect(heading).toBeVisible();
+  if (args.projects?.heading?.title) {
+    const label = canvas.getByText(args.projects.heading.title);
+    await expect(label).toBeVisible();
+  }
 
   if (args.projects?.heading?.description) {
-    const description = canvas.getByText(args.projects.heading.description);
-    await expect(description).toBeVisible();
+    const heading = canvas.getByRole("heading", {
+      level: 2,
+      name: args.projects.heading.description
+    });
+    await expect(heading).toBeVisible();
   }
 });
 

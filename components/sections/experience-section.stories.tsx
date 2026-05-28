@@ -29,15 +29,17 @@ export const ExperienceSection_Default = meta.story({
 
 // Test 1: Section renders with heading
 ExperienceSection_Default.test("Renders section heading and description", async ({ canvas, args }) => {
-  const heading = canvas.getByRole("heading", {
-    name: args.experience?.heading?.title || "",
-    level: 2
-  });
-  await expect(heading).toBeVisible();
+  if (args.experience?.heading?.title) {
+    const label = canvas.getByText(args.experience.heading.title);
+    await expect(label).toBeVisible();
+  }
 
   if (args.experience?.heading?.description) {
-    const description = canvas.getByText(args.experience.heading.description);
-    await expect(description).toBeVisible();
+    const heading = canvas.getByRole("heading", {
+      name: args.experience.heading.description,
+      level: 2
+    });
+    await expect(heading).toBeVisible();
   }
 });
 
