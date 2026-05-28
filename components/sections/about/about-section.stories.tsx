@@ -1,4 +1,4 @@
-import { expect, userEvent, within } from "storybook/test";
+import { expect, screen, waitFor } from "storybook/test";
 import preview from "~/.storybook/preview";
 import { portfolioPageAboutBuilder } from "~/tests/builders/portfolio-page.builder";
 import { AboutSection as AboutSectionComponent } from "./about-section";
@@ -19,13 +19,17 @@ const meta = preview.meta({
 export const AboutSection = meta.story({});
 
 AboutSection.test("Renders section heading with title and description", async ({ canvas, args }) => {
-  const heading = canvas.getByRole("heading", { level: 2 });
-  await expect(heading).toBeVisible();
-  await expect(heading).toHaveTextContent(args.about?.heading?.title ?? "");
+  if (args.about?.heading?.title) {
+    const label = canvas.getByText(args.about.heading.title);
+    await expect(label).toBeVisible();
+  }
 
   if (args.about?.heading?.description) {
-    const description = canvas.getByText(args.about.heading.description);
-    await expect(description).toBeVisible();
+    const heading = canvas.getByRole("heading", {
+      name: args.about.heading.description,
+      level: 2
+    });
+    await expect(heading).toBeVisible();
   }
 });
 
@@ -36,11 +40,9 @@ AboutSection.test("Renders bio tagline with terminal icon", async ({ canvas, arg
   }
 });
 
-AboutSection.test("Renders bio as markdown", async ({ canvas }) => {
-  const section = canvas.getByRole("region");
-  await expect(section).toBeVisible();
-  // bold elements rendered from markdown strong syntax
-  const boldElements = section.querySelectorAll("strong");
+AboutSection.test("Renders bio as markdown", async ({ canvasElement }) => {
+  // bold elements rendered from markdown strong syntax (**text**)
+  const boldElements = canvasElement.querySelectorAll("strong");
   await expect(boldElements.length).toBeGreaterThan(0);
 });
 
@@ -81,7 +83,7 @@ AboutSection.test("Renders hobbies section label and items", async ({ canvas, ar
   }
 });
 
-AboutSection.test("CV dropdown opens and shows download options", async ({ canvas, args }) => {
+AboutSection.test("CV dropdown opens and shows download options", async ({ canvas, userEvent, args }) => {
   const downloads = args.about?.cvDownloads ?? [];
   if (!downloads.length) return;
 
@@ -92,8 +94,12 @@ AboutSection.test("CV dropdown opens and shows download options", async ({ canva
 
   for (const item of downloads) {
     if (item.label) {
-      const option = canvas.getByText(item.label);
-      await expect(option).toBeVisible();
+      // Dropdown content is rendered in a portal, use screen to query outside canvas scope
+      // Use waitFor to allow Radix UI animation/transition to complete
+      await waitFor(async () => {
+        const option = screen.getByText(item.label!);
+        await expect(option).toBeVisible();
+      });
     }
   }
 });

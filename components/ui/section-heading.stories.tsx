@@ -22,18 +22,18 @@ export const CenterAligned = meta.story({
   }
 });
 
-// Test 1: Renders h2 heading with correct title text
-CenterAligned.test("Renders h2 heading with correct title text", async ({ canvas, args }) => {
-  const heading = canvas.getByRole("heading", { level: 2 });
-  await expect(heading).toBeVisible();
-  await expect(heading).toHaveTextContent(args.title);
+// Test 1: Renders title as uppercase overline label
+CenterAligned.test("Renders title as uppercase overline label", async ({ canvas, args }) => {
+  const label = canvas.getByText(args.title);
+  await expect(label).toBeVisible();
+  await expect(label.tagName.toLowerCase()).toBe("span");
 });
 
-// Test 2: Renders description paragraph when provided
-CenterAligned.test("Renders description paragraph when provided", async ({ canvas, args }) => {
-  const description = canvas.getByText(args.description!);
-  await expect(description).toBeVisible();
-  await expect(description.tagName.toLowerCase()).toBe("p");
+// Test 2: Renders description as h2 heading when provided
+CenterAligned.test("Renders description as h2 heading when provided", async ({ canvas, args }) => {
+  const heading = canvas.getByRole("heading", { level: 2 });
+  await expect(heading).toBeVisible();
+  await expect(heading).toHaveTextContent(args.description!);
 });
 
 // Test 3: Applies center alignment classes by default
@@ -51,18 +51,17 @@ CenterAligned.test("Renders children content when provided", async ({ canvas }) 
 
 // Test 5: Applies correct description styles
 CenterAligned.test("Applies correct description styles", async ({ canvas, args }) => {
-  const description = canvas.getByText(args.description!);
-  await expect(description).toHaveClass("text-body-lg");
-  await expect(description).toHaveClass("text-muted-foreground");
-  await expect(description).toHaveClass("max-w-2xl");
+  const description = canvas.getByRole("heading", { level: 2 });
+  await expect(description).toHaveClass("text-display-sm");
+  await expect(description).toHaveTextContent(args.description!);
 });
 
 // Test 6: Has correct semantic structure for accessibility
 CenterAligned.test("Has correct semantic structure for accessibility", async ({ canvas, args }) => {
   const heading = canvas.getByRole("heading", { level: 2 });
   await expect(heading).toBeInTheDocument();
-  // Verify h2 has accessible name from title
-  await expect(heading).toHaveAccessibleName(args.title);
+  // Verify h2 has accessible name from description
+  await expect(heading).toHaveAccessibleName(args.description!);
 });
 
 /**
@@ -77,11 +76,11 @@ export const LeftAligned = meta.story({
   }
 });
 
-// Test 1: Renders h2 heading with title
-LeftAligned.test("Renders h2 heading with title", async ({ canvas, args }) => {
-  const heading = canvas.getByRole("heading", { level: 2 });
-  await expect(heading).toBeVisible();
-  await expect(heading).toHaveTextContent(args.title);
+// Test 1: Renders title as overline label
+LeftAligned.test("Renders title as overline label", async ({ canvas, args }) => {
+  const label = canvas.getByText(args.title);
+  await expect(label).toBeVisible();
+  await expect(label.tagName.toLowerCase()).toBe("span");
 });
 
 // Test 2: Applies left alignment classes when align='left'
@@ -91,11 +90,11 @@ LeftAligned.test("Applies left alignment classes when align='left'", async ({ ca
   await expect(container).not.toHaveClass("text-center");
 });
 
-// Test 3: Renders description with left alignment
-LeftAligned.test("Renders description with left alignment", async ({ canvas, args }) => {
-  const description = canvas.getByText(args.description!);
-  await expect(description).toBeVisible();
-  await expect(description.tagName.toLowerCase()).toBe("p");
+// Test 3: Renders description as h2 heading with left alignment
+LeftAligned.test("Renders description as h2 heading with left alignment", async ({ canvas, args }) => {
+  const heading = canvas.getByRole("heading", { level: 2 });
+  await expect(heading).toBeVisible();
+  await expect(heading).toHaveTextContent(args.description!);
 });
 
 /**
@@ -108,11 +107,11 @@ export const TitleOnly = meta.story({
   }
 });
 
-// Test 1: Renders h2 heading with title
-TitleOnly.test("Renders h2 heading with title", async ({ canvas, args }) => {
-  const heading = canvas.getByRole("heading", { level: 2 });
-  await expect(heading).toBeVisible();
-  await expect(heading).toHaveTextContent(args.title);
+// Test 1: Renders title as overline label span
+TitleOnly.test("Renders title as overline label span", async ({ canvas, args }) => {
+  const label = canvas.getByText(args.title);
+  await expect(label).toBeVisible();
+  await expect(label.tagName.toLowerCase()).toBe("span");
 });
 
 // Test 2: Does not render description paragraph when description prop is undefined
@@ -125,8 +124,8 @@ TitleOnly.test("Does not render description paragraph when description prop is u
 // Test 3: Applies base spacing classes
 TitleOnly.test("Applies base spacing classes", async ({ canvasElement }) => {
   const container = canvasElement.querySelector("div");
-  await expect(container).toHaveClass("mb-12");
-  await expect(container).toHaveClass("space-y-4");
+  await expect(container).toHaveClass("mb-14");
+  await expect(container).toHaveClass("space-y-3.5");
 });
 
 // Test 4: Maintains center alignment by default

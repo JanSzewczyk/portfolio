@@ -54,14 +54,14 @@ export const ContactSectionStory = meta.story({
 
 // Test 1: Section heading
 ContactSectionStory.test("Renders section heading with title and description", async ({ canvas }) => {
+  const label = canvas.getByText("Get In Touch");
+  await expect(label).toBeVisible();
+
   const heading = canvas.getByRole("heading", {
     level: 2,
-    name: "Get In Touch"
+    name: "Have a question or want to work together?"
   });
   await expect(heading).toBeVisible();
-
-  const description = canvas.getByText("Have a question or want to work together?");
-  await expect(description).toBeVisible();
 });
 
 // Test 2: Email card
