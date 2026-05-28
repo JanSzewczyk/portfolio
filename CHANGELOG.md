@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.11.0](https://github.com/JanSzewczyk/portfolio/compare/v1.10.3...v1.11.0) (2026-05-28)
+
+### Features
+
+* enhance about section with bio tagline, markdown support, and CV download options ([7676115](https://github.com/JanSzewczyk/portfolio/commit/7676115ef42e338c6f47daa4749a3326f424756a))
+
+### Tests
+
+* refactor section heading tests for improved clarity and consistency ([94b7763](https://github.com/JanSzewczyk/portfolio/commit/94b7763f2d5d4925bc5f89fe02d12bc9f72b050f))
+
 ## [1.10.3](https://github.com/JanSzewczyk/portfolio/compare/v1.10.2...v1.10.3) (2026-05-27)
 
 ### Bug Fixes
