@@ -4,6 +4,7 @@ import { visionTool } from "@sanity/vision";
 import { defineConfig } from "sanity";
 import { presentationTool } from "sanity/presentation";
 import { structureTool } from "sanity/structure";
+import { markdownSchema } from "sanity-plugin-markdown";
 
 import { schema, structure } from "./lib/sanity/configuration";
 import { resolve } from "./lib/sanity/configuration/presentation/resolve";
@@ -15,6 +16,7 @@ export default defineConfig({
   schema,
   plugins: [
     structureTool({ structure }),
+    markdownSchema(),
     visionTool({
       defaultApiVersion: process.env.NEXT_PUBLIC_SANITY_API_VERSION ?? process.env.SANITY_STUDIO_DEPLOYMENT_APP_ID
     }),

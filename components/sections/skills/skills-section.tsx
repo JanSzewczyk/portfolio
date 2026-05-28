@@ -105,7 +105,7 @@ export function SkillsSection({ skills, documentId, documentType }: SkillsSectio
                           `skills.technologyGroups[${groupIndex}].technologies[${techIndex}]`
                         )}
                         variant="outline"
-                        className="text-body-lg"
+                        className="font-code"
                       >
                         <ReactIcon name={tech.icon as IconName} />
                         {tech.name}

@@ -33,20 +33,7 @@ export async function getPortfolioPageData(): Promise<[null, NonNullable<Portfol
       return [error, null];
     }
 
-    // Log summary of fetched data
-    const summary = {
-      documentId: data._id,
-      hasPersonalInfo: !!data.personalInfo,
-      hasHero: !!data.hero,
-      hasAbout: !!data.about,
-      hasSkills: !!data.skills,
-      hasProjects: !!data.projects,
-      hasExperience: !!data.experience,
-      hasEducation: !!data.education,
-      hasContact: !!data.contact
-    };
-
-    fnLogger.info({ summary }, "Successfully fetched portfolio page data from Sanity");
+    fnLogger.info("Successfully fetched portfolio page data from Sanity");
 
     return [null, data];
   } catch (error) {

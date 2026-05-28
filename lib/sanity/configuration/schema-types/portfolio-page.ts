@@ -170,19 +170,72 @@ export const portfolioPage = defineType({
           }
         }),
         defineField({
+          name: "bioTagline",
+          title: "Bio Tagline",
+          type: "string",
+          description: "Short subtitle displayed before the biography (e.g., 'Beyond just building UI.')"
+        }),
+        defineField({
           name: "bio",
           title: "Biography",
-          type: "text",
-          description: "Extended biography text",
-          rows: 10,
+          type: "markdown",
+          description: "Extended biography text (Markdown supported — bold, italic, links, lists)",
           validation: (rule) => rule.required()
         }),
-
+        defineField({
+          name: "cvDownloads",
+          title: "CV Downloads",
+          type: "array",
+          description: "List of CV download buttons shown in the about section",
+          of: [
+            {
+              type: "object",
+              fields: [
+                defineField({
+                  name: "label",
+                  title: "Button Label",
+                  type: "string",
+                  description: "Text shown in the dropdown (e.g., 'English', 'Polski')",
+                  validation: (rule) => rule.required()
+                }),
+                defineField({
+                  name: "file",
+                  title: "CV File",
+                  type: "file",
+                  description: "Upload the CV file (PDF recommended)",
+                  options: {
+                    accept: ".pdf,.doc,.docx"
+                  },
+                  validation: (rule) => rule.required()
+                }),
+                defineField({
+                  name: "languageCode",
+                  title: "Language Code",
+                  type: "string",
+                  description: "ISO language code used to display a flag emoji (e.g., 'en' → 🇬🇧, 'pl' → 🇵🇱)",
+                  validation: (rule) => rule.required()
+                })
+              ],
+              preview: {
+                select: {
+                  label: "label",
+                  languageCode: "languageCode"
+                },
+                prepare({ label, languageCode }) {
+                  return {
+                    title: label,
+                    subtitle: languageCode
+                  };
+                }
+              }
+            }
+          ]
+        }),
         defineField({
           name: "stats",
           title: "Statistics",
           type: "array",
-          description: "Achievement statistics displayed as cards",
+          description: "Achievement statistics displayed as large animated numbers",
           of: [
             {
               type: "object",
@@ -227,21 +280,93 @@ export const portfolioPage = defineType({
           name: "location",
           title: "Location",
           type: "object",
-          description: "Your current location for the about section",
+          description: "Your current location displayed in the about section",
           fields: [
             defineField({
               name: "city",
               title: "City Name",
               type: "string",
-              description: "City name to display (e.g., 'Warsaw, Poland')",
+              description: "City name to display (e.g., 'Kraków, Poland')",
               validation: (rule) => rule.required()
             }),
             defineField({
-              name: "coordinates",
-              title: "Coordinates",
-              type: "geopoint",
-              description: "Geographic coordinates for the map marker",
-              validation: (rule) => rule.required()
+              name: "remoteWorkLabel",
+              title: "Remote Work Label",
+              type: "string",
+              description: "Short label displayed below the city (e.g., 'Open to remote work')",
+              initialValue: "Open to remote work"
+            })
+          ]
+        }),
+        defineField({
+          name: "hobbies",
+          title: "Hobbies",
+          type: "object",
+          description: "Personal hobbies displayed at the bottom of the about section",
+          options: {
+            collapsible: true,
+            collapsed: true
+          },
+          fields: [
+            defineField({
+              name: "sectionLabel",
+              title: "Section Label",
+              type: "string",
+              description: "Small heading above the hobby icons",
+              initialValue: "Off the Keyboard"
+            }),
+            defineField({
+              name: "items",
+              title: "Hobby Items",
+              type: "array",
+              of: [
+                {
+                  type: "object",
+                  fields: [
+                    defineField({
+                      name: "icon",
+                      title: "Icon",
+                      type: "string",
+                      description: "Icon type for the hobby",
+                      options: {
+                        list: [
+                          { title: "Fishing 🎣", value: "fishing" },
+                          { title: "Figurines / Painting 🖌️", value: "figurines" },
+                          { title: "Gardening 🌿", value: "gardening" },
+                          { title: "Photography 📷", value: "photography" },
+                          { title: "Gaming 🎮", value: "gaming" },
+                          { title: "Cooking 🍳", value: "cooking" },
+                          { title: "Reading 📚", value: "reading" },
+                          { title: "Cycling 🚴", value: "cycling" },
+                          { title: "Hiking ⛰️", value: "hiking" },
+                          { title: "Music 🎵", value: "music" },
+                          { title: "Travel ✈️", value: "travel" }
+                        ]
+                      },
+                      validation: (rule) => rule.required()
+                    }),
+                    defineField({
+                      name: "label",
+                      title: "Label",
+                      type: "string",
+                      description: "Display name for the hobby",
+                      validation: (rule) => rule.required()
+                    })
+                  ],
+                  preview: {
+                    select: {
+                      label: "label",
+                      icon: "icon"
+                    },
+                    prepare({ label, icon }) {
+                      return {
+                        title: label,
+                        subtitle: icon
+                      };
+                    }
+                  }
+                }
+              ]
             })
           ]
         })

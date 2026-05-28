@@ -1,21 +1,14 @@
 "use client";
 
-import { Card, CardContent } from "@szum-tech/design-system/components/card";
 import { CountingNumber } from "@szum-tech/design-system/components/counting-number";
-import { Skeleton } from "@szum-tech/design-system/components/skeleton";
-import dynamic from "next/dynamic";
+import { MapPin, Terminal } from "lucide-react";
 import { SectionHeading } from "~/components/ui/section-heading";
 import { Section } from "~/constants/sections";
 import type { PortfolioPageQueryResult } from "~/lib/sanity/types";
 import { buildSanityAttribute } from "~/lib/sanity/utils";
-
-// pigeon-maps is heavy and the map sits below the fold, so it is loaded lazily
-// (client-only) to keep it out of the initial bundle. The h-48 skeleton matches
-// the rendered map height to avoid layout shift (CLS).
-const LocationCard = dynamic(() => import("~/components/sections/about/location-card").then((m) => m.LocationCard), {
-  ssr: false,
-  loading: () => <Skeleton className="h-48 w-full rounded-xl" />
-});
+import { BioMarkdown } from "./bio-markdown";
+import { CVDropdown } from "./cv-dropdown";
+import { HobbyItem } from "./hobby-item";
 
 type AboutSectionProps = {
   about: NonNullable<PortfolioPageQueryResult>["about"];
@@ -35,42 +28,78 @@ export function AboutSection({ about, documentId, documentType }: AboutSectionPr
         <SectionHeading
           title={about?.heading?.title ?? ""}
           description={about?.heading?.description ?? ""}
+          align="left"
           data-sanity={createSanityAttribute("about.heading")}
         />
 
-        <div className="grid gap-12 lg:grid-cols-2">
-          <div className="space-y-6" data-sanity={createSanityAttribute("about.bio")}>
-            {about?.bio?.split("\n\n").map((paragraph) => (
-              <p key={paragraph} className="text-muted-foreground">
-                {paragraph}
-              </p>
-            ))}
-          </div>
+        {/* ── Two-column: bio left (1.3fr) + stats right (0.7fr) ── */}
+        <div className="mb-16 grid gap-16 lg:grid-cols-[1.3fr_0.7fr]">
+          {/* Bio column */}
+          <div className="flex flex-col gap-5" data-sanity={createSanityAttribute("about.bio")}>
+            {about?.bioTagline ? (
+              <div className="mb-1 flex items-center gap-2.5" data-sanity={createSanityAttribute("about.bioTagline")}>
+                <Terminal className="size-4 shrink-0 text-primary" />
+                <span className="text-body-sm">{about.bioTagline}</span>
+              </div>
+            ) : null}
 
-          <div className="grid grid-cols-2 gap-4">
-            {about?.stats?.map((stat, index) => (
-              <Card key={stat._key} data-sanity={createSanityAttribute(`about.stats[${index}]`)}>
-                <CardContent className="flex flex-1 flex-col items-center justify-center text-center">
-                  <div className="text-display-sm text-primary">
-                    <CountingNumber
-                      to={stat.value ?? 0}
-                      duration={2}
-                      format={(value) => `${Math.round(value)}${stat.suffix ?? ""}`}
-                      once
-                    />
-                  </div>
-                  <p className="mt-2 text-body-lg text-muted-foreground">{stat.label}</p>
-                </CardContent>
-              </Card>
-            ))}
+            {about?.bio ? <BioMarkdown content={about.bio} /> : null}
 
-            {/* Location Card */}
-            {about?.location ? (
-              <div className="col-span-2" data-sanity={createSanityAttribute("about.location")}>
-                <LocationCard city={about.location.city ?? ""} coordinates={about.location.coordinates ?? {}} />
+            {about?.cvDownloads && about.cvDownloads.length > 0 ? (
+              <div>
+                <CVDropdown dataSanity={createSanityAttribute("about.cvDownloads")} downloads={about.cvDownloads} />
               </div>
             ) : null}
           </div>
+
+          {/* Stats column — no card wrappers, DS typography */}
+          <div className="grid grid-cols-2 content-start gap-x-8 gap-y-10 pt-1">
+            {about?.stats?.map((stat, index) => (
+              <div key={stat._key} data-sanity={createSanityAttribute(`about.stats[${index}]`)}>
+                <div className="font-code text-display-sm text-foreground tabular-nums">
+                  <CountingNumber
+                    to={stat.value ?? 0}
+                    duration={2}
+                    format={(value) => `${Math.round(value)}${stat.suffix ?? ""}`}
+                    once
+                  />
+                </div>
+                <p className="mt-1.5 text-mute">{stat.label}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* ── Bottom row: location + hobbies ── */}
+        <div className="grid gap-12 border-border border-t pt-12 sm:grid-cols-2">
+          {/* Location */}
+          {about?.location?.city ? (
+            <div className="flex items-center gap-3.5" data-sanity={createSanityAttribute("about.location")}>
+              <div className="relative shrink-0">
+                <MapPin className="size-5 text-primary" />
+                <span className="absolute -top-0.5 -right-0.5 size-2 animate-ping rounded-full bg-primary/60" />
+                <span className="absolute -top-0.5 -right-0.5 size-2 rounded-full bg-primary" />
+              </div>
+              <div>
+                <p className="font-semibold text-body-sm">{about.location.city}</p>
+                {about.location.remoteWorkLabel ? <p className="text-small">{about.location.remoteWorkLabel}</p> : null}
+              </div>
+            </div>
+          ) : null}
+
+          {/* Hobbies */}
+          {about?.hobbies?.items && about.hobbies.items.length > 0 ? (
+            <div data-sanity={createSanityAttribute("about.hobbies")}>
+              {about.hobbies.sectionLabel ? (
+                <span className="mb-3 block text-small">{about.hobbies.sectionLabel}</span>
+              ) : null}
+              <div className="-mx-3 flex flex-wrap gap-1">
+                {about.hobbies.items.map((hobby) => (
+                  <HobbyItem key={hobby._key} iconType={hobby.icon ?? ""} label={hobby.label ?? ""} />
+                ))}
+              </div>
+            </div>
+          ) : null}
         </div>
       </div>
     </section>
