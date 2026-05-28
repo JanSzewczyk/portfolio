@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.11.1](https://github.com/JanSzewczyk/portfolio/compare/v1.11.0...v1.11.1) (2026-05-28)
+
+### Bug Fixes
+
+* add "use client" directive to contact section for proper rendering ([a19a125](https://github.com/JanSzewczyk/portfolio/commit/a19a125f779201d3928415ab821e838c689617d7))
+
+### Documentation
+
+* add UI guidelines for @szum-tech/design-system components and semantic tokens ([1d7338a](https://github.com/JanSzewczyk/portfolio/commit/1d7338a0db1d81275e8d0deb77b4292336df8b05))
+
 ## [1.11.0](https://github.com/JanSzewczyk/portfolio/compare/v1.10.3...v1.11.0) (2026-05-28)
 
 ### Features
