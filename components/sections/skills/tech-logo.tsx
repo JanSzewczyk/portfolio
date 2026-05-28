@@ -16,7 +16,7 @@ export type TechLogoProps = {
 export function TechLogo({ tech, dataSanity }: TechLogoProps) {
   return (
     <Card
-      className="group relative flex h-24 w-28 flex-col items-center gap-2 transition-all duration-300 hover:scale-105 hover:shadow-md"
+      className="group relative flex min-h-24 w-28 flex-col items-center gap-2 py-4 transition-all duration-300 hover:scale-105 hover:shadow-md"
       data-sanity={dataSanity}
     >
       <div>
@@ -28,7 +28,7 @@ export function TechLogo({ tech, dataSanity }: TechLogoProps) {
         ) : null}
       </div>
 
-      <span className="relative z-10 text-center text-body-xs text-foreground">{tech.name}</span>
+      <span className="relative z-10 text-center font-code text-body-xs text-foreground">{tech.name}</span>
     </Card>
   );
 }

@@ -1,4 +1,4 @@
-import { expect } from "storybook/test";
+import { expect, userEvent, within } from "storybook/test";
 import preview from "~/.storybook/preview";
 import { portfolioPageAboutBuilder } from "~/tests/builders/portfolio-page.builder";
 import { AboutSection as AboutSectionComponent } from "./about-section";
@@ -29,16 +29,22 @@ AboutSection.test("Renders section heading with title and description", async ({
   }
 });
 
-AboutSection.test("Renders bio paragraphs", async ({ canvas, args }) => {
-  const bioParagraphs = args.about?.bio?.split("\n\n") ?? [];
-
-  for (const paragraph of bioParagraphs) {
-    const text = canvas.getByText(paragraph);
-    await expect(text).toBeVisible();
+AboutSection.test("Renders bio tagline with terminal icon", async ({ canvas, args }) => {
+  if (args.about?.bioTagline) {
+    const tagline = canvas.getByText(args.about.bioTagline);
+    await expect(tagline).toBeVisible();
   }
 });
 
-AboutSection.test("Renders all stats with counting numbers", async ({ canvas, args }) => {
+AboutSection.test("Renders bio as markdown", async ({ canvas }) => {
+  const section = canvas.getByRole("region");
+  await expect(section).toBeVisible();
+  // bold elements rendered from markdown strong syntax
+  const boldElements = section.querySelectorAll("strong");
+  await expect(boldElements.length).toBeGreaterThan(0);
+});
+
+AboutSection.test("Renders all stats labels", async ({ canvas, args }) => {
   const stats = args.about?.stats ?? [];
 
   for (const stat of stats) {
@@ -49,6 +55,47 @@ AboutSection.test("Renders all stats with counting numbers", async ({ canvas, ar
   }
 
   await expect(stats.length).toBe(4);
+});
+
+AboutSection.test("Renders location city", async ({ canvas, args }) => {
+  const city = args.about?.location?.city;
+  if (city) {
+    const cityEl = canvas.getByText(city);
+    await expect(cityEl).toBeVisible();
+  }
+});
+
+AboutSection.test("Renders hobbies section label and items", async ({ canvas, args }) => {
+  const sectionLabel = args.about?.hobbies?.sectionLabel;
+  if (sectionLabel) {
+    const label = canvas.getByText(sectionLabel);
+    await expect(label).toBeVisible();
+  }
+
+  const items = args.about?.hobbies?.items ?? [];
+  for (const item of items) {
+    if (item.label) {
+      const hobbyLabel = canvas.getByText(item.label);
+      await expect(hobbyLabel).toBeVisible();
+    }
+  }
+});
+
+AboutSection.test("CV dropdown opens and shows download options", async ({ canvas, args }) => {
+  const downloads = args.about?.cvDownloads ?? [];
+  if (!downloads.length) return;
+
+  const trigger = canvas.getByRole("button", { name: /Download CV/i });
+  await expect(trigger).toBeVisible();
+
+  await userEvent.click(trigger);
+
+  for (const item of downloads) {
+    if (item.label) {
+      const option = canvas.getByText(item.label);
+      await expect(option).toBeVisible();
+    }
+  }
 });
 
 export const EmptyBio = meta.story({
@@ -77,6 +124,36 @@ export const NoStats = meta.story({
 });
 
 NoStats.test("Handles empty stats array", async ({ canvas }) => {
+  const section = canvas.getByRole("region");
+  await expect(section).toBeVisible();
+});
+
+export const NoCvDownloads = meta.story({
+  args: {
+    about: portfolioPageAboutBuilder.one({
+      overrides: {
+        cvDownloads: []
+      }
+    })
+  }
+});
+
+NoCvDownloads.test("Hides CV dropdown when no downloads configured", async ({ canvas }) => {
+  const trigger = canvas.queryByRole("button", { name: /Download CV/i });
+  await expect(trigger).toBeNull();
+});
+
+export const NoHobbies = meta.story({
+  args: {
+    about: portfolioPageAboutBuilder.one({
+      overrides: {
+        hobbies: null
+      }
+    })
+  }
+});
+
+NoHobbies.test("Renders gracefully without hobbies", async ({ canvas }) => {
   const section = canvas.getByRole("region");
   await expect(section).toBeVisible();
 });

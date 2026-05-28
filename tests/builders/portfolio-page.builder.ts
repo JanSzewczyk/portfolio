@@ -74,41 +74,65 @@ export const portfolioPageAboutBuilder = build<NonNullable<PortfolioPageQueryRes
       title: () => faker.lorem.words(3),
       description: () => faker.lorem.sentence()
     },
-    bio: () => faker.lorem.paragraphs(2, "\n\n"),
-    location: () => ({
-      city: faker.location.city(),
-      coordinates: {
-        _type: "geopoint" as const,
-        lat: Number(faker.location.latitude()),
-        lng: Number(faker.location.longitude())
+    bioTagline: () => faker.lorem.sentence(5),
+    bio: () =>
+      [
+        `With over **${int(3, 8)} years of commercial experience**, I've been shaping modern web interfaces.`,
+        `I'm the creator of **Szum-Tech** — an open-source design system built on Tailwind CSS and Radix UI.`,
+        `Beyond frontend, I've ventured into computer vision with **MediaPipe and OpenCV**.`
+      ].join("\n\n"),
+    cvDownloads: () => [
+      {
+        _key: faker.string.uuid(),
+        label: "English",
+        languageCode: "en",
+        file: { asset: { url: faker.internet.url(), originalFilename: "Jan-Szewczyk-CV-EN.pdf" } }
+      },
+      {
+        _key: faker.string.uuid(),
+        label: "Polski",
+        languageCode: "pl",
+        file: { asset: { url: faker.internet.url(), originalFilename: "Jan-Szewczyk-CV-PL.pdf" } }
       }
+    ],
+    location: () => ({
+      city: `${faker.location.city()}, Poland`,
+      remoteWorkLabel: "Open to remote work"
     }),
     stats: () => [
       {
         _key: faker.string.uuid(),
-        label: "Years Experience",
-        value: int(1, 20),
+        label: "Years of experience",
+        value: int(4, 8),
         suffix: "+"
       },
       {
         _key: faker.string.uuid(),
-        label: "Projects Completed",
-        value: int(10, 100),
+        label: "GitHub repositories",
+        value: int(20, 50),
+        suffix: null
+      },
+      {
+        _key: faker.string.uuid(),
+        label: "Open source projects",
+        value: int(5, 15),
         suffix: "+"
       },
       {
         _key: faker.string.uuid(),
-        label: "Technologies",
-        value: int(10, 50),
-        suffix: "+"
-      },
-      {
-        _key: faker.string.uuid(),
-        label: "Clients Served",
-        value: int(5, 50),
-        suffix: "+"
+        label: "Published packages",
+        value: int(10, 40),
+        suffix: null
       }
-    ]
+    ],
+    hobbies: () => ({
+      sectionLabel: "Off the Keyboard",
+      items: [
+        { _key: faker.string.uuid(), icon: "fishing", label: "Fishing" },
+        { _key: faker.string.uuid(), icon: "figurines", label: "Figurines" },
+        { _key: faker.string.uuid(), icon: "gardening", label: "Gardening" }
+      ]
+    })
   }
 });
 

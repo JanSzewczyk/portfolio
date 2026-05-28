@@ -4,7 +4,7 @@ import type { IconType } from "react-icons";
 
 // Curated, tree-shakeable icon map. Avoids the `import * as X from "react-icons/*"` barrel that
 // pulled the whole icon sets (~4.7 MB) into the client bundle. Add new icons in icon-registry.ts.
-import { ICONS, type IconName } from "~/components/ui/icon-registry";
+import { ICONS, type IconName } from "./icon-registry";
 
 export type { IconName };
 

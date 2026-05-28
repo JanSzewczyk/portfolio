@@ -12,5 +12,6 @@ export const { sanityFetch, SanityLive } = defineLive({
   // cookie (Lighthouse best-practices) and leak a credential client-side. Live
   // updates for published content work without a browser token; draft preview
   // is handled separately via draft mode in app/(app)/layout.tsx.
+  browserToken: env.SANITY_API_READ_TOKEN,
   serverToken: env.SANITY_API_READ_TOKEN
 });

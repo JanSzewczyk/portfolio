@@ -47,13 +47,36 @@ export const portfolioPageQuery = defineQuery(`
         title,
         description
       },
+      bioTagline,
       bio,
-      location,
+      cvDownloads[] {
+        _key,
+        label,
+        languageCode,
+        file {
+          asset-> {
+            url,
+            originalFilename
+          }
+        }
+      },
       stats[] {
         _key,
         label,
         value,
         suffix
+      },
+      location {
+        city,
+        remoteWorkLabel
+      },
+      hobbies {
+        sectionLabel,
+        items[] {
+          _key,
+          icon,
+          label
+        }
       }
     },
 

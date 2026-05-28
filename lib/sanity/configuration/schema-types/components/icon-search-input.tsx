@@ -4,7 +4,7 @@ import { Autocomplete, Box, Card, Flex, Text } from "@sanity/ui";
 import * as React from "react";
 import type { IconType } from "react-icons";
 import { type StringInputProps, set, unset } from "sanity";
-import { ICONS } from "~/components/ui/icon-registry";
+import { ICONS } from "../../../../../components/ui/icon-registry";
 
 const ICON_NAMES = Object.keys(ICONS);
 
