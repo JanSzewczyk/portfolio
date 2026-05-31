@@ -4,16 +4,16 @@ import { portfolioPageAboutBuilder } from "~/tests/builders/portfolio-page.build
 import { AboutSection as AboutSectionComponent } from "./about-section";
 
 const meta = preview.meta({
-  title: "Components/Sections/About Section",
-  component: AboutSectionComponent,
   args: {
     about: portfolioPageAboutBuilder.one(),
     documentId: "test-portfolio-id",
     documentType: "portfolioPage"
   },
+  component: AboutSectionComponent,
   parameters: {
     layout: "fullscreen"
-  }
+  },
+  title: "Components/Sections/About Section"
 });
 
 export const AboutSection = meta.story({});
@@ -26,8 +26,8 @@ AboutSection.test("Renders section heading with title and description", async ({
 
   if (args.about?.heading?.description) {
     const heading = canvas.getByRole("heading", {
-      name: args.about.heading.description,
-      level: 2
+      level: 2,
+      name: args.about.heading.description
     });
     await expect(heading).toBeVisible();
   }

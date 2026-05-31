@@ -16,7 +16,7 @@ test("page structure, navigation and metadata", async ({ page }) => {
   // Navigation buttons
   const navLabels = ["Home", "About", "Skills", "Projects", "Experience", "Education", "Contact"];
   for (const label of navLabels) {
-    await expect(page.getByRole("button", { name: label, exact: true })).toBeVisible();
+    await expect(page.getByRole("button", { exact: true, name: label })).toBeVisible();
   }
 
   // Logo link

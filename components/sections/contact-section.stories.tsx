@@ -4,48 +4,48 @@ import { portfolioPageContactBuilder, portfolioPagePersonalInfoBuilder } from "~
 import { ContactSection } from "./contact-section";
 
 const meta = preview.meta({
-  title: "Components/Sections/Contact Section",
-  component: ContactSection,
   args: {
+    contact: portfolioPageContactBuilder.one({
+      overrides: {
+        heading: {
+          description: "Have a question or want to work together?",
+          title: "Get In Touch"
+        },
+        quickChat: {
+          description: "Feel free to reach out anytime.",
+          title: "Quick Chat"
+        }
+      }
+    }),
+    documentId: "test-portfolio-id",
+    documentType: "portfolioPage",
     personalInfo: portfolioPagePersonalInfoBuilder.one({
       overrides: {
         email: "jan@example.com",
         socialLinks: [
           {
             _key: "key-github",
+            icon: "SiGithub",
             platform: "GitHub",
             url: "https://github.com/test",
-            icon: "SiGithub",
             username: "test-user"
           },
           {
             _key: "key-linkedin",
+            icon: "TbBrandLinkedin",
             platform: "LinkedIn",
             url: "https://linkedin.com/in/test",
-            icon: "TbBrandLinkedin",
             username: "test-user"
           }
         ]
       }
-    }),
-    contact: portfolioPageContactBuilder.one({
-      overrides: {
-        heading: {
-          title: "Get In Touch",
-          description: "Have a question or want to work together?"
-        },
-        quickChat: {
-          title: "Quick Chat",
-          description: "Feel free to reach out anytime."
-        }
-      }
-    }),
-    documentId: "test-portfolio-id",
-    documentType: "portfolioPage"
+    })
   },
+  component: ContactSection,
   parameters: {
     layout: "fullscreen"
-  }
+  },
+  title: "Components/Sections/Contact Section"
 });
 
 export const ContactSectionStory = meta.story({
@@ -98,21 +98,21 @@ export const WithoutForm = meta.story({
   args: {
     contact: portfolioPageContactBuilder.one({
       overrides: {
-        heading: {
-          title: "Get In Touch",
-          description: "Have a question or want to work together?"
-        },
         form: {
-          enabled: false,
-          title: null,
           description: null,
-          successMessage: null,
+          enabled: false,
           submitButtonText: null,
-          successView: null
+          successMessage: null,
+          successView: null,
+          title: null
+        },
+        heading: {
+          description: "Have a question or want to work together?",
+          title: "Get In Touch"
         },
         quickChat: {
-          title: "Quick Chat",
-          description: "Feel free to reach out anytime."
+          description: "Feel free to reach out anytime.",
+          title: "Quick Chat"
         }
       }
     })

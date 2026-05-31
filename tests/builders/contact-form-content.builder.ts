@@ -35,16 +35,16 @@ export type ContactFormContent = NonNullable<NonNullable<PortfolioPageQueryResul
  */
 export const contactFormContentBuilder = build<ContactFormContent>({
   fields: {
-    enabled: true,
-    title: "Send a Message",
     description: "Fill out the form and I'll get back to you as soon as possible.",
-    successMessage: "Thank you! Your message has been sent successfully.",
+    enabled: true,
     submitButtonText: "Send Message",
+    successMessage: "Thank you! Your message has been sent successfully.",
     successView: {
-      title: "Thank you for your message!",
+      buttonText: "Send another message",
       description: "I'll get back to you within 24-48 hours. Thank you for reaching out!",
-      buttonText: "Send another message"
-    }
+      title: "Thank you for your message!"
+    },
+    title: "Send a Message"
   },
   traits: {
     /**
@@ -61,15 +61,15 @@ export const contactFormContentBuilder = build<ContactFormContent>({
      */
     extended: {
       overrides: {
-        title: () => faker.lorem.words(4),
         description: () => faker.lorem.paragraphs(1),
-        successMessage: () => faker.lorem.sentence(),
         submitButtonText: () => faker.lorem.words(2),
+        successMessage: () => faker.lorem.sentence(),
         successView: {
-          title: () => faker.lorem.words(5),
+          buttonText: () => faker.lorem.words(3),
           description: () => faker.lorem.paragraphs(1),
-          buttonText: () => faker.lorem.words(3)
-        }
+          title: () => faker.lorem.words(5)
+        },
+        title: () => faker.lorem.words(4)
       }
     },
 
@@ -78,12 +78,12 @@ export const contactFormContentBuilder = build<ContactFormContent>({
      */
     minimal: {
       overrides: {
-        enabled: true,
-        title: "Contact",
         description: null,
-        successMessage: null,
+        enabled: true,
         submitButtonText: null,
-        successView: null
+        successMessage: null,
+        successView: null,
+        title: "Contact"
       }
     }
   }

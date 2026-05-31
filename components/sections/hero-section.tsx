@@ -32,7 +32,7 @@ export function HeroSection({ personalInfo, hero, documentId, documentType }: He
     .join("");
 
   return (
-    <section id={Section.HERO} className="relative min-h-[calc(100vh-4rem)] scroll-m-16 overflow-hidden">
+    <section className="relative min-h-[calc(100vh-4rem)] scroll-m-16 overflow-hidden" id={Section.HERO}>
       <GridBackground />
 
       <div className="container flex min-h-[calc(100vh-4rem)] items-center py-20">
@@ -42,12 +42,12 @@ export function HeroSection({ personalInfo, hero, documentId, documentType }: He
                 instead of cdn.sanity.io directly, avoiding the third-party `sanitySession` cookie. */}
             {personalInfo?.avatar ? (
               <Image
-                src={urlFor(personalInfo.avatar).width(128).height(128).url()}
                 alt={personalInfo?.avatar?.alt ?? ""}
-                width={128}
+                className="aspect-square size-full object-cover"
                 height={128}
                 priority
-                className="aspect-square size-full object-cover"
+                src={urlFor(personalInfo.avatar).width(128).height(128).url()}
+                width={128}
               />
             ) : (
               <AvatarFallback className="text-3xl">{initials}</AvatarFallback>
@@ -56,8 +56,8 @@ export function HeroSection({ personalInfo, hero, documentId, documentType }: He
 
           <div className="mt-2 mb-4">
             <Status
-              variant={hero?.isAvailable ? "success" : "error"}
               data-sanity={createSanityAttribute("hero.isAvailable")}
+              variant={hero?.isAvailable ? "success" : "error"}
             >
               <StatusIndicator />
               <StatusLabel>{hero?.isAvailable ? "Available for opportunities" : "Currently unavailable"}</StatusLabel>
@@ -65,12 +65,12 @@ export function HeroSection({ personalInfo, hero, documentId, documentType }: He
           </div>
 
           <h1 className="mb-4 text-display-lg" data-sanity={createSanityAttribute("personalInfo.name")}>
-            <TypingText text={`Hi I'm ${stegaClean(personalInfo?.name)}`} speed={80} />
+            <TypingText speed={80} text={`Hi I'm ${stegaClean(personalInfo?.name)}`} />
           </h1>
 
           {hero?.alternativeTitles && hero.alternativeTitles.length > 0 ? (
             <div className="mb-6 text-heading-h1 text-primary">
-              <WordRotate words={hero.alternativeTitles} duration={3000} animationStyle={"slide-up"} />
+              <WordRotate animationStyle={"slide-up"} duration={3000} words={hero.alternativeTitles} />
             </div>
           ) : null}
 
@@ -80,7 +80,7 @@ export function HeroSection({ personalInfo, hero, documentId, documentType }: He
             <ScrollButton size="lg" targetSection={Section.CONTACT}>
               Get in Touch
             </ScrollButton>
-            <ScrollButton size="lg" variant="outline" targetSection={Section.PROJECTS} endIcon={<ArrowDownIcon />}>
+            <ScrollButton endIcon={<ArrowDownIcon />} size="lg" targetSection={Section.PROJECTS} variant="outline">
               View Projects
             </ScrollButton>
           </div>

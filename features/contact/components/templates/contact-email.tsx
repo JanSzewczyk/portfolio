@@ -63,74 +63,74 @@ export function ContactEmail({ name, email, message }: ContactFormData) {
  */
 const styles = {
   body: {
+    backgroundColor: "#ffffff",
+    color: "#1a1a1a",
     fontFamily: "Poppins, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
     lineHeight: "1.6",
-    color: "#1a1a1a",
-    backgroundColor: "#ffffff",
     margin: "0",
     padding: "48px 24px"
   },
   container: {
-    maxWidth: "560px",
-    margin: "0 auto"
-  },
-  header: {
-    padding: "0 0 32px 0",
-    borderBottom: "1px solid #e5e5e5"
-  },
-  headerTitle: {
-    margin: "0",
-    fontSize: "20px",
-    fontWeight: "600",
-    color: "#1a1a1a",
-    letterSpacing: "-0.01em"
+    margin: "0 auto",
+    maxWidth: "560px"
   },
   content: {
     padding: "32px 0"
-  },
-  field: {
-    marginBottom: "24px"
-  },
-  fieldLabel: {
-    fontWeight: "500",
-    color: "#737373",
-    fontSize: "12px",
-    textTransform: "uppercase" as const,
-    letterSpacing: "0.05em",
-    marginBottom: "6px",
-    marginTop: "0"
-  },
-  fieldValue: {
-    color: "#1a1a1a",
-    fontSize: "15px",
-    wordWrap: "break-word" as const,
-    margin: "0",
-    lineHeight: "1.5"
-  },
-  messageField: {
-    color: "#1a1a1a",
-    fontSize: "15px",
-    whiteSpace: "pre-wrap" as const,
-    lineHeight: "1.7",
-    wordWrap: "break-word" as const,
-    margin: "0"
   },
   emailLink: {
     color: "#2563eb",
     textDecoration: "none"
   },
-  timestamp: {
-    color: "#a3a3a3",
+  field: {
+    marginBottom: "24px"
+  },
+  fieldLabel: {
+    color: "#737373",
     fontSize: "12px",
-    marginTop: "24px",
-    marginBottom: "0"
+    fontWeight: "500",
+    letterSpacing: "0.05em",
+    marginBottom: "6px",
+    marginTop: "0",
+    textTransform: "uppercase" as const
+  },
+  fieldValue: {
+    color: "#1a1a1a",
+    fontSize: "15px",
+    lineHeight: "1.5",
+    margin: "0",
+    wordWrap: "break-word" as const
   },
   footer: {
     padding: "24px 0 0 0"
   },
   footerText: {
-    fontSize: "12px",
     color: "#a3a3a3",
+    fontSize: "12px",
     margin: "0"
+  },
+  header: {
+    borderBottom: "1px solid #e5e5e5",
+    padding: "0 0 32px 0"
+  },
+  headerTitle: {
+    color: "#1a1a1a",
+    fontSize: "20px",
+    fontWeight: "600",
+    letterSpacing: "-0.01em",
+    margin: "0"
+  },
+  messageField: {
+    color: "#1a1a1a",
+    fontSize: "15px",
+    lineHeight: "1.7",
+    margin: "0",
+    whiteSpace: "pre-wrap" as const,
+    wordWrap: "break-word" as const
+  },
+  timestamp: {
+    color: "#a3a3a3",
+    fontSize: "12px",
+    marginBottom: "0",
+    marginTop: "24px"
   }
 };

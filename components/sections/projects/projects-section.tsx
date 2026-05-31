@@ -53,9 +53,9 @@ export function ProjectsSection({ projects, documentId, documentType }: Projects
   // Add "Featured" tab if there are featured projects
   if (featuredProjects.length > 0) {
     tabs.push({
-      value: "featured",
       label: "Featured",
-      projects: featuredProjects
+      projects: featuredProjects,
+      value: "featured"
     });
   }
 
@@ -68,22 +68,22 @@ export function ProjectsSection({ projects, documentId, documentType }: Projects
       })) ?? [];
 
     tabs.push({
-      value: `group-${groupIndex}`,
       label: stegaClean(group.label) ?? `Group ${groupIndex + 1}`,
-      projects: groupProjects
+      projects: groupProjects,
+      value: `group-${groupIndex}`
     });
   });
 
   return (
-    <section id={Section.PROJECTS} className="py-24">
+    <section className="py-24" id={Section.PROJECTS}>
       <div className="container">
         <SectionHeading
-          title={projects?.heading?.title ?? ""}
-          description={projects?.heading?.description ?? ""}
           data-sanity={createSanityAttribute("projects.heading")}
+          description={projects?.heading?.description ?? ""}
+          title={projects?.heading?.title ?? ""}
         />
 
-        <Tabs defaultValue={tabs[0]?.value} className="w-full">
+        <Tabs className="w-full" defaultValue={tabs[0]?.value}>
           <TabsList className="mx-auto mb-8">
             {tabs.map((tab) => (
               <TabsTrigger key={tab.value} value={tab.value}>
@@ -97,9 +97,9 @@ export function ProjectsSection({ projects, documentId, documentType }: Projects
               <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                 {tab.projects.map((item) => (
                   <ProjectCard
+                    dataSanity={createSanityAttribute(item.sanityPath)}
                     key={`${tab.value}-${item.data._id}`}
                     project={item.data}
-                    dataSanity={createSanityAttribute(item.sanityPath)}
                   />
                 ))}
               </div>

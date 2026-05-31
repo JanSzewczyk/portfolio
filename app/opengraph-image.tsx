@@ -3,8 +3,8 @@ import { ImageResponse } from "next/og";
 export const runtime = "edge";
 
 export const size = {
-  width: 1200,
-  height: 630
+  height: 630,
+  width: 1200
 };
 
 export const contentType = "image/png";
@@ -15,30 +15,30 @@ export default function OgImage() {
   return new ImageResponse(
     <div
       style={{
-        width: "100%",
-        height: "100%",
+        alignItems: "center",
+        background: "linear-gradient(135deg, #111111 0%, #1a1a2e 50%, #16213e 100%)",
         display: "flex",
         flexDirection: "column",
-        alignItems: "center",
+        fontFamily: "system-ui, -apple-system, sans-serif",
+        height: "100%",
         justifyContent: "center",
-        background: "linear-gradient(135deg, #111111 0%, #1a1a2e 50%, #16213e 100%)",
-        fontFamily: "system-ui, -apple-system, sans-serif"
+        width: "100%"
       }}
     >
       <div
         style={{
+          alignItems: "center",
           display: "flex",
           flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: "16px"
+          gap: "16px",
+          justifyContent: "center"
         }}
       >
         <div
           style={{
+            color: "#ffffff",
             fontSize: "64px",
             fontWeight: 700,
-            color: "#ffffff",
             letterSpacing: "-0.02em",
             lineHeight: 1.1
           }}
@@ -47,9 +47,9 @@ export default function OgImage() {
         </div>
         <div
           style={{
+            color: "#a0a0b8",
             fontSize: "28px",
             fontWeight: 400,
-            color: "#a0a0b8",
             letterSpacing: "0.05em",
             textTransform: "uppercase" as const
           }}
@@ -58,10 +58,10 @@ export default function OgImage() {
         </div>
         <div
           style={{
-            marginTop: "24px",
-            fontSize: "18px",
             color: "#6b6b80",
-            letterSpacing: "0.02em"
+            fontSize: "18px",
+            letterSpacing: "0.02em",
+            marginTop: "24px"
           }}
         >
           janszewczyk.com

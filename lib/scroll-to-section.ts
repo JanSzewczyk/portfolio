@@ -5,6 +5,17 @@ import type { Section, SectionHref } from "~/constants/sections";
  */
 export interface ScrollToSectionOptions {
   /**
+   * Scroll behavior for the scrollIntoView method.
+   * @default "smooth"
+   */
+  behavior?: ScrollBehavior;
+
+  /**
+   * Block alignment for the scrollIntoView method.
+   * @default "start"
+   */
+  block?: ScrollLogicalPosition;
+  /**
    * Callback function to execute after scrolling to a section.
    * Useful for closing mobile menus or other UI cleanup.
    *
@@ -16,18 +27,6 @@ export interface ScrollToSectionOptions {
    * ```
    */
   onAfterScroll?: () => void;
-
-  /**
-   * Scroll behavior for the scrollIntoView method.
-   * @default "smooth"
-   */
-  behavior?: ScrollBehavior;
-
-  /**
-   * Block alignment for the scrollIntoView method.
-   * @default "start"
-   */
-  block?: ScrollLogicalPosition;
 }
 
 export function scrollToSection(section: Section, options: ScrollToSectionOptions = {}): void {

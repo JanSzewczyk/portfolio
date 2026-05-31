@@ -18,7 +18,7 @@ type ImageProps = React.ImgHTMLAttributes<HTMLImageElement> & {
 const NextImageStub = React.forwardRef<HTMLImageElement, ImageProps>(function NextImageStub(props, ref) {
   const { src, alt, fill, priority, loader, placeholder, blurDataURL, quality, unoptimized, ...rest } = props;
   const resolvedSrc = typeof src === "string" ? src : src?.src;
-  return <img ref={ref} src={resolvedSrc} alt={alt} {...rest} />;
+  return <img alt={alt} ref={ref} src={resolvedSrc} {...rest} />;
 });
 
 export default NextImageStub;

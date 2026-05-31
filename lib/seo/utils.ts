@@ -34,68 +34,6 @@ export function buildMetadata({ siteUrl, seoData }: { siteUrl: string; seoData: 
 
   // Build metadata object
   return {
-    metadataBase: new URL(siteUrl),
-    title: metaTitle,
-    description: metaDescription,
-    keywords,
-
-    authors: [{ name, url: siteUrl }],
-
-    creator: name,
-    generator: "Next.js",
-
-    applicationName: `${name} - Portfolio`,
-    appleWebApp: {
-      title: "Jan Szewczyk Portfolio",
-      statusBarStyle: "default"
-    },
-
-    openGraph: {
-      type: "website",
-      locale: "en_US",
-      url: siteUrl,
-      siteName: `${name} - ${title}`,
-      title: ogTitle,
-      description: ogDescription,
-      images: [
-        ogImage
-          ? {
-              url: ogImage,
-              width: seoData?.seo?.ogImage?.asset?.metadata?.dimensions?.width ?? 1200,
-              height: seoData?.seo?.ogImage?.asset?.metadata?.dimensions?.height ?? 630,
-              alt: seoData?.seo?.ogImage?.alt ?? `${name} - ${title}`
-            }
-          : {
-              url: fallbackOgImageUrl,
-              width: 1200,
-              height: 630,
-              alt: `${name} - ${title}`
-            }
-      ]
-    },
-
-    twitter: {
-      card: twitterCardType as "summary" | "summary_large_image" | "app" | "player",
-      title: twitterTitle,
-      description: twitterDescription,
-      images: [twitterImage ?? ogImage ?? fallbackOgImageUrl],
-      creator: twitterCreator,
-      site: twitterSite
-    },
-
-    robots: {
-      index: !seoData?.seo?.noindex,
-      follow: !seoData?.seo?.nofollow,
-      noarchive: seoData?.seo?.noarchive ?? false,
-      googleBot: {
-        index: !seoData?.seo?.noindex,
-        follow: !seoData?.seo?.nofollow,
-        "max-video-preview": -1,
-        "max-image-preview": "large",
-        "max-snippet": -1
-      }
-    },
-
     alternates: {
       canonical: seoData?.seo?.canonicalUrl ?? siteUrl,
       languages: seoData?.seo?.alternateUrls?.reduce(
@@ -107,6 +45,67 @@ export function buildMetadata({ siteUrl, seoData }: { siteUrl: string; seoData: 
         },
         {} as Record<string, string>
       )
+    },
+    appleWebApp: {
+      statusBarStyle: "default",
+      title: "Jan Szewczyk Portfolio"
+    },
+
+    applicationName: `${name} - Portfolio`,
+
+    authors: [{ name, url: siteUrl }],
+
+    creator: name,
+    description: metaDescription,
+    generator: "Next.js",
+    keywords,
+    metadataBase: new URL(siteUrl),
+
+    openGraph: {
+      description: ogDescription,
+      images: [
+        ogImage
+          ? {
+              alt: seoData?.seo?.ogImage?.alt ?? `${name} - ${title}`,
+              height: seoData?.seo?.ogImage?.asset?.metadata?.dimensions?.height ?? 630,
+              url: ogImage,
+              width: seoData?.seo?.ogImage?.asset?.metadata?.dimensions?.width ?? 1200
+            }
+          : {
+              alt: `${name} - ${title}`,
+              height: 630,
+              url: fallbackOgImageUrl,
+              width: 1200
+            }
+      ],
+      locale: "en_US",
+      siteName: `${name} - ${title}`,
+      title: ogTitle,
+      type: "website",
+      url: siteUrl
+    },
+
+    robots: {
+      follow: !seoData?.seo?.nofollow,
+      googleBot: {
+        follow: !seoData?.seo?.nofollow,
+        index: !seoData?.seo?.noindex,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+        "max-video-preview": -1
+      },
+      index: !seoData?.seo?.noindex,
+      noarchive: seoData?.seo?.noarchive ?? false
+    },
+    title: metaTitle,
+
+    twitter: {
+      card: twitterCardType as "summary" | "summary_large_image" | "app" | "player",
+      creator: twitterCreator,
+      description: twitterDescription,
+      images: [twitterImage ?? ogImage ?? fallbackOgImageUrl],
+      site: twitterSite,
+      title: twitterTitle
     }
   };
 }

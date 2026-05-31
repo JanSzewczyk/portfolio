@@ -4,10 +4,6 @@ import { defineField, defineType } from "sanity";
 import { IconSearchInput } from "./components/icon-search-input";
 
 export const technologyGroup = defineType({
-  name: "technologyGroup",
-  title: "Technology Group",
-  type: "document",
-  icon: ComponentIcon,
   fields: [
     defineField({
       name: "label",
@@ -21,39 +17,43 @@ export const technologyGroup = defineType({
       type: "text"
     }),
     defineField({
+      description: "Defines if the technology group is featured (e.g., displayed prominently).",
+      initialValue: true,
       name: "featured",
       title: "Featured",
       type: "boolean",
-      description: "Defines if the technology group is featured (e.g., displayed prominently).",
-      initialValue: true,
       validation: (rule) => rule.required()
     }),
     defineField({
-      name: "icon",
-      title: "Icon",
-      type: "string",
       components: {
         input: IconSearchInput
       },
+      name: "icon",
+      title: "Icon",
+      type: "string",
       validation: (rule) => rule.required()
     }),
     defineField({
       name: "technologies",
-      title: "Technologies",
-      type: "array",
       of: [
         {
-          type: "reference",
-          to: [{ type: "technology" }]
+          to: [{ type: "technology" }],
+          type: "reference"
         }
       ],
+      title: "Technologies",
+      type: "array",
       validation: (rule) => rule.required().min(1)
     })
   ],
+  icon: ComponentIcon,
+  name: "technologyGroup",
   preview: {
     select: {
-      title: "label",
-      subtitle: "category"
+      subtitle: "category",
+      title: "label"
     }
-  }
+  },
+  title: "Technology Group",
+  type: "document"
 });

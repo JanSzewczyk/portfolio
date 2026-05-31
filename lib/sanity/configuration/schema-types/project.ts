@@ -2,10 +2,6 @@ import { ProjectsIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
 
 export const project = defineType({
-  name: "project",
-  title: "Project",
-  type: "document",
-  icon: ProjectsIcon,
   fields: [
     defineField({
       name: "title",
@@ -25,18 +21,11 @@ export const project = defineType({
       type: "text"
     }),
     defineField({
-      name: "thumbnail",
-      title: "Thumbnail",
-      type: "image",
-      options: {
-        hotspot: true
-      },
-      validation: (rule) => rule.required(),
       fields: [
         defineField({
           name: "alt",
-          type: "string",
           title: "Alternative text",
+          type: "string",
           validation: (rule) =>
             rule.custom((value, context) => {
               const parent = context?.parent as { asset?: { _ref?: string } };
@@ -44,24 +33,28 @@ export const project = defineType({
               return !value && parent?.asset?._ref ? "Alt text is required when an image is present" : true;
             })
         })
-      ]
+      ],
+      name: "thumbnail",
+      options: {
+        hotspot: true
+      },
+      title: "Thumbnail",
+      type: "image",
+      validation: (rule) => rule.required()
     }),
     defineField({
       name: "technologies",
-      title: "Technologies",
-      type: "array",
       of: [
         {
-          type: "reference",
-          to: [{ type: "technology" }]
+          to: [{ type: "technology" }],
+          type: "reference"
         }
       ],
+      title: "Technologies",
+      type: "array",
       validation: (rule) => rule.required().min(1)
     }),
     defineField({
-      name: "links",
-      title: "Links",
-      type: "object",
       fields: [
         defineField({
           name: "live",
@@ -78,20 +71,27 @@ export const project = defineType({
           title: "NPM URL",
           type: "url"
         })
-      ]
+      ],
+      name: "links",
+      title: "Links",
+      type: "object"
     }),
     defineField({
+      initialValue: false,
       name: "featured",
       title: "Featured",
-      type: "boolean",
-      initialValue: false
+      type: "boolean"
     })
   ],
+  icon: ProjectsIcon,
+  name: "project",
   preview: {
     select: {
-      title: "title",
+      media: "thumbnail",
       subtitle: "category",
-      media: "thumbnail"
+      title: "title"
     }
-  }
+  },
+  title: "Project",
+  type: "document"
 });

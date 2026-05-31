@@ -30,17 +30,17 @@ export function SkillsSection({ skills, documentId, documentType }: SkillsSectio
     skills?.technologyGroups?.flatMap((group) => group.technologies?.filter((tech) => tech.name) ?? []) ?? [];
   const uniqueTechnologies = Array.from(new Map(allTechnologies.map((tech) => [tech._id, tech])).values());
   const marqueeItems = uniqueTechnologies.slice(0, MAX_MARQUEE_TECHS).map((tech) => ({
-    tech,
-    dataSanity: createSanityAttribute(`skills.technologyGroups[_key=="${tech._id}"]`)
+    dataSanity: createSanityAttribute(`skills.technologyGroups[_key=="${tech._id}"]`),
+    tech
   }));
 
   return (
-    <section id={Section.SKILLS} className="py-24">
+    <section className="py-24" id={Section.SKILLS}>
       <div className="container">
         <SectionHeading
-          title={skills?.heading?.title ?? ""}
-          description={skills?.heading?.description ?? ""}
           data-sanity={createSanityAttribute("skills.heading")}
+          description={skills?.heading?.description ?? ""}
+          title={skills?.heading?.title ?? ""}
         />
 
         {/* Tech logos marquee with enhanced styling */}
@@ -65,12 +65,12 @@ export function SkillsSection({ skills, documentId, documentType }: SkillsSectio
 
             return (
               <Card
-                key={group._id}
                 className={cn(
                   isFeatured ? "md:col-span-2" : "md:col-span-1",
                   "group transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
                 )}
                 data-sanity={createSanityAttribute(`skills.technologyGroups[${groupIndex}]`)}
+                key={group._id}
               >
                 <CardHeader className="relative">
                   <div className="absolute top-0 right-4">
@@ -82,7 +82,7 @@ export function SkillsSection({ skills, documentId, documentType }: SkillsSectio
                     )}
                   </div>
                   <div className="mb-2 flex size-10 items-center justify-center rounded bg-muted">
-                    {groupIcon ? <ReactIcon name={groupIcon} className="size-6" /> : null}
+                    {groupIcon ? <ReactIcon className="size-6" name={groupIcon} /> : null}
                   </div>
                   <CardTitle className="text-heading-h4">{group.label}</CardTitle>
 
@@ -96,12 +96,12 @@ export function SkillsSection({ skills, documentId, documentType }: SkillsSectio
                     group.technologies.length > 0 &&
                     group.technologies.map((tech, techIndex) => (
                       <Badge
-                        key={tech._id}
+                        className="font-code"
                         data-sanity={createSanityAttribute(
                           `skills.technologyGroups[${groupIndex}].technologies[${techIndex}]`
                         )}
+                        key={tech._id}
                         variant="outline"
-                        className="font-code"
                       >
                         <ReactIcon name={tech.icon as IconName} />
                         {tech.name}

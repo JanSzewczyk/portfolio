@@ -8,9 +8,9 @@ export default function robots(): MetadataRoute.Robots {
   return {
     rules: [
       {
-        userAgent: "*",
         allow: "/",
-        disallow: ["/api/", "/_next/", "/storybook-static/"]
+        disallow: ["/api/", "/_next/", "/storybook-static/"],
+        userAgent: "*"
       }
     ],
     sitemap: `${baseUrl}/sitemap.xml`

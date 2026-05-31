@@ -21,9 +21,9 @@ export async function sendContactEmail(formData: ContactFormData): ActionRespons
     // Log the attempt
     logger.info(
       {
-        name: formData.name,
         email: formData.email,
-        messageLength: formData.message.length
+        messageLength: formData.message.length,
+        name: formData.name
       },
       "Attempting to send contact email"
     );
@@ -31,10 +31,10 @@ export async function sendContactEmail(formData: ContactFormData): ActionRespons
     // Send email via Resend
     const { data, error } = await resend.emails.send({
       from: env.RESEND_FROM_EMAIL,
-      to: env.RESEND_TO_EMAIL,
+      react: createElement(ContactEmail, formData),
       replyTo: formData.email,
       subject: `Portfolio Contact: ${formData.name}`,
-      react: createElement(ContactEmail, formData)
+      to: env.RESEND_TO_EMAIL
     });
 
     if (error) {
@@ -48,23 +48,23 @@ export async function sendContactEmail(formData: ContactFormData): ActionRespons
       );
 
       return {
-        success: false,
-        error: "Failed to send email. Please try again later or contact me directly via email."
+        error: "Failed to send email. Please try again later or contact me directly via email.",
+        success: false
       };
     }
 
     logger.info(
       {
         emailId: data?.id,
-        senderName: formData.name,
-        senderEmail: formData.email
+        senderEmail: formData.email,
+        senderName: formData.name
       },
       "Contact email sent successfully"
     );
 
     return {
-      success: true,
-      data
+      data,
+      success: true
     };
   } catch (error) {
     logger.error(
@@ -77,8 +77,8 @@ export async function sendContactEmail(formData: ContactFormData): ActionRespons
 
     // Generic error message for unexpected failures
     return {
-      success: false,
-      error: "An unexpected error occurred. Please try again later."
+      error: "An unexpected error occurred. Please try again later.",
+      success: false
     };
   }
 }

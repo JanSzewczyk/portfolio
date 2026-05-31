@@ -20,9 +20,9 @@ type ContactSectionProps = {
 
 export function ContactSection({ personalInfo, contact }: ContactSectionProps) {
   return (
-    <section id={Section.CONTACT} className="py-24">
+    <section className="py-24" id={Section.CONTACT}>
       <div className="container">
-        <SectionHeading title={contact?.heading?.title ?? ""} description={contact?.heading?.description ?? ""} />
+        <SectionHeading description={contact?.heading?.description ?? ""} title={contact?.heading?.title ?? ""} />
 
         <div className={cn("mx-auto grid gap-8", contact?.form?.enabled ? "max-w-4xl lg:grid-cols-2" : "max-w-lg")}>
           {/* Contact Form */}
@@ -39,7 +39,7 @@ export function ContactSection({ personalInfo, contact }: ContactSectionProps) {
                 </div>
                 <div>
                   <p className="font-medium">Email</p>
-                  <a href={`mailto:${personalInfo?.email}`} className="text-muted-foreground hover:text-primary">
+                  <a className="text-muted-foreground hover:text-primary" href={`mailto:${personalInfo?.email}`}>
                     {personalInfo?.email}
                   </a>
                 </div>
@@ -55,12 +55,12 @@ export function ContactSection({ personalInfo, contact }: ContactSectionProps) {
                   <div className="flex gap-4">
                     {personalInfo.socialLinks.map((link) => {
                       return (
-                        <Button key={link._key} variant="outline" size="icon" asChild>
+                        <Button asChild key={link._key} size="icon" variant="outline">
                           <a
-                            href={link.url ?? "#"}
-                            target="_blank"
-                            rel="noopener noreferrer"
                             aria-label={link.platform ?? ""}
+                            href={link.url ?? "#"}
+                            rel="noopener noreferrer"
+                            target="_blank"
                           >
                             <ReactIcon name={link.icon as IconName} />
                           </a>

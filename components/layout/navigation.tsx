@@ -22,7 +22,7 @@ export function Navigation({ personalInfo }: NavigationProps) {
     <>
       <Header>
         <div className="flex w-full items-center justify-between">
-          <Link href="/" className="text-heading-h3 transition-colors hover:text-primary">
+          <Link className="text-heading-h3 transition-colors hover:text-primary" href="/">
             {personalInfo?.name}
           </Link>
 
@@ -32,13 +32,13 @@ export function Navigation({ personalInfo }: NavigationProps) {
               {NAV_ITEMS.map((item) => (
                 <Button
                   key={item.section}
-                  variant="ghost"
-                  size="sm"
                   onClick={() =>
                     scrollToSection(item.section, {
                       onAfterScroll: () => setIsMobileMenuOpen(false)
                     })
                   }
+                  size="sm"
+                  variant="ghost"
                 >
                   {item.label}
                 </Button>
@@ -52,10 +52,10 @@ export function Navigation({ personalInfo }: NavigationProps) {
             <div className="flex items-center gap-2 md:hidden">
               <ThemeToggle />
               <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                size="icon"
+                variant="ghost"
               >
                 {isMobileMenuOpen ? <XIcon className="size-5" /> : <MenuIcon className="size-5" />}
               </Button>
@@ -70,14 +70,14 @@ export function Navigation({ personalInfo }: NavigationProps) {
           <nav className="container flex flex-col gap-2 py-4">
             {NAV_ITEMS.map((item) => (
               <Button
-                key={item.section}
-                variant="ghost"
                 className="justify-start"
+                key={item.section}
                 onClick={() =>
                   scrollToSection(item.section, {
                     onAfterScroll: () => setIsMobileMenuOpen(false)
                   })
                 }
+                variant="ghost"
               >
                 {item.label}
               </Button>

@@ -51,10 +51,10 @@ export function EducationCard({ education }: EducationCardProps) {
         <CardDescription>
           {education.institutionUrl ? (
             <a
-              href={stegaClean(education.institutionUrl)}
-              target="_blank"
-              rel="noopener noreferrer"
               className="hover:text-primary hover:underline"
+              href={stegaClean(education.institutionUrl)}
+              rel="noopener noreferrer"
+              target="_blank"
             >
               {education.institution}
             </a>
@@ -78,7 +78,7 @@ export function EducationCard({ education }: EducationCardProps) {
             {thesisTechnologies.length > 0 && (
               <div className="mb-3 flex flex-wrap gap-1.5">
                 {thesisTechnologies.map((tech) => (
-                  <Badge key={`${education._id}-thesis-${tech._id}`} variant="outline" className="text-body-xs">
+                  <Badge className="text-body-xs" key={`${education._id}-thesis-${tech._id}`} variant="outline">
                     {tech.name}
                   </Badge>
                 ))}
@@ -96,12 +96,12 @@ export function EducationCard({ education }: EducationCardProps) {
                 {education.thesis.project?.links?.live ? (
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <Button size="icon" variant="ghost" asChild>
+                      <Button asChild size="icon" variant="ghost">
                         <a
-                          href={stegaClean(education.thesis.project.links.live)}
-                          target="_blank"
-                          rel="noopener noreferrer"
                           aria-label="Open live project"
+                          href={stegaClean(education.thesis.project.links.live)}
+                          rel="noopener noreferrer"
+                          target="_blank"
                         >
                           <ExternalLinkIcon className="size-4" />
                         </a>
@@ -113,12 +113,12 @@ export function EducationCard({ education }: EducationCardProps) {
                 {education.thesis.project?.links?.github ? (
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <Button size="icon" variant="ghost" asChild>
+                      <Button asChild size="icon" variant="ghost">
                         <a
-                          href={stegaClean(education.thesis.project.links.github)}
-                          target="_blank"
-                          rel="noopener noreferrer"
                           aria-label="Open source code"
+                          href={stegaClean(education.thesis.project.links.github)}
+                          rel="noopener noreferrer"
+                          target="_blank"
                         >
                           <ReactIcon name="SiGithub" size={14} />
                         </a>
@@ -130,12 +130,12 @@ export function EducationCard({ education }: EducationCardProps) {
                 {education.thesis.url ? (
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <Button size="icon" variant="ghost" asChild>
+                      <Button asChild size="icon" variant="ghost">
                         <a
-                          href={stegaClean(education.thesis.url)}
-                          target="_blank"
-                          rel="noopener noreferrer"
                           aria-label="Open thesis document"
+                          href={stegaClean(education.thesis.url)}
+                          rel="noopener noreferrer"
+                          target="_blank"
                         >
                           <FileTextIcon className="size-4" />
                         </a>
@@ -149,7 +149,7 @@ export function EducationCard({ education }: EducationCardProps) {
           </div>
         ) : null}
 
-        <Accordion type="single" collapsible>
+        <Accordion collapsible type="single">
           {education.achievements && education.achievements.length > 0 ? (
             <AccordionItem value="achievements">
               <AccordionTrigger>Key Achievements</AccordionTrigger>

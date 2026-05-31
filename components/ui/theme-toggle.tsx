@@ -12,9 +12,9 @@ type Theme = "system" | "light" | "dark";
 const THEME_CYCLE: Theme[] = ["system", "light", "dark"];
 
 const THEME_LABELS: Record<Theme, string> = {
-  system: "System theme",
+  dark: "Dark theme",
   light: "Light theme",
-  dark: "Dark theme"
+  system: "System theme"
 };
 
 function ThemeIcon({ theme }: { theme: Theme }) {
@@ -71,7 +71,7 @@ export function ThemeToggle() {
   // Render placeholder during SSR to prevent hydration mismatch
   if (!mounted) {
     return (
-      <Button variant="ghost" size="icon" aria-label="Toggle theme" disabled>
+      <Button aria-label="Toggle theme" disabled size="icon" variant="ghost">
         <span className="size-4" />
       </Button>
     );
@@ -88,11 +88,11 @@ export function ThemeToggle() {
     <Tooltip>
       <TooltipTrigger asChild>
         <Button
-          variant="ghost"
-          size="icon"
+          aria-label={`Current: ${THEME_LABELS[currentTheme]}. Click to switch to ${getNextThemeLabel()}`}
           onClick={cycleTheme}
           onKeyDown={handleKeyDown}
-          aria-label={`Current: ${THEME_LABELS[currentTheme]}. Click to switch to ${getNextThemeLabel()}`}
+          size="icon"
+          variant="ghost"
         >
           <ThemeIcon theme={currentTheme} />
         </Button>

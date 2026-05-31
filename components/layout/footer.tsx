@@ -25,14 +25,14 @@ export function Footer({ footer, personalInfo }: FooterProps) {
               personalInfo.socialLinks.length > 0 &&
               personalInfo.socialLinks.map((link) => {
                 return (
-                  <Button key={link._key} variant="ghost" size="icon" asChild>
+                  <Button asChild key={link._key} size="icon" variant="ghost">
                     <a
-                      href={link.url ?? "#"}
-                      target="_blank"
-                      rel="noopener noreferrer"
                       aria-label={link.platform ?? ""}
+                      href={link.url ?? "#"}
+                      rel="noopener noreferrer"
+                      target="_blank"
                     >
-                      <ReactIcon name={link.icon as IconName} className="size-5" />
+                      <ReactIcon className="size-5" name={link.icon as IconName} />
                     </a>
                   </Button>
                 );

@@ -2,97 +2,96 @@ import { defineLocations, type PresentationPluginOptions } from "sanity/presenta
 
 export const resolve: PresentationPluginOptions["resolve"] = {
   locations: {
-    // Portfolio Page (singleton) - maps to the main page
-    portfolioPage: defineLocations({
-      select: {
-        heroName: "hero.name",
-        heroTitle: "hero.title"
-      },
+    // Education - referenced in education section
+    education: defineLocations({
       resolve: (doc) => ({
         locations: [
           {
-            title: doc?.heroName || "Portfolio",
-            href: "/"
+            href: "/#education",
+            title: doc?.institution || "Education"
           }
         ]
-      })
-    }),
-
-    // Technology - referenced in skills section
-    technology: defineLocations({
+      }),
       select: {
-        name: "name"
-      },
-      resolve: (doc) => ({
-        locations: [
-          {
-            title: doc?.name || "Technology",
-            href: "/#skills"
-          }
-        ]
-      })
-    }),
-
-    // Technology Group - referenced in skills section
-    technologyGroup: defineLocations({
-      select: {
-        label: "label"
-      },
-      resolve: (doc) => ({
-        locations: [
-          {
-            title: doc?.label || "Technology Group",
-            href: "/#skills"
-          }
-        ]
-      })
-    }),
-
-    // Project - referenced in projects section
-    project: defineLocations({
-      select: {
-        title: "title"
-      },
-      resolve: (doc) => ({
-        locations: [
-          {
-            title: doc?.title || "Project",
-            href: "/#projects"
-          }
-        ]
-      })
+        degree: "degree",
+        institution: "institution"
+      }
     }),
 
     // Experience - referenced in experience section
     experience: defineLocations({
-      select: {
-        role: "role",
-        company: "company"
-      },
       resolve: (doc) => ({
         locations: [
           {
-            title: doc?.role ? `${doc.role} @ ${doc.company}` : "Experience",
-            href: "/#experience"
+            href: "/#experience",
+            title: doc?.role ? `${doc.role} @ ${doc.company}` : "Experience"
           }
         ]
-      })
+      }),
+      select: {
+        company: "company",
+        role: "role"
+      }
+    }),
+    // Portfolio Page (singleton) - maps to the main page
+    portfolioPage: defineLocations({
+      resolve: (doc) => ({
+        locations: [
+          {
+            href: "/",
+            title: doc?.heroName || "Portfolio"
+          }
+        ]
+      }),
+      select: {
+        heroName: "hero.name",
+        heroTitle: "hero.title"
+      }
     }),
 
-    // Education - referenced in education section
-    education: defineLocations({
-      select: {
-        institution: "institution",
-        degree: "degree"
-      },
+    // Project - referenced in projects section
+    project: defineLocations({
       resolve: (doc) => ({
         locations: [
           {
-            title: doc?.institution || "Education",
-            href: "/#education"
+            href: "/#projects",
+            title: doc?.title || "Project"
           }
         ]
-      })
+      }),
+      select: {
+        title: "title"
+      }
+    }),
+
+    // Technology - referenced in skills section
+    technology: defineLocations({
+      resolve: (doc) => ({
+        locations: [
+          {
+            href: "/#skills",
+            title: doc?.name || "Technology"
+          }
+        ]
+      }),
+      select: {
+        name: "name"
+      }
+    }),
+
+    // Technology Group - referenced in skills section
+    technologyGroup: defineLocations({
+      resolve: (doc) => ({
+        locations: [
+          {
+            href: "/#skills",
+            title: doc?.label || "Technology Group"
+          }
+        ]
+      }),
+      select: {
+        label: "label"
+      }
     })
   }
 };

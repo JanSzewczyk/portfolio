@@ -7,8 +7,8 @@ import { createLogger } from "~/lib/logger";
 type WebhookPayload = { path?: string };
 
 const revalidateLogger = createLogger({
-  module: "api",
-  endpoint: "/api/revalidate/path"
+  endpoint: "/api/revalidate/path",
+  module: "api"
 });
 
 export async function POST(req: NextRequest) {
@@ -19,8 +19,8 @@ export async function POST(req: NextRequest) {
 
     if (!isValidSignature) {
       const message = "Invalid signature";
-      revalidateLogger.warn({ isValidSignature, body }, "Invalid webhook signature");
-      return new Response(JSON.stringify({ message, isValidSignature, body }), {
+      revalidateLogger.warn({ body, isValidSignature }, "Invalid webhook signature");
+      return new Response(JSON.stringify({ body, isValidSignature, message }), {
         status: 401
       });
     }
@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
     if (!body?.path) {
       const message = "Bad Request";
       revalidateLogger.warn({ body }, "Missing path in webhook payload");
-      return new Response(JSON.stringify({ message, body }), { status: 400 });
+      return new Response(JSON.stringify({ body, message }), { status: 400 });
     }
 
     revalidatePath(body.path);

@@ -12,18 +12,18 @@ import { stegaClean } from "next-sanity";
 
 /** Maps ISO language codes to flag emoji. Falls back to 🌐. */
 const LANGUAGE_FLAGS: Record<string, string> = {
-  en: "🇬🇧",
-  pl: "🇵🇱",
-  de: "🇩🇪",
-  fr: "🇫🇷",
-  es: "🇪🇸",
-  it: "🇮🇹",
-  pt: "🇵🇹",
-  nl: "🇳🇱",
-  ru: "🇷🇺",
-  uk: "🇺🇦",
   cs: "🇨🇿",
-  sk: "🇸🇰"
+  de: "🇩🇪",
+  en: "🇬🇧",
+  es: "🇪🇸",
+  fr: "🇫🇷",
+  it: "🇮🇹",
+  nl: "🇳🇱",
+  pl: "🇵🇱",
+  pt: "🇵🇹",
+  ru: "🇷🇺",
+  sk: "🇸🇰",
+  uk: "🇺🇦"
 };
 
 function getLanguageFlag(languageCode: string): string {
@@ -67,7 +67,7 @@ export function CVDropdown({ downloads, dataSanity }: CVDropdownProps) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button data-sanity={dataSanity} variant="default" size="sm" startIcon={<Download />} endIcon={<ChevronDown />}>
+        <Button data-sanity={dataSanity} endIcon={<ChevronDown />} size="sm" startIcon={<Download />} variant="default">
           Download CV
         </Button>
       </DropdownMenuTrigger>
@@ -75,8 +75,8 @@ export function CVDropdown({ downloads, dataSanity }: CVDropdownProps) {
       <DropdownMenuContent align="start">
         {validDownloads.map((item) => {
           return (
-            <DropdownMenuItem key={item._key} asChild>
-              <a href={buildDownloadUrl(item)} target="_blank" rel="noopener noreferrer">
+            <DropdownMenuItem asChild key={item._key}>
+              <a href={buildDownloadUrl(item)} rel="noopener noreferrer" target="_blank">
                 <span className="text-base leading-none">{getLanguageFlag(stegaClean(item.languageCode ?? ""))}</span>
                 <span>{item.label}</span>
                 <Download className="ml-auto opacity-40" />

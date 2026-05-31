@@ -10,9 +10,9 @@ export default function GlobalError({ error, reset }: { error: Error & { digest?
     logger.error(
       {
         error: {
+          digest: error.digest,
           message: error.message,
-          stack: error.stack,
-          digest: error.digest
+          stack: error.stack
         }
       },
       "Global error occurred"

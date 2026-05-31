@@ -61,14 +61,14 @@ export function IconSearchInput(props: StringInputProps) {
     <Flex align="center" gap={2}>
       <Autocomplete
         id="icon-search"
-        placeholder="Search icons..."
-        options={options}
-        value={value}
-        onQueryChange={handleQueryChange}
         onChange={handleChange}
+        onQueryChange={handleQueryChange}
+        openButton
+        options={options}
+        placeholder="Search icons..."
         renderOption={renderOption}
         renderValue={renderValue}
-        openButton
+        value={value}
       />
       {IconComponent ? <IconComponent size={32} /> : null}
     </Flex>

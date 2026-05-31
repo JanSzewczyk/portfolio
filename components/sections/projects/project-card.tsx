@@ -38,12 +38,12 @@ export function ProjectCard({ project, dataSanity }: ProjectCardProps) {
         <div className="mb-4 aspect-video overflow-hidden rounded bg-muted">
           {project.thumbnail ? (
             <Image
-              src={urlFor(project.thumbnail).auto("format").width(800).height(450).url()}
               alt={stegaClean(project.thumbnail?.alt) || "Project thumbnail"}
               className="size-full object-cover transition-transform duration-300 group-hover:scale-105"
-              width={800}
               height={450}
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+              src={urlFor(project.thumbnail).auto("format").width(800).height(450).url()}
+              width={800}
             />
           ) : (
             <div
@@ -76,22 +76,22 @@ export function ProjectCard({ project, dataSanity }: ProjectCardProps) {
 
       <CardFooter className="gap-2">
         {project.links?.live && (
-          <Button size="sm" startIcon={<ExternalLinkIcon />} asChild>
-            <a href={stegaClean(project.links.live)} target="_blank" rel="noopener noreferrer">
+          <Button asChild size="sm" startIcon={<ExternalLinkIcon />}>
+            <a href={stegaClean(project.links.live)} rel="noopener noreferrer" target="_blank">
               Live
             </a>
           </Button>
         )}
         {project.links?.github && (
-          <Button startIcon={<ReactIcon name="SiGithub" />} size="sm" variant="outline" asChild>
-            <a href={stegaClean(project.links.github)} target="_blank" rel="noopener noreferrer">
+          <Button asChild size="sm" startIcon={<ReactIcon name="SiGithub" />} variant="outline">
+            <a href={stegaClean(project.links.github)} rel="noopener noreferrer" target="_blank">
               Code
             </a>
           </Button>
         )}
         {project.links?.npm && (
-          <Button startIcon={<ReactIcon name="SiNpm" />} size="sm" variant="outline" asChild>
-            <a href={stegaClean(project.links.npm)} target="_blank" rel="noopener noreferrer">
+          <Button asChild size="sm" startIcon={<ReactIcon name="SiNpm" />} variant="outline">
+            <a href={stegaClean(project.links.npm)} rel="noopener noreferrer" target="_blank">
               NPM
             </a>
           </Button>

@@ -5,9 +5,9 @@ import type * as React from "react";
 
 interface GridBackgroundProps {
   className?: string;
-  gridSize?: number;
-  gridColor?: string;
   fade?: boolean;
+  gridColor?: string;
+  gridSize?: number;
 }
 
 export function GridBackground({
@@ -18,12 +18,12 @@ export function GridBackground({
 }: GridBackgroundProps) {
   return (
     <div
-      data-testid="grid-background-container"
       className={cn("pointer-events-none absolute inset-0 -z-10", className)}
+      data-testid="grid-background-container"
       style={
         {
-          "--grid-size": `${gridSize}px`,
-          "--grid-color": gridColor
+          "--grid-color": gridColor,
+          "--grid-size": `${gridSize}px`
         } as React.CSSProperties
       }
     >

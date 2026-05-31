@@ -9,15 +9,12 @@ import { IconSearchInput } from "./components/icon-search-input";
  * Used in both contact and footer sections to maintain consistency.
  */
 export const socialLink = defineType({
-  name: "socialLink",
-  title: "Social Link",
-  type: "object",
   fields: [
     {
+      description: "Social media platform name (e.g., 'GitHub', 'LinkedIn', 'Twitter')",
       name: "platform",
       title: "Platform",
       type: "string",
-      description: "Social media platform name (e.g., 'GitHub', 'LinkedIn', 'Twitter')",
       validation: (rule) => rule.required()
     },
     {
@@ -27,32 +24,35 @@ export const socialLink = defineType({
       validation: (rule) => rule.required()
     },
     defineField({
-      name: "icon",
-      title: "Icon",
-      type: "string",
       components: {
         input: IconSearchInput
       },
+      name: "icon",
+      title: "Icon",
+      type: "string",
       validation: (rule) => rule.required()
     }),
     {
+      description: "Optional username/handle to display",
       name: "username",
       title: "Username",
-      type: "string",
-      description: "Optional username/handle to display"
+      type: "string"
     }
   ],
+  name: "socialLink",
   preview: {
+    prepare({ platform, url, username }) {
+      return {
+        subtitle: username || url,
+        title: platform
+      };
+    },
     select: {
       platform: "platform",
       url: "url",
       username: "username"
-    },
-    prepare({ platform, url, username }) {
-      return {
-        title: platform,
-        subtitle: username || url
-      };
     }
-  }
+  },
+  title: "Social Link",
+  type: "object"
 });

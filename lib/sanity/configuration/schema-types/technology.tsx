@@ -6,10 +6,6 @@ import { ReactIcon } from "../../../../components/ui/react-icon";
 import { IconSearchInput } from "./components/icon-search-input";
 
 export const technology = defineType({
-  name: "technology",
-  title: "Technology",
-  type: "document",
-  icon: CodeIcon,
   fields: [
     defineField({
       name: "name",
@@ -18,12 +14,12 @@ export const technology = defineType({
       validation: (rule) => rule.required()
     }),
     defineField({
-      name: "icon",
-      title: "Icon",
-      type: "string",
       components: {
         input: IconSearchInput
       },
+      name: "icon",
+      title: "Icon",
+      type: "string",
       validation: (rule) => rule.required()
     }),
     defineField({
@@ -32,18 +28,22 @@ export const technology = defineType({
       type: "text"
     })
   ],
+  icon: CodeIcon,
+  name: "technology",
   preview: {
-    select: {
-      title: "name",
-      subtitle: "category",
-      icon: "icon"
-    },
     prepare({ title, subtitle, icon }) {
       return {
-        title,
+        media: <ReactIcon name={icon} />,
         subtitle,
-        media: <ReactIcon name={icon} />
+        title
       };
+    },
+    select: {
+      icon: "icon",
+      subtitle: "category",
+      title: "name"
     }
-  }
+  },
+  title: "Technology",
+  type: "document"
 });

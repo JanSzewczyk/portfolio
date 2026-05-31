@@ -3,18 +3,18 @@ import preview from "~/.storybook/preview";
 import { GridBackground } from "./grid-background";
 
 const meta = preview.meta({
-  title: "Components/UI/Grid Background",
   component: GridBackground,
-  parameters: {
-    layout: "fullscreen"
-  },
   decorators: [
     (Story) => (
       <div className="relative h-150 w-full">
         <Story />
       </div>
     )
-  ]
+  ],
+  parameters: {
+    layout: "fullscreen"
+  },
+  title: "Components/UI/Grid Background"
 });
 
 /**
@@ -221,9 +221,9 @@ CustomGridColor.test("Applies custom grid color", async ({ canvas, step }) => {
 export const FullyCustomized = meta.story({
   args: {
     className: "opacity-50",
-    gridSize: 60,
+    fade: false,
     gridColor: "rgba(59, 130, 246, 0.5)",
-    fade: false
+    gridSize: 60
   }
 });
 

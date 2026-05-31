@@ -2,10 +2,6 @@ import { MasterDetailIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
 
 export const education = defineType({
-  name: "education",
-  title: "Education",
-  type: "document",
-  icon: MasterDetailIcon,
   fields: [
     defineField({
       name: "institution",
@@ -26,8 +22,6 @@ export const education = defineType({
     }),
     defineField({
       name: "degree",
-      title: "Degree",
-      type: "string",
       options: {
         list: [
           { title: "Bachelor's Degree", value: "Bachelor's Degree" },
@@ -35,6 +29,8 @@ export const education = defineType({
           { title: "Ph.D.", value: "Ph.D." }
         ]
       },
+      title: "Degree",
+      type: "string",
       validation: (rule) => rule.required()
     }),
     defineField({
@@ -50,10 +46,10 @@ export const education = defineType({
       validation: (rule) => rule.required()
     }),
     defineField({
+      description: "Leave empty if currently studying",
       name: "endDate",
       title: "End Date",
-      type: "date",
-      description: "Leave empty if currently studying"
+      type: "date"
     }),
     defineField({
       name: "grade",
@@ -61,9 +57,6 @@ export const education = defineType({
       type: "string"
     }),
     defineField({
-      name: "thesis",
-      title: "Thesis",
-      type: "object",
       fields: [
         defineField({
           name: "title",
@@ -79,60 +72,67 @@ export const education = defineType({
         }),
         defineField({
           name: "technologies",
-          title: "Technologies",
-          type: "array",
           of: [
             {
-              type: "reference",
-              to: [{ type: "technology" }]
+              to: [{ type: "technology" }],
+              type: "reference"
             }
-          ]
+          ],
+          title: "Technologies",
+          type: "array"
         }),
         defineField({
+          description: "Link to related project if available",
           name: "project",
           title: "Related Project",
-          type: "reference",
           to: [{ type: "project" }],
-          description: "Link to related project if available"
+          type: "reference"
         }),
         defineField({
           name: "url",
           title: "URL",
           type: "url"
         })
-      ]
+      ],
+      name: "thesis",
+      title: "Thesis",
+      type: "object"
     }),
     defineField({
       name: "achievements",
+      of: [{ type: "string" }],
       title: "Achievements",
-      type: "array",
-      of: [{ type: "string" }]
+      type: "array"
     }),
     defineField({
       name: "coursework",
+      of: [{ type: "string" }],
       title: "Coursework",
-      type: "array",
-      of: [{ type: "string" }]
+      type: "array"
     })
   ],
+  icon: MasterDetailIcon,
+  name: "education",
   orderings: [
     {
-      title: "Start Date, Newest",
+      by: [{ direction: "desc", field: "startDate" }],
       name: "startDateDesc",
-      by: [{ field: "startDate", direction: "desc" }]
+      title: "Start Date, Newest"
     }
   ],
   preview: {
-    select: {
-      title: "institution",
-      subtitle: "fieldOfStudy",
-      degree: "degree"
-    },
     prepare({ title, subtitle, degree }) {
       return {
-        title,
-        subtitle: `${degree ? degree.charAt(0).toUpperCase() + degree.slice(1) : ""} - ${subtitle}`
+        subtitle: `${degree ? degree.charAt(0).toUpperCase() + degree.slice(1) : ""} - ${subtitle}`,
+        title
       };
+    },
+    select: {
+      degree: "degree",
+      subtitle: "fieldOfStudy",
+      title: "institution"
     }
-  }
+  },
+  title: "Education",
+  type: "document"
 });

@@ -2,12 +2,12 @@ import { cn } from "@szum-tech/design-system/utils";
 import type { ReactNode } from "react";
 
 interface SectionHeadingProps {
-  title: string;
-  description?: string;
+  align?: "left" | "center";
   children?: ReactNode;
   className?: string;
-  align?: "left" | "center";
   "data-sanity"?: string;
+  description?: string;
+  title: string;
 }
 
 /**

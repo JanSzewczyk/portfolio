@@ -21,8 +21,8 @@ export function TechLogo({ tech, dataSanity }: TechLogoProps) {
     >
       {tech.icon ? (
         <ReactIcon
-          name={tech.icon as IconName}
           className="relative z-10 size-8 text-primary opacity-40 transition-opacity duration-300 group-hover:opacity-70"
+          name={tech.icon as IconName}
         />
       ) : null}
 
