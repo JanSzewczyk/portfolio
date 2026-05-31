@@ -9,7 +9,7 @@ import * as React from "react";
 
 type Theme = "system" | "light" | "dark";
 
-const THEME_CYCLE: Theme[] = ["system", "light", "dark"];
+const THEME_CYCLE: Array<Theme> = ["system", "light", "dark"];
 
 const THEME_LABELS: Record<Theme, string> = {
   dark: "Dark theme",

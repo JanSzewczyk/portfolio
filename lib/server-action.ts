@@ -20,7 +20,7 @@ export type ActionStateFailed = {
   /** Error message describing what went wrong */
   error: string;
   /** Field-specific validation errors for forms */
-  fieldErrors?: Record<string, string[]>;
+  fieldErrors?: Record<string, Array<string>>;
 };
 
 /**

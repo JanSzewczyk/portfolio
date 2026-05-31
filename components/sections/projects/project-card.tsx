@@ -17,11 +17,11 @@ import { urlFor } from "~/lib/sanity/image";
 import type { PortfolioPageQueryResult } from "~/lib/sanity/types";
 
 type ProjectGroupData =
-  NonNullable<NonNullable<NonNullable<PortfolioPageQueryResult>["projects"]>["projectGroups"]> extends (infer T)[]
+  NonNullable<NonNullable<NonNullable<PortfolioPageQueryResult>["projects"]>["projectGroups"]> extends Array<infer T>
     ? T
     : never;
 
-export type ProjectData = NonNullable<ProjectGroupData["projects"]> extends (infer T)[] ? T : never;
+export type ProjectData = NonNullable<ProjectGroupData["projects"]> extends Array<infer T> ? T : never;
 
 export type ProjectCardProps = {
   project: ProjectData;

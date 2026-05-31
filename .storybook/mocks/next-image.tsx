@@ -18,6 +18,7 @@ type ImageProps = React.ImgHTMLAttributes<HTMLImageElement> & {
 const NextImageStub = React.forwardRef<HTMLImageElement, ImageProps>(function NextImageStub(props, ref) {
   const { src, alt, fill, priority, loader, placeholder, blurDataURL, quality, unoptimized, ...rest } = props;
   const resolvedSrc = typeof src === "string" ? src : src?.src;
+  // biome-ignore lint/performance/noImgElement: This is a stub for Next.js's Image component, which is not available in Storybook. Using a regular img element here for simplicity.
   return <img alt={alt} ref={ref} src={resolvedSrc} {...rest} />;
 });
 

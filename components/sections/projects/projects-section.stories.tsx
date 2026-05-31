@@ -139,7 +139,7 @@ ProjectsSection_.test("Project cards display title, description, and technologie
 
     if (firstProject.technologies && firstProject.technologies.length > 0) {
       const firstTech = firstProject.technologies[0];
-      if (firstTech && firstTech.name) {
+      if (firstTech?.name) {
         const techBadge = canvas.getByText(firstTech.name);
         await expect(techBadge).toBeVisible();
       }
