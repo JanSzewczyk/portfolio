@@ -120,7 +120,7 @@ export const InitialState = meta.story({
 export const FullThemeCycle = meta.story({
   play: async ({ canvas, step, userEvent }) => {
     const button = canvas.getByRole("button");
-    const themesVisited: string[] = [];
+    const themesVisited: Array<string> = [];
 
     const getThemeFromLabel = (): string => {
       const label = button.getAttribute("aria-label") || "";

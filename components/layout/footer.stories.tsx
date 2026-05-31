@@ -45,7 +45,7 @@ Default.test("Renders social media links with correct attributes", async ({ canv
   await step("Verify social links are present", async () => {
     if (args.personalInfo?.socialLinks && args.personalInfo.socialLinks.length > 0) {
       const firstLink = args.personalInfo.socialLinks[0];
-      if (firstLink && firstLink.platform) {
+      if (firstLink?.platform) {
         // Footer uses Button asChild with <a>, so links have role="button" with aria-label
         const linkButton = canvas.getByLabelText(firstLink.platform);
         await expect(linkButton).toBeInTheDocument();
@@ -100,7 +100,7 @@ Default.test("Keyboard navigation", async ({ canvas, step, userEvent, args }) =>
   await step("Tab to first social link", async () => {
     await userEvent.tab();
     const firstLink = args.personalInfo?.socialLinks?.[0];
-    if (firstLink && firstLink.platform) {
+    if (firstLink?.platform) {
       const linkElement = canvas.getByLabelText(firstLink.platform);
       const isFocused = document.activeElement === linkElement || document.activeElement?.contains(linkElement);
       await expect(isFocused).toBeTruthy();
@@ -111,7 +111,7 @@ Default.test("Keyboard navigation", async ({ canvas, step, userEvent, args }) =>
     await step("Tab to next social link", async () => {
       await userEvent.tab();
       const secondLink = args.personalInfo?.socialLinks?.[1];
-      if (secondLink && secondLink.platform) {
+      if (secondLink?.platform) {
         const linkElement = canvas.getByLabelText(secondLink.platform);
         const isFocused = document.activeElement === linkElement || document.activeElement?.contains(linkElement);
         await expect(isFocused).toBeTruthy();

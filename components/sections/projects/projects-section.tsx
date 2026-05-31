@@ -17,7 +17,7 @@ type ProjectWithPath = {
 type ProjectCategoryTab = {
   value: string;
   label: string;
-  projects: ProjectWithPath[];
+  projects: Array<ProjectWithPath>;
 };
 
 export type ProjectsSectionProps = {
@@ -35,10 +35,10 @@ export function ProjectsSection({ projects, documentId, documentType }: Projects
   // Get project groups from the data
   const projectGroups = projects?.projectGroups ?? [];
 
-  const tabs: ProjectCategoryTab[] = [];
+  const tabs: Array<ProjectCategoryTab> = [];
 
   // Collect featured projects with their original paths
-  const featuredProjects: ProjectWithPath[] = [];
+  const featuredProjects: Array<ProjectWithPath> = [];
   projectGroups.forEach((group, groupIndex) => {
     group.projects?.forEach((project, projectIndex) => {
       if (project.featured) {

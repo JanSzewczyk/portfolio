@@ -439,7 +439,7 @@ export const educationBuilder = build<PortfolioEducation>({
     fieldOfStudy: () =>
       faker.helpers.arrayElement(["Computer Science", "Software Engineering", "Information Technology"]),
     grade: () => faker.helpers.arrayElement(["4.0", "3.8", "3.5", null]),
-    institution: () => faker.company.name() + " University",
+    institution: () => `${faker.company.name()} University`,
     institutionUrl: () => faker.internet.url(),
     location: () => `${faker.location.city()}, ${faker.location.country()}`,
     startDate: () => faker.date.past({ years: 10 }).toISOString(),
