@@ -3,6 +3,28 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.12.0](https://github.com/JanSzewczyk/portfolio/compare/v1.11.1...v1.12.0) (2026-05-31)
+
+### Features
+
+* add SiNodedotjs icon to the icon registry ([474efe7](https://github.com/JanSzewczyk/portfolio/commit/474efe7fa469bfb31a5480f3a8710db1e0f3b3f3))
+
+### Miscellaneous Chores
+
+* **deps:** bump @biomejs/biome to 2.4.16 ([064c416](https://github.com/JanSzewczyk/portfolio/commit/064c4163a154ce9b3ecf473bcc299f0b8949fa59))
+* **deps:** update react-hook-form to 7.77.0 ([c304b8a](https://github.com/JanSzewczyk/portfolio/commit/c304b8a78b23d0be27bc5a70ec2a4d8c1600f4f6))
+* **deps:** update sanity dependencies to 5.28.0 ([e6b8d52](https://github.com/JanSzewczyk/portfolio/commit/e6b8d52081e9d4dc4af790e804122fa972fb51d6))
+* rename publish.yml to release.yml ([80461e1](https://github.com/JanSzewczyk/portfolio/commit/80461e1c1eb18d68e485bb46ed6223d09dac7ca8))
+* simplify source path for design system in globals.css ([b36c222](https://github.com/JanSzewczyk/portfolio/commit/b36c222656af5dc588b9d0c35b9e4d77923d9830))
+* update release.yml to add permissions for contents, issues, pull-requests, and id-token ([cb90df9](https://github.com/JanSzewczyk/portfolio/commit/cb90df9e1a6cbd8cd928314ca59878cae1d51e3f))
+
+### Code Refactoring
+
+* introduce animated stats and scroll button components; refactor about and skills sections for improved functionality ([7c03333](https://github.com/JanSzewczyk/portfolio/commit/7c03333b6364f801f635760fdc3ea86670b30c3d))
+* reorder parameters and properties for improved consistency across components ([845bc50](https://github.com/JanSzewczyk/portfolio/commit/845bc501ba00622ad12379caf5ec5cc3f0f4454b))
+* update publish workflow name and environment variable; streamline job permissions and steps ([956daf6](https://github.com/JanSzewczyk/portfolio/commit/956daf6922b759c04d4741f8733872220249d3b7))
+* update type annotations for improved consistency and clarity ([dbbd437](https://github.com/JanSzewczyk/portfolio/commit/dbbd4373a1b2853ab77d932cfa418fba04c65a0e))
+
 ## [1.11.1](https://github.com/JanSzewczyk/portfolio/compare/v1.11.0...v1.11.1) (2026-05-28)
 
 ### Bug Fixes
