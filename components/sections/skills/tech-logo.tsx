@@ -19,14 +19,12 @@ export function TechLogo({ tech, dataSanity }: TechLogoProps) {
       className="group relative flex min-h-24 w-28 flex-col items-center gap-2 py-4 transition-all duration-300 hover:scale-105 hover:shadow-md"
       data-sanity={dataSanity}
     >
-      <div>
-        {tech.icon ? (
-          <ReactIcon
-            name={tech.icon as IconName}
-            className="relative z-10 size-8 text-primary opacity-40 transition-opacity duration-300 group-hover:opacity-70"
-          />
-        ) : null}
-      </div>
+      {tech.icon ? (
+        <ReactIcon
+          name={tech.icon as IconName}
+          className="relative z-10 size-8 text-primary opacity-40 transition-opacity duration-300 group-hover:opacity-70"
+        />
+      ) : null}
 
       <span className="relative z-10 text-center font-code text-body-xs text-foreground">{tech.name}</span>
     </Card>

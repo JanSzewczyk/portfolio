@@ -32,5 +32,11 @@
         ]
       }
     ]
+  },
+  "enabledPlugins": {
+    "testing@szum-tech": true,
+    "nextjs@szum-tech": true,
+    "code-quality@szum-tech": true,
+    "performance@szum-tech": true
   }
 }

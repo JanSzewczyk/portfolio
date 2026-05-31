@@ -130,3 +130,5 @@ src/styles
 /.claude/*.local.*
 /bash.exe.stackdump
 /.claude/agent-memory
+
+/.lighthouseci
