@@ -1,7 +1,4 @@
-"use client";
-
 import { Avatar, AvatarFallback } from "@szum-tech/design-system/components/avatar";
-import { Button } from "@szum-tech/design-system/components/button";
 import { Status, StatusIndicator, StatusLabel } from "@szum-tech/design-system/components/status";
 import { TypingText } from "@szum-tech/design-system/components/typing-text";
 import { WordRotate } from "@szum-tech/design-system/components/word-rotate";
@@ -13,7 +10,8 @@ import { Section } from "~/constants/sections";
 import { urlFor } from "~/lib/sanity/image";
 import type { PortfolioPageQueryResult } from "~/lib/sanity/types";
 import { buildSanityAttribute } from "~/lib/sanity/utils";
-import { scrollToSection } from "~/lib/scroll-to-section";
+
+import { ScrollButton } from "./scroll-button";
 
 type HeroSectionProps = {
   personalInfo: NonNullable<PortfolioPageQueryResult>["personalInfo"];
@@ -70,26 +68,21 @@ export function HeroSection({ personalInfo, hero, documentId, documentType }: He
             <TypingText text={`Hi I'm ${stegaClean(personalInfo?.name)}`} speed={80} />
           </h1>
 
-          {hero?.alternativeTitles && hero.alternativeTitles.length > 0 && (
+          {hero?.alternativeTitles && hero.alternativeTitles.length > 0 ? (
             <div className="mb-6 text-heading-h1 text-primary">
               <WordRotate words={hero.alternativeTitles} duration={3000} animationStyle={"slide-up"} />
             </div>
-          )}
+          ) : null}
 
           <p className="mb-8 max-w-2xl text-body-lg text-muted-foreground">{hero?.tagline}</p>
 
           <div className="flex flex-col gap-4 sm:flex-row">
-            <Button size="lg" onClick={() => scrollToSection(Section.CONTACT)}>
+            <ScrollButton size="lg" targetSection={Section.CONTACT}>
               Get in Touch
-            </Button>
-            <Button
-              size="lg"
-              variant="outline"
-              onClick={() => scrollToSection(Section.PROJECTS)}
-              endIcon={<ArrowDownIcon />}
-            >
+            </ScrollButton>
+            <ScrollButton size="lg" variant="outline" targetSection={Section.PROJECTS} endIcon={<ArrowDownIcon />}>
               View Projects
-            </Button>
+            </ScrollButton>
           </div>
         </div>
       </div>

@@ -1,8 +1,5 @@
-"use client";
-
 import { Badge } from "@szum-tech/design-system/components/badge";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@szum-tech/design-system/components/card";
-import { Marquee } from "@szum-tech/design-system/components/marquee";
 import { cn } from "@szum-tech/design-system/utils";
 import { ArrowDownIcon } from "lucide-react";
 import { type IconName, ReactIcon } from "~/components/ui/react-icon";
@@ -11,13 +8,16 @@ import { Section } from "~/constants/sections";
 import type { PortfolioPageQueryResult } from "~/lib/sanity/types";
 import { buildSanityAttribute } from "~/lib/sanity/utils";
 
-import { TechLogo } from "./tech-logo";
+import { TechMarquee } from "./tech-marquee";
 
 type SkillsSectionProps = {
   skills: NonNullable<PortfolioPageQueryResult>["skills"];
   documentId: string;
   documentType: string;
 };
+
+/** Cap the marquee logos — every technology still appears in the grouped grid below. */
+const MAX_MARQUEE_TECHS = 16;
 
 export function SkillsSection({ skills, documentId, documentType }: SkillsSectionProps) {
   const { createSanityAttribute } = buildSanityAttribute({
@@ -29,6 +29,10 @@ export function SkillsSection({ skills, documentId, documentType }: SkillsSectio
   const allTechnologies =
     skills?.technologyGroups?.flatMap((group) => group.technologies?.filter((tech) => tech.name) ?? []) ?? [];
   const uniqueTechnologies = Array.from(new Map(allTechnologies.map((tech) => [tech._id, tech])).values());
+  const marqueeItems = uniqueTechnologies.slice(0, MAX_MARQUEE_TECHS).map((tech) => ({
+    tech,
+    dataSanity: createSanityAttribute(`skills.technologyGroups[_key=="${tech._id}"]`)
+  }));
 
   return (
     <section id={Section.SKILLS} className="py-24">
@@ -40,24 +44,16 @@ export function SkillsSection({ skills, documentId, documentType }: SkillsSectio
         />
 
         {/* Tech logos marquee with enhanced styling */}
-        {uniqueTechnologies.length > 0 && (
+        {marqueeItems.length > 0 ? (
           <div
             className="relative -mx-4 mb-20 sm:-mx-6 lg:-mx-8"
             data-sanity={createSanityAttribute("skills.technologyGroups")}
           >
-            <Marquee pauseOnHover className="[--duration:50s]">
-              {uniqueTechnologies.map((tech) => (
-                <TechLogo
-                  key={tech._id}
-                  tech={tech}
-                  dataSanity={createSanityAttribute(`skills.technologyGroups[_key=="${tech._id}"]`)}
-                />
-              ))}
-            </Marquee>
+            <TechMarquee items={marqueeItems} />
             <div className="pointer-events-none absolute inset-y-0 left-0 w-1/6 bg-linear-to-r from-background/95 to-transparent" />
             <div className="pointer-events-none absolute inset-y-0 right-0 w-1/6 bg-linear-to-l from-background/95 to-transparent" />
           </div>
-        )}
+        ) : null}
 
         <div
           className="grid auto-rows-auto grid-cols-1 gap-6 md:grid-cols-3"

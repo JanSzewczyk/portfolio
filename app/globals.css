@@ -2,4 +2,6 @@
 
 @import "@szum-tech/design-system/tailwind/global.css";
 
-@source "../node_modules/@szum-tech/design-system";
+/* Scan only the shipped ESM runtime files for class names — skips the duplicate
+   .cjs build and .d.ts/.cts type files, which carry no runtime classNames. */
+@source "../node_modules/@szum-tech/design-system/dist/**/*.js";

@@ -1,11 +1,9 @@
-"use client";
-
-import { CountingNumber } from "@szum-tech/design-system/components/counting-number";
 import { MapPin, Terminal } from "lucide-react";
 import { SectionHeading } from "~/components/ui/section-heading";
 import { Section } from "~/constants/sections";
 import type { PortfolioPageQueryResult } from "~/lib/sanity/types";
 import { buildSanityAttribute } from "~/lib/sanity/utils";
+import { AnimatedStat } from "./animated-stat";
 import { BioMarkdown } from "./bio-markdown";
 import { CVDropdown } from "./cv-dropdown";
 import { HobbyItem } from "./hobby-item";
@@ -55,17 +53,13 @@ export function AboutSection({ about, documentId, documentType }: AboutSectionPr
           {/* Stats column — no card wrappers, DS typography */}
           <div className="grid grid-cols-2 content-start gap-x-8 gap-y-10 pt-1">
             {about?.stats?.map((stat, index) => (
-              <div key={stat._key} data-sanity={createSanityAttribute(`about.stats[${index}]`)}>
-                <div className="font-code text-display-sm text-foreground tabular-nums">
-                  <CountingNumber
-                    to={stat.value ?? 0}
-                    duration={2}
-                    format={(value) => `${Math.round(value)}${stat.suffix ?? ""}`}
-                    once
-                  />
-                </div>
-                <p className="mt-1.5 text-mute">{stat.label}</p>
-              </div>
+              <AnimatedStat
+                key={stat._key}
+                value={stat.value ?? 0}
+                suffix={stat.suffix ?? undefined}
+                label={stat.label ?? undefined}
+                dataSanity={createSanityAttribute(`about.stats[${index}]`)}
+              />
             ))}
           </div>
         </div>
