@@ -8,7 +8,7 @@ import { Input } from "@szum-tech/design-system/components/input";
 import { Textarea } from "@szum-tech/design-system/components/textarea";
 import { MailboxIcon, SendIcon } from "lucide-react";
 import * as React from "react";
-import { useForm } from "react-hook-form";
+import { useForm, useFormState } from "react-hook-form";
 import type { CreateEmailResponseSuccess } from "resend";
 import { toast } from "sonner";
 import { type ContactFormData, contactFormSchema } from "~/features/contact/schemas/contact.schema";
@@ -32,6 +32,8 @@ export function ContactForm({ onSubmitAction, contactFormContent }: ContactFormP
     },
     resolver: zodResolver(contactFormSchema)
   });
+
+  const formState = useFormState({ control: form.control });
 
   async function handleSubmit(formData: ContactFormData) {
     const actionResponse = await onSubmitAction(formData);
@@ -80,40 +82,40 @@ export function ContactForm({ onSubmitAction, contactFormContent }: ContactFormP
                 <input autoComplete="off" id="website" tabIndex={-1} type="text" {...form.register("website")} />
               </div>
 
-              <Field data-invalid={!!form.formState.errors.name}>
+              <Field data-invalid={!!formState.errors.name}>
                 <FieldLabel htmlFor="username">Username</FieldLabel>
                 <Input
                   id="username"
-                  invalid={!!form.formState.errors.name}
+                  invalid={!!formState.errors.name}
                   placeholder="Your name"
                   {...form.register("name")}
                 />
-                <FieldError errors={[form.formState.errors.name]} />
+                <FieldError errors={[formState.errors.name]} />
               </Field>
-              <Field data-invalid={!!form.formState.errors.email}>
+              <Field data-invalid={!!formState.errors.email}>
                 <FieldLabel htmlFor="email">Email</FieldLabel>
                 <Input
                   id="email"
-                  invalid={!!form.formState.errors.email}
+                  invalid={!!formState.errors.email}
                   placeholder="your@email.com"
                   type="email"
                   {...form.register("email")}
                 />
-                <FieldError errors={[form.formState.errors.email]} />
+                <FieldError errors={[formState.errors.email]} />
               </Field>
-              <Field data-invalid={!!form.formState.errors.message}>
+              <Field data-invalid={!!formState.errors.message}>
                 <FieldLabel htmlFor="message">Message</FieldLabel>
                 <Textarea
                   id="message"
-                  invalid={!!form.formState.errors.message}
+                  invalid={!!formState.errors.message}
                   placeholder="Your message..."
                   rows={5}
                   {...form.register("message")}
                 />
-                <FieldError errors={[form.formState.errors.message]} />
+                <FieldError errors={[formState.errors.message]} />
               </Field>
 
-              <Button fullWidth loading={form.formState.isSubmitting} startIcon={<SendIcon />} type="submit">
+              <Button fullWidth loading={formState.isSubmitting} startIcon={<SendIcon />} type="submit">
                 Send Message
               </Button>
             </FieldGroup>

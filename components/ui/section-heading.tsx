@@ -10,12 +10,6 @@ interface SectionHeadingProps {
   title: string;
 }
 
-/**
- * Section heading with overline label + display heading pattern.
- *
- * - `title`       → small uppercase overline label (primary color)
- * - `description` → main section h2 (display-sm, bold)
- */
 export function SectionHeading({
   title,
   description,
@@ -34,7 +28,7 @@ export function SectionHeading({
       )}
       data-sanity={dataSanity}
     >
-      <span className="block text-body-xs text-primary uppercase">{title}</span>
+      <span className="block text-heading-h4 text-primary uppercase">{title}</span>
       {description ? <h2 className="text-display-sm">{description}</h2> : null}
       {children}
     </div>

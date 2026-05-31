@@ -1,5 +1,3 @@
-"use client";
-
 import { Button } from "@szum-tech/design-system/components/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@szum-tech/design-system/components/card";
 import { cn } from "@szum-tech/design-system/utils";
