@@ -19,11 +19,11 @@ type EducationSectionProps = {
 
 export function EducationSection({ education }: EducationSectionProps) {
   return (
-    <section id={Section.EDUCATION} className="py-24">
+    <section className="py-24" id={Section.EDUCATION}>
       <div className="container">
         <SectionHeading
-          title={education?.heading?.title ?? "Education"}
           description={education?.heading?.description ?? ""}
+          title={education?.heading?.title ?? "Education"}
         />
 
         <div className="mx-auto max-w-3xl">

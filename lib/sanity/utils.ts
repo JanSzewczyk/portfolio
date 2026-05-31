@@ -5,8 +5,8 @@ export function buildSanityAttribute({ documentId, documentType }: { documentId:
     createSanityAttribute(path: string) {
       return createDataAttribute({
         id: documentId,
-        type: documentType,
-        path
+        path,
+        type: documentType
       }).toString();
     }
   };

@@ -7,19 +7,7 @@ process.env.SKIP_ENV_VALIDATION = "true";
 
 export default defineConfig({
   test: {
-    globals: true,
-    reporters: process.env.CI ? ["dot", "github-actions"] : ["tree"],
     coverage: {
-      provider: "v8",
-      reporter: ["text", "html", "json-summary", "json"],
-      reportOnFailure: true,
-      include: [
-        "app/**/*.{js,jsx,ts,tsx}",
-        "components/**/*.{js,jsx,ts,tsx}",
-        "features/**/*.{js,jsx,ts,tsx}",
-        "lib/**/*.{js,ts}",
-        "utils/**/*.{js,ts}"
-      ],
       exclude: [
         "**/{node_modules,coverage,storybook-static}/**",
         "**/.next/**",
@@ -45,8 +33,19 @@ export default defineConfig({
         "**/lib/{sanity,seo}/**",
         "**/lib/scroll-to-section.ts",
         "app/studio/**"
-      ]
+      ],
+      include: [
+        "app/**/*.{js,jsx,ts,tsx}",
+        "components/**/*.{js,jsx,ts,tsx}",
+        "features/**/*.{js,jsx,ts,tsx}",
+        "lib/**/*.{js,ts}",
+        "utils/**/*.{js,ts}"
+      ],
+      provider: "v8",
+      reporter: ["text", "html", "json-summary", "json"],
+      reportOnFailure: true
     },
+    globals: true,
     projects: [
       // Unit tests project - runs in Node environment
       {
@@ -55,10 +54,10 @@ export default defineConfig({
           tsconfigPaths: true
         },
         test: {
-          name: "unit",
+          environment: "node",
           globals: true,
           include: ["**/*.{test,spec}.{ts,tsx}"],
-          environment: "node",
+          name: "unit",
           setupFiles: ["tests/unit/vitest.setup.ts"]
         }
       },
@@ -69,24 +68,25 @@ export default defineConfig({
           tsconfigPaths: true
         },
         test: {
-          name: "storybook",
-          exclude: ["**/node_modules/**", "**/dist/**", "**/.next/**"],
-          testTimeout: 30000,
-          hookTimeout: 30000,
-          isolate: false,
           browser: {
             enabled: true,
-            provider: playwright(),
             instances: [
               {
                 browser: "chromium",
                 headless: true
               }
-            ]
+            ],
+            provider: playwright()
           },
-          setupFiles: ["tests/integration/vitest.setup.tsx"]
+          exclude: ["**/node_modules/**", "**/dist/**", "**/.next/**"],
+          hookTimeout: 30000,
+          isolate: false,
+          name: "storybook",
+          setupFiles: ["tests/integration/vitest.setup.tsx"],
+          testTimeout: 30000
         }
       }
-    ]
+    ],
+    reporters: process.env.CI ? ["dot", "github-actions"] : ["tree"]
   }
 });

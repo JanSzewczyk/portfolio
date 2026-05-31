@@ -3,8 +3,8 @@ import { type NextRequest, NextResponse } from "next/server";
 import { createLogger } from "~/lib/logger";
 
 const draftModeLogger = createLogger({
-  module: "api",
-  endpoint: "/api/draft-mode/disable"
+  endpoint: "/api/draft-mode/disable",
+  module: "api"
 });
 
 export async function GET(request: NextRequest) {

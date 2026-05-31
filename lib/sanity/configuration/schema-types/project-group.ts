@@ -2,49 +2,49 @@ import { FolderIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
 
 export const projectGroup = defineType({
-  name: "projectGroup",
-  title: "Project Group",
-  type: "document",
-  icon: FolderIcon,
   fields: [
     defineField({
+      description: "Display name for the project group (e.g., 'Web Applications', 'Mobile Apps')",
       name: "label",
       title: "Label",
       type: "string",
-      description: "Display name for the project group (e.g., 'Web Applications', 'Mobile Apps')",
       validation: (rule) => rule.required()
     }),
     defineField({
-      name: "description",
-      title: "Description",
-      type: "text",
       description: "Optional description of this project category",
-      rows: 3
+      name: "description",
+      rows: 3,
+      title: "Description",
+      type: "text"
     }),
     defineField({
       name: "projects",
-      title: "Projects",
-      type: "array",
       of: [
         {
-          type: "reference",
-          to: [{ type: "project" }]
+          to: [{ type: "project" }],
+          type: "reference"
         }
       ],
+      title: "Projects",
+      type: "array",
       validation: (rule) => rule.required().min(1)
     })
   ],
+  icon: FolderIcon,
+  name: "projectGroup",
   preview: {
-    select: {
-      title: "label",
-      subtitle: "description",
-      projects: "projects"
-    },
     prepare({ title, subtitle, projects }) {
       return {
-        title,
-        subtitle: subtitle || `${projects.length || 0} projects`
+        subtitle: subtitle || `${projects.length || 0} projects`,
+        title
       };
+    },
+    select: {
+      projects: "projects",
+      subtitle: "description",
+      title: "label"
     }
-  }
+  },
+  title: "Project Group",
+  type: "document"
 });

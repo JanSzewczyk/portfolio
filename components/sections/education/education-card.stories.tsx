@@ -4,18 +4,18 @@ import { educationBuilder, technologyBuilder } from "~/tests/builders/portfolio-
 import { EducationCard, type EducationCardProps } from "./education-card";
 
 const meta = preview.meta({
-  title: "Components/Sections/Education/Education Card",
   component: EducationCard,
-  parameters: {
-    layout: "centered"
-  },
   decorators: [
     (Story) => (
       <div className="w-120">
         <Story />
       </div>
     )
-  ]
+  ],
+  parameters: {
+    layout: "centered"
+  },
+  title: "Components/Sections/Education/Education Card"
 });
 
 /**
@@ -25,52 +25,6 @@ export const WithThesisAndProject = meta.story({
   args: {
     education: educationBuilder.one({
       overrides: {
-        institution: "Warsaw University of Technology",
-        institutionUrl: "https://www.pw.edu.pl",
-        location: "Warsaw, Poland",
-        degree: "Master's Degree",
-        fieldOfStudy: "Computer Science",
-        startDate: "2018-10-01",
-        endDate: "2020-06-30",
-        grade: "4.0",
-        thesis: () => ({
-          title: "Real-time Collaborative Code Editor Using CRDTs",
-          description:
-            "Design and implementation of a real-time collaborative code editing platform leveraging Conflict-free Replicated Data Types for consistency.",
-          technologies: [
-            technologyBuilder.one({
-              overrides: { name: "TypeScript", icon: "SiTypescript" }
-            }),
-            technologyBuilder.one({
-              overrides: { name: "React", icon: "SiReact" }
-            }),
-            technologyBuilder.one({
-              overrides: { name: "Node.js", icon: "SiNodedotjs" }
-            })
-          ],
-          project: {
-            _id: "project-1",
-            title: "CollabCode",
-            description: "A real-time collaborative code editor with syntax highlighting and multi-cursor support.",
-            technologies: [
-              technologyBuilder.one({
-                overrides: { name: "TypeScript", icon: "SiTypescript" }
-              }),
-              technologyBuilder.one({
-                overrides: { name: "Next.js", icon: "SiNextdotjs" }
-              }),
-              technologyBuilder.one({
-                overrides: { name: "Tailwind CSS", icon: "SiTailwindcss" }
-              })
-            ],
-            links: {
-              live: "https://collabcode.example.com",
-              github: "https://github.com/example/collabcode",
-              npm: undefined
-            }
-          },
-          url: "https://example.com/thesis.pdf"
-        }),
         achievements: () => [
           "Graduated with honors (summa cum laude)",
           "Published research paper at IEEE Conference",
@@ -82,7 +36,53 @@ export const WithThesisAndProject = meta.story({
           "Machine Learning",
           "Software Architecture",
           "Computer Networks"
-        ]
+        ],
+        degree: "Master's Degree",
+        endDate: "2020-06-30",
+        fieldOfStudy: "Computer Science",
+        grade: "4.0",
+        institution: "Warsaw University of Technology",
+        institutionUrl: "https://www.pw.edu.pl",
+        location: "Warsaw, Poland",
+        startDate: "2018-10-01",
+        thesis: () => ({
+          description:
+            "Design and implementation of a real-time collaborative code editing platform leveraging Conflict-free Replicated Data Types for consistency.",
+          project: {
+            _id: "project-1",
+            description: "A real-time collaborative code editor with syntax highlighting and multi-cursor support.",
+            links: {
+              github: "https://github.com/example/collabcode",
+              live: "https://collabcode.example.com",
+              npm: undefined
+            },
+            technologies: [
+              technologyBuilder.one({
+                overrides: { icon: "SiTypescript", name: "TypeScript" }
+              }),
+              technologyBuilder.one({
+                overrides: { icon: "SiNextdotjs", name: "Next.js" }
+              }),
+              technologyBuilder.one({
+                overrides: { icon: "SiTailwindcss", name: "Tailwind CSS" }
+              })
+            ],
+            title: "CollabCode"
+          },
+          technologies: [
+            technologyBuilder.one({
+              overrides: { icon: "SiTypescript", name: "TypeScript" }
+            }),
+            technologyBuilder.one({
+              overrides: { icon: "SiReact", name: "React" }
+            }),
+            technologyBuilder.one({
+              overrides: { icon: "SiNodedotjs", name: "Node.js" }
+            })
+          ],
+          title: "Real-time Collaborative Code Editor Using CRDTs",
+          url: "https://example.com/thesis.pdf"
+        })
       }
     }) as EducationCardProps["education"]
   }
@@ -98,8 +98,8 @@ WithThesisAndProject.test("Renders institution and field of study", async ({ can
 
 WithThesisAndProject.test("Renders thesis section with title and description", async ({ canvas }) => {
   const thesisHeading = canvas.getByRole("heading", {
-    name: "Thesis",
-    level: 3
+    level: 3,
+    name: "Thesis"
   });
   await expect(thesisHeading).toBeVisible();
 
@@ -169,30 +169,30 @@ export const ThesisWithoutProject = meta.story({
   args: {
     education: educationBuilder.one({
       overrides: {
+        achievements: () => ["Best thesis award in Software Engineering department"],
+        coursework: () => ["Object-Oriented Programming", "Databases", "Web Development"],
+        degree: "Bachelor's Degree",
+        endDate: "2018-06-30",
+        fieldOfStudy: "Software Engineering",
+        grade: "3.8",
         institution: "AGH University of Science and Technology",
         institutionUrl: "https://www.agh.edu.pl",
         location: "Krakow, Poland",
-        degree: "Bachelor's Degree",
-        fieldOfStudy: "Software Engineering",
         startDate: "2015-10-01",
-        endDate: "2018-06-30",
-        grade: "3.8",
         thesis: () => ({
-          title: "Automated Testing Framework for React Applications",
           description: "Design of a testing framework combining unit, integration, and visual regression testing.",
+          project: null,
           technologies: [
             technologyBuilder.one({
-              overrides: { name: "React", icon: "SiReact" }
+              overrides: { icon: "SiReact", name: "React" }
             }),
             technologyBuilder.one({
-              overrides: { name: "Vitest", icon: "SiVitest" }
+              overrides: { icon: "SiVitest", name: "Vitest" }
             })
           ],
-          project: null,
+          title: "Automated Testing Framework for React Applications",
           url: "https://example.com/bachelor-thesis.pdf"
-        }),
-        achievements: () => ["Best thesis award in Software Engineering department"],
-        coursework: () => ["Object-Oriented Programming", "Databases", "Web Development"]
+        })
       }
     }) as EducationCardProps["education"]
   }
@@ -228,17 +228,17 @@ export const MinimalCard = meta.story({
   args: {
     education: educationBuilder.one({
       overrides: {
+        achievements: null,
+        coursework: null,
+        degree: "Bachelor's Degree",
+        endDate: undefined,
+        fieldOfStudy: "Information Technology",
+        grade: null,
         institution: "Online University",
         institutionUrl: null,
         location: null,
-        degree: "Bachelor's Degree",
-        fieldOfStudy: "Information Technology",
         startDate: "2020-01-01",
-        endDate: undefined,
-        grade: null,
-        thesis: null,
-        achievements: null,
-        coursework: null
+        thesis: null
       }
     }) as EducationCardProps["education"]
   }
@@ -272,41 +272,41 @@ export const ProjectGithubOnly = meta.story({
   args: {
     education: educationBuilder.one({
       overrides: {
+        achievements: () => ["Published 3 papers in top-tier ML conferences"],
+        coursework: null,
+        degree: "Ph.D.",
+        endDate: "2021-06-30",
+        fieldOfStudy: "Computer Science",
+        grade: "3.9",
         institution: "MIT",
         institutionUrl: "https://www.mit.edu",
         location: "Cambridge, USA",
-        degree: "Ph.D.",
-        fieldOfStudy: "Computer Science",
         startDate: "2016-09-01",
-        endDate: "2021-06-30",
-        grade: "3.9",
         thesis: () => ({
-          title: "Neural Architecture Search for Edge Computing",
           description: "Optimizing neural network architectures for deployment on resource-constrained edge devices.",
-          technologies: [
-            technologyBuilder.one({
-              overrides: { name: "Python", icon: "SiPython" }
-            })
-          ],
           project: {
             _id: "project-2",
-            title: "EdgeNAS",
             description: "Neural Architecture Search toolkit optimized for edge deployment.",
+            links: {
+              github: "https://github.com/example/edgenas",
+              live: undefined,
+              npm: undefined
+            },
             technologies: [
               technologyBuilder.one({
-                overrides: { name: "Python", icon: "SiPython" }
+                overrides: { icon: "SiPython", name: "Python" }
               })
             ],
-            links: {
-              live: undefined,
-              github: "https://github.com/example/edgenas",
-              npm: undefined
-            }
+            title: "EdgeNAS"
           },
+          technologies: [
+            technologyBuilder.one({
+              overrides: { icon: "SiPython", name: "Python" }
+            })
+          ],
+          title: "Neural Architecture Search for Edge Computing",
           url: null
-        }),
-        achievements: () => ["Published 3 papers in top-tier ML conferences"],
-        coursework: null
+        })
       }
     }) as EducationCardProps["education"]
   }
@@ -330,17 +330,17 @@ ProjectGithubOnly.test("Renders only source code icon button when only GitHub li
  * Education card with accordion sections expanded to test interaction.
  */
 export const AccordionInteraction = meta.story({
-  tags: ["test-only"],
   args: {
     education: educationBuilder.one({
       overrides: {
-        thesis: null,
-        grade: "3.5",
         achievements: () => ["Dean's List for 4 consecutive semesters", "Hackathon winner 2019"],
-        coursework: () => ["Data Structures", "Algorithms", "Operating Systems"]
+        coursework: () => ["Data Structures", "Algorithms", "Operating Systems"],
+        grade: "3.5",
+        thesis: null
       }
     }) as EducationCardProps["education"]
-  }
+  },
+  tags: ["test-only"]
 });
 
 AccordionInteraction.test("Expands and collapses achievements accordion", async ({ canvas, step, userEvent }) => {

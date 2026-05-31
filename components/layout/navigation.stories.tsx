@@ -4,14 +4,14 @@ import { portfolioPagePersonalInfoBuilder } from "~/tests/builders/portfolio-pag
 import { Navigation } from "./navigation";
 
 const meta = preview.meta({
-  title: "Components/Layout/Navigation",
+  args: {
+    personalInfo: portfolioPagePersonalInfoBuilder.one()
+  },
   component: Navigation,
   parameters: {
     layout: "fullscreen"
   },
-  args: {
-    personalInfo: portfolioPagePersonalInfoBuilder.one()
-  }
+  title: "Components/Layout/Navigation"
 });
 
 /**
@@ -100,7 +100,7 @@ NavigationStory.test("Semantic HTML structure is accessible", async ({ canvas, s
  */
 export const MobileNavigationStory = meta.story({
   globals: {
-    viewport: { value: "mobile2", isRotated: false }
+    viewport: { isRotated: false, value: "mobile2" }
   }
 });
 

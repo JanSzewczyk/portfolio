@@ -4,40 +4,40 @@ import { educationBuilder, portfolioPageEducationBuilder } from "~/tests/builder
 import { EducationSection } from "./education-section";
 
 const meta = preview.meta({
-  title: "Components/Sections/Education Section",
-  component: EducationSection,
   args: {
+    documentId: "test-portfolio-id",
+    documentType: "portfolioPage",
     education: portfolioPageEducationBuilder.one({
       overrides: {
-        heading: {
-          title: "Education",
-          description: "My academic background and achievements"
-        },
         education: [
           educationBuilder.one({
             overrides: {
+              achievements: () => ["Graduated with honors", "Published research paper"],
+              coursework: () => ["Distributed Systems", "Advanced Algorithms", "Machine Learning"],
+              degree: "Master's Degree",
+              endDate: "2020-06-30",
+              fieldOfStudy: "Computer Science",
+              grade: "4.0",
               institution: "Warsaw University of Technology",
               institutionUrl: "https://www.pw.edu.pl",
               location: "Warsaw, Poland",
-              degree: "Master's Degree",
-              fieldOfStudy: "Computer Science",
               startDate: "2018-10-01",
-              endDate: "2020-06-30",
-              grade: "4.0",
-              thesis: null,
-              achievements: () => ["Graduated with honors", "Published research paper"],
-              coursework: () => ["Distributed Systems", "Advanced Algorithms", "Machine Learning"]
+              thesis: null
             }
           })
-        ]
+        ],
+        heading: {
+          description: "My academic background and achievements",
+          title: "Education"
+        }
       }
-    }),
-    documentId: "test-portfolio-id",
-    documentType: "portfolioPage"
+    })
   },
+  component: EducationSection,
   parameters: {
     layout: "fullscreen"
-  }
+  },
+  title: "Components/Sections/Education Section"
 });
 
 export const EducationSectionStory = meta.story({
@@ -50,8 +50,8 @@ EducationSectionStory.test("Renders section heading with title and description",
   await expect(label).toBeVisible();
 
   const heading = canvas.getByRole("heading", {
-    name: "My academic background and achievements",
-    level: 2
+    level: 2,
+    name: "My academic background and achievements"
   });
   await expect(heading).toBeVisible();
 });

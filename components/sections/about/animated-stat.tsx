@@ -13,7 +13,7 @@ export function AnimatedStat({ value, suffix, label, dataSanity }: AnimatedStatP
   return (
     <div data-sanity={dataSanity}>
       <div className="font-code text-display-sm text-foreground tabular-nums">
-        <CountingNumber to={value} duration={2} format={(value) => `${Math.round(value)}${suffix ?? ""}`} once />
+        <CountingNumber duration={2} format={(value) => `${Math.round(value)}${suffix ?? ""}`} once to={value} />
       </div>
       <p className="mt-1.5 text-mute">{label}</p>
     </div>

@@ -1,11 +1,11 @@
 export const Section = {
-  HERO: "hero",
   ABOUT: "about",
-  SKILLS: "skills",
-  PROJECTS: "projects",
-  EXPERIENCE: "experience",
+  CONTACT: "contact",
   EDUCATION: "education",
-  CONTACT: "contact"
+  EXPERIENCE: "experience",
+  HERO: "hero",
+  PROJECTS: "projects",
+  SKILLS: "skills"
 } as const;
 
 export type Section = (typeof Section)[keyof typeof Section];

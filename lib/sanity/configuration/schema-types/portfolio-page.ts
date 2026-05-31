@@ -16,23 +16,12 @@ import { defineField, defineType } from "sanity";
  * - Footer (social links, copyright)
  */
 export const portfolioPage = defineType({
-  name: "portfolioPage",
-  title: "Portfolio Page",
-  type: "document",
-  icon: DocumentIcon,
   fields: [
     // ============================================
     // Personal Information
     // ============================================
     defineField({
-      name: "personalInfo",
-      title: "Personal Information",
-      type: "object",
       description: "Core personal information used across the portfolio",
-      options: {
-        collapsible: true,
-        collapsed: false
-      },
       fields: [
         defineField({
           name: "name",
@@ -41,23 +30,23 @@ export const portfolioPage = defineType({
           validation: (rule) => rule.required()
         }),
         defineField({
+          description: "Main professional title (e.g., 'Frontend Engineer')",
           name: "title",
           title: "Primary Title",
           type: "string",
-          description: "Main professional title (e.g., 'Frontend Engineer')",
           validation: (rule) => rule.required()
         }),
         defineField({
+          description: "Current company or organization",
           name: "company",
           title: "Company",
-          type: "string",
-          description: "Current company or organization"
+          type: "string"
         }),
         defineField({
+          description: "Primary contact email address",
           name: "email",
           title: "Contact Email",
           type: "string",
-          description: "Primary contact email address",
           validation: (rule) =>
             rule
               .required()
@@ -68,19 +57,12 @@ export const portfolioPage = defineType({
               })
         }),
         defineField({
-          name: "avatar",
-          title: "Avatar",
-          type: "image",
           description: "Profile picture",
-          options: {
-            hotspot: true
-          },
-          validation: (rule) => rule.required(),
           fields: [
             defineField({
               name: "alt",
-              type: "string",
               title: "Alternative text",
+              type: "string",
               validation: (rule) =>
                 rule.custom((value, context) => {
                   const parent = context?.parent as {
@@ -90,155 +72,159 @@ export const portfolioPage = defineType({
                   return !value && parent?.asset?._ref ? "Alt text is required when an image is present" : true;
                 })
             })
-          ]
+          ],
+          name: "avatar",
+          options: {
+            hotspot: true
+          },
+          title: "Avatar",
+          type: "image",
+          validation: (rule) => rule.required()
         }),
         defineField({
+          description: "Current location (e.g., 'Cracow, Poland')",
           name: "location",
           title: "Location",
-          type: "string",
-          description: "Current location (e.g., 'Cracow, Poland')"
+          type: "string"
         }),
         defineField({
-          name: "socialLinks",
-          title: "Social Links",
-          type: "array",
           description: "Social media profiles (used in contact and footer)",
-          of: [{ type: "socialLink" }]
+          name: "socialLinks",
+          of: [{ type: "socialLink" }],
+          title: "Social Links",
+          type: "array"
         })
-      ]
+      ],
+      name: "personalInfo",
+      options: {
+        collapsed: false,
+        collapsible: true
+      },
+      title: "Personal Information",
+      type: "object"
     }),
 
     // ============================================
     // Hero Section
     // ============================================
     defineField({
-      name: "hero",
-      title: "Hero Section",
-      type: "object",
       description: "Main landing section with introduction and CTA buttons",
-      options: {
-        collapsible: true,
-        collapsed: true
-      },
       fields: [
         defineField({
+          description: "Rotating titles displayed in hero section",
           name: "alternativeTitles",
+          of: [{ type: "string" }],
           title: "Alternative Titles",
           type: "array",
-          description: "Rotating titles displayed in hero section",
-          of: [{ type: "string" }],
           validation: (rule) => rule.required().min(1)
         }),
         defineField({
+          description: "Short description displayed below the title",
           name: "tagline",
+          rows: 2,
           title: "Tagline",
           type: "text",
-          description: "Short description displayed below the title",
-          rows: 2,
           validation: (rule) => rule.required().max(200)
         }),
         defineField({
+          description: "Shows availability status badge",
+          initialValue: true,
           name: "isAvailable",
           title: "Available for Opportunities",
-          type: "boolean",
-          description: "Shows availability status badge",
-          initialValue: true
+          type: "boolean"
         })
-      ]
+      ],
+      name: "hero",
+      options: {
+        collapsed: true,
+        collapsible: true
+      },
+      title: "Hero Section",
+      type: "object"
     }),
 
     // ============================================
     // About Section
     // ============================================
     defineField({
-      name: "about",
-      title: "About Section",
-      type: "object",
       description: "About me section with bio and statistics",
-      options: {
-        collapsible: true,
-        collapsed: true
-      },
       fields: [
         defineField({
+          initialValue: {
+            description: "Get to know me a little better.",
+            title: "About Me"
+          },
           name: "heading",
           title: "Section Heading",
-          type: "sectionHeading",
-          initialValue: {
-            title: "About Me",
-            description: "Get to know me a little better."
-          }
+          type: "sectionHeading"
         }),
         defineField({
+          description: "Short subtitle displayed before the biography (e.g., 'Beyond just building UI.')",
           name: "bioTagline",
           title: "Bio Tagline",
-          type: "string",
-          description: "Short subtitle displayed before the biography (e.g., 'Beyond just building UI.')"
+          type: "string"
         }),
         defineField({
+          description: "Extended biography text (Markdown supported — bold, italic, links, lists)",
           name: "bio",
           title: "Biography",
           type: "markdown",
-          description: "Extended biography text (Markdown supported — bold, italic, links, lists)",
           validation: (rule) => rule.required()
         }),
         defineField({
-          name: "cvDownloads",
-          title: "CV Downloads",
-          type: "array",
           description: "List of CV download buttons shown in the about section",
+          name: "cvDownloads",
           of: [
             {
-              type: "object",
               fields: [
                 defineField({
+                  description: "Text shown in the dropdown (e.g., 'English', 'Polski')",
                   name: "label",
                   title: "Button Label",
                   type: "string",
-                  description: "Text shown in the dropdown (e.g., 'English', 'Polski')",
                   validation: (rule) => rule.required()
                 }),
                 defineField({
-                  name: "file",
-                  title: "CV File",
-                  type: "file",
                   description: "Upload the CV file (PDF recommended)",
+                  name: "file",
                   options: {
                     accept: ".pdf,.doc,.docx"
                   },
+                  title: "CV File",
+                  type: "file",
                   validation: (rule) => rule.required()
                 }),
                 defineField({
+                  description: "ISO language code used to display a flag emoji (e.g., 'en' → 🇬🇧, 'pl' → 🇵🇱)",
                   name: "languageCode",
                   title: "Language Code",
                   type: "string",
-                  description: "ISO language code used to display a flag emoji (e.g., 'en' → 🇬🇧, 'pl' → 🇵🇱)",
                   validation: (rule) => rule.required()
                 })
               ],
               preview: {
+                prepare({ label, languageCode }) {
+                  return {
+                    subtitle: languageCode,
+                    title: label
+                  };
+                },
                 select: {
                   label: "label",
                   languageCode: "languageCode"
-                },
-                prepare({ label, languageCode }) {
-                  return {
-                    title: label,
-                    subtitle: languageCode
-                  };
                 }
-              }
+              },
+              type: "object"
             }
-          ]
+          ],
+          title: "CV Downloads",
+          type: "array"
         }),
         defineField({
-          name: "stats",
-          title: "Statistics",
-          type: "array",
           description: "Achievement statistics displayed as large animated numbers",
+          name: "stats",
           of: [
             {
-              type: "object",
               fields: [
                 defineField({
                   name: "label",
@@ -253,81 +239,72 @@ export const portfolioPage = defineType({
                   validation: (rule) => rule.required().positive()
                 }),
                 defineField({
-                  name: "suffix",
-                  title: "Suffix",
-                  type: "string",
                   description: "Optional suffix (e.g., '+', 'k')",
-                  placeholder: "+"
+                  name: "suffix",
+                  placeholder: "+",
+                  title: "Suffix",
+                  type: "string"
                 })
               ],
               preview: {
-                select: {
-                  label: "label",
-                  value: "value",
-                  suffix: "suffix"
-                },
                 prepare({ label, value, suffix }) {
                   return {
-                    title: label,
-                    subtitle: `${value}${suffix || ""}`
+                    subtitle: `${value}${suffix || ""}`,
+                    title: label
                   };
+                },
+                select: {
+                  label: "label",
+                  suffix: "suffix",
+                  value: "value"
                 }
-              }
+              },
+              type: "object"
             }
-          ]
+          ],
+          title: "Statistics",
+          type: "array"
         }),
         defineField({
-          name: "location",
-          title: "Location",
-          type: "object",
           description: "Your current location displayed in the about section",
           fields: [
             defineField({
+              description: "City name to display (e.g., 'Kraków, Poland')",
               name: "city",
               title: "City Name",
               type: "string",
-              description: "City name to display (e.g., 'Kraków, Poland')",
               validation: (rule) => rule.required()
             }),
             defineField({
+              description: "Short label displayed below the city (e.g., 'Open to remote work')",
+              initialValue: "Open to remote work",
               name: "remoteWorkLabel",
               title: "Remote Work Label",
-              type: "string",
-              description: "Short label displayed below the city (e.g., 'Open to remote work')",
-              initialValue: "Open to remote work"
+              type: "string"
             })
-          ]
+          ],
+          name: "location",
+          title: "Location",
+          type: "object"
         }),
         defineField({
-          name: "hobbies",
-          title: "Hobbies",
-          type: "object",
           description: "Personal hobbies displayed at the bottom of the about section",
-          options: {
-            collapsible: true,
-            collapsed: true
-          },
           fields: [
             defineField({
+              description: "Small heading above the hobby icons",
+              initialValue: "Off the Keyboard",
               name: "sectionLabel",
               title: "Section Label",
-              type: "string",
-              description: "Small heading above the hobby icons",
-              initialValue: "Off the Keyboard"
+              type: "string"
             }),
             defineField({
               name: "items",
-              title: "Hobby Items",
-              type: "array",
               of: [
                 {
-                  type: "object",
                   fields: [
                     defineField({
-                      name: "icon",
-                      title: "Icon",
-                      type: "string",
                       description: "Icon type for the hobby",
+                      name: "icon",
                       options: {
                         list: [
                           { title: "Fishing 🎣", value: "fishing" },
@@ -343,417 +320,427 @@ export const portfolioPage = defineType({
                           { title: "Travel ✈️", value: "travel" }
                         ]
                       },
+                      title: "Icon",
+                      type: "string",
                       validation: (rule) => rule.required()
                     }),
                     defineField({
+                      description: "Display name for the hobby",
                       name: "label",
                       title: "Label",
                       type: "string",
-                      description: "Display name for the hobby",
                       validation: (rule) => rule.required()
                     })
                   ],
                   preview: {
-                    select: {
-                      label: "label",
-                      icon: "icon"
-                    },
                     prepare({ label, icon }) {
                       return {
-                        title: label,
-                        subtitle: icon
+                        subtitle: icon,
+                        title: label
                       };
+                    },
+                    select: {
+                      icon: "icon",
+                      label: "label"
                     }
-                  }
+                  },
+                  type: "object"
                 }
-              ]
+              ],
+              title: "Hobby Items",
+              type: "array"
             })
-          ]
+          ],
+          name: "hobbies",
+          options: {
+            collapsed: true,
+            collapsible: true
+          },
+          title: "Hobbies",
+          type: "object"
         })
-      ]
+      ],
+      name: "about",
+      options: {
+        collapsed: true,
+        collapsible: true
+      },
+      title: "About Section",
+      type: "object"
     }),
 
     // ============================================
     // Skills Section
     // ============================================
     defineField({
-      name: "skills",
-      title: "Skills Section",
-      type: "object",
       description: "Skills and technologies organized by groups",
-      options: {
-        collapsible: true,
-        collapsed: true
-      },
       fields: [
         defineField({
+          initialValue: {
+            description: "The tools and technologies I work with to bring ideas to life.",
+            title: "Skills & Technologies"
+          },
           name: "heading",
           title: "Section Heading",
-          type: "sectionHeading",
-          initialValue: {
-            title: "Skills & Technologies",
-            description: "The tools and technologies I work with to bring ideas to life."
-          }
+          type: "sectionHeading"
         }),
         defineField({
-          name: "technologyGroups",
-          title: "Technology Groups",
-          type: "array",
           description: "Reference to technology groups (frontend, backend, mobile, etc.)",
+          name: "technologyGroups",
           of: [
             {
-              type: "reference",
-              to: [{ type: "technologyGroup" }]
+              to: [{ type: "technologyGroup" }],
+              type: "reference"
             }
           ],
+          title: "Technology Groups",
+          type: "array",
           validation: (rule) => rule.required().min(1)
         }),
         defineField({
-          name: "decorativeBottomText",
-          title: "Decorative Bottom Text",
-          type: "text",
           description:
             'Optional decorative text displayed at the bottom of the skills section (e.g., "And many more...")',
-          initialValue: "And many more..."
+          initialValue: "And many more...",
+          name: "decorativeBottomText",
+          title: "Decorative Bottom Text",
+          type: "text"
         })
-      ]
+      ],
+      name: "skills",
+      options: {
+        collapsed: true,
+        collapsible: true
+      },
+      title: "Skills Section",
+      type: "object"
     }),
 
     // ============================================
     // Projects Section
     // ============================================
     defineField({
-      name: "projects",
-      title: "Projects Section",
-      type: "object",
       description: "Portfolio projects and case studies",
-      options: {
-        collapsible: true,
-        collapsed: true
-      },
       fields: [
         defineField({
+          initialValue: {
+            description:
+              "A selection of projects I've worked on, from open source libraries to full-stack applications.",
+            title: "Featured Projects"
+          },
           name: "heading",
           title: "Section Heading",
-          type: "sectionHeading",
-          initialValue: {
-            title: "Featured Projects",
-            description:
-              "A selection of projects I've worked on, from open source libraries to full-stack applications."
-          }
+          type: "sectionHeading"
         }),
         defineField({
-          name: "projectGroups",
-          title: "Project Groups",
-          type: "array",
           description: "Organized groups of projects (e.g., Featured, Web Apps, Mobile Apps)",
+          name: "projectGroups",
           of: [
             {
-              type: "reference",
-              to: [{ type: "projectGroup" }]
+              to: [{ type: "projectGroup" }],
+              type: "reference"
             }
           ],
+          title: "Project Groups",
+          type: "array",
           validation: (rule) => rule.required().min(1)
         })
-      ]
+      ],
+      name: "projects",
+      options: {
+        collapsed: true,
+        collapsible: true
+      },
+      title: "Projects Section",
+      type: "object"
     }),
 
     // ============================================
     // Experience Section
     // ============================================
     defineField({
-      name: "experience",
-      title: "Experience Section",
-      type: "object",
       description: "Professional work experience",
-      options: {
-        collapsible: true,
-        collapsed: true
-      },
       fields: [
         defineField({
+          initialValue: {
+            description: "My professional journey and the roles that shaped my career.",
+            title: "Experience"
+          },
           name: "heading",
           title: "Section Heading",
-          type: "sectionHeading",
-          initialValue: {
-            title: "Experience",
-            description: "My professional journey and the roles that shaped my career."
-          }
+          type: "sectionHeading"
         }),
         defineField({
-          name: "experiences",
-          title: "Experiences",
-          type: "array",
           description: "Work experience entries (sorted by start date)",
+          name: "experiences",
           of: [
             {
-              type: "reference",
-              to: [{ type: "experience" }]
+              to: [{ type: "experience" }],
+              type: "reference"
             }
           ],
+          title: "Experiences",
+          type: "array",
           validation: (rule) => rule.required().min(1)
         })
-      ]
+      ],
+      name: "experience",
+      options: {
+        collapsed: true,
+        collapsible: true
+      },
+      title: "Experience Section",
+      type: "object"
     }),
 
     // ============================================
     // Education Section
     // ============================================
     defineField({
-      name: "education",
-      title: "Education Section",
-      type: "object",
       description: "Academic background and education",
-      options: {
-        collapsible: true,
-        collapsed: true
-      },
       fields: [
         defineField({
+          initialValue: {
+            description: "My academic journey and the knowledge that built my foundation.",
+            title: "Education"
+          },
           name: "heading",
           title: "Section Heading",
-          type: "sectionHeading",
-          initialValue: {
-            title: "Education",
-            description: "My academic journey and the knowledge that built my foundation."
-          }
+          type: "sectionHeading"
         }),
         defineField({
-          name: "education",
-          title: "Education Entries",
-          type: "array",
           description: "Academic degrees and institutions",
+          name: "education",
           of: [
             {
-              type: "reference",
-              to: [{ type: "education" }]
+              to: [{ type: "education" }],
+              type: "reference"
             }
           ],
+          title: "Education Entries",
+          type: "array",
           validation: (rule) => rule.required().min(1)
         })
-      ]
+      ],
+      name: "education",
+      options: {
+        collapsed: true,
+        collapsible: true
+      },
+      title: "Education Section",
+      type: "object"
     }),
 
     // ============================================
     // Contact Section
     // ============================================
     defineField({
-      name: "contact",
-      title: "Contact Section",
-      type: "object",
       description: "Contact information and form settings",
-      options: {
-        collapsible: true,
-        collapsed: true
-      },
       fields: [
         defineField({
+          initialValue: {
+            description: "Have a project in mind or just want to say hello? I'd love to hear from you.",
+            title: "Get in Touch"
+          },
           name: "heading",
           title: "Section Heading",
-          type: "sectionHeading",
-          initialValue: {
-            title: "Get in Touch",
-            description: "Have a project in mind or just want to say hello? I'd love to hear from you."
-          }
+          type: "sectionHeading"
         }),
         defineField({
-          name: "form",
-          title: "Contact Form Settings",
-          type: "object",
           description: "Configuration for the contact form",
-          options: {
-            collapsible: true,
-            collapsed: true
-          },
           fields: [
             defineField({
+              description: "Show/hide the contact form",
+              initialValue: true,
               name: "enabled",
               title: "Enable Contact Form",
-              type: "boolean",
-              description: "Show/hide the contact form",
-              initialValue: true
+              type: "boolean"
             }),
             defineField({
+              initialValue: "Send a Message",
               name: "title",
               title: "Contact Form Title",
-              type: "string",
-              initialValue: "Send a Message"
+              type: "string"
             }),
             defineField({
+              initialValue: "Fill out the form and I'll get back to you as soon as possible.",
               name: "description",
-              title: "Contact Form Description",
-              type: "text",
               rows: 2,
-              initialValue: "Fill out the form and I'll get back to you as soon as possible."
+              title: "Contact Form Description",
+              type: "text"
             }),
             defineField({
+              initialValue: "Thank you for your message! I'll get back to you soon.",
               name: "successMessage",
-              title: "Success Message",
-              type: "text",
               rows: 2,
-              initialValue: "Thank you for your message! I'll get back to you soon."
+              title: "Success Message",
+              type: "text"
             }),
 
             defineField({
+              initialValue: "Send Message",
               name: "submitButtonText",
               title: "Submit Button Text",
-              type: "string",
-              initialValue: "Send Message"
+              type: "string"
             }),
 
             defineField({
-              name: "successView",
-              title: "Success View Settings",
-              type: "object",
               description: "Configuration for the success message after form submission",
               fields: [
                 defineField({
+                  initialValue: "Thank you for your message!",
                   name: "title",
                   title: "Success Title",
-                  type: "string",
-                  initialValue: "Thank you for your message!"
+                  type: "string"
                 }),
                 defineField({
+                  initialValue: "Thank you for your message! I'll get back to you soon.",
                   name: "description",
-                  title: "Success Description",
-                  type: "text",
                   rows: 2,
-                  initialValue: "Thank you for your message! I'll get back to you soon."
+                  title: "Success Description",
+                  type: "text"
                 }),
                 defineField({
+                  initialValue: "Send another message",
                   name: "buttonText",
                   title: "Send Another Button Text",
-                  type: "string",
-                  initialValue: "Send another message"
+                  type: "string"
                 })
-              ]
+              ],
+              name: "successView",
+              title: "Success View Settings",
+              type: "object"
             })
-          ]
+          ],
+          name: "form",
+          options: {
+            collapsed: true,
+            collapsible: true
+          },
+          title: "Contact Form Settings",
+          type: "object"
         }),
 
         defineField({
-          name: "quickChat",
-          title: "Quick Chat Settings",
-          type: "object",
           description: "Configuration for the quick chat",
-          options: {
-            collapsible: true,
-            collapsed: true
-          },
           fields: [
             defineField({
+              description: "Title for the quick chat call-out card",
+              initialValue: "Prefer a quick chat?",
               name: "title",
               title: "Quick Chat Title",
-              type: "string",
-              description: "Title for the quick chat call-out card",
-              initialValue: "Prefer a quick chat?"
+              type: "string"
             }),
             defineField({
-              name: "description",
-              title: "Quick Chat Description",
-              type: "text",
               description: "Description for the quick chat call-out card",
+              initialValue: "Feel free to reach out on LinkedIn or Twitter for a faster response.",
+              name: "description",
               rows: 2,
-              initialValue: "Feel free to reach out on LinkedIn or Twitter for a faster response."
+              title: "Quick Chat Description",
+              type: "text"
             })
-          ]
+          ],
+          name: "quickChat",
+          options: {
+            collapsed: true,
+            collapsible: true
+          },
+          title: "Quick Chat Settings",
+          type: "object"
         })
-      ]
+      ],
+      name: "contact",
+      options: {
+        collapsed: true,
+        collapsible: true
+      },
+      title: "Contact Section",
+      type: "object"
     }),
 
     // ============================================
     // Footer
     // ============================================
     defineField({
-      name: "footer",
-      title: "Footer",
-      type: "object",
       description: "Footer section configuration",
-      options: {
-        collapsible: true,
-        collapsed: true
-      },
       fields: [
         defineField({
-          name: "copyrightText",
-          title: "Copyright Text",
-          type: "string",
           description: "Copyright notice (year will be added automatically)",
-          placeholder: "Jan Szewczyk. All rights reserved."
+          name: "copyrightText",
+          placeholder: "Jan Szewczyk. All rights reserved.",
+          title: "Copyright Text",
+          type: "string"
         })
-      ]
+      ],
+      name: "footer",
+      options: {
+        collapsed: true,
+        collapsible: true
+      },
+      title: "Footer",
+      type: "object"
     }),
 
     // ============================================
     // SEO & Metadata
     // ============================================
     defineField({
-      name: "seo",
-      title: "SEO & Metadata",
-      type: "object",
       description: "Search engine optimization settings",
-      options: {
-        collapsible: true,
-        collapsed: true
-      },
       fields: [
         defineField({
+          description: "Browser tab and search result title",
           name: "metaTitle",
           title: "Meta Title",
           type: "string",
-          description: "Browser tab and search result title",
           validation: (rule) => rule.max(60)
         }),
         defineField({
+          description: "Search result description snippet",
           name: "metaDescription",
+          rows: 2,
           title: "Meta Description",
           type: "text",
-          description: "Search result description snippet",
-          rows: 2,
           validation: (rule) => rule.max(160)
         }),
         defineField({
-          name: "keywords",
-          title: "Keywords",
-          type: "array",
           description: "SEO keywords",
-          of: [{ type: "string" }]
+          name: "keywords",
+          of: [{ type: "string" }],
+          title: "Keywords",
+          type: "array"
         }),
         defineField({
-          name: "ogImage",
-          title: "Open Graph Image",
-          type: "image",
           description: "Image shown when sharing on social media (1200x630px recommended)",
-          options: {
-            hotspot: true
-          },
           fields: [
             defineField({
               name: "alt",
-              type: "string",
-              title: "Alternative text"
+              title: "Alternative text",
+              type: "string"
             })
-          ]
+          ],
+          name: "ogImage",
+          options: {
+            hotspot: true
+          },
+          title: "Open Graph Image",
+          type: "image"
         }),
         defineField({
+          description: "Title for Open Graph (defaults to meta title if not provided)",
           name: "ogTitle",
           title: "Open Graph Title",
-          type: "string",
-          description: "Title for Open Graph (defaults to meta title if not provided)"
+          type: "string"
         }),
         defineField({
-          name: "ogDescription",
-          title: "Open Graph Description",
-          type: "text",
           description: "Description for Open Graph (defaults to meta description if not provided)",
-          rows: 2
+          name: "ogDescription",
+          rows: 2,
+          title: "Open Graph Description",
+          type: "text"
         }),
         defineField({
-          name: "twitterCardType",
-          title: "Twitter Card Type",
-          type: "string",
           description: "Twitter card type",
           initialValue: "summary_large_image",
+          name: "twitterCardType",
           options: {
             list: [
               { title: "Summary Large Image", value: "summary_large_image" },
@@ -761,160 +748,173 @@ export const portfolioPage = defineType({
               { title: "App", value: "app" },
               { title: "Player", value: "player" }
             ]
-          }
+          },
+          title: "Twitter Card Type",
+          type: "string"
         }),
         defineField({
+          description: "Twitter site handle (e.g., @username)",
           name: "twitterSite",
           title: "Twitter Site",
-          type: "string",
-          description: "Twitter site handle (e.g., @username)"
+          type: "string"
         }),
         defineField({
+          description: "Twitter creator handle (e.g., @username)",
           name: "twitterCreator",
           title: "Twitter Creator",
-          type: "string",
-          description: "Twitter creator handle (e.g., @username)"
+          type: "string"
         }),
         defineField({
-          name: "twitterImage",
-          title: "Twitter Image",
-          type: "image",
           description: "Image shown when sharing on Twitter (1200x630px recommended)",
-          options: {
-            hotspot: true
-          },
           fields: [
             defineField({
               name: "alt",
-              type: "string",
-              title: "Alternative text"
+              title: "Alternative text",
+              type: "string"
             })
-          ]
+          ],
+          name: "twitterImage",
+          options: {
+            hotspot: true
+          },
+          title: "Twitter Image",
+          type: "image"
         }),
         defineField({
+          description: "Prevent this page from being indexed by search engines",
           name: "noindex",
           title: "No Index",
-          type: "boolean",
-          description: "Prevent this page from being indexed by search engines"
+          type: "boolean"
         }),
         defineField({
+          description: "Tell search engines not to follow links on this page",
           name: "nofollow",
           title: "No Follow",
-          type: "boolean",
-          description: "Tell search engines not to follow links on this page"
+          type: "boolean"
         }),
         defineField({
+          description: "Prevent search engines from caching this page",
           name: "noarchive",
           title: "No Archive",
-          type: "boolean",
-          description: "Prevent search engines from caching this page"
+          type: "boolean"
         }),
         defineField({
+          description: "Canonical URL for this page (defaults to site URL if not provided)",
           name: "canonicalUrl",
           title: "Canonical URL",
-          type: "string",
-          description: "Canonical URL for this page (defaults to site URL if not provided)"
+          type: "string"
         }),
         defineField({
-          name: "alternateUrls",
-          title: "Alternate URLs",
-          type: "array",
           description: "Alternate language versions of this page",
+          name: "alternateUrls",
           of: [
             {
-              type: "object",
               fields: [
                 defineField({
+                  description: "Language code (e.g., en-US, pl-PL)",
                   name: "hreflang",
                   title: "Hreflang",
                   type: "string",
-                  description: "Language code (e.g., en-US, pl-PL)",
                   validation: (rule) => rule.required()
                 }),
                 defineField({
+                  description: "Alternate page URL",
                   name: "url",
                   title: "URL",
                   type: "url",
-                  description: "Alternate page URL",
                   validation: (rule) => rule.required()
                 })
-              ]
+              ],
+              type: "object"
             }
-          ]
+          ],
+          title: "Alternate URLs",
+          type: "array"
         }),
         defineField({
+          description: "Organization name for structured data",
           name: "organizationName",
           title: "Organization Name",
-          type: "string",
-          description: "Organization name for structured data"
+          type: "string"
         }),
         defineField({
-          name: "organizationLogo",
-          title: "Organization Logo",
-          type: "image",
           description: "Organization logo for structured data",
-          options: {
-            hotspot: true
-          },
           fields: [
             defineField({
               name: "alt",
-              type: "string",
-              title: "Alternative text"
+              title: "Alternative text",
+              type: "string"
             })
-          ]
+          ],
+          name: "organizationLogo",
+          options: {
+            hotspot: true
+          },
+          title: "Organization Logo",
+          type: "image"
         }),
         defineField({
-          name: "sameAsUrls",
-          title: "Same As URLs",
-          type: "array",
           description: "Additional URLs associated with the organization or person (e.g., social profiles)",
-          of: [{ type: "url" }]
+          name: "sameAsUrls",
+          of: [{ type: "url" }],
+          title: "Same As URLs",
+          type: "array"
         }),
 
         // ============================================
         // Structured Data (Schema.org)
         // ============================================
         defineField({
-          name: "alternateNames",
-          title: "Alternate Names",
-          type: "array",
           description: "Alternative names for the person (e.g., 'Jan Szewczyk', 'JanSzewczyk')",
-          of: [{ type: "string" }]
+          name: "alternateNames",
+          of: [{ type: "string" }],
+          title: "Alternate Names",
+          type: "array"
         }),
         defineField({
+          description: "City name (e.g., 'Cracow')",
           name: "addressLocality",
           title: "Address Locality",
-          type: "string",
-          description: "City name (e.g., 'Cracow')"
+          type: "string"
         }),
         defineField({
+          description: "ISO country code (e.g., 'PL' for Poland)",
           name: "addressCountry",
           title: "Address Country",
-          type: "string",
-          description: "ISO country code (e.g., 'PL' for Poland)"
+          type: "string"
         }),
         defineField({
-          name: "knowsAbout",
-          title: "Knows About",
-          type: "array",
           description: "Skills and areas of expertise for structured data",
-          of: [{ type: "string" }]
+          name: "knowsAbout",
+          of: [{ type: "string" }],
+          title: "Knows About",
+          type: "array"
         })
-      ]
+      ],
+      name: "seo",
+      options: {
+        collapsed: true,
+        collapsible: true
+      },
+      title: "SEO & Metadata",
+      type: "object"
     })
   ],
+  icon: DocumentIcon,
+  name: "portfolioPage",
 
   preview: {
+    prepare({ name, title }) {
+      return {
+        subtitle: title || "Main portfolio configuration",
+        title: name || "Portfolio Page"
+      };
+    },
     select: {
       name: "hero.name",
       title: "hero.title"
-    },
-    prepare({ name, title }) {
-      return {
-        title: name || "Portfolio Page",
-        subtitle: title || "Main portfolio configuration"
-      };
     }
-  }
+  },
+  title: "Portfolio Page",
+  type: "document"
 });

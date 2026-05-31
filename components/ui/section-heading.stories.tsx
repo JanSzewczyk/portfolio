@@ -3,11 +3,11 @@ import preview from "~/.storybook/preview";
 import { SectionHeading } from "./section-heading";
 
 const meta = preview.meta({
-  title: "Components/UI/SectionHeading",
   component: SectionHeading,
   parameters: {
     layout: "centered"
-  }
+  },
+  title: "Components/UI/SectionHeading"
 });
 
 /**
@@ -16,9 +16,9 @@ const meta = preview.meta({
  */
 export const CenterAligned = meta.story({
   args: {
-    title: "Featured Projects",
+    children: <span data-testid="test-child">View all projects</span>,
     description: "Explore my latest work and creative projects that showcase my skills and passion for development.",
-    children: <span data-testid="test-child">View all projects</span>
+    title: "Featured Projects"
   }
 });
 
@@ -70,9 +70,9 @@ CenterAligned.test("Has correct semantic structure for accessibility", async ({ 
  */
 export const LeftAligned = meta.story({
   args: {
-    title: "About Me",
+    align: "left",
     description: "I'm a passionate developer focused on creating impactful digital experiences.",
-    align: "left"
+    title: "About Me"
   }
 });
 

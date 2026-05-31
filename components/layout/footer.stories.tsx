@@ -4,15 +4,15 @@ import { portfolioPageFooterBuilder, portfolioPagePersonalInfoBuilder } from "~/
 import { Footer } from "./footer";
 
 const meta = preview.meta({
-  title: "Components/Layout/Footer",
-  component: Footer,
   args: {
     footer: portfolioPageFooterBuilder.one(),
     personalInfo: portfolioPagePersonalInfoBuilder.one()
   },
+  component: Footer,
   parameters: {
     layout: "fullscreen"
-  }
+  },
+  title: "Components/Layout/Footer"
 });
 
 /**

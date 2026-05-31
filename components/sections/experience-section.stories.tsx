@@ -4,23 +4,23 @@ import { experienceBuilder, portfolioPageExperienceBuilder } from "~/tests/build
 import { ExperienceSection } from "./experience-section";
 
 const meta = preview.meta({
-  title: "Components/Sections/Experience Section",
-  component: ExperienceSection,
   args: {
+    documentId: "portfolio-page",
+    documentType: "portfolioPage",
     experience: portfolioPageExperienceBuilder.one({
       overrides: {
         heading: {
-          title: "Experience",
-          description: "My professional journey and key achievements"
+          description: "My professional journey and key achievements",
+          title: "Experience"
         }
       }
-    }),
-    documentId: "portfolio-page",
-    documentType: "portfolioPage"
+    })
   },
+  component: ExperienceSection,
   parameters: {
     layout: "fullscreen"
-  }
+  },
+  title: "Components/Sections/Experience Section"
 });
 
 export const ExperienceSection_Default = meta.story({
@@ -36,8 +36,8 @@ ExperienceSection_Default.test("Renders section heading and description", async 
 
   if (args.experience?.heading?.description) {
     const heading = canvas.getByRole("heading", {
-      name: args.experience.heading.description,
-      level: 2
+      level: 2,
+      name: args.experience.heading.description
     });
     await expect(heading).toBeVisible();
   }
@@ -158,24 +158,24 @@ ExperienceSection_Default.test("Displays technology badges", async ({ canvas, ar
 
 // Story without company logos
 export const WithoutLogos = meta.story({
-  name: "Without Company Logos",
   args: {
+    documentId: "portfolio-page",
+    documentType: "portfolioPage",
     experience: portfolioPageExperienceBuilder.one({
       overrides: {
-        heading: {
-          title: "Experience",
-          description: "My professional journey and key achievements"
-        },
         experiences: Array.from({ length: 3 }, () =>
           experienceBuilder.one({
             traits: ["withoutLogo"]
           })
-        )
+        ),
+        heading: {
+          description: "My professional journey and key achievements",
+          title: "Experience"
+        }
       }
-    }),
-    documentId: "portfolio-page",
-    documentType: "portfolioPage"
-  }
+    })
+  },
+  name: "Without Company Logos"
 });
 
 // Test 8: Fallback initials are displayed
@@ -195,29 +195,29 @@ WithoutLogos.test("Displays company logo fallback with first letter", async ({ c
 
 // Story with current position (no end date)
 export const CurrentPosition = meta.story({
-  name: "Current Position",
   args: {
+    documentId: "portfolio-page",
+    documentType: "portfolioPage",
     experience: portfolioPageExperienceBuilder.one({
       overrides: {
-        heading: {
-          title: "Experience",
-          description: "My professional journey and key achievements"
-        },
         experiences: [
           experienceBuilder.one({
-            traits: ["current"],
             overrides: {
-              role: "Senior Frontend Engineer",
               company: "Tech Company Inc.",
+              role: "Senior Frontend Engineer",
               type: "full-time"
-            }
+            },
+            traits: ["current"]
           })
-        ]
+        ],
+        heading: {
+          description: "My professional journey and key achievements",
+          title: "Experience"
+        }
       }
-    }),
-    documentId: "portfolio-page",
-    documentType: "portfolioPage"
-  }
+    })
+  },
+  name: "Current Position"
 });
 
 // Test 9: Present is displayed for current position

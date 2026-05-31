@@ -6,71 +6,71 @@ import { SkillsSection } from "./skills-section";
 // Create deterministic test data
 const testTechReact = technologyBuilder.one({
   overrides: {
-    name: "React",
+    description: "A JavaScript library for building user interfaces",
     icon: "SiReact",
-    description: "A JavaScript library for building user interfaces"
+    name: "React"
   }
 });
 const testTechTypeScript = technologyBuilder.one({
   overrides: {
-    name: "TypeScript",
+    description: "JavaScript with syntax for types",
     icon: "SiTypescript",
-    description: "JavaScript with syntax for types"
+    name: "TypeScript"
   }
 });
 const testTechNode = technologyBuilder.one({
   overrides: {
-    name: "Node.js",
+    description: "JavaScript runtime",
     icon: "SiNodedotjs",
-    description: "JavaScript runtime"
+    name: "Node.js"
   }
 });
 const testTechTailwind = technologyBuilder.one({
   overrides: {
-    name: "Tailwind CSS",
+    description: "Utility-first CSS framework",
     icon: "SiTailwindcss",
-    description: "Utility-first CSS framework"
+    name: "Tailwind CSS"
   }
 });
 
 const testGroupFrontend = technologyGroupBuilder.one({
   overrides: {
-    label: "Frontend",
-    featured: true,
     description: "User interfaces, design systems, and interactive web apps",
+    featured: true,
     icon: "SiReact",
+    label: "Frontend",
     technologies: [testTechReact, testTechTypeScript, testTechTailwind]
   }
 });
 
 const testGroupBackend = technologyGroupBuilder.one({
   overrides: {
-    label: "Backend",
-    featured: false,
     description: "APIs, services, and infrastructure",
+    featured: false,
     icon: "SiNodedotjs",
+    label: "Backend",
     technologies: [testTechNode]
   }
 });
 
 const meta = preview.meta({
-  title: "Components/Sections/Skills Section",
-  component: SkillsSection,
   args: {
-    skills: {
-      heading: {
-        title: "Skills & Technologies",
-        description: "The tools and technologies I work with to bring ideas to life"
-      },
-      technologyGroups: [testGroupFrontend, testGroupBackend],
-      decorativeBottomText: "Always learning and exploring new technologies"
-    },
     documentId: "portfolio-page",
-    documentType: "portfolioPage"
+    documentType: "portfolioPage",
+    skills: {
+      decorativeBottomText: "Always learning and exploring new technologies",
+      heading: {
+        description: "The tools and technologies I work with to bring ideas to life",
+        title: "Skills & Technologies"
+      },
+      technologyGroups: [testGroupFrontend, testGroupBackend]
+    }
   },
+  component: SkillsSection,
   parameters: {
     layout: "fullscreen"
-  }
+  },
+  title: "Components/Sections/Skills Section"
 });
 
 /**
@@ -226,16 +226,16 @@ SectionHeadingStructure.test("Skill cards use proper heading levels", async ({ c
  */
 export const EmptySkills = meta.story({
   args: {
-    skills: {
-      heading: {
-        title: "Skills & Technologies",
-        description: "The tools and technologies I work with"
-      },
-      technologyGroups: [],
-      decorativeBottomText: null
-    },
     documentId: "portfolio-page",
-    documentType: "portfolioPage"
+    documentType: "portfolioPage",
+    skills: {
+      decorativeBottomText: null,
+      heading: {
+        description: "The tools and technologies I work with",
+        title: "Skills & Technologies"
+      },
+      technologyGroups: []
+    }
   }
 });
 

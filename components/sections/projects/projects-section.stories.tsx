@@ -11,25 +11,25 @@ import {
 
 // Create deterministic test data to avoid flaky tests
 const testTech1 = technologyBuilder.one({
-  overrides: { name: "React", icon: "SiReact" }
+  overrides: { icon: "SiReact", name: "React" }
 });
 const testTech2 = technologyBuilder.one({
-  overrides: { name: "TypeScript", icon: "SiTypescript" }
+  overrides: { icon: "SiTypescript", name: "TypeScript" }
 });
 const testTech3 = technologyBuilder.one({
-  overrides: { name: "Node.js", icon: "SiNodedotjs" }
+  overrides: { icon: "SiNodedotjs", name: "Node.js" }
 });
 
 const testProject = projectBuilder.one({
   overrides: {
-    title: "Test Project",
     description: "A test project description",
-    technologies: [testTech1, testTech2],
     links: () => ({
-      live: "https://example.com",
       github: "https://github.com/test/repo",
+      live: "https://example.com",
       npm: null
-    })
+    }),
+    technologies: [testTech1, testTech2],
+    title: "Test Project"
   }
 });
 
@@ -46,12 +46,12 @@ const testGroup2 = projectGroupBuilder.one({
     projects: [
       projectBuilder.one({
         overrides: {
-          technologies: [testTech3],
           links: () => ({
-            live: null,
             github: "https://github.com/test/oss",
+            live: null,
             npm: null
-          })
+          }),
+          technologies: [testTech3]
         }
       })
     ]
@@ -59,22 +59,22 @@ const testGroup2 = projectGroupBuilder.one({
 });
 
 const meta = preview.meta({
-  title: "Components/Sections/Projects Section",
-  component: ProjectsSection,
   args: {
+    documentId: "test-portfolio-page-id",
+    documentType: "portfolioPage",
     projects: {
       heading: {
-        title: "Featured Work",
-        description: "A collection of projects I've worked on"
+        description: "A collection of projects I've worked on",
+        title: "Featured Work"
       },
       projectGroups: [testGroup1, testGroup2]
-    },
-    documentId: "test-portfolio-page-id",
-    documentType: "portfolioPage"
+    }
   },
+  component: ProjectsSection,
   parameters: {
     layout: "fullscreen"
-  }
+  },
+  title: "Components/Sections/Projects Section"
 });
 
 // Story named after component
@@ -172,28 +172,28 @@ ProjectsSection_.test("Renders live and GitHub links when available", async ({ c
 
 // Story: With Full Portfolio Data
 export const WithFullPortfolioData = meta.story({
-  name: "With Full Portfolio Data",
   args: {
-    projects: portfolioPageProjectsBuilder.one(),
     documentId: portfolioPageBuilder.one()._id,
-    documentType: "portfolioPage"
-  }
+    documentType: "portfolioPage",
+    projects: portfolioPageProjectsBuilder.one()
+  },
+  name: "With Full Portfolio Data"
 });
 
 // Story: Empty State
 export const EmptyState = meta.story({
-  name: "Empty State",
   args: {
+    documentId: "test-portfolio-page-id",
+    documentType: "portfolioPage",
     projects: {
       heading: {
-        title: "My Projects",
-        description: "Check out what I've been working on"
+        description: "Check out what I've been working on",
+        title: "My Projects"
       },
       projectGroups: []
-    },
-    documentId: "test-portfolio-page-id",
-    documentType: "portfolioPage"
-  }
+    }
+  },
+  name: "Empty State"
 });
 
 EmptyState.test("Shows empty state when no project groups available", async ({ canvas }) => {

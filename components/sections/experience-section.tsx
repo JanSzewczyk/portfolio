@@ -52,12 +52,12 @@ export function ExperienceSection({ experience, documentId, documentType }: Expe
   }
 
   return (
-    <section id={Section.EXPERIENCE} className="bg-muted/30 py-24">
+    <section className="bg-muted/30 py-24" id={Section.EXPERIENCE}>
       <div className="container">
         <SectionHeading
-          title={experience.heading?.title ?? ""}
-          description={experience.heading?.description ?? ""}
           data-sanity={createSanityAttribute("experience.heading")}
+          description={experience.heading?.description ?? ""}
+          title={experience.heading?.title ?? ""}
         />
 
         <div className="mx-auto max-w-3xl">
@@ -79,16 +79,16 @@ export function ExperienceSection({ experience, documentId, documentType }: Expe
                         <div className="flex flex-wrap items-center gap-2">
                           {exp.startDate && (
                             <Badge
-                              variant="outline"
                               data-sanity={createSanityAttribute(`experience.experiences[${index}].startDate`)}
+                              variant="outline"
                             >
                               {formatPeriod(exp.startDate, exp.endDate)}
                             </Badge>
                           )}
                           {exp.type && (
                             <Badge
-                              variant="secondary"
                               data-sanity={createSanityAttribute(`experience.experiences[${index}].type`)}
+                              variant="secondary"
                             >
                               {exp.type}
                             </Badge>
@@ -110,11 +110,11 @@ export function ExperienceSection({ experience, documentId, documentType }: Expe
                                   avoiding the third-party `sanitySession` cookie from cdn.sanity.io. */}
                               {companyLogoUrl ? (
                                 <Image
-                                  src={companyLogoUrl}
                                   alt={`${stegaClean(exp.company)} logo`}
-                                  width={40}
-                                  height={40}
                                   className="size-full object-cover"
+                                  height={40}
+                                  src={companyLogoUrl}
+                                  width={40}
                                 />
                               ) : (
                                 <AvatarFallback>{companyInitial}</AvatarFallback>
@@ -124,10 +124,10 @@ export function ExperienceSection({ experience, documentId, documentType }: Expe
                               <div data-sanity={createSanityAttribute(`experience.experiences[${index}].company`)}>
                                 {exp.companyUrl ? (
                                   <a
-                                    href={exp.companyUrl}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
                                     className="hover:text-primary hover:underline"
+                                    href={exp.companyUrl}
+                                    rel="noopener noreferrer"
+                                    target="_blank"
                                   >
                                     {exp.company}
                                   </a>
@@ -153,7 +153,7 @@ export function ExperienceSection({ experience, documentId, documentType }: Expe
                           {exp.summary}
                         </p>
 
-                        <Accordion type="single" collapsible>
+                        <Accordion collapsible type="single">
                           {exp.responsibilities && exp.responsibilities.length > 0 && (
                             <AccordionItem value="responsibilities">
                               <AccordionTrigger>Key Responsibilities</AccordionTrigger>
@@ -195,7 +195,7 @@ export function ExperienceSection({ experience, documentId, documentType }: Expe
                             data-sanity={createSanityAttribute(`experience.experiences[${index}].technologies`)}
                           >
                             {exp.technologies.map((tech) => (
-                              <Badge key={tech._id} variant="secondary" className="text-xs">
+                              <Badge className="text-xs" key={tech._id} variant="secondary">
                                 {tech.name}
                               </Badge>
                             ))}

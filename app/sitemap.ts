@@ -8,10 +8,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return [
     {
-      url: baseUrl,
-      lastModified: currentDate,
       changeFrequency: "weekly",
-      priority: 1.0
+      lastModified: currentDate,
+      priority: 1.0,
+      url: baseUrl
     }
   ];
 }

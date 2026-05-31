@@ -6,19 +6,19 @@ import { ContactForm } from "~/features/contact/components/contact-form";
 import { contactFormContentBuilder } from "~/tests/builders";
 
 const meta = preview.meta({
-  title: "Features/Contact/Contact Form",
-  component: ContactForm,
-  parameters: {
-    layout: "padded"
-  },
   args: {
     contactFormContent: contactFormContentBuilder.one(),
     onSubmitAction: fn(async () => ({
-      success: true as const,
-      data: { id: "test-id" } as CreateEmailResponseSuccess
+      data: { id: "test-id" } as CreateEmailResponseSuccess,
+      success: true as const
     }))
   },
-  decorators: [(Story) => <div className="w-full max-w-xl">{Story()}</div>]
+  component: ContactForm,
+  decorators: [(Story) => <div className="w-full max-w-xl">{Story()}</div>],
+  parameters: {
+    layout: "padded"
+  },
+  title: "Features/Contact/Contact Form"
 });
 
 // Story named after component (single story)
@@ -73,9 +73,9 @@ ContactForm_.test("Successfully submits valid form data", async ({ canvas, args,
   await step("Verify submission", async () => {
     await waitFor(async () => {
       await expect(args.onSubmitAction).toHaveBeenCalledWith({
-        name: "John Doe",
         email: "john@example.com",
         message: "This is a test message that is long enough to pass validation",
+        name: "John Doe",
         website: ""
       });
     });
@@ -177,9 +177,9 @@ ContactForm_.test(
     await step("Verify second submission succeeded", async () => {
       await waitFor(async () => {
         await expect(args.onSubmitAction).toHaveBeenCalledWith({
-          name: "Jane Smith",
           email: "jane@example.com",
           message: "This is the second test message that should also work fine",
+          name: "Jane Smith",
           website: ""
         });
       });
@@ -263,8 +263,8 @@ ContactForm_.test("Shows loading state during submission", async ({ canvas, args
         setTimeout(
           () =>
             resolve({
-              success: true as const,
-              data: { id: "test-id" } as CreateEmailResponseSuccess
+              data: { id: "test-id" } as CreateEmailResponseSuccess,
+              success: true as const
             }),
           2000
         )
@@ -307,8 +307,8 @@ ContactForm_.test("Shows loading state during submission", async ({ canvas, args
 ContactForm_.test("Handles submission error gracefully", async ({ canvas, args, step, userEvent }) => {
   // Mock error response
   (args.onSubmitAction as ReturnType<typeof fn>).mockImplementation(async () => ({
-    success: false as const,
-    error: "Failed to send message. Please try again."
+    error: "Failed to send message. Please try again.",
+    success: false as const
   }));
 
   const nameInput = canvas.getByLabelText(/username/i);

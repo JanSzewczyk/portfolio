@@ -16,10 +16,10 @@ vi.mock("resend", () => ({
 
 vi.mock("~/lib/logger", () => ({
   createLogger: vi.fn(() => ({
-    info: vi.fn(),
+    debug: vi.fn(),
     error: vi.fn(),
-    warn: vi.fn(),
-    debug: vi.fn()
+    info: vi.fn(),
+    warn: vi.fn()
   }))
 }));
 
@@ -45,9 +45,9 @@ describe("sendContactEmail", () => {
     test("sends email successfully with valid form data", async () => {
       // Arrange
       const formData: ContactFormData = {
-        name: "John Doe",
         email: "john@example.com",
-        message: "This is a test message from John Doe."
+        message: "This is a test message from John Doe.",
+        name: "John Doe"
       };
 
       const mockEmailResponse = {
@@ -62,17 +62,17 @@ describe("sendContactEmail", () => {
 
       // Assert
       expect(result).toEqual({
-        success: true,
-        data: { id: "email-123" }
+        data: { id: "email-123" },
+        success: true
       });
 
       expect(mockSend).toHaveBeenCalledOnce();
       expect(mockSend).toHaveBeenCalledWith({
         from: "noreply@test.com",
-        to: "contact@test.com",
+        react: expect.any(Object), // React element
         replyTo: "john@example.com",
         subject: "Portfolio Contact: John Doe",
-        react: expect.any(Object) // React element
+        to: "contact@test.com"
       });
     });
 
@@ -80,9 +80,9 @@ describe("sendContactEmail", () => {
       // Arrange
       const longMessage = "A".repeat(500);
       const formData: ContactFormData = {
-        name: "Alice",
         email: "alice@example.com",
-        message: longMessage
+        message: longMessage,
+        name: "Alice"
       };
 
       mockSend.mockResolvedValue({
@@ -97,8 +97,8 @@ describe("sendContactEmail", () => {
       expect(result.success).toBe(true);
       expect(mockSend).toHaveBeenCalledWith(
         expect.objectContaining({
-          subject: "Portfolio Contact: Alice",
-          replyTo: "alice@example.com"
+          replyTo: "alice@example.com",
+          subject: "Portfolio Contact: Alice"
         })
       );
     });
@@ -106,9 +106,9 @@ describe("sendContactEmail", () => {
     test("uses correct email addresses from environment", async () => {
       // Arrange
       const formData: ContactFormData = {
-        name: "Test User",
         email: "test@example.com",
-        message: "Test message content here."
+        message: "Test message content here.",
+        name: "Test User"
       };
 
       mockSend.mockResolvedValue({
@@ -133,9 +133,9 @@ describe("sendContactEmail", () => {
     test("returns error when Resend API fails", async () => {
       // Arrange
       const formData: ContactFormData = {
-        name: "Failed User",
         email: "fail@example.com",
-        message: "This will fail to send."
+        message: "This will fail to send.",
+        name: "Failed User"
       };
 
       const mockError = {
@@ -153,17 +153,17 @@ describe("sendContactEmail", () => {
 
       // Assert
       expect(result).toEqual({
-        success: false,
-        error: "Failed to send email. Please try again later or contact me directly via email."
+        error: "Failed to send email. Please try again later or contact me directly via email.",
+        success: false
       });
     });
 
     test("handles unexpected exceptions gracefully", async () => {
       // Arrange
       const formData: ContactFormData = {
-        name: "Exception User",
         email: "exception@example.com",
-        message: "This will throw an exception."
+        message: "This will throw an exception.",
+        name: "Exception User"
       };
 
       mockSend.mockRejectedValue(new Error("Network connection failed"));
@@ -173,17 +173,17 @@ describe("sendContactEmail", () => {
 
       // Assert
       expect(result).toEqual({
-        success: false,
-        error: "An unexpected error occurred. Please try again later."
+        error: "An unexpected error occurred. Please try again later.",
+        success: false
       });
     });
 
     it("handles non-Error exceptions", async () => {
       // Arrange
       const formData: ContactFormData = {
-        name: "Unknown Error User",
         email: "unknown@example.com",
-        message: "This will throw a non-Error object."
+        message: "This will throw a non-Error object.",
+        name: "Unknown Error User"
       };
 
       mockSend.mockRejectedValue("String error");
@@ -199,9 +199,9 @@ describe("sendContactEmail", () => {
     test("handles Resend API error with missing error name", async () => {
       // Arrange
       const formData: ContactFormData = {
-        name: "Partial Error User",
         email: "partial@example.com",
-        message: "This has a partial error response."
+        message: "This has a partial error response.",
+        name: "Partial Error User"
       };
 
       mockSend.mockResolvedValue({
@@ -224,9 +224,9 @@ describe("sendContactEmail", () => {
     test("includes sender name in subject line", async () => {
       // Arrange
       const formData: ContactFormData = {
-        name: "Jane Smith",
         email: "jane@example.com",
-        message: "Hello from Jane!"
+        message: "Hello from Jane!",
+        name: "Jane Smith"
       };
 
       mockSend.mockResolvedValue({
@@ -249,9 +249,9 @@ describe("sendContactEmail", () => {
       // Arrange
       const senderEmail = "sender@domain.com";
       const formData: ContactFormData = {
-        name: "Sender",
         email: senderEmail,
-        message: "Please reply to this email."
+        message: "Please reply to this email.",
+        name: "Sender"
       };
 
       mockSend.mockResolvedValue({

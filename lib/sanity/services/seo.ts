@@ -34,12 +34,12 @@ async function getSeoData(): Promise<[null, NonNullable<SeoQueryResult>] | [Erro
 
     // Log summary of fetched data
     const summary = {
-      hasMetaTitle: !!data.seo?.metaTitle,
       hasMetaDescription: !!data.seo?.metaDescription,
+      hasMetaTitle: !!data.seo?.metaTitle,
       hasOgImage: !!data.seo?.ogImage?.asset?.url,
-      hasTwitterImage: !!data.seo?.twitterImage?.asset?.url,
       hasOrganization: !!data.seo?.organizationName,
       hasPersonalInfo: !!data.personalInfo?.name,
+      hasTwitterImage: !!data.seo?.twitterImage?.asset?.url,
       keywordsCount: data.seo?.keywords?.length ?? 0
     };
 

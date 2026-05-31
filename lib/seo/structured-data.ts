@@ -33,31 +33,31 @@ export function buildPersonSchema({ siteUrl, seoData }: { siteUrl: string; seoDa
   const knowsAbout = seoData?.seo?.knowsAbout ?? [];
 
   return {
-    "@type": "Person",
     "@id": `${siteUrl}#person`,
-    name,
-    alternateName: alternateNames,
-    jobTitle: title,
-    description,
-    image: avatar
-      ? {
-          "@type": "ImageObject",
-          url: avatar,
-          caption: `${name} - ${title}`
-        }
-      : undefined,
-    url: siteUrl,
-    email: email ? `mailto:${email}` : undefined,
+    "@type": "Person",
     address:
       addressLocality || addressCountry
         ? {
             "@type": "PostalAddress",
-            addressLocality,
-            addressCountry
+            addressCountry,
+            addressLocality
           }
         : undefined,
-    sameAs: sameAsUrls,
+    alternateName: alternateNames,
+    description,
+    email: email ? `mailto:${email}` : undefined,
+    image: avatar
+      ? {
+          "@type": "ImageObject",
+          caption: `${name} - ${title}`,
+          url: avatar
+        }
+      : undefined,
+    jobTitle: title,
     knowsAbout,
+    name,
+    sameAs: sameAsUrls,
+    url: siteUrl,
     worksFor: company
       ? {
           "@type": "Organization",
@@ -76,15 +76,15 @@ export function buildWebsiteSchema({ siteUrl, seoData }: { siteUrl: string; seoD
   const description = seoData?.seo?.metaDescription ?? undefined;
 
   return {
-    "@type": "WebSite",
     "@id": `${siteUrl}#website`,
-    url: siteUrl,
-    name: name && title ? `${name} - ${title} Portfolio` : undefined,
+    "@type": "WebSite",
     description,
+    inLanguage: "en-US",
+    name: name && title ? `${name} - ${title} Portfolio` : undefined,
     publisher: {
       "@id": `${siteUrl}#person`
     },
-    inLanguage: "en-US"
+    url: siteUrl
   };
 }
 
@@ -98,22 +98,22 @@ export function buildWebPageSchema({ siteUrl, seoData }: { siteUrl: string; seoD
   const ogImage = seoData?.seo?.ogImage?.asset?.url ?? `${siteUrl}/opengraph-image`;
 
   return {
-    "@type": "WebPage",
     "@id": `${siteUrl}#webpage`,
-    url: siteUrl,
-    name: name && title ? `${name} | ${title}` : undefined,
-    description,
-    isPartOf: {
-      "@id": `${siteUrl}#website`
-    },
+    "@type": "WebPage",
     about: {
       "@id": `${siteUrl}#person`
     },
+    description,
     inLanguage: "en-US",
+    isPartOf: {
+      "@id": `${siteUrl}#website`
+    },
+    name: name && title ? `${name} | ${title}` : undefined,
     primaryImageOfPage: {
       "@type": "ImageObject",
       url: ogImage
-    }
+    },
+    url: siteUrl
   };
 }
 
@@ -131,14 +131,14 @@ export function buildProfilePageSchema({
   const description = seoData?.seo?.metaDescription ?? undefined;
 
   return {
-    "@type": "ProfilePage",
     "@id": `${siteUrl}#profilepage`,
-    url: siteUrl,
-    name: name ? `${name} - Portfolio` : undefined,
+    "@type": "ProfilePage",
     description,
     mainEntity: {
       "@id": `${siteUrl}#person`
-    }
+    },
+    name: name ? `${name} - Portfolio` : undefined,
+    url: siteUrl
   };
 }
 
@@ -157,17 +157,17 @@ export function buildOrganizationSchema({
   const sameAsUrls = seoData?.seo?.sameAsUrls ?? [];
 
   return {
-    "@type": "Organization",
     "@id": `${siteUrl}#organization`,
-    name,
-    url: siteUrl,
-    sameAs: sameAsUrls,
+    "@type": "Organization",
     logo: logo
       ? {
           "@type": "ImageObject",
           url: logo
         }
-      : undefined
+      : undefined,
+    name,
+    sameAs: sameAsUrls,
+    url: siteUrl
   };
 }
 
@@ -180,27 +180,27 @@ export function buildBreadcrumbSchema({ siteUrl }: { siteUrl: string }): Breadcr
     itemListElement: [
       {
         "@type": "ListItem",
-        position: 1,
+        item: siteUrl,
         name: "Home",
-        item: siteUrl
+        position: 1
       },
       {
         "@type": "ListItem",
-        position: 2,
+        item: `${siteUrl}#about`,
         name: "About",
-        item: `${siteUrl}#about`
+        position: 2
       },
       {
         "@type": "ListItem",
-        position: 3,
+        item: `${siteUrl}#projects`,
         name: "Projects",
-        item: `${siteUrl}#projects`
+        position: 3
       },
       {
         "@type": "ListItem",
-        position: 4,
+        item: `${siteUrl}#contact`,
         name: "Contact",
-        item: `${siteUrl}#contact`
+        position: 4
       }
     ]
   };
@@ -219,12 +219,12 @@ export function buildStructuredDataGraph({
   return {
     "@context": "https://schema.org",
     "@graph": [
-      buildPersonSchema({ siteUrl, seoData }),
-      buildWebsiteSchema({ siteUrl, seoData }),
-      buildWebPageSchema({ siteUrl, seoData }),
-      buildProfilePageSchema({ siteUrl, seoData }),
+      buildPersonSchema({ seoData, siteUrl }),
+      buildWebsiteSchema({ seoData, siteUrl }),
+      buildWebPageSchema({ seoData, siteUrl }),
+      buildProfilePageSchema({ seoData, siteUrl }),
       buildBreadcrumbSchema({ siteUrl }),
-      buildOrganizationSchema({ siteUrl, seoData })
+      buildOrganizationSchema({ seoData, siteUrl })
     ]
   };
 }

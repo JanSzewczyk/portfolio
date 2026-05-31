@@ -123,6 +123,7 @@ export const ICONS = {
   SiTestinglibrary,
   SiTypescript,
   SiVitest,
+  SiX,
   SiZod,
   TbBrain,
   TbBrandFramerMotion,
@@ -138,8 +139,7 @@ export const ICONS = {
   TbTestPipe,
   TbWaveSine,
   VscDebugConsole,
-  VscTools,
-  SiX
+  VscTools
 } as const satisfies Record<string, IconType>;
 
 export type IconName = keyof typeof ICONS;

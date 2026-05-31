@@ -3,16 +3,16 @@ import type * as React from "react";
 import { GiFishingLure, GiGardeningShears } from "react-icons/gi";
 
 const HOBBY_ICONS: Record<string, React.ElementType> = {
-  fishing: GiFishingLure,
-  figurines: Paintbrush,
-  gardening: GiGardeningShears,
-  photography: Camera,
-  gaming: Gamepad2,
   cooking: ChefHat,
-  reading: BookOpen,
   cycling: Bike,
+  figurines: Paintbrush,
+  fishing: GiFishingLure,
+  gaming: Gamepad2,
+  gardening: GiGardeningShears,
   hiking: Mountain,
   music: Music,
+  photography: Camera,
+  reading: BookOpen,
   travel: Plane
 };
 

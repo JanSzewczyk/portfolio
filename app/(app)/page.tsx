@@ -29,40 +29,40 @@ export default async function HomePage() {
       <Navigation personalInfo={portfolioPage.personalInfo} />
       <main>
         <HeroSection
-          personalInfo={portfolioPage.personalInfo}
-          hero={portfolioPage.hero}
           documentId={portfolioPage._id}
           documentType={portfolioPage._type}
+          hero={portfolioPage.hero}
+          personalInfo={portfolioPage.personalInfo}
         />
         <AboutSection about={portfolioPage.about} documentId={portfolioPage._id} documentType={portfolioPage._type} />
         <SkillsSection
-          skills={portfolioPage.skills}
           documentId={portfolioPage._id}
           documentType={portfolioPage._type}
+          skills={portfolioPage.skills}
         />
         <ProjectsSection
-          projects={portfolioPage.projects}
           documentId={portfolioPage._id}
           documentType={portfolioPage._type}
+          projects={portfolioPage.projects}
         />
         <ExperienceSection
-          experience={portfolioPage.experience}
           documentId={portfolioPage._id}
           documentType={portfolioPage._type}
+          experience={portfolioPage.experience}
         />
         <EducationSection
-          education={portfolioPage.education}
           documentId={portfolioPage._id}
           documentType={portfolioPage._type}
+          education={portfolioPage.education}
         />
         <ContactSection
-          personalInfo={portfolioPage.personalInfo}
           contact={portfolioPage.contact}
           documentId={portfolioPage._id}
           documentType={portfolioPage._type}
+          personalInfo={portfolioPage.personalInfo}
         />
       </main>
-      <Footer personalInfo={portfolioPage.personalInfo} footer={portfolioPage.footer} />
+      <Footer footer={portfolioPage.footer} personalInfo={portfolioPage.personalInfo} />
     </>
   );
 }

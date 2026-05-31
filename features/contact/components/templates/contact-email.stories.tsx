@@ -3,29 +3,29 @@ import preview from "~/.storybook/preview";
 import { ContactEmail } from "./contact-email";
 
 const meta = preview.meta({
-  title: "Features/Contact/Templates/Contact Email",
   component: ContactEmail,
   parameters: {
-    layout: "fullscreen",
     docs: {
       description: {
         component: "Minimal React Email component for contact form submissions."
       }
-    }
-  }
+    },
+    layout: "fullscreen"
+  },
+  title: "Features/Contact/Templates/Contact Email"
 });
 
 /**
  * Default contact email with typical content
  */
 export const ContactEmailStory = meta.story({
-  name: "Contact Email",
   args: {
-    name: "John Doe",
     email: "john.doe@example.com",
     message:
-      "Hello! I'm interested in discussing a potential project collaboration. I was impressed by your portfolio and would love to chat about working together.\n\nPlease let me know when you're available for a call.\n\nBest regards,\nJohn"
-  }
+      "Hello! I'm interested in discussing a potential project collaboration. I was impressed by your portfolio and would love to chat about working together.\n\nPlease let me know when you're available for a call.\n\nBest regards,\nJohn",
+    name: "John Doe"
+  },
+  name: "Contact Email"
 });
 
 // Test: Renders all required fields
@@ -75,9 +75,9 @@ ContactEmailStory.test("Displays footer text", async ({ canvas }) => {
  */
 export const ShortMessage = meta.story({
   args: {
-    name: "Alice Smith",
     email: "alice@startup.io",
-    message: "Quick question about your availability for a consultation. Are you free next week?"
+    message: "Quick question about your availability for a consultation. Are you free next week?",
+    name: "Alice Smith"
   }
 });
 
@@ -86,7 +86,6 @@ export const ShortMessage = meta.story({
  */
 export const LongMessage = meta.story({
   args: {
-    name: "Robert Anderson",
     email: "robert.anderson@company.com",
     message: `Dear Portfolio Owner,
 
@@ -113,7 +112,8 @@ Looking forward to hearing from you.
 Best regards,
 Robert Anderson
 Senior Engineering Manager
-Tech Innovations Inc.`
+Tech Innovations Inc.`,
+    name: "Robert Anderson"
   }
 });
 
@@ -122,7 +122,6 @@ Tech Innovations Inc.`
  */
 export const InternationalCharacters = meta.story({
   args: {
-    name: "François Müller",
     email: "francois.muller@société.fr",
     message: `Bonjour!
 
@@ -134,7 +133,8 @@ Quelques détails techniques:
 • Tests complets
 
 Cordialement,
-François`
+François`,
+    name: "François Müller"
   }
 });
 
@@ -143,9 +143,9 @@ François`
  */
 export const SpecialCharacters = meta.story({
   args: {
-    name: "Test User <script>",
     email: "test@example.com",
-    message: 'Message with "quotes" and <brackets> & ampersands that should be properly escaped.'
+    message: 'Message with "quotes" and <brackets> & ampersands that should be properly escaped.',
+    name: "Test User <script>"
   }
 });
 
@@ -160,9 +160,9 @@ SpecialCharacters.test("Special characters are properly escaped", async ({ canva
  */
 export const MinimalContent = meta.story({
   args: {
-    name: "Bo",
     email: "bo@me.co",
-    message: "Hey, let's talk!"
+    message: "Hey, let's talk!",
+    name: "Bo"
   }
 });
 
@@ -171,9 +171,9 @@ export const MinimalContent = meta.story({
  */
 export const ComplexEmail = meta.story({
   args: {
-    name: "Developer Name",
     email: "complex.email+tag@sub-domain.example.com",
-    message: "Testing complex email address rendering and mailto link functionality."
+    message: "Testing complex email address rendering and mailto link functionality.",
+    name: "Developer Name"
   }
 });
 

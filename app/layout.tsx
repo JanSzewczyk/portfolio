@@ -15,18 +15,18 @@ const siteUrl = getSiteUrl();
 export async function generateMetadata(): Promise<Metadata> {
   const [, seoData] = await getCachedSeoData();
 
-  return buildMetadata({ siteUrl, seoData });
+  return buildMetadata({ seoData, siteUrl });
 }
 
 export const viewport: Viewport = {
-  width: "device-width",
   initialScale: 1,
   maximumScale: 5,
-  userScalable: true,
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-    { media: "(prefers-color-scheme: dark)", color: "#111111" }
-  ]
+    { color: "#ffffff", media: "(prefers-color-scheme: light)" },
+    { color: "#111111", media: "(prefers-color-scheme: dark)" }
+  ],
+  userScalable: true,
+  width: "device-width"
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
@@ -35,17 +35,17 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <StructuredData siteUrl={siteUrl} seoData={seoData} />
-        <link rel="preconnect" href="https://github.com" referrerPolicy="no-referrer" />
-        <link rel="preconnect" href="https://avatars.githubusercontent.com" referrerPolicy="no-referrer" />
-        <link rel="dns-prefetch" href="https://github.com" />
-        <link rel="preconnect" href="https://cdn.sanity.io" crossOrigin="anonymous" />
-        <link rel="dns-prefetch" href="https://cdn.sanity.io" />
+        <StructuredData seoData={seoData} siteUrl={siteUrl} />
+        <link href="https://github.com" referrerPolicy="no-referrer" rel="preconnect" />
+        <link href="https://avatars.githubusercontent.com" referrerPolicy="no-referrer" rel="preconnect" />
+        <link href="https://github.com" rel="dns-prefetch" />
+        <link crossOrigin="anonymous" href="https://cdn.sanity.io" rel="preconnect" />
+        <link href="https://cdn.sanity.io" rel="dns-prefetch" />
 
-        <meta name="google-site-verification" content="AiA9CANm5wTKgVJ2UQVly5tWskJNx898rxpPlbtcpLE" />
+        <meta content="AiA9CANm5wTKgVJ2UQVly5tWskJNx898rxpPlbtcpLE" name="google-site-verification" />
       </head>
       <body>
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem disableTransitionOnChange>
+        <ThemeProvider attribute="class" defaultTheme="system" disableTransitionOnChange enableSystem>
           {children}
         </ThemeProvider>
         <Analytics mode="production" />

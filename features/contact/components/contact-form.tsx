@@ -24,13 +24,13 @@ export function ContactForm({ onSubmitAction, contactFormContent }: ContactFormP
   const [isSubmitted, setIsSubmitted] = React.useState<boolean>(false);
 
   const form = useForm<ContactFormData>({
-    resolver: zodResolver(contactFormSchema),
     defaultValues: {
-      name: "",
       email: "",
       message: "",
+      name: "",
       website: "" // Honeypot field
-    }
+    },
+    resolver: zodResolver(contactFormSchema)
   });
 
   async function handleSubmit(formData: ContactFormData) {
@@ -75,17 +75,17 @@ export function ContactForm({ onSubmitAction, contactFormContent }: ContactFormP
           <form onSubmit={form.handleSubmit(handleSubmit)}>
             <FieldGroup>
               {/* Honeypot field - hidden from users, visible to bots */}
-              <div className="hidden" aria-hidden="true">
+              <div aria-hidden="true" className="hidden">
                 <label htmlFor="website">Website</label>
-                <input type="text" id="website" tabIndex={-1} autoComplete="off" {...form.register("website")} />
+                <input autoComplete="off" id="website" tabIndex={-1} type="text" {...form.register("website")} />
               </div>
 
               <Field data-invalid={!!form.formState.errors.name}>
                 <FieldLabel htmlFor="username">Username</FieldLabel>
                 <Input
                   id="username"
-                  placeholder="Your name"
                   invalid={!!form.formState.errors.name}
+                  placeholder="Your name"
                   {...form.register("name")}
                 />
                 <FieldError errors={[form.formState.errors.name]} />
@@ -94,8 +94,8 @@ export function ContactForm({ onSubmitAction, contactFormContent }: ContactFormP
                 <FieldLabel htmlFor="email">Email</FieldLabel>
                 <Input
                   id="email"
-                  placeholder="your@email.com"
                   invalid={!!form.formState.errors.email}
+                  placeholder="your@email.com"
                   type="email"
                   {...form.register("email")}
                 />
@@ -105,15 +105,15 @@ export function ContactForm({ onSubmitAction, contactFormContent }: ContactFormP
                 <FieldLabel htmlFor="message">Message</FieldLabel>
                 <Textarea
                   id="message"
+                  invalid={!!form.formState.errors.message}
                   placeholder="Your message..."
                   rows={5}
-                  invalid={!!form.formState.errors.message}
                   {...form.register("message")}
                 />
                 <FieldError errors={[form.formState.errors.message]} />
               </Field>
 
-              <Button type="submit" fullWidth loading={form.formState.isSubmitting} startIcon={<SendIcon />}>
+              <Button fullWidth loading={form.formState.isSubmitting} startIcon={<SendIcon />} type="submit">
                 Send Message
               </Button>
             </FieldGroup>

@@ -15,9 +15,9 @@ type TechMarqueeProps = {
 
 export function TechMarquee({ items }: TechMarqueeProps) {
   return (
-    <Marquee pauseOnHover repeat={2} className="[--duration:50s]">
+    <Marquee className="[--duration:50s]" pauseOnHover repeat={2}>
       {items.map(({ tech, dataSanity }) => (
-        <TechLogo key={tech._id} tech={tech} dataSanity={dataSanity} />
+        <TechLogo dataSanity={dataSanity} key={tech._id} tech={tech} />
       ))}
     </Marquee>
   );

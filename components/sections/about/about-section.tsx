@@ -21,13 +21,13 @@ export function AboutSection({ about, documentId, documentType }: AboutSectionPr
   });
 
   return (
-    <section id={Section.ABOUT} className="bg-muted/30 py-24">
+    <section className="bg-muted/30 py-24" id={Section.ABOUT}>
       <div className="container">
         <SectionHeading
-          title={about?.heading?.title ?? ""}
-          description={about?.heading?.description ?? ""}
           align="left"
           data-sanity={createSanityAttribute("about.heading")}
+          description={about?.heading?.description ?? ""}
+          title={about?.heading?.title ?? ""}
         />
 
         {/* ── Two-column: bio left (1.3fr) + stats right (0.7fr) ── */}
@@ -54,11 +54,11 @@ export function AboutSection({ about, documentId, documentType }: AboutSectionPr
           <div className="grid grid-cols-2 content-start gap-x-8 gap-y-10 pt-1">
             {about?.stats?.map((stat, index) => (
               <AnimatedStat
-                key={stat._key}
-                value={stat.value ?? 0}
-                suffix={stat.suffix ?? undefined}
-                label={stat.label ?? undefined}
                 dataSanity={createSanityAttribute(`about.stats[${index}]`)}
+                key={stat._key}
+                label={stat.label ?? undefined}
+                suffix={stat.suffix ?? undefined}
+                value={stat.value ?? 0}
               />
             ))}
           </div>
@@ -89,7 +89,7 @@ export function AboutSection({ about, documentId, documentType }: AboutSectionPr
               ) : null}
               <div className="-mx-3 flex flex-wrap gap-1">
                 {about.hobbies.items.map((hobby) => (
-                  <HobbyItem key={hobby._key} iconType={hobby.icon ?? ""} label={hobby.label ?? ""} />
+                  <HobbyItem iconType={hobby.icon ?? ""} key={hobby._key} label={hobby.label ?? ""} />
                 ))}
               </div>
             </div>

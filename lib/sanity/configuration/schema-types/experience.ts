@@ -2,10 +2,6 @@ import { CaseIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
 
 export const experience = defineType({
-  name: "experience",
-  title: "Experience",
-  type: "document",
-  icon: CaseIcon,
   fields: [
     defineField({
       name: "role",
@@ -21,11 +17,11 @@ export const experience = defineType({
     }),
     defineField({
       name: "companyLogo",
-      title: "Company Logo",
-      type: "image",
       options: {
         hotspot: true
-      }
+      },
+      title: "Company Logo",
+      type: "image"
     }),
     defineField({
       name: "companyUrl",
@@ -40,8 +36,6 @@ export const experience = defineType({
     }),
     defineField({
       name: "type",
-      title: "Employment Type",
-      type: "string",
       options: {
         list: [
           { title: "Full-time", value: "full-time" },
@@ -50,6 +44,8 @@ export const experience = defineType({
           { title: "Freelance", value: "freelance" }
         ]
       },
+      title: "Employment Type",
+      type: "string",
       validation: (rule) => rule.required()
     }),
     defineField({
@@ -59,10 +55,10 @@ export const experience = defineType({
       validation: (rule) => rule.required()
     }),
     defineField({
+      description: "Leave empty if currently working here",
       name: "endDate",
       title: "End Date",
-      type: "date",
-      description: "Leave empty if currently working here"
+      type: "date"
     }),
     defineField({
       name: "summary",
@@ -72,42 +68,46 @@ export const experience = defineType({
     }),
     defineField({
       name: "responsibilities",
+      of: [{ type: "string" }],
       title: "Responsibilities",
       type: "array",
-      of: [{ type: "string" }],
       validation: (rule) => rule.required().min(1)
     }),
     defineField({
       name: "achievements",
+      of: [{ type: "string" }],
       title: "Achievements",
-      type: "array",
-      of: [{ type: "string" }]
+      type: "array"
     }),
     defineField({
       name: "technologies",
-      title: "Technologies",
-      type: "array",
       of: [
         {
-          type: "reference",
-          to: [{ type: "technology" }]
+          to: [{ type: "technology" }],
+          type: "reference"
         }
       ],
+      title: "Technologies",
+      type: "array",
       validation: (rule) => rule.required().min(1)
     })
   ],
+  icon: CaseIcon,
+  name: "experience",
   orderings: [
     {
-      title: "Start Date, Newest",
+      by: [{ direction: "desc", field: "startDate" }],
       name: "startDateDesc",
-      by: [{ field: "startDate", direction: "desc" }]
+      title: "Start Date, Newest"
     }
   ],
   preview: {
     select: {
-      title: "role",
+      media: "companyLogo",
       subtitle: "company",
-      media: "companyLogo"
+      title: "role"
     }
-  }
+  },
+  title: "Experience",
+  type: "document"
 });

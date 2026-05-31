@@ -8,9 +8,6 @@ import { defineType } from "sanity";
  * to maintain consistent heading structure.
  */
 export const sectionHeading = defineType({
-  name: "sectionHeading",
-  title: "Section Heading",
-  type: "object",
   fields: [
     {
       name: "title",
@@ -20,21 +17,24 @@ export const sectionHeading = defineType({
     },
     {
       name: "description",
+      rows: 2,
       title: "Description",
-      type: "text",
-      rows: 2
+      type: "text"
     }
   ],
+  name: "sectionHeading",
   preview: {
-    select: {
-      title: "title",
-      description: "description"
-    },
     prepare({ title, description }) {
       return {
-        title: title || "Section Heading",
-        subtitle: description || ""
+        subtitle: description || "",
+        title: title || "Section Heading"
       };
+    },
+    select: {
+      description: "description",
+      title: "title"
     }
-  }
+  },
+  title: "Section Heading",
+  type: "object"
 });

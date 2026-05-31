@@ -4,18 +4,18 @@ import { projectBuilder } from "~/tests/builders/portfolio-page.builder";
 import { ProjectCard, type ProjectCardProps } from "./project-card";
 
 const meta = preview.meta({
-  title: "Components/Project Card",
   component: ProjectCard,
-  parameters: {
-    layout: "centered"
-  },
   decorators: [
     (Story) => (
       <div className="w-100">
         <Story />
       </div>
     )
-  ]
+  ],
+  parameters: {
+    layout: "centered"
+  },
+  title: "Components/Project Card"
 });
 
 /**
@@ -25,13 +25,13 @@ export const AllLinks = meta.story({
   args: {
     project: projectBuilder.one({
       overrides: {
-        title: "Design System",
         description: "A comprehensive React component library with TypeScript support and modern styling.",
         links: () => ({
-          live: "https://design-system.example.com",
           github: "https://github.com/example/design-system",
+          live: "https://design-system.example.com",
           npm: "https://www.npmjs.com/package/@example/design-system"
-        })
+        }),
+        title: "Design System"
       }
     }) as ProjectCardProps["project"]
   }
@@ -79,13 +79,13 @@ export const NpmLinkOnly = meta.story({
   args: {
     project: projectBuilder.one({
       overrides: {
-        title: "Utility Package",
         description: "A lightweight utility library for common JavaScript operations.",
         links: () => ({
-          live: null,
           github: null,
+          live: null,
           npm: "https://www.npmjs.com/package/@example/utils"
-        })
+        }),
+        title: "Utility Package"
       }
     }) as ProjectCardProps["project"]
   }
@@ -109,13 +109,13 @@ export const GithubAndNpm = meta.story({
   args: {
     project: projectBuilder.one({
       overrides: {
-        title: "React Hooks Library",
         description: "A collection of useful React hooks for modern applications.",
         links: () => ({
-          live: null,
           github: "https://github.com/example/react-hooks",
+          live: null,
           npm: "https://www.npmjs.com/package/@example/react-hooks"
-        })
+        }),
+        title: "React Hooks Library"
       }
     }) as ProjectCardProps["project"]
   }
@@ -140,13 +140,13 @@ export const NoNpmLink = meta.story({
   args: {
     project: projectBuilder.one({
       overrides: {
-        title: "Portfolio Website",
         description: "A modern portfolio website built with Next.js and TypeScript.",
         links: () => ({
-          live: "https://portfolio.example.com",
           github: "https://github.com/example/portfolio",
+          live: "https://portfolio.example.com",
           npm: null
-        })
+        }),
+        title: "Portfolio Website"
       }
     }) as ProjectCardProps["project"]
   }
@@ -171,13 +171,13 @@ export const NoLinks = meta.story({
   args: {
     project: projectBuilder.one({
       overrides: {
-        title: "Internal Tool",
         description: "An internal tool used for company operations.",
         links: () => ({
-          live: null,
           github: null,
+          live: null,
           npm: null
-        })
+        }),
+        title: "Internal Tool"
       }
     }) as ProjectCardProps["project"]
   }
@@ -200,14 +200,14 @@ export const LongContent = meta.story({
   args: {
     project: projectBuilder.one({
       overrides: {
-        title: "Enterprise React Component Library with TypeScript",
         description:
           "A comprehensive, production-ready React component library designed for enterprise applications. Features include full TypeScript support, extensive accessibility features, theme customization, and comprehensive documentation.",
         links: () => ({
-          live: "https://components.example.com",
           github: "https://github.com/example/components",
+          live: "https://components.example.com",
           npm: "https://www.npmjs.com/package/@example/components"
-        })
+        }),
+        title: "Enterprise React Component Library with TypeScript"
       }
     }) as ProjectCardProps["project"]
   }

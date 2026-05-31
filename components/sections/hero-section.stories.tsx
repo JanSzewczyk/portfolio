@@ -4,19 +4,19 @@ import { portfolioPageHeroBuilder, portfolioPagePersonalInfoBuilder } from "~/te
 import { HeroSection } from "./hero-section";
 
 const meta = preview.meta({
-  title: "Components/Sections/Hero Section",
+  args: {
+    documentId: "test-portfolio",
+    documentType: "portfolioPage",
+    hero: portfolioPageHeroBuilder.one(),
+    personalInfo: portfolioPagePersonalInfoBuilder.one({
+      traits: ["withAvatar"]
+    })
+  },
   component: HeroSection,
   parameters: {
     layout: "fullscreen"
   },
-  args: {
-    personalInfo: portfolioPagePersonalInfoBuilder.one({
-      traits: ["withAvatar"]
-    }),
-    hero: portfolioPageHeroBuilder.one(),
-    documentId: "test-portfolio",
-    documentType: "portfolioPage"
-  }
+  title: "Components/Sections/Hero Section"
 });
 
 // Story 1: With Avatar and Available Status
@@ -25,8 +25,8 @@ export const HeroSectionWithAvatar = meta.story({});
 // Story 2: Without Avatar and Unavailable Status
 export const HeroSectionWithoutAvatar = meta.story({
   args: {
-    personalInfo: portfolioPagePersonalInfoBuilder.one(), // No withAvatar trait = null avatar
-    hero: portfolioPageHeroBuilder.one({ traits: ["unavailable"] })
+    hero: portfolioPageHeroBuilder.one({ traits: ["unavailable"] }),
+    personalInfo: portfolioPagePersonalInfoBuilder.one() // No withAvatar trait = null avatar
   }
 });
 

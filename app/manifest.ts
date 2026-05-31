@@ -2,32 +2,32 @@ import type { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "Jan Szewczyk - Frontend Engineer Portfolio",
-    short_name: "Jan Szewczyk",
-    description: "Frontend Engineer from Cracow, Poland specializing in React, Next.js, TypeScript, and React Native.",
-    start_url: "/",
-    display: "standalone",
     background_color: "#111111",
-    theme_color: "#111111",
-    orientation: "portrait",
+    categories: ["portfolio", "developer", "technology"],
+    description: "Frontend Engineer from Cracow, Poland specializing in React, Next.js, TypeScript, and React Native.",
+    dir: "ltr",
+    display: "standalone",
     icons: [
-      { src: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
-      { src: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { sizes: "16x16", src: "/favicon-16x16.png", type: "image/png" },
+      { sizes: "32x32", src: "/favicon-32x32.png", type: "image/png" },
       {
-        src: "/android-chrome-192x192.png",
+        purpose: "maskable",
         sizes: "192x192",
-        type: "image/png",
-        purpose: "maskable"
+        src: "/android-chrome-192x192.png",
+        type: "image/png"
       },
       {
-        src: "/android-chrome-512x512.png",
+        purpose: "maskable",
         sizes: "512x512",
-        type: "image/png",
-        purpose: "maskable"
+        src: "/android-chrome-512x512.png",
+        type: "image/png"
       }
     ],
-    categories: ["portfolio", "developer", "technology"],
     lang: "en-US",
-    dir: "ltr"
+    name: "Jan Szewczyk - Frontend Engineer Portfolio",
+    orientation: "portrait",
+    short_name: "Jan Szewczyk",
+    start_url: "/",
+    theme_color: "#111111"
   };
 }
