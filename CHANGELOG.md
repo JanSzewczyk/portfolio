@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.12.1](https://github.com/JanSzewczyk/portfolio/compare/v1.12.0...v1.12.1) (2026-05-31)
+
+### Bug Fixes
+
+* update contact form to use useFormState for improved error handling ([522e552](https://github.com/JanSzewczyk/portfolio/commit/522e552ddae2da0de474fdb950ef9aefb8e9937e))
+
 ## [1.12.0](https://github.com/JanSzewczyk/portfolio/compare/v1.11.1...v1.12.0) (2026-05-31)
 
 ### Features
