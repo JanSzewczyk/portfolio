@@ -27,6 +27,8 @@ async function loadData() {
 export default async function HomePage() {
   const { portfolioPage, topSkills } = await loadData();
 
+  console.log("Portfolio Page Data:", portfolioPage);
+
   return (
     <>
       <Navigation personalInfo={portfolioPage.personalInfo} />

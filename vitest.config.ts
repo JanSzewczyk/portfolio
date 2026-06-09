@@ -32,13 +32,18 @@ export default defineConfig({
         "**/data/**",
         "**/lib/{sanity,seo}/**",
         "**/lib/scroll-to-section.ts",
-        "app/studio/**"
+        "app/studio/**",
+        "app/**/page.tsx",
+        "app/**/layout.tsx",
+        "components/ui/icon-registry.ts",
+        "components/sections/scroll-button.tsx"
       ],
       include: [
         "app/**/*.{js,jsx,ts,tsx}",
         "components/**/*.{js,jsx,ts,tsx}",
         "features/**/*.{js,jsx,ts,tsx}",
         "lib/**/*.{js,ts}",
+        "services/**/*.{js,ts}",
         "utils/**/*.{js,ts}"
       ],
       provider: "v8",
