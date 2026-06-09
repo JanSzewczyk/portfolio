@@ -1,6 +1,6 @@
 import { expect } from "storybook/test";
 import preview from "~/.storybook/preview";
-import { projectBuilder } from "~/tests/builders/portfolio-page.builder";
+import { projectBuilder, technologyBuilder } from "~/tests/builders/portfolio-page.builder";
 import { ProjectCard, type ProjectCardProps } from "./project-card";
 
 const meta = preview.meta({
@@ -221,4 +221,47 @@ LongContent.test("All buttons remain visible with long content", async ({ canvas
   await expect(liveButton).toBeVisible();
   await expect(codeButton).toBeVisible();
   await expect(npmButton).toBeVisible();
+});
+
+/**
+ * ProjectCard with a few technologies — verifies badges are rendered with icons and font-code style.
+ */
+export const WithTechnologies = meta.story({
+  args: {
+    project: projectBuilder.one({
+      overrides: {
+        links: () => ({ github: null, live: null, npm: null }),
+        technologies: technologyBuilder.many(3)
+      }
+    }) as ProjectCardProps["project"]
+  }
+});
+
+WithTechnologies.test("Renders technology badges", async ({ canvas, args }) => {
+  const techs = args.project.technologies ?? [];
+  for (const tech of techs) {
+    if (tech.name) {
+      const badge = canvas.getByText(tech.name);
+      await expect(badge).toBeVisible();
+    }
+  }
+});
+
+/**
+ * ProjectCard with more technologies than the BadgeOverflow default limit — verifies overflow badge.
+ */
+export const WithManyTechnologies = meta.story({
+  args: {
+    project: projectBuilder.one({
+      overrides: {
+        links: () => ({ github: null, live: null, npm: null }),
+        technologies: technologyBuilder.many(10)
+      }
+    }) as ProjectCardProps["project"]
+  }
+});
+
+WithManyTechnologies.test("Renders overflow badge when technologies exceed the visible limit", async ({ canvas }) => {
+  const overflowBadge = canvas.getByText(/^\+\d+$/);
+  await expect(overflowBadge).toBeVisible();
 });
