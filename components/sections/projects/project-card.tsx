@@ -61,8 +61,8 @@ export function ProjectCard({ project, dataSanity }: ProjectCardProps) {
         <CardDescription>{project.description}</CardDescription>
       </CardHeader>
 
-      <CardContent className="flex-1">
-        <div className="flex flex-wrap gap-1.5">
+      <CardContent className="flex flex-1 flex-col justify-end">
+        <div className="flex flex-wrap items-end gap-2">
           {project.technologies?.slice(0, 4).map((tech) => (
             <Badge className="font-code" key={`${project._id}-${tech._id}`} variant="secondary">
               <ReactIcon name={tech.icon as IconName} />
