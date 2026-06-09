@@ -1,4 +1,5 @@
 import { Badge } from "@szum-tech/design-system/components/badge";
+import { BadgeOverflow } from "@szum-tech/design-system/components/badge-overflow";
 import { Button } from "@szum-tech/design-system/components/button";
 import {
   Card,
@@ -62,17 +63,17 @@ export function ProjectCard({ project, dataSanity }: ProjectCardProps) {
       </CardHeader>
 
       <CardContent className="flex flex-1 flex-col justify-end">
-        <div className="flex flex-wrap items-end gap-2">
-          {project.technologies?.slice(0, 4).map((tech) => (
+        <BadgeOverflow
+          getBadgeLabel={(tech) => tech.name ?? ""}
+          items={project.technologies ?? []}
+          renderBadge={(tech, label) => (
             <Badge className="font-code" key={`${project._id}-${tech._id}`} variant="secondary">
               <ReactIcon name={tech.icon as IconName} />
-              {tech.name}
+              {label}
             </Badge>
-          ))}
-          {project.technologies && project.technologies.length > 4 && (
-            <Badge variant="secondary">+{project.technologies.length - 4}</Badge>
           )}
-        </div>
+          renderOverflow={(count) => <Badge variant="secondary">+{count}</Badge>}
+        />
       </CardContent>
 
       <CardFooter className="gap-2">
