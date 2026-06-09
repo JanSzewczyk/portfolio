@@ -18,6 +18,7 @@ import {
 } from "@szum-tech/design-system/components/timeline";
 import Image from "next/image";
 import { stegaClean } from "next-sanity";
+import { type IconName, ReactIcon } from "~/components/ui/react-icon";
 import { SectionHeading } from "~/components/ui/section-heading";
 import { Section } from "~/constants/sections";
 import { urlFor } from "~/lib/sanity/image";
@@ -195,7 +196,8 @@ export function ExperienceSection({ experience, documentId, documentType }: Expe
                             data-sanity={createSanityAttribute(`experience.experiences[${index}].technologies`)}
                           >
                             {exp.technologies.map((tech) => (
-                              <Badge className="text-xs" key={tech._id} variant="secondary">
+                              <Badge className="font-code" key={tech._id} variant="secondary">
+                                <ReactIcon name={tech.icon as IconName} />
                                 {tech.name}
                               </Badge>
                             ))}

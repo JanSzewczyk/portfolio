@@ -10,6 +10,7 @@ import {
   SkillsSection
 } from "~/components/sections";
 import { getPortfolioPageData } from "~/lib/sanity/services";
+import { getTopSkills } from "~/services/tech.service";
 
 async function loadData() {
   const [error, portfolioPage] = await getPortfolioPageData();
@@ -18,11 +19,13 @@ async function loadData() {
     notFound();
   }
 
-  return { portfolioPage };
+  const topSkills = getTopSkills(portfolioPage);
+
+  return { portfolioPage, topSkills };
 }
 
 export default async function HomePage() {
-  const { portfolioPage } = await loadData();
+  const { portfolioPage, topSkills } = await loadData();
 
   return (
     <>
@@ -39,6 +42,7 @@ export default async function HomePage() {
           documentId={portfolioPage._id}
           documentType={portfolioPage._type}
           skills={portfolioPage.skills}
+          topSkills={topSkills}
         />
         <ProjectsSection
           documentId={portfolioPage._id}
