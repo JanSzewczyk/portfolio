@@ -12,7 +12,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@szum
 import { Tooltip, TooltipContent, TooltipTrigger } from "@szum-tech/design-system/components/tooltip";
 import { ExternalLinkIcon, FileTextIcon } from "lucide-react";
 import { stegaClean } from "next-sanity";
-import { ReactIcon } from "~/components/ui/react-icon";
+import { type IconName, ReactIcon } from "~/components/ui/react-icon";
 import type { PortfolioPageQueryResult } from "~/lib/sanity/types";
 
 type EducationData = NonNullable<NonNullable<NonNullable<PortfolioPageQueryResult>["education"]>["education"]>[number];
@@ -78,7 +78,8 @@ export function EducationCard({ education }: EducationCardProps) {
             {thesisTechnologies.length > 0 && (
               <div className="mb-3 flex flex-wrap gap-1.5">
                 {thesisTechnologies.map((tech) => (
-                  <Badge className="text-body-xs" key={`${education._id}-thesis-${tech._id}`} variant="outline">
+                  <Badge className="font-code" key={`${education._id}-thesis-${tech._id}`} variant="outline">
+                    <ReactIcon name={tech.icon as IconName} />
                     {tech.name}
                   </Badge>
                 ))}

@@ -7,32 +7,23 @@ import { SectionHeading } from "~/components/ui/section-heading";
 import { Section } from "~/constants/sections";
 import type { PortfolioPageQueryResult } from "~/lib/sanity/types";
 import { buildSanityAttribute } from "~/lib/sanity/utils";
-
+import type { Tech } from "~/services/tech.service";
 import { TechMarquee } from "./tech-marquee";
 
 type SkillsSectionProps = {
   skills: NonNullable<PortfolioPageQueryResult>["skills"];
+  topSkills: Array<Tech>;
   documentId: string;
   documentType: string;
 };
 
-/** Cap the marquee logos — every technology still appears in the grouped grid below. */
-const MAX_MARQUEE_TECHS = 16;
-
-export function SkillsSection({ skills, documentId, documentType }: SkillsSectionProps) {
+export function SkillsSection({ skills, topSkills, documentId, documentType }: SkillsSectionProps) {
   const { createSanityAttribute } = buildSanityAttribute({
     documentId,
     documentType
   });
 
-  // Collect all technologies from all groups for the marquee (deduplicated by _id)
-  const allTechnologies =
-    skills?.technologyGroups?.flatMap((group) => group.technologies?.filter((tech) => tech.name) ?? []) ?? [];
-  const uniqueTechnologies = Array.from(new Map(allTechnologies.map((tech) => [tech._id, tech])).values());
-  const marqueeItems = uniqueTechnologies.slice(0, MAX_MARQUEE_TECHS).map((tech) => ({
-    dataSanity: createSanityAttribute(`skills.technologyGroups[_key=="${tech._id}"]`),
-    tech
-  }));
+  const marqueeItems = topSkills.map((tech) => ({ tech }));
 
   return (
     <section className="py-24" id={Section.SKILLS}>

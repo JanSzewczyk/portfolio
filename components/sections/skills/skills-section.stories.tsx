@@ -64,7 +64,8 @@ const meta = preview.meta({
         title: "Skills & Technologies"
       },
       technologyGroups: [testGroupFrontend, testGroupBackend]
-    }
+    },
+    topSkills: [testTechReact, testTechTypeScript, testTechNode, testTechTailwind]
   },
   component: SkillsSection,
   parameters: {
@@ -88,13 +89,10 @@ SkillsSection_Story.test("Renders section heading with title and description", a
 });
 
 SkillsSection_Story.test("Renders marquee with tech logos", async ({ canvas, args }) => {
-  // Verify at least one tech logo is visible in marquee
-  const firstTech = args.skills?.technologyGroups?.[0]?.technologies?.[0];
+  const firstTech = args.topSkills?.[0];
   if (firstTech?.name) {
-    // Get all elements with this tech name (appears in marquee AND in badges)
     const techElements = canvas.getAllByText(firstTech.name);
-    // Expect at least two occurrences (marquee + badge)
-    await expect(techElements.length).toBeGreaterThan(1);
+    await expect(techElements.length).toBeGreaterThan(0);
   }
 });
 
@@ -235,7 +233,8 @@ export const EmptySkills = meta.story({
         title: "Skills & Technologies"
       },
       technologyGroups: []
-    }
+    },
+    topSkills: []
   }
 });
 

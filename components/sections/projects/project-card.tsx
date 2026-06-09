@@ -12,7 +12,7 @@ import { cn } from "@szum-tech/design-system/utils";
 import { ExternalLinkIcon } from "lucide-react";
 import Image from "next/image";
 import { stegaClean } from "next-sanity";
-import { ReactIcon } from "~/components/ui/react-icon";
+import { type IconName, ReactIcon } from "~/components/ui/react-icon";
 import { urlFor } from "~/lib/sanity/image";
 import type { PortfolioPageQueryResult } from "~/lib/sanity/types";
 
@@ -63,8 +63,9 @@ export function ProjectCard({ project, dataSanity }: ProjectCardProps) {
 
       <CardContent className="flex-1">
         <div className="flex flex-wrap gap-1.5">
-          {project.technologies?.slice(0, 4).map((tech: { _id: string; name: string | null }) => (
-            <Badge key={`${project._id}-${tech._id}`} variant="secondary">
+          {project.technologies?.slice(0, 4).map((tech) => (
+            <Badge className="font-code" key={`${project._id}-${tech._id}`} variant="secondary">
+              <ReactIcon name={tech.icon as IconName} />
               {tech.name}
             </Badge>
           ))}
