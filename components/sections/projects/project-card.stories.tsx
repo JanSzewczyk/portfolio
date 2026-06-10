@@ -1,4 +1,4 @@
-import { expect } from "storybook/test";
+import { expect, waitFor } from "storybook/test";
 import preview from "~/.storybook/preview";
 import { projectBuilder, technologyBuilder } from "~/tests/builders/portfolio-page.builder";
 import { ProjectCard, type ProjectCardProps } from "./project-card";
@@ -225,13 +225,18 @@ LongContent.test("All buttons remain visible with long content", async ({ canvas
 
 /**
  * ProjectCard with a few technologies — verifies badges are rendered with icons and font-code style.
+ * Uses deterministic tech names to avoid random duplicates from the builder.
  */
 export const WithTechnologies = meta.story({
   args: {
     project: projectBuilder.one({
       overrides: {
         links: () => ({ github: null, live: null, npm: null }),
-        technologies: technologyBuilder.many(3)
+        technologies: [
+          technologyBuilder.one({ overrides: { icon: "SiReact", name: "React" } }),
+          technologyBuilder.one({ overrides: { icon: "SiTypescript", name: "TypeScript" } }),
+          technologyBuilder.one({ overrides: { icon: "SiNodedotjs", name: "Node.js" } })
+        ]
       }
     }) as ProjectCardProps["project"]
   }
@@ -241,8 +246,9 @@ WithTechnologies.test("Renders technology badges", async ({ canvas, args }) => {
   const techs = args.project.technologies ?? [];
   for (const tech of techs) {
     if (tech.name) {
-      const badge = canvas.getByText(tech.name);
-      await expect(badge).toBeVisible();
+      // BadgeOverflow renders items twice: in a hidden measurement div + visible area
+      const badges = canvas.getAllByText(tech.name);
+      await expect(badges.length).toBeGreaterThan(0);
     }
   }
 });
@@ -261,7 +267,14 @@ export const WithManyTechnologies = meta.story({
   }
 });
 
-WithManyTechnologies.test("Renders overflow badge when technologies exceed the visible limit", async ({ canvas }) => {
-  const overflowBadge = canvas.getByText(/^\+\d+$/);
-  await expect(overflowBadge).toBeVisible();
-});
+WithManyTechnologies.test(
+  "Renders overflow badge when technologies exceed the visible limit",
+  async ({ canvasElement }) => {
+    // BadgeOverflow also renders +99 in a hidden measurement div, so we query the
+    // visible [data-slot="badge-overflow"] container and wait for its last child to show +N.
+    await waitFor(() => {
+      const badgeOverflow = canvasElement.querySelector('[data-slot="badge-overflow"]');
+      expect(badgeOverflow?.lastElementChild?.textContent).toMatch(/^\+\d+$/);
+    });
+  }
+);

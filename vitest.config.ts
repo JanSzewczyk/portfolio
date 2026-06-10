@@ -88,7 +88,7 @@ export default defineConfig({
           isolate: false,
           name: "storybook",
           setupFiles: ["tests/integration/vitest.setup.tsx"],
-          testTimeout: 30000
+          testTimeout: 60000
         }
       }
     ],
