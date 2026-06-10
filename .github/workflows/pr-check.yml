@@ -175,7 +175,7 @@ jobs:
           pattern: blob-*
           merge-multiple: true
       - name: Merge reports & generate coverage
-        run: npx vitest run --merge-reports=.vitest-reports --reporter=default --coverage
+        run: npx vitest run --merge-reports=.vitest-reports --coverage
       - name: Report coverage to PR
         uses: davelosert/vitest-coverage-report-action@v2
         with:
