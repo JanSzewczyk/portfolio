@@ -1,4 +1,4 @@
-import { expect, screen } from "storybook/test";
+import { expect, screen, waitFor } from "storybook/test";
 import preview from "~/.storybook/preview";
 
 import { CVDropdown } from "./cv-dropdown";
@@ -53,11 +53,15 @@ WithMultipleDownloads.test("Renders the Download CV trigger button", async ({ ca
 WithMultipleDownloads.test("Opens dropdown with two download links on click", async ({ canvas, userEvent }) => {
   await userEvent.click(canvas.getByRole("button", { name: /download cv/i }));
 
-  const englishLink = await screen.findByRole("menuitem", { name: /english/i });
-  const polishLink = await screen.findByRole("menuitem", { name: /polski/i });
-
-  await expect(englishLink).toBeVisible();
-  await expect(polishLink).toBeVisible();
+  // waitFor retries until the dropdown finishes its fade-in animation (opacity 0 → 1).
+  await waitFor(async () => {
+    const englishLink = await screen.findByRole("menuitem", { name: /english/i });
+    await expect(englishLink).toBeVisible();
+  });
+  await waitFor(async () => {
+    const polishLink = await screen.findByRole("menuitem", { name: /polski/i });
+    await expect(polishLink).toBeVisible();
+  });
 });
 
 WithMultipleDownloads.test("English link has correct download URL with ?dl suffix", async ({ canvas, userEvent }) => {
