@@ -39,6 +39,12 @@ export default defineMain({
     const nextImageMock = path.resolve(here, "mocks/next-image.tsx");
 
     return mergeConfig(config, {
+      optimizeDeps: {
+        // @sanity/visual-editing imports react/compiler-runtime, which rolldown cannot resolve
+        // during the optimizeDeps pre-bundling phase (Vite 6). Excluding prevents the crash;
+        // resolve.alias handles the import correctly during normal serving.
+        exclude: ["@sanity/visual-editing"]
+      },
       resolve: {
         alias: [
           { find: /^next\/image$/, replacement: nextImageMock },

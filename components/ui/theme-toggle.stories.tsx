@@ -302,10 +302,8 @@ export const TooltipShowsThemeName = meta.story({
       const currentTheme = getThemeFromLabel();
       await userEvent.hover(button);
 
-      await waitFor(async () => {
-        const tooltip = await screen.findByRole("tooltip");
-        await expect(tooltip).toHaveTextContent(`${currentTheme} theme`);
-      });
+      const tooltip = await screen.findByRole("tooltip");
+      await expect(tooltip).toHaveTextContent(`${currentTheme} theme`);
 
       await userEvent.unhover(button);
 
@@ -332,10 +330,8 @@ export const TooltipShowsThemeName = meta.story({
       const currentTheme = getThemeFromLabel();
       await userEvent.hover(button);
 
-      await waitFor(async () => {
-        const tooltip = await screen.findByRole("tooltip");
-        await expect(tooltip).toHaveTextContent(`${currentTheme} theme`);
-      });
+      const tooltip = await screen.findByRole("tooltip");
+      await expect(tooltip).toHaveTextContent(`${currentTheme} theme`);
     });
   }
 });
