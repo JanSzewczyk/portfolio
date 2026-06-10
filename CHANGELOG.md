@@ -3,6 +3,43 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.13.0](https://github.com/JanSzewczyk/portfolio/compare/v1.12.1...v1.13.0) (2026-06-10)
+
+### Features
+
+* add CVDropdown component with multiple download options and tests ([da412c0](https://github.com/JanSzewczyk/portfolio/commit/da412c01c551cac3613d7287c0bdde504f7d815a))
+* add ReactIcon component with tests for known and unknown icon names ([65631e3](https://github.com/JanSzewczyk/portfolio/commit/65631e3e6c680de8dba79f0c911fcbb499140bff))
+* add ReactIcon component with tests for known and unknown icon names ([b7473f2](https://github.com/JanSzewczyk/portfolio/commit/b7473f23c73e27f8b6c1b84308487a37a72bd038))
+* enhance project card technology display with BadgeOverflow component ([8c8a5f5](https://github.com/JanSzewczyk/portfolio/commit/8c8a5f5b4ff42caf6771853bc9d9ef798f9034e9))
+* implement top skills feature and update technology display in sections ([0f14870](https://github.com/JanSzewczyk/portfolio/commit/0f148709693337c9940cca54fc3f9720c743c2ec))
+* update pr-check.yml to enhance permissions and simplify React Doctor step ([d82e6cb](https://github.com/JanSzewczyk/portfolio/commit/d82e6cbad2138ad9fceacab2e6fdd7a04fae9477))
+* update pr-check.yml to simplify coverage reporting and adjust vitest.config.ts for GitHub Actions ([e91c359](https://github.com/JanSzewczyk/portfolio/commit/e91c3597523914c0f0446cc8ba73b97c7c7232a9))
+
+### Bug Fixes
+
+* add waitFor utility to about-section stories for improved async testing ([1942089](https://github.com/JanSzewczyk/portfolio/commit/194208950b449b12619394739315ce755b225a18))
+* change default reporter in vitest.config.ts for consistency in reporting ([86e792b](https://github.com/JanSzewczyk/portfolio/commit/86e792bc04e4a2a1410a4c0950ea51e595154098))
+* update pr-check.yml and vitest.config.ts for improved GitHub Actions support ([a6766d7](https://github.com/JanSzewczyk/portfolio/commit/a6766d76e3790e42a10dee69e0594ad8e4a1a6d0))
+* update routes import path and add line clamping to project description ([91323d3](https://github.com/JanSzewczyk/portfolio/commit/91323d3673e00ac0c2c92b8b78a4b929b5dd9d76))
+
+### Miscellaneous Chores
+
+* **deps:** update @szum-tech/design-system to v3.21.6 ([ad7dbff](https://github.com/JanSzewczyk/portfolio/commit/ad7dbff1c224fb5ee449b1bee293cd9cb7dde902))
+* **deps:** update @szum-tech/design-system to v3.21.7 ([6965302](https://github.com/JanSzewczyk/portfolio/commit/69653029a43f0678251572fc73ec3c3c06472a7c))
+* **deps:** update next to v16.2.7 ([769e90a](https://github.com/JanSzewczyk/portfolio/commit/769e90a80613ddf58304960ab5b992093a5920b1))
+* **deps:** update next-sanity and @szum-tech/design-system patch versions ([d3a343b](https://github.com/JanSzewczyk/portfolio/commit/d3a343ba72ba78730a01a4595c8f8c32c87f2e5b))
+* **deps:** update react, react-dom and @types/react patch versions ([272cd8a](https://github.com/JanSzewczyk/portfolio/commit/272cd8a0194839312451b52d3c3276e765b70949))
+* **deps:** update vitest and coverage to v4.1.8 ([42555fe](https://github.com/JanSzewczyk/portfolio/commit/42555fefcc7371f09ae1f504007aabadb19004b5))
+
+### Code Refactoring
+
+* remove console log for portfolio page data in HomePage component ([7305765](https://github.com/JanSzewczyk/portfolio/commit/7305765ef87d52aa19ea82064664593c344d2f31))
+* update SanityLive component usage and improve draft mode handling ([5c97eba](https://github.com/JanSzewczyk/portfolio/commit/5c97ebafbb6805401a1712bcfd486ab550d76a92))
+
+### Continuous Integration
+
+* enable coverage reporting to PR in pr-check.yml ([a0d8fc8](https://github.com/JanSzewczyk/portfolio/commit/a0d8fc8baa868a006019808edfc09df0b806ffea))
+
 ## [1.12.1](https://github.com/JanSzewczyk/portfolio/compare/v1.12.0...v1.12.1) (2026-05-31)
 
 ### Bug Fixes
