@@ -1,4 +1,4 @@
-import { expect, screen } from "storybook/test";
+import { expect, screen, waitFor } from "storybook/test";
 import preview from "~/.storybook/preview";
 import { portfolioPageAboutBuilder } from "~/tests/builders/portfolio-page.builder";
 import { AboutSection as AboutSectionComponent } from "./about-section";
@@ -94,9 +94,13 @@ AboutSection.test("CV dropdown opens and shows download options", async ({ canva
 
   for (const item of downloads) {
     if (item.label) {
-      // Dropdown renders in a Radix portal outside the canvas; use screen with role=menuitem
-      const option = await screen.findByRole("menuitem", { name: new RegExp(item.label, "i") });
-      await expect(option).toBeVisible();
+      // Dropdown renders in a Radix portal outside the canvas; use screen with role=menuitem.
+      // waitFor retries until the menu finishes its fade-in animation (opacity 0 → 1).
+      const name = new RegExp(item.label.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "i");
+      await waitFor(async () => {
+        const option = await screen.findByRole("menuitem", { name });
+        await expect(option).toBeVisible();
+      });
     }
   }
 });

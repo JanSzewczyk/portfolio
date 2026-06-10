@@ -99,7 +99,6 @@ export default defineConfig({
           },
           exclude: ["**/node_modules/**", "**/dist/**", "**/.next/**"],
           hookTimeout: 30000,
-          isolate: false,
           name: "storybook",
           setupFiles: ["tests/integration/vitest.setup.tsx"],
           testTimeout: 60000
