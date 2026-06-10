@@ -177,11 +177,11 @@ jobs:
           merge-multiple: true
       - name: Merge reports & generate coverage
         run: npx vitest run --merge-reports=.vitest-reports --coverage
-#      - name: Report coverage to PR
-#        uses: davelosert/vitest-coverage-report-action@v2
-#        with:
-#          json-summary-path: coverage/coverage-summary.json
-#          json-final-path: coverage/coverage-final.json
+      - name: Report coverage to PR
+        uses: davelosert/vitest-coverage-report-action@v2
+        with:
+          json-summary-path: coverage/coverage-summary.json
+          json-final-path: coverage/coverage-final.json
 
   e2e-test:
     name: Playwright 🎭
