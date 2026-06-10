@@ -105,6 +105,6 @@ export default defineConfig({
         }
       }
     ],
-    reporters: process.env.GITHUB_ACTIONS === "true" ? ["dot", "github-actions"] : ["verbose"]
+    reporters: process.env.GITHUB_ACTIONS === "true" ? ["dot", "github-actions"] : ["default"]
   }
 });
