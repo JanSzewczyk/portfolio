@@ -59,7 +59,7 @@ export function ProjectCard({ project, dataSanity }: ProjectCardProps) {
           )}
         </div>
         <CardTitle>{project.title}</CardTitle>
-        <CardDescription>{project.description}</CardDescription>
+        <CardDescription className="line-clamp-5">{project.description}</CardDescription>
       </CardHeader>
 
       <CardContent className="flex flex-1 flex-col justify-end">

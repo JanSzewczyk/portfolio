@@ -1,10 +1,6 @@
-import path from "node:path";
-import { fileURLToPath } from "node:url";
 import { storybookTest } from "@storybook/addon-vitest/vitest-plugin";
 import { playwright } from "@vitest/browser-playwright";
 import { defineConfig } from "vitest/config";
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // Skip environment validation in tests
 process.env.SKIP_ENV_VALIDATION = "true";
@@ -72,18 +68,8 @@ export default defineConfig({
       },
       // Storybook tests project - runs in browser with Playwright
       {
-        optimizeDeps: {
-          // @sanity/visual-editing and @sanity/insert-menu are compiled with React Compiler
-          // and import react/compiler-runtime. Excluding them prevents pre-bundling failures;
-          // the alias below resolves the import at serve time.
-          exclude: ["@sanity/visual-editing", "@sanity/insert-menu"],
-          include: ["react-dom"]
-        },
         plugins: [storybookTest()],
         resolve: {
-          alias: {
-            "react/compiler-runtime": path.resolve(__dirname, "node_modules/react/compiler-runtime.js")
-          },
           tsconfigPaths: true
         },
         test: {
