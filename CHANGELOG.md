@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.13.1](https://github.com/JanSzewczyk/portfolio/compare/v1.13.0...v1.13.1) (2026-06-11)
+
+### Bug Fixes
+
+* enhance accessibility for icons and update .gitignore ([33fed0c](https://github.com/JanSzewczyk/portfolio/commit/33fed0ce9e4dc48d9ce3a0e953f320ccc71cb8ee))
+
 ## [1.13.0](https://github.com/JanSzewczyk/portfolio/compare/v1.12.1...v1.13.0) (2026-06-10)
 
 ### Features
