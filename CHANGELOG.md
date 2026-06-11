@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.13.5](https://github.com/JanSzewczyk/portfolio/compare/v1.13.4...v1.13.5) (2026-06-11)
+
+### Bug Fixes
+
+* enhance accessibility for hero section and improve SEO data handling ([db11401](https://github.com/JanSzewczyk/portfolio/commit/db11401157ff90c132123c695041d053a85884c0))
+
 ## [1.13.4](https://github.com/JanSzewczyk/portfolio/compare/v1.13.3...v1.13.4) (2026-06-11)
 
 ### Bug Fixes
