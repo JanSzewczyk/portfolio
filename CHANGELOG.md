@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.13.6](https://github.com/JanSzewczyk/portfolio/compare/v1.13.5...v1.13.6) (2026-06-11)
+
+### Bug Fixes
+
+* remove unused preconnect and dns-prefetch links from layout ([9f3d1f8](https://github.com/JanSzewczyk/portfolio/commit/9f3d1f8d5bac835feea96397e821a4e7119556b0))
+
 ## [1.13.5](https://github.com/JanSzewczyk/portfolio/compare/v1.13.4...v1.13.5) (2026-06-11)
 
 ### Bug Fixes
