@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.13.2](https://github.com/JanSzewczyk/portfolio/compare/v1.13.1...v1.13.2) (2026-06-11)
+
+### Bug Fixes
+
+* update contact form field labels and improve email sending logic ([dc28392](https://github.com/JanSzewczyk/portfolio/commit/dc28392adc155e2eb23e2a3fb57564b771e1c475))
+
 ## [1.13.1](https://github.com/JanSzewczyk/portfolio/compare/v1.13.0...v1.13.1) (2026-06-11)
 
 ### Bug Fixes
