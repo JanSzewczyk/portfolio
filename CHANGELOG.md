@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.13.3](https://github.com/JanSzewczyk/portfolio/compare/v1.13.2...v1.13.3) (2026-06-11)
+
+### Bug Fixes
+
+* add production URL environment variable and enhance sitemap last-modified logic ([8b8176f](https://github.com/JanSzewczyk/portfolio/commit/8b8176fd811d6b0929d89e2674f9d6c7e3876147))
+
 ## [1.13.2](https://github.com/JanSzewczyk/portfolio/compare/v1.13.1...v1.13.2) (2026-06-11)
 
 ### Bug Fixes
