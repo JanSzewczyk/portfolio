@@ -1,15 +1,17 @@
 import type { MetadataRoute } from "next";
 
+import { getPortfolioPageLastModified } from "~/lib/sanity/services";
 import { getSiteUrl } from "~/lib/seo/get-site-url";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = getSiteUrl();
-  const currentDate = new Date().toISOString();
+  // Honest lastmod tied to the Sanity document, falling back to "now" if unavailable.
+  const lastModified = (await getPortfolioPageLastModified()) ?? new Date();
 
   return [
     {
       changeFrequency: "weekly",
-      lastModified: currentDate,
+      lastModified,
       priority: 1.0,
       url: baseUrl
     }

@@ -1,6 +1,7 @@
 import { ImageResponse } from "next/og";
 
-export const runtime = "edge";
+// No edge runtime: the image is fully static, so let Next prerender it at build time
+// (edge runtime forces dynamic generation on every request).
 
 export const size = {
   height: 630,

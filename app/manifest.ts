@@ -4,7 +4,7 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     background_color: "#111111",
     categories: ["portfolio", "developer", "technology"],
-    description: "Frontend Engineer from Cracow, Poland specializing in React, Next.js, TypeScript, and React Native.",
+    description: "Frontend Engineer from Cracow, Poland specializing in React, Next.js, and TypeScript.",
     dir: "ltr",
     display: "standalone",
     icons: [

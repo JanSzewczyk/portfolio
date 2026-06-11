@@ -3,6 +3,7 @@ import { type NextRequest, NextResponse } from "next/server";
 import { parseBody } from "next-sanity/webhook";
 import { env } from "~/data/env/server";
 import { createLogger } from "~/lib/logger";
+import { pingIndexNow } from "~/lib/seo/indexnow";
 
 type WebhookPayload = { path?: string };
 
@@ -32,6 +33,13 @@ export async function POST(req: NextRequest) {
     }
 
     revalidatePath(body.path);
+    // Regenerate the statically-prerendered sitemap so its <lastmod> reflects this publish.
+    revalidatePath("/sitemap.xml");
+
+    // Proactively notify search engines so re-indexing is triggered on publish rather than
+    // waiting for the next scheduled crawl. Best-effort — never blocks the revalidation result.
+    await pingIndexNow([body.path]);
+
     const message = `Updated route: ${body.path}`;
     revalidateLogger.info({ path: body.path }, "Route revalidated successfully");
     return NextResponse.json({ body, message });

@@ -13,9 +13,9 @@ export default async function Layout({ children }: LayoutProps<"/">) {
     <React.Fragment>
       {children}
 
-      <SanityLive includeDrafts={isDraftMode} />
       {isDraftMode ? (
         <React.Fragment>
+          <SanityLive includeDrafts />
           <DisableDraftMode />
           <VisualEditing />
         </React.Fragment>

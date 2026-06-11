@@ -17,6 +17,8 @@ export const env = createEnv({
       .enum(["true", "false", "0", "1"])
       .optional()
       .transform((value) => value === "true" || value === "1"),
+    // IndexNow (optional — proactive search-engine notification on content publish)
+    INDEXNOW_KEY: z.string().min(8).optional(),
     LOG_LEVEL: z.enum(["fatal", "error", "warn", "info", "debug", "trace"]).optional().default("info"),
     NODE_ENV: z.enum(["development", "test", "production"]),
     // Resend

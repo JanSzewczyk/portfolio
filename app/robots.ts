@@ -9,7 +9,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: [
       {
         allow: "/",
-        disallow: ["/api/", "/_next/", "/storybook-static/"],
+        disallow: ["/api/", "/_next/", "/storybook-static/", "/studio"],
         userAgent: "*"
       }
     ],
