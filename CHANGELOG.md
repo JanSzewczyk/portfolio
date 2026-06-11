@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.13.4](https://github.com/JanSzewczyk/portfolio/compare/v1.13.3...v1.13.4) (2026-06-11)
+
+### Bug Fixes
+
+* remove unused SEO index notification and clean up route revalidation logic ([583b131](https://github.com/JanSzewczyk/portfolio/commit/583b131b6f3f422d99ca89c91fa13bb121068cda))
+
 ## [1.13.3](https://github.com/JanSzewczyk/portfolio/compare/v1.13.2...v1.13.3) (2026-06-11)
 
 ### Bug Fixes
