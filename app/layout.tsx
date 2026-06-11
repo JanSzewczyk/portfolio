@@ -36,12 +36,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     <html lang="en" suppressHydrationWarning>
       <head>
         <StructuredData seoData={seoData} siteUrl={siteUrl} />
-        <link href="https://github.com" referrerPolicy="no-referrer" rel="preconnect" />
-        <link href="https://avatars.githubusercontent.com" referrerPolicy="no-referrer" rel="preconnect" />
-        <link href="https://github.com" rel="dns-prefetch" />
-        <link crossOrigin="anonymous" href="https://cdn.sanity.io" rel="preconnect" />
-        <link href="https://cdn.sanity.io" rel="dns-prefetch" />
-
         <meta content="AiA9CANm5wTKgVJ2UQVly5tWskJNx898rxpPlbtcpLE" name="google-site-verification" />
       </head>
       <body>
