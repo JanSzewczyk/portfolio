@@ -132,3 +132,4 @@ src/styles
 /.claude/agent-memory
 
 /.lighthouseci
+/lighthouserc.json
