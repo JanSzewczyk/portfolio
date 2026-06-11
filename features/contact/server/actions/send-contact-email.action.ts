@@ -5,11 +5,10 @@ import { createElement } from "react";
 import { type CreateEmailResponseSuccess, Resend } from "resend";
 
 import { env } from "~/data/env/server";
-import type { ContactFormData } from "~/features/contact/schemas/contact.schema";
+import { ContactEmail } from "~/features/contact/components/templates/contact-email";
+import { type ContactFormData, contactFormSchema } from "~/features/contact/schemas/contact.schema";
 import { createLogger } from "~/lib/logger";
 import type { ActionResponse } from "~/lib/server-action";
-
-import { ContactEmail } from "../../components/templates/contact-email";
 
 const logger = createLogger({ module: "contact-actions" });
 
@@ -18,12 +17,31 @@ const resend = new Resend(env.RESEND_API_KEY);
 
 export async function sendContactEmail(formData: ContactFormData): ActionResponse<CreateEmailResponseSuccess> {
   try {
+    // Re-validate on the server (defense in depth) — never trust the client-side type alone
+    const validation = contactFormSchema.safeParse(formData);
+
+    if (!validation.success) {
+      logger.warn(
+        {
+          issues: validation.error.issues.map((issue) => ({ message: issue.message, path: issue.path }))
+        },
+        "Rejected invalid contact form submission"
+      );
+
+      return {
+        error: "Invalid form data. Please check your input and try again.",
+        success: false
+      };
+    }
+
+    const validatedData = validation.data;
+
     // Log the attempt
     logger.info(
       {
-        email: formData.email,
-        messageLength: formData.message.length,
-        name: formData.name
+        email: validatedData.email,
+        messageLength: validatedData.message.length,
+        name: validatedData.name
       },
       "Attempting to send contact email"
     );
@@ -31,9 +49,9 @@ export async function sendContactEmail(formData: ContactFormData): ActionRespons
     // Send email via Resend
     const { data, error } = await resend.emails.send({
       from: env.RESEND_FROM_EMAIL,
-      react: createElement(ContactEmail, formData),
-      replyTo: formData.email,
-      subject: `Portfolio Contact: ${formData.name}`,
+      react: createElement(ContactEmail, validatedData),
+      replyTo: validatedData.email,
+      subject: `Portfolio Contact: ${validatedData.name}`,
       to: env.RESEND_TO_EMAIL
     });
 
@@ -42,7 +60,7 @@ export async function sendContactEmail(formData: ContactFormData): ActionRespons
         {
           errorMessage: error.message,
           errorName: error.name,
-          senderEmail: formData.email
+          senderEmail: validatedData.email
         },
         "Failed to send contact email via Resend"
       );
@@ -56,8 +74,8 @@ export async function sendContactEmail(formData: ContactFormData): ActionRespons
     logger.info(
       {
         emailId: data?.id,
-        senderEmail: formData.email,
-        senderName: formData.name
+        senderEmail: validatedData.email,
+        senderName: validatedData.name
       },
       "Contact email sent successfully"
     );

@@ -116,6 +116,29 @@ features/
     └── server/        # Server-side logic (actions, data fetching)
 ```
 
+### Architecture Decision: presentational sections vs. feature slices
+
+This project deliberately does **not** split every domain into a `features/{domain}/` slice. The
+decision is intentional, not an oversight:
+
+- **Feature slices (`features/{domain}/` with a `server/` zone) are used only where a domain owns
+  real server-side logic** — data mutations, server-side validation, or external integrations. In
+  this repo the only such domain is `features/contact/` (Server Action + Resend + Zod). Its
+  `server/` zone earns its place.
+- **Presentational content fed by the single CMS query stays in `components/sections/`.** The whole
+  page is hydrated from one GROQ query (`portfolioPageQuery`), so the section components
+  (hero/about/skills/projects/experience/education) are pure view components. They receive props
+  from `app/(app)/page.tsx` and type those props from the generated `~/lib/sanity/types`
+  (`NonNullable<PortfolioPageQueryResult>["..."]`) — the single source of truth. No per-section
+  feature folders, no empty `server/` zones, no separate `types/` layer.
+- **App-level stateless services** (data transforms such as `getTopSkills`) live in `services/` with
+  `import "server-only"`, not inside a feature.
+
+**Rationale:** with one data source for the whole page, forcing per-domain `server/` zones would
+create empty, ceremonial folders (cargo-cult architecture) — a worse signal to a code reviewer than
+a clean presentational structure. The full feature spec in
+`.claude/rules/feature-architecture.md` applies **only** to domains with genuine server-side logic.
+
 ### Environment Variables
 
 Environment variables are validated at build-time using T3 Env:

@@ -24,6 +24,8 @@ export async function getPortfolioPageData(): Promise<[null, NonNullable<Portfol
 
     if (!data) {
       const error = new Error("No portfolio page data returned from Sanity");
+      // Distinct name lets callers map "no data" → notFound() and real failures → throw
+      error.name = "PortfolioPageNotFoundError";
       fnLogger.warn(
         {
           reason: "noData"

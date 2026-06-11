@@ -2,21 +2,24 @@ import { Button } from "@szum-tech/design-system/components/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@szum-tech/design-system/components/card";
 import { cn } from "@szum-tech/design-system/utils";
 import { Mail } from "lucide-react";
+import type { CreateEmailResponseSuccess } from "resend";
 import { type IconName, ReactIcon } from "~/components/ui/react-icon";
 import { SectionHeading } from "~/components/ui/section-heading";
 import { Section } from "~/constants/sections";
-import { ContactForm } from "~/features/contact/components/contact-form";
-import { sendContactEmail } from "~/features/contact/server/actions/send-contact-email";
+import { ContactForm } from "~/features/contact/components";
+import type { ContactFormData } from "~/features/contact/schemas";
 import type { PortfolioPageQueryResult } from "~/lib/sanity/types";
+import type { ActionResponse } from "~/lib/server-action";
 
 type ContactSectionProps = {
   personalInfo: NonNullable<PortfolioPageQueryResult>["personalInfo"];
   contact: NonNullable<PortfolioPageQueryResult>["contact"];
   documentId: string;
   documentType: string;
+  sendContactAction(data: ContactFormData): ActionResponse<CreateEmailResponseSuccess>;
 };
 
-export function ContactSection({ personalInfo, contact }: ContactSectionProps) {
+export function ContactSection({ personalInfo, contact, sendContactAction }: ContactSectionProps) {
   return (
     <section className="py-24" id={Section.CONTACT}>
       <div className="container">
@@ -25,7 +28,7 @@ export function ContactSection({ personalInfo, contact }: ContactSectionProps) {
         <div className={cn("mx-auto grid gap-8", contact?.form?.enabled ? "max-w-4xl lg:grid-cols-2" : "max-w-lg")}>
           {/* Contact Form */}
           {contact?.form?.enabled ? (
-            <ContactForm contactFormContent={contact.form} onSubmitAction={sendContactEmail} />
+            <ContactForm contactFormContent={contact.form} onSubmitAction={sendContactAction} />
           ) : null}
 
           {/* Contact Info */}

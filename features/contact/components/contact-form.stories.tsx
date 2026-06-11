@@ -26,7 +26,7 @@ export const ContactForm_ = meta.story({});
 
 // Test 1: Initial render
 ContactForm_.test("Renders all form fields and submit button", async ({ canvas }) => {
-  const nameInput = canvas.getByLabelText(/username/i);
+  const nameInput = canvas.getByLabelText(/name/i);
   const emailInput = canvas.getByLabelText(/email/i);
   const messageInput = canvas.getByLabelText(/message/i);
   const submitButton = canvas.getByRole("button", { name: /send message/i });
@@ -55,7 +55,7 @@ ContactForm_.test("Shows validation errors when submitting empty form", async ({
 
 // Test 3: Valid form submission
 ContactForm_.test("Successfully submits valid form data", async ({ canvas, args, step, userEvent }) => {
-  const nameInput = canvas.getByLabelText(/username/i);
+  const nameInput = canvas.getByLabelText(/name/i);
   const emailInput = canvas.getByLabelText(/email/i);
   const messageInput = canvas.getByLabelText(/message/i);
   const submitButton = canvas.getByRole("button", { name: /send message/i });
@@ -84,7 +84,7 @@ ContactForm_.test("Successfully submits valid form data", async ({ canvas, args,
 
 // Test 4: Shows success state after submission
 ContactForm_.test("Shows success state after successful submission", async ({ canvas, step, userEvent }) => {
-  const nameInput = canvas.getByLabelText(/username/i);
+  const nameInput = canvas.getByLabelText(/name/i);
   const emailInput = canvas.getByLabelText(/email/i);
   const messageInput = canvas.getByLabelText(/message/i);
   const submitButton = canvas.getByRole("button", { name: /send message/i });
@@ -119,7 +119,7 @@ ContactForm_.test(
   "Allows second submission after clicking send another message",
   async ({ canvas, args, step, userEvent }) => {
     await step("First submission", async () => {
-      const nameInput = canvas.getByLabelText(/username/i);
+      const nameInput = canvas.getByLabelText(/name/i);
       const emailInput = canvas.getByLabelText(/email/i);
       const messageInput = canvas.getByLabelText(/message/i);
       const submitButton = canvas.getByRole("button", {
@@ -149,7 +149,7 @@ ContactForm_.test(
 
       // Wait for form to reappear
       await waitFor(async () => {
-        const nameInput = canvas.getByLabelText(/username/i);
+        const nameInput = canvas.getByLabelText(/name/i);
         await expect(nameInput).toBeVisible();
       });
     });
@@ -158,7 +158,7 @@ ContactForm_.test(
       // Clear the mock to check second call
       (args.onSubmitAction as ReturnType<typeof fn>).mockClear();
 
-      const nameInput = canvas.getByLabelText(/username/i);
+      const nameInput = canvas.getByLabelText(/name/i);
       const emailInput = canvas.getByLabelText(/email/i);
       const messageInput = canvas.getByLabelText(/message/i);
       const submitButton = canvas.getByRole("button", {
@@ -196,7 +196,7 @@ ContactForm_.test(
 
 // Test 6: Field validation - name
 ContactForm_.test("Validates name field correctly", async ({ canvas, step, userEvent }) => {
-  const nameInput = canvas.getByLabelText(/username/i);
+  const nameInput = canvas.getByLabelText(/name/i);
   const submitButton = canvas.getByRole("button", { name: /send message/i });
 
   await step("Test short name", async () => {
@@ -213,7 +213,7 @@ ContactForm_.test("Validates name field correctly", async ({ canvas, step, userE
 // Test 7: Field validation - email
 ContactForm_.test("Validates email field correctly", async ({ canvas, args, step, userEvent }) => {
   const emailInput = canvas.getByLabelText(/email/i);
-  const nameInput = canvas.getByLabelText(/username/i);
+  const nameInput = canvas.getByLabelText(/name/i);
   const messageInput = canvas.getByLabelText(/message/i);
   const submitButton = canvas.getByRole("button", { name: /send message/i });
 
@@ -271,7 +271,7 @@ ContactForm_.test("Shows loading state during submission", async ({ canvas, args
       )
   );
 
-  const nameInput = canvas.getByLabelText(/username/i);
+  const nameInput = canvas.getByLabelText(/name/i);
   const emailInput = canvas.getByLabelText(/email/i);
   const messageInput = canvas.getByLabelText(/message/i);
   const submitButton = canvas.getByRole("button", { name: /send message/i });
@@ -311,7 +311,7 @@ ContactForm_.test("Handles submission error gracefully", async ({ canvas, args, 
     success: false as const
   }));
 
-  const nameInput = canvas.getByLabelText(/username/i);
+  const nameInput = canvas.getByLabelText(/name/i);
   const emailInput = canvas.getByLabelText(/email/i);
   const messageInput = canvas.getByLabelText(/message/i);
   const submitButton = canvas.getByRole("button", { name: /send message/i });

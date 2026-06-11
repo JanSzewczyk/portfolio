@@ -83,13 +83,8 @@ export function ContactForm({ onSubmitAction, contactFormContent }: ContactFormP
               </div>
 
               <Field data-invalid={!!formState.errors.name}>
-                <FieldLabel htmlFor="username">Username</FieldLabel>
-                <Input
-                  id="username"
-                  invalid={!!formState.errors.name}
-                  placeholder="Your name"
-                  {...form.register("name")}
-                />
+                <FieldLabel htmlFor="name">Name</FieldLabel>
+                <Input id="name" invalid={!!formState.errors.name} placeholder="Your name" {...form.register("name")} />
                 <FieldError errors={[formState.errors.name]} />
               </Field>
               <Field data-invalid={!!formState.errors.email}>

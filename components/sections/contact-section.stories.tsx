@@ -1,4 +1,4 @@
-import { expect } from "storybook/test";
+import { expect, fn } from "storybook/test";
 import preview from "~/.storybook/preview";
 import { portfolioPageContactBuilder, portfolioPagePersonalInfoBuilder } from "~/tests/builders/portfolio-page.builder";
 import { ContactSection } from "./contact-section";
@@ -39,7 +39,8 @@ const meta = preview.meta({
           }
         ]
       }
-    })
+    }),
+    sendContactAction: fn(async () => ({ data: { id: "story-email-id" }, success: true as const }))
   },
   component: ContactSection,
   parameters: {

@@ -34,7 +34,7 @@ vi.mock("~/data/env/server", () => ({
 import type { ContactFormData } from "~/features/contact/schemas/contact.schema";
 import type { ActionStateFailed } from "~/lib/server-action";
 
-import { sendContactEmail } from "./send-contact-email";
+import { sendContactEmail } from "./send-contact-email.action";
 
 describe("sendContactEmail", () => {
   beforeEach(() => {
