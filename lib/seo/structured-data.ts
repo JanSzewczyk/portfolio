@@ -46,6 +46,19 @@ export function buildPersonSchema({ siteUrl, seoData }: { siteUrl: string; seoDa
     alternateName: alternateNames,
     description,
     email: email ? `mailto:${email}` : undefined,
+    hasOccupation: title
+      ? {
+          "@type": "Occupation",
+          name: title,
+          occupationLocation: addressLocality
+            ? {
+                "@type": "City",
+                name: addressLocality
+              }
+            : undefined,
+          skills: knowsAbout.length > 0 ? knowsAbout : undefined
+        }
+      : undefined,
     image: avatar
       ? {
           "@type": "ImageObject",

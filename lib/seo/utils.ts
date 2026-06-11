@@ -14,9 +14,10 @@ export function buildMetadata({ siteUrl, seoData }: { siteUrl: string; seoData: 
   const name = seoData?.personalInfo?.name ?? "";
   const title = seoData?.personalInfo?.title ?? "";
 
-  // Get SEO data from Sanity or fallback
-  const metaTitle = seoData?.seo?.metaTitle ?? "";
-  const metaDescription = seoData?.seo?.metaDescription ?? "";
+  // Get SEO data from Sanity or fallback. Trim to guard against stray leading/trailing
+  // whitespace in CMS input leaking into the rendered <title> / description.
+  const metaTitle = (seoData?.seo?.metaTitle ?? "").trim();
+  const metaDescription = (seoData?.seo?.metaDescription ?? "").trim();
   const keywords = seoData?.seo?.keywords ?? [];
 
   // Open Graph

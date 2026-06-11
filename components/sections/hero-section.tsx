@@ -65,12 +65,25 @@ export function HeroSection({ personalInfo, hero, documentId, documentType }: He
           </div>
 
           <h1 className="mb-4 text-display-lg" data-sanity={createSanityAttribute("personalInfo.name")}>
-            <TypingText speed={80} text={`Hi I'm ${stegaClean(personalInfo?.name)}`} />
+            {/* Static, server-rendered name for crawlers and screen readers — the strongest on-page
+                signal for name-based searches. The typing animation is decorative progressive
+                enhancement and is hidden from assistive tech / indexing to avoid duplicate text. */}
+            <span className="sr-only">
+              {stegaClean(personalInfo?.name)} – {stegaClean(personalInfo?.title)}
+            </span>
+            <span aria-hidden="true">
+              <TypingText speed={80} text={`Hi I'm ${stegaClean(personalInfo?.name)}`} />
+            </span>
           </h1>
 
           {hero?.alternativeTitles && hero.alternativeTitles.length > 0 ? (
             <div className="mb-6 text-heading-h1 text-primary">
-              <WordRotate animationStyle={"slide-up"} duration={3000} words={hero.alternativeTitles} />
+              {/* WordRotate renders only the active word on the client; expose the full list
+                  statically so the roles are indexable and announced once. */}
+              <span className="sr-only">{stegaClean(hero.alternativeTitles.join(", "))}</span>
+              <span aria-hidden="true">
+                <WordRotate animationStyle={"slide-up"} duration={3000} words={hero.alternativeTitles} />
+              </span>
             </div>
           ) : null}
 
