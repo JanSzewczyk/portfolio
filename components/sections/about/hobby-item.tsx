@@ -26,7 +26,11 @@ export function HobbyItem({ iconType, label }: HobbyItemProps) {
 
   return (
     <div className="group flex items-center gap-2 rounded px-3 py-2 transition-colors hover:bg-accent">
-      <Icon className="size-4 shrink-0 text-muted-foreground transition-colors group-hover:text-primary" />
+      <Icon
+        aria-hidden
+        className="size-4 shrink-0 text-muted-foreground transition-colors group-hover:text-primary"
+        focusable={false}
+      />
       <span className="text-body-sm text-muted-foreground transition-colors group-hover:text-foreground">{label}</span>
     </div>
   );
