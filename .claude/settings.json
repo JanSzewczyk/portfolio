@@ -3,6 +3,7 @@
     "code-quality@szum-tech": true,
     "nextjs@szum-tech": true,
     "performance@szum-tech": true,
+    "sdd@spec-driven-development": true,
     "testing@szum-tech": true
   },
   "hooks": {
@@ -15,6 +16,19 @@
           }
         ],
         "matcher": "Edit|Write"
+      },
+      {
+        "hooks": [
+          {
+            "command": "bash .claude/hooks/typecheck.sh",
+            "type": "command"
+          },
+          {
+            "command": "bash .claude/hooks/lint.sh",
+            "type": "command"
+          }
+        ],
+        "matcher": "Edit|Write|MultiEdit"
       }
     ],
     "PreToolUse": [
