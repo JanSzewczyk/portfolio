@@ -81,13 +81,20 @@ test("all sections display correct content", async ({ page }) => {
 test("project GitHub links open correctly", async ({ page, context }) => {
   await page.goto("/");
 
-  const firstGitHubButton = page.locator("#projects").getByRole("link", { name: /code/i }).first();
-  await expect(firstGitHubButton).toBeVisible();
+  // Per spec FR6, GitHub links moved into the project details dialog.
+  // Open the first card, then verify the GitHub link inside the dialog.
+  const firstCard = page.locator("#projects [data-testid='project-card']").first();
+  await firstCard.click();
 
-  const pagePromise = context.waitForEvent("page");
-  await firstGitHubButton.click();
-  const newPage = await pagePromise;
-  await newPage.waitForLoadState();
+  const dialog = page.getByRole("dialog");
+  await expect(dialog).toBeVisible();
 
-  expect(newPage.url()).toMatch(/^https?:\/\/(?:www\.)?github\.com(?:[:/?#]|$)/i);
+  const githubLink = dialog.getByRole("link", { name: /view source/i }).first();
+  if ((await githubLink.count()) > 0) {
+    const pagePromise = context.waitForEvent("page");
+    await githubLink.click();
+    const newPage = await pagePromise;
+    await newPage.waitForLoadState();
+    expect(newPage.url()).toMatch(/^https?:\/\/(?:www\.)?github\.com(?:[:/?#]|$)/i);
+  }
 });

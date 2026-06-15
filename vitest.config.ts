@@ -6,6 +6,9 @@ import { defineConfig } from "vitest/config";
 process.env.SKIP_ENV_VALIDATION = "true";
 
 export default defineConfig({
+  optimizeDeps: {
+    include: ["@szum-tech/design-system/components/carousel", "@szum-tech/design-system/components/dialog"]
+  },
   test: {
     coverage: {
       exclude: [
