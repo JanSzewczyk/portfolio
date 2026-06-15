@@ -13,7 +13,7 @@
   type: generic
   agent: orchestrator
   skills: []
-  status: draft
+  status: review
   acceptance: |
     spec.md AC3. In lib/sanity/configuration/schema-types/project.ts:
     `description` is type `markdown` (required); `longDescription` removed; `thumbnail`
@@ -27,7 +27,7 @@
   type: generic
   agent: orchestrator
   skills: []
-  status: draft
+  status: review
   acceptance: |
     In lib/sanity/queries/portfolio-page.ts the projects projection selects `images[]`
     ({asset->{_id,url,metadata{dimensions,lqip}}, hotspot, crop, alt}) and `highlights`,
@@ -39,7 +39,7 @@
   type: generic
   agent: orchestrator
   skills: []
-  status: draft
+  status: review
   acceptance: |
     `npm run sanity:typegen` regenerates lib/sanity/types.ts; `Project` and
     `PortfolioPageQueryResult` reflect images[]/highlights and drop thumbnail/longDescription.
@@ -55,7 +55,7 @@
   type: generic
   agent: orchestrator
   skills: []
-  status: draft
+  status: review
   acceptance: |
     spec.md AC3. scripts/migrations/project-images.ts iterates all `project` docs: sets
     `images = [thumbnail]` preserving alt/hotspot/crop, unsets `thumbnail` and `longDescription`;
@@ -225,7 +225,7 @@
   type: generic
   agent: orchestrator
   skills: [builder-factory]
-  status: draft
+  status: review
   acceptance: |
     tests/builders/portfolio-page.builder.ts `projectBuilder` produces `images` (≥1, each with alt)
     and `highlights`, and no longer `thumbnail`/`longDescription`; existing stories/tests compile.

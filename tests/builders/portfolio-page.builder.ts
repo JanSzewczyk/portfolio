@@ -312,20 +312,21 @@ export const projectBuilder = build<PortfolioProject>({
     _id: () => faker.string.uuid(),
     description: () => faker.lorem.sentence(),
     featured: false,
+    highlights: () => Array.from({ length: int(2, 4) }, () => faker.lorem.sentence()),
+    images: () =>
+      Array.from({ length: int(1, 3) }, () => ({
+        _type: "image" as const,
+        alt: faker.lorem.sentence(),
+        asset: buildExpandedAssetForQuery(800, 450),
+        crop: null,
+        hotspot: null
+      })),
     links: () => ({
       github: faker.helpers.arrayElement([faker.internet.url(), null]),
       live: faker.helpers.arrayElement([faker.internet.url(), null]),
       npm: faker.helpers.arrayElement([faker.internet.url(), null])
     }),
-    longDescription: () => faker.lorem.paragraphs(2),
     technologies: () => technologyBuilder.many(int(2, 6)),
-    thumbnail: () => ({
-      _type: "image",
-      alt: faker.lorem.sentence(),
-      asset: buildExpandedAssetForQuery(800, 450),
-      crop: null,
-      hotspot: null
-    }),
     title: () => faker.company.catchPhrase()
   },
   traits: {

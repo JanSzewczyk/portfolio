@@ -116,8 +116,8 @@ export const portfolioPageQuery = defineQuery(`
           _id,
           title,
           description,
-          longDescription,
-          thumbnail {
+          highlights,
+          images[] {
             _type,
             asset-> {
               _id,

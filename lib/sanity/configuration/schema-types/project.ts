@@ -1,5 +1,5 @@
 import { ProjectsIcon } from "@sanity/icons";
-import { defineField, defineType } from "sanity";
+import { defineArrayMember, defineField, defineType } from "sanity";
 
 export const project = defineType({
   fields: [
@@ -10,37 +10,45 @@ export const project = defineType({
       validation: (rule) => rule.required()
     }),
     defineField({
+      description: "Short description (Markdown supported — bold, italic, links, lists).",
       name: "description",
       title: "Description",
-      type: "text",
+      type: "markdown",
       validation: (rule) => rule.required()
     }),
     defineField({
-      name: "longDescription",
-      title: "Long Description",
-      type: "text"
+      description: "Key standout points. Each entry supports inline Markdown (e.g. **bold**).",
+      name: "highlights",
+      of: [defineArrayMember({ type: "string" })],
+      title: "Highlights",
+      type: "array"
     }),
     defineField({
-      fields: [
-        defineField({
-          name: "alt",
-          title: "Alternative text",
-          type: "string",
-          validation: (rule) =>
-            rule.custom((value, context) => {
-              const parent = context?.parent as { asset?: { _ref?: string } };
+      name: "images",
+      of: [
+        defineArrayMember({
+          fields: [
+            defineField({
+              name: "alt",
+              title: "Alternative text",
+              type: "string",
+              validation: (rule) =>
+                rule.custom((value, context) => {
+                  const parent = context?.parent as { asset?: { _ref?: string } };
 
-              return !value && parent?.asset?._ref ? "Alt text is required when an image is present" : true;
+                  return !value && parent?.asset?._ref ? "Alt text is required when an image is present" : true;
+                })
             })
+          ],
+          options: {
+            hotspot: true
+          },
+          type: "image"
         })
       ],
-      name: "thumbnail",
-      options: {
-        hotspot: true
-      },
-      title: "Thumbnail",
-      type: "image",
-      validation: (rule) => rule.required()
+      title: "Images",
+      type: "array",
+      validation: (rule) => rule.required().min(1)
     }),
     defineField({
       name: "technologies",
@@ -87,7 +95,7 @@ export const project = defineType({
   name: "project",
   preview: {
     select: {
-      media: "thumbnail",
+      media: "images.0",
       subtitle: "category",
       title: "title"
     }
