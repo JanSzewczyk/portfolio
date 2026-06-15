@@ -30,6 +30,8 @@ export type ProjectCardProps = {
 };
 
 export function ProjectCard({ project, dataSanity }: ProjectCardProps) {
+  const coverImage = project.images?.[0];
+
   return (
     <Card
       className="group flex h-full flex-col transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
@@ -37,13 +39,13 @@ export function ProjectCard({ project, dataSanity }: ProjectCardProps) {
     >
       <CardHeader>
         <div className="mb-4 aspect-video overflow-hidden rounded bg-muted">
-          {project.thumbnail ? (
+          {coverImage ? (
             <Image
-              alt={stegaClean(project.thumbnail?.alt) || "Project thumbnail"}
+              alt={stegaClean(coverImage?.alt) || "Project thumbnail"}
               className="size-full object-cover transition-transform duration-300 group-hover:scale-105"
               height={450}
               sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-              src={urlFor(project.thumbnail).auto("format").width(800).height(450).url()}
+              src={urlFor(coverImage).auto("format").width(800).height(450).url()}
               width={800}
             />
           ) : (
