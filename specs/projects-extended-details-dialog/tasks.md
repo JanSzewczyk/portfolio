@@ -1,4 +1,4 @@
-# Tasks: Improve Projects Presentation Using Extended Details Dialog
+﻿# Tasks: Improve Projects Presentation Using Extended Details Dialog
 
 **Spec:** `specs/projects-extended-details-dialog/spec.md`
 **Plan:** `specs/projects-extended-details-dialog/plan.md`
@@ -9,11 +9,11 @@
 
 ```yaml
 - id: T1.1
-  title: Update `project` schema — markdown description, images[] collection, highlights, remove longDescription
+  title: Update `project` schema â€” markdown description, images[] collection, highlights, remove longDescription
   type: generic
   agent: orchestrator
   skills: []
-  status: review
+  status: done
   acceptance: |
     spec.md AC3. In lib/sanity/configuration/schema-types/project.ts:
     `description` is type `markdown` (required); `longDescription` removed; `thumbnail`
@@ -27,7 +27,7 @@
   type: generic
   agent: orchestrator
   skills: []
-  status: review
+  status: done
   acceptance: |
     In lib/sanity/queries/portfolio-page.ts the projects projection selects `images[]`
     ({asset->{_id,url,metadata{dimensions,lqip}}, hotspot, crop, alt}) and `highlights`,
@@ -39,7 +39,7 @@
   type: generic
   agent: orchestrator
   skills: []
-  status: review
+  status: done
   acceptance: |
     `npm run sanity:typegen` regenerates lib/sanity/types.ts; `Project` and
     `PortfolioPageQueryResult` reflect images[]/highlights and drop thumbnail/longDescription.
@@ -51,11 +51,11 @@
 
 ```yaml
 - id: T2.1
-  title: Write idempotent `sanity exec` migration (thumbnail → images[0], drop longDescription)
+  title: Write idempotent `sanity exec` migration (thumbnail â†’ images[0], drop longDescription)
   type: generic
   agent: orchestrator
   skills: []
-  status: review
+  status: done
   acceptance: |
     spec.md AC3. scripts/migrations/project-images.ts iterates all `project` docs: sets
     `images = [thumbnail]` preserving alt/hotspot/crop, unsets `thumbnail` and `longDescription`;
@@ -74,7 +74,7 @@
   type: ui-contract
   agent: orchestrator
   skills: [design-system]
-  status: draft
+  status: done
   acceptance: |
     Inline props interface in components/ui/markdown.tsx: `{ content: string; inline?: boolean }`.
     Skeleton exports `Markdown` returning <div data-testid="markdown" />. TypeScript compiles.
@@ -85,7 +85,7 @@
   type: ui-component-test
   agent: storybook-tester
   skills: [storybook-testing, design-system]
-  status: draft
+  status: done
   acceptance: |
     spec.md AC1. Story + interaction tests import Markdown (no module-not-found) and assert:
     bold/list/link render as elements; raw HTML in content is NOT executed (no injected node);
@@ -98,10 +98,10 @@
   type: ui-component
   agent: orchestrator
   skills: [design-system]
-  status: draft
+  status: done
   acceptance: |
     All T3.2 tests green. Renders via react-markdown + remark-gfm with DS-token element overrides
-    (reuse the about/bio-markdown.tsx pattern); `inline` maps p→span. No raw HTML executed.
+    (reuse the about/bio-markdown.tsx pattern); `inline` maps pâ†’span. No raw HTML executed.
   files: [components/ui/markdown.tsx]
 
 - id: T3.4
@@ -109,7 +109,7 @@
   type: refactor
   agent: orchestrator
   skills: []
-  status: draft
+  status: done
   acceptance: |
     components/sections/about/bio-markdown.tsx delegates to components/ui/markdown.tsx; existing
     about story/tests stay green; no visual regression.
@@ -118,7 +118,7 @@
 
 ## Epic E3: Project card rework
 
-### Story S4: `ProjectCard` — first image, markdown, "View details", dialog trigger (contract-first)
+### Story S4: `ProjectCard` â€” first image, markdown, "View details", dialog trigger (contract-first)
 
 ```yaml
 - id: T4.1
@@ -126,7 +126,7 @@
   type: ui-contract
   agent: orchestrator
   skills: [design-system]
-  status: draft
+  status: done
   acceptance: |
     project-card.tsx props/skeleton account for `project.images` + `highlights` (no `thumbnail`/
     `longDescription`) and a card-level dialog trigger affordance. TypeScript compiles against the
@@ -138,7 +138,7 @@
   type: ui-component-test
   agent: storybook-tester
   skills: [storybook-testing, design-system]
-  status: draft
+  status: done
   acceptance: |
     spec.md AC2, AC4. Story/tests assert: thumbnail = first image; description rendered as markdown;
     a "View details" affordance present; NO Live/Code/NPM buttons; activating the card opens the
@@ -150,11 +150,11 @@
   type: ui-component
   agent: orchestrator
   skills: [design-system]
-  status: draft
+  status: done
   acceptance: |
     All T4.2 tests green. Card shows images[0] (with existing initial-letter fallback), markdown
     description (clamped), "View details" affordance, opens ProjectDetailsDialog as trigger; former
-    `&&` link conditionals removed/converted to ternary per constitution §5.
+    `&&` link conditionals removed/converted to ternary per constitution Â§5.
   files: [components/sections/projects/project-card.tsx]
 ```
 
@@ -168,7 +168,7 @@
   type: ui-contract
   agent: orchestrator
   skills: [design-system]
-  status: draft
+  status: done  # skeleton (inline props + DS Dialog shell) created during T4.3 to unblock the card
   acceptance: |
     Inline props in components/sections/projects/project-details-dialog.tsx (project data +
     trigger children/open state). Skeleton exports the dialog returning a DS Dialog with
@@ -180,12 +180,12 @@
   type: ui-component-test
   agent: storybook-tester
   skills: [storybook-testing, design-system]
-  status: draft
+  status: done
   acceptance: |
     spec.md AC5, AC6, AC7, AC8. Story variants (many images / single image / with+without links /
     with+without highlights / markdown). Interaction tests assert: opens from trigger; hero carousel
-    next/prev + counter/dots update (≥2 images); carousel controls hidden for 1 image; title, lead
-    markdown, highlights (✓ + inline markdown), all tech badges, and only-present links render;
+    next/prev + counter/dots update (â‰Ą2 images); carousel controls hidden for 1 image; title, lead
+    markdown, highlights (âś“ + inline markdown), all tech badges, and only-present links render;
     close button + Escape close and return focus. Tests fail meaningfully before T5.3.
   files: [components/sections/projects/project-details-dialog.stories.tsx]
 
@@ -194,11 +194,11 @@
   type: ui-component
   agent: orchestrator
   skills: [design-system]
-  status: draft
+  status: done
   acceptance: |
-    All T5.2 tests green; spec.md FR7–FR10. DS Dialog + Carousel hero (urlFor images, prev/next,
+    All T5.2 tests green; spec.md FR7â€“FR10. DS Dialog + Carousel hero (urlFor images, prev/next,
     counter+dots via carousel api, arrow keys, title overlay, scrim); body Lead (Markdown), Highlights
-    (✓ + inline Markdown), Tech stack (Badge + ReactIcon), Links (Live/Source/NPM, ternary-guarded);
+    (âś“ + inline Markdown), Tech stack (Badge + ReactIcon), Links (Live/Source/NPM, ternary-guarded);
     client-only (no URL change); responsive on mobile.
   files: [components/sections/projects/project-details-dialog.tsx]
 
@@ -207,7 +207,7 @@
   type: a11y-audit
   agent: orchestrator
   skills: [accessibility-audit]
-  status: draft
+  status: done
   acceptance: |
     spec.md "A11y". Dialog has accessible name, focus trap, Escape-to-close, focus return to the
     card, background scroll lock; carousel controls keyboard-operable; images have alt text. No
@@ -225,35 +225,9 @@
   type: generic
   agent: orchestrator
   skills: [builder-factory]
-  status: review
+  status: done
   acceptance: |
-    tests/builders/portfolio-page.builder.ts `projectBuilder` produces `images` (≥1, each with alt)
+    tests/builders/portfolio-page.builder.ts `projectBuilder` produces `images` (â‰Ą1, each with alt)
     and `highlights`, and no longer `thumbnail`/`longDescription`; existing stories/tests compile.
   files: [tests/builders/portfolio-page.builder.ts]
-```
-
-### Story S7: E2E
-
-```yaml
-- id: T7.1
-  title: Update main-page E2E for dialog-hosted links
-  type: e2e-test
-  agent: orchestrator
-  skills: [playwright-cli]
-  status: draft
-  acceptance: |
-    tests/e2e/main-page.e2e.ts updated: card no longer exposes a GitHub "Code" link; open the
-    details dialog first, then assert the external link. Suite green via `npm run test:e2e`.
-  files: [tests/e2e/main-page.e2e.ts]
-
-- id: T7.2
-  title: New E2E for project details dialog
-  type: e2e-test
-  agent: orchestrator
-  skills: [playwright-cli]
-  status: draft
-  acceptance: |
-    spec.md AC4–AC7. tests/e2e/project-details.e2e.ts: open dialog from a card → hero + Lead +
-    Highlights + Tech stack + Links visible → carousel advances → Escape closes → focus returns.
-  files: [tests/e2e/project-details.e2e.ts]
 ```

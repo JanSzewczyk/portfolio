@@ -148,28 +148,24 @@ ProjectsSection_.test("Project cards display title, description, and technologie
   }
 });
 
-// Test: Links render when available — use getByRole("link") since Button asChild renders <a>
-ProjectsSection_.test("Renders live and GitHub links when available", async ({ canvas, args }) => {
-  const firstGroup = args.projects?.projectGroups?.[0];
-  const firstProject = firstGroup?.projects?.[0];
+// Test: Per spec FR6, links are no longer on the card surface — they live inside the details dialog.
+ProjectsSection_.test(
+  "No Live or Code links on card surface (links moved to dialog per FR6)",
+  async ({ canvas, args }) => {
+    const firstGroup = args.projects?.projectGroups?.[0];
+    const firstProject = firstGroup?.projects?.[0];
 
-  if (firstProject?.title) {
-    const projectTitle = canvas.getByText(firstProject.title);
-    await expect(projectTitle).toBeVisible();
-
-    if (firstProject.links?.live) {
-      const liveLink = canvas.getByRole("link", { name: /live/i });
-      await expect(liveLink).toBeVisible();
-      await expect(liveLink).toHaveAttribute("href", firstProject.links.live);
+    if (firstProject?.title) {
+      const projectTitle = canvas.getByText(firstProject.title);
+      await expect(projectTitle).toBeVisible();
     }
 
-    if (firstProject.links?.github) {
-      const githubLink = canvas.getByRole("link", { name: /code/i });
-      await expect(githubLink).toBeVisible();
-      await expect(githubLink).toHaveAttribute("href", firstProject.links.github);
-    }
+    const liveLink = canvas.queryByRole("link", { name: /live/i });
+    const codeLink = canvas.queryByRole("link", { name: /code/i });
+    await expect(liveLink).not.toBeInTheDocument();
+    await expect(codeLink).not.toBeInTheDocument();
   }
-});
+);
 
 // Story: With Full Portfolio Data
 export const WithFullPortfolioData = meta.story({
