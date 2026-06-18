@@ -39,6 +39,9 @@ export default defineMain({
     const nextImageMock = path.resolve(here, "mocks/next-image.tsx");
 
     return mergeConfig(config, {
+      optimizeDeps: {
+        exclude: ["@sanity/visual-editing"]
+      },
       resolve: {
         alias: [
           { find: /^next\/image$/, replacement: nextImageMock },
