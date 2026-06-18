@@ -38,7 +38,9 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
     <html lang="en" suppressHydrationWarning>
       <head>
         <StructuredData seoData={seoData} siteUrl={siteUrl} />
-        <meta content="AiA9CANm5wTKgVJ2UQVly5tWskJNx898rxpPlbtcpLE" name="google-site-verification" />
+        {env.GOOGLE_SITE_VERIFICATION ? (
+          <meta content={env.GOOGLE_SITE_VERIFICATION} name="google-site-verification" />
+        ) : null}
       </head>
       <body>
         <ThemeProvider attribute="class" defaultTheme="system" disableTransitionOnChange enableSystem>

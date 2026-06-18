@@ -17,8 +17,8 @@ export const env = createEnv({
       .enum(["true", "false", "0", "1"])
       .optional()
       .transform((value) => value === "true" || value === "1"),
-    // IndexNow (optional — proactive search-engine notification on content publish)
-    INDEXNOW_KEY: z.string().min(8).optional(),
+    // Google Search Console site verification
+    GOOGLE_SITE_VERIFICATION: z.string().optional(),
     LOG_LEVEL: z.enum(["fatal", "error", "warn", "info", "debug", "trace"]).optional().default("info"),
     NODE_ENV: z.enum(["development", "test", "production"]),
     // Resend
@@ -31,8 +31,7 @@ export const env = createEnv({
     SANITY_STUDIO_API_DATASET: z.string(),
     SANITY_STUDIO_API_PROJECT_ID: z.string(),
     SANITY_STUDIO_API_VERSION: z.string(),
-    SANITY_STUDIO_DEPLOYMENT_APP_ID: z.string().min(1),
-    VERCEL_URL: z.string().optional()
+    SANITY_STUDIO_DEPLOYMENT_APP_ID: z.string().min(1)
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially
