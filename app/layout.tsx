@@ -1,5 +1,5 @@
 import { Analytics } from "@vercel/analytics/next";
-
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata, Viewport } from "next";
 import type * as React from "react";
 import { ThemeProvider } from "~/components/providers/theme-provider";
@@ -43,6 +43,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           {children}
         </ThemeProvider>
         <Analytics mode="production" />
+        <SpeedInsights />
       </body>
     </html>
   );
