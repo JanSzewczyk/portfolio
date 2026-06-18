@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.13.8](https://github.com/JanSzewczyk/portfolio/compare/v1.13.7...v1.13.8) (2026-06-18)
+
+### Bug Fixes
+
+* exclude @sanity/visual-editing from optimized dependencies and update route types import ([bdcb11c](https://github.com/JanSzewczyk/portfolio/commit/bdcb11cb7588e83b43e62a7fb4a1919912c6e0db))
+
+### Miscellaneous Chores
+
+* **deps:** bump the project-dependencies group across 1 directory with 24 updates ([42541e1](https://github.com/JanSzewczyk/portfolio/commit/42541e19bf629c10a88f26b78de36062a5fbb98a))
+
 ## [1.13.7](https://github.com/JanSzewczyk/portfolio/compare/v1.13.6...v1.13.7) (2026-06-18)
 
 ### Bug Fixes
