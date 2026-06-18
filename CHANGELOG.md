@@ -3,6 +3,15 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.13.7](https://github.com/JanSzewczyk/portfolio/compare/v1.13.6...v1.13.7) (2026-06-18)
+
+### Bug Fixes
+
+* add Google Search Console site verification to environment and layout ([2b70f8d](https://github.com/JanSzewczyk/portfolio/commit/2b70f8d1386c2504e81f7b41abe2e4b4d92d2848))
+* add Speed Insights integration and update package version ([d548cec](https://github.com/JanSzewczyk/portfolio/commit/d548cec1c54659570ad34f48be03701495567fb7))
+* update Open Graph image source and add web app manifest ([3e9ed90](https://github.com/JanSzewczyk/portfolio/commit/3e9ed90703bcb150ef2fe31974d9150c4241dee9))
+* update route type imports and enhance manifest structure ([a81c0e2](https://github.com/JanSzewczyk/portfolio/commit/a81c0e213b64992efb2614805feb8ce43cb69f1e))
+
 ## [1.13.6](https://github.com/JanSzewczyk/portfolio/compare/v1.13.5...v1.13.6) (2026-06-11)
 
 ### Bug Fixes
