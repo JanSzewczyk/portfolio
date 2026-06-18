@@ -65,7 +65,7 @@ export default function OgImage() {
             marginTop: "24px"
           }}
         >
-          janszewczyk.com
+          janszewczyk.dev
         </div>
       </div>
     </div>,
