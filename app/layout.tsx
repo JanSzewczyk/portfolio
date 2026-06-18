@@ -1,9 +1,9 @@
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { Metadata, Viewport } from "next";
-import type * as React from "react";
 import { ThemeProvider } from "~/components/providers/theme-provider";
 import { StructuredData } from "~/components/seo/structured-data";
+import { env } from "~/data/env/server";
 import { getCachedSeoData } from "~/lib/sanity/services";
 import { getSiteUrl } from "~/lib/seo/get-site-url";
 import { buildMetadata } from "~/lib/seo/utils";
@@ -29,7 +29,9 @@ export const viewport: Viewport = {
   width: "device-width"
 };
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
+const isProduction = env.NODE_ENV === "production";
+
+export default async function RootLayout({ children }: LayoutProps<"/">) {
   const [, seoData] = await getCachedSeoData();
 
   return (
@@ -42,8 +44,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <ThemeProvider attribute="class" defaultTheme="system" disableTransitionOnChange enableSystem>
           {children}
         </ThemeProvider>
-        <Analytics mode="production" />
-        <SpeedInsights />
+        {isProduction ? <Analytics /> : null}
+        {isProduction ? <SpeedInsights /> : null}
       </body>
     </html>
   );
