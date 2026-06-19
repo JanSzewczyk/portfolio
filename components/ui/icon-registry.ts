@@ -56,6 +56,7 @@ import {
   SiTensorflow,
   SiTestinglibrary,
   SiTypescript,
+  SiVercel,
   SiVitest,
   SiX,
   SiZod
@@ -124,6 +125,7 @@ export const ICONS = {
   SiTensorflow,
   SiTestinglibrary,
   SiTypescript,
+  SiVercel,
   SiVitest,
   SiX,
   SiZod,

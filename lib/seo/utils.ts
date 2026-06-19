@@ -11,13 +11,18 @@ export function buildMetadata({ siteUrl, seoData }: { siteUrl: string; seoData: 
   const fallbackOgImageUrl = `${siteUrl}/opengraph-image`;
 
   // Get personal info from Sanity or fallback
-  const name = seoData?.personalInfo?.name ?? "";
-  const title = seoData?.personalInfo?.title ?? "";
+  const name = (seoData?.personalInfo?.name ?? "").trim() || "Jan Szewczyk";
+  const title = (seoData?.personalInfo?.title ?? "").trim() || "Frontend Engineer";
+
+  // Last-resort defaults so the page never ships an empty <title> / description when the
+  // corresponding Sanity SEO fields are blank — an empty title tag is a hard SEO penalty.
+  const fallbackTitle = `${name} – ${title} | React & Next.js Developer, Kraków`;
+  const fallbackDescription = `${name} – ${title} from Kraków, Poland. Specializing in React, Next.js, and TypeScript, building scalable, high-performance web applications.`;
 
   // Get SEO data from Sanity or fallback. Trim to guard against stray leading/trailing
   // whitespace in CMS input leaking into the rendered <title> / description.
-  const metaTitle = (seoData?.seo?.metaTitle ?? "").trim();
-  const metaDescription = (seoData?.seo?.metaDescription ?? "").trim();
+  const metaTitle = (seoData?.seo?.metaTitle ?? "").trim() || fallbackTitle;
+  const metaDescription = (seoData?.seo?.metaDescription ?? "").trim() || fallbackDescription;
   const keywords = seoData?.seo?.keywords ?? [];
 
   // Open Graph
