@@ -5,5 +5,5 @@ type BioMarkdownProps = {
 };
 
 export function BioMarkdown({ content }: BioMarkdownProps) {
-  return <Markdown content={content} />;
+  return <Markdown className="text-body-default text-muted-foreground" content={content} />;
 }

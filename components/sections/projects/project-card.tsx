@@ -57,9 +57,9 @@ export function ProjectCard({ project, dataSanity }: ProjectCardProps) {
               </div>
             )}
           </div>
-          <CardTitle>{project.title}</CardTitle>
-          <div className="line-clamp-5">
-            <Markdown content={project.description ?? ""} />
+          <CardTitle className="text-heading-h4">{project.title}</CardTitle>
+          <div className="line-clamp-5 text-body-sm text-muted-foreground">
+            <Markdown content={project.description ?? ""} inline />
           </div>
         </CardHeader>
 
@@ -76,7 +76,7 @@ export function ProjectCard({ project, dataSanity }: ProjectCardProps) {
             renderOverflow={(count) => <Badge variant="secondary">+{count}</Badge>}
           />
 
-          <span className="flex items-center gap-1 font-medium text-body-sm text-primary">
+          <span className="flex items-center gap-1 font-medium text-primary">
             View details
             <ArrowRightIcon className="size-4 transition-transform group-hover:translate-x-1" />
           </span>
