@@ -1,10 +1,11 @@
 {
   "enabledPlugins": {
     "code-quality@szum-tech": true,
+    "design@szum-tech": true,
     "nextjs@szum-tech": true,
     "performance@szum-tech": true,
     "sdd@spec-driven-development": true,
-    "testing@szum-tech": true
+    "testing@szum-tech": false
   },
   "hooks": {
     "PostToolUse": [

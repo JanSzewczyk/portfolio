@@ -1,6 +1,5 @@
 "use client";
 
-import { Separator } from "@szum-tech/design-system";
 import { Badge } from "@szum-tech/design-system/components/badge";
 import { Button } from "@szum-tech/design-system/components/button";
 import {
@@ -13,13 +12,14 @@ import {
 } from "@szum-tech/design-system/components/carousel";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogTitle,
   DialogTrigger
 } from "@szum-tech/design-system/components/dialog";
 import { cn } from "@szum-tech/design-system/utils";
-import { CheckIcon, ExternalLinkIcon } from "lucide-react";
+import { CheckIcon, ExternalLinkIcon, XIcon } from "lucide-react";
 import Image from "next/image";
 import { stegaClean } from "next-sanity";
 import * as React from "react";
@@ -48,6 +48,14 @@ export function ProjectDetailsDialog({ project, children }: ProjectDetailsDialog
   const highlights = project.highlights ?? [];
   const hasMultipleImages = images.length > 1;
 
+  // Shared style for controls overlaid on the hero photos. Keeps a frosted fill visible on any
+  // image in both themes — the DS `outline` button turns near-transparent in dark via
+  // `dark:bg-input/30`, so the explicit `dark:` overrides below are required to restore contrast.
+  const overlayControlClassName = cn(
+    "border-border bg-background/80 shadow-sm backdrop-blur-sm",
+    "hover:bg-background dark:border-border dark:bg-background/80 dark:hover:bg-background"
+  );
+
   const [api, setApi] = React.useState<CarouselApi>();
   const [current, setCurrent] = React.useState(0);
 
@@ -72,9 +80,19 @@ export function ProjectDetailsDialog({ project, children }: ProjectDetailsDialog
   return (
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className="max-h-[95dvh] gap-0 overflow-hidden p-0" showCloseButton width="3xl">
+      <DialogContent className="flex max-h-[90dvh] flex-col gap-0 overflow-hidden p-0" width="3xl">
         <DialogDescription className="sr-only">Detailed information about {project.title}</DialogDescription>
-        <div className="relative">
+        <div className="relative shrink-0">
+          <DialogClose asChild>
+            <Button
+              aria-label="Close"
+              className={cn(overlayControlClassName, "absolute top-4 right-4 z-10")}
+              size="icon"
+              variant="outline"
+            >
+              <XIcon />
+            </Button>
+          </DialogClose>
           <Carousel aria-label={`${stegaClean(project.title) ?? "Project"} images`} setApi={setApi}>
             <CarouselContent>
               {images.map((image, index) => (
@@ -94,8 +112,8 @@ export function ProjectDetailsDialog({ project, children }: ProjectDetailsDialog
             </CarouselContent>
             {hasMultipleImages ? (
               <>
-                <CarouselPrevious className="left-4" />
-                <CarouselNext className="right-4" />
+                <CarouselPrevious className={cn(overlayControlClassName, "left-4")} />
+                <CarouselNext className={cn(overlayControlClassName, "right-4")} />
               </>
             ) : null}
           </Carousel>
@@ -103,26 +121,29 @@ export function ProjectDetailsDialog({ project, children }: ProjectDetailsDialog
           <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-background/90 via-background/10 to-transparent" />
 
           <div className="absolute right-0 bottom-0 left-0 flex items-end justify-between gap-4 p-6">
-            <DialogTitle className="text-display-sm text-foreground">{project.title}</DialogTitle>
+            <DialogTitle className="text-display-md text-foreground">{project.title}</DialogTitle>
             {hasMultipleImages ? (
               <div className="flex flex-col items-end gap-2">
                 <span className="font-code text-body-sm text-muted-foreground">
                   <span className="text-primary/90">{current + 1}</span> / {images.length}
                 </span>
-                <div className="flex gap-1.5">
+                <div className="flex items-center gap-1.5">
                   {images.map((image, index) => (
                     <button
                       aria-current={index === current ? "true" : undefined}
                       aria-label={`Go to image ${index + 1}`}
-                      className={cn(
-                        "flex size-6 items-center justify-center rounded-full",
-                        "before:size-2 before:rounded-full before:transition-colors before:content-['']",
-                        index === current ? "before:bg-primary" : "before:bg-muted-foreground/30"
-                      )}
+                      className="flex h-6 items-center"
                       key={image.asset?._id ?? `${project._id}-dot-${index}`}
                       onClick={() => api?.scrollTo(index)}
                       type="button"
-                    />
+                    >
+                      <span
+                        className={cn(
+                          "h-1 rounded-full transition-all duration-300",
+                          index === current ? "w-9 bg-primary" : "w-6 bg-muted-foreground/30"
+                        )}
+                      />
+                    </button>
                   ))}
                 </div>
               </div>
@@ -130,17 +151,19 @@ export function ProjectDetailsDialog({ project, children }: ProjectDetailsDialog
           </div>
         </div>
 
-        <div className="grid gap-6 p-6 md:grid-cols-[1fr_auto_200px]">
-          <div className="flex flex-col gap-8">
-            <Markdown content={project.description ?? ""} />
+        <div className="min-h-0 flex-1 overflow-y-auto md:flex md:overflow-hidden">
+          <div className="flex flex-1 flex-col gap-8 p-6 md:min-h-0 md:overflow-y-auto">
+            <Markdown className="text-body-default text-foreground" content={project.description ?? ""} />
 
             {highlights.length > 0 ? (
               <section className="flex flex-col gap-3">
-                <p className="font-semibold text-heading-h4">Highlights</p>
-                <ul className="flex flex-col gap-2">
+                <p className="font-semibold text-body-xs text-muted-foreground uppercase">Highlights</p>
+                <ul className="flex flex-col gap-3">
                   {highlights.map((highlight) => (
-                    <li className="flex items-start gap-2" key={highlight}>
-                      <CheckIcon className="mt-1 size-4 shrink-0 text-primary" />
+                    <li className="flex items-start gap-3 text-body-sm" key={highlight}>
+                      <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-primary/15">
+                        <CheckIcon className="size-3 text-primary" />
+                      </span>
                       <Markdown content={highlight} inline />
                     </li>
                   ))}
@@ -150,7 +173,7 @@ export function ProjectDetailsDialog({ project, children }: ProjectDetailsDialog
 
             {technologies.length > 0 ? (
               <section className="flex flex-col gap-3">
-                <p className="font-semibold text-heading-h4">Tech stack</p>
+                <p className="font-semibold text-body-xs text-muted-foreground uppercase">Tech stack</p>
                 <div className="flex flex-wrap gap-2">
                   {technologies.map((tech) => (
                     <Badge className="font-code" key={`${project._id}-${tech._id}`} variant="secondary">
@@ -163,10 +186,8 @@ export function ProjectDetailsDialog({ project, children }: ProjectDetailsDialog
             ) : null}
           </div>
 
-          <Separator orientation="vertical" />
-
-          <aside className="flex flex-col gap-3">
-            <p className="font-semibold text-heading-h4">Links</p>
+          <aside className="flex shrink-0 flex-col gap-3 border-border border-t bg-sidebar p-6 md:w-48 md:border-t-0 md:border-l">
+            <p className="font-semibold text-body-xs text-muted-foreground uppercase">Links</p>
             <div className="flex flex-col gap-2">
               {project.links?.live ? (
                 <Button asChild startIcon={<ExternalLinkIcon />}>
