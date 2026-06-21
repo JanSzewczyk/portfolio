@@ -35,6 +35,7 @@
 import { expect, screen, waitFor } from "storybook/test";
 
 import preview from "~/.storybook/preview";
+import { Markdown } from "~/components/ui/markdown";
 import { projectBuilder, technologyBuilder } from "~/tests/builders/portfolio-page.builder";
 import type { ProjectDetailsDialogProps } from "./project-details-dialog";
 import { ProjectDetailsDialog } from "./project-details-dialog";
@@ -87,6 +88,7 @@ const OPENS_TITLE = "Dialog Opens Test Project";
 export const OpensFromTrigger = meta.story({
   args: {
     children: <button type="button">Open details</button>,
+    description: <Markdown className="text-body-default text-foreground" content="A **bold** lead." />,
     project: projectBuilder.one({
       overrides: {
         description: "A **bold** lead.",
@@ -146,6 +148,10 @@ OpensFromTrigger.test(
 export const Highlights = meta.story({
   args: {
     children: <button type="button">Open details</button>,
+    highlights: [
+      { content: <Markdown content="**Editable** content" inline />, id: "editable" },
+      { content: <Markdown content="Contact that lands" inline />, id: "contact" }
+    ],
     project: projectBuilder.one({
       overrides: {
         description: "A simple lead.",

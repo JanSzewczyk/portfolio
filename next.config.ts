@@ -32,7 +32,7 @@ export default {
   logging: {
     browserToTerminal: true
   },
-  productionBrowserSourceMaps: true,
+  productionBrowserSourceMaps: false,
   reactCompiler: true,
   reactStrictMode: true,
   async rewrites() {
@@ -42,6 +42,6 @@ export default {
       { destination: "/api/health", source: "/health" },
       { destination: "/api/health", source: "/ping" }
     ];
-  },
-  serverExternalPackages: ["pino", "pino-pretty"]
+  }
+  // serverExternalPackages: ["pino", "pino-pretty"]
 } satisfies NextConfig;

@@ -28,10 +28,20 @@ export function ProjectCard({ project, dataSanity }: ProjectCardProps) {
   const coverImage = project.images?.[0];
 
   return (
-    <ProjectDetailsDialog project={project}>
+    <ProjectDetailsDialog
+      description={<Markdown className="text-body-default text-foreground" content={project.description ?? ""} />}
+      highlights={(project.highlights ?? []).map((highlight) => ({
+        content: <Markdown content={highlight} inline />,
+        id: highlight
+      }))}
+      project={project}
+    >
       <Card
+        aria-label={`${project.title} — view details`}
         className="group flex h-full cursor-pointer flex-col transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
         data-sanity={dataSanity}
+        role="button"
+        tabIndex={0}
       >
         <CardHeader>
           <div className="mb-4 aspect-video overflow-hidden rounded bg-muted">
