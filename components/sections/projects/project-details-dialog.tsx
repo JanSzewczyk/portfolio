@@ -64,16 +64,19 @@ export function ProjectDetailsDialog({ project, children }: ProjectDetailsDialog
       return;
     }
 
-    setCurrent(api.selectedScrollSnap());
-
+    // Sync `current` only from Embla's callbacks (external system), never synchronously in the effect
+    // body — that lets the React Compiler optimize this component. `reInit` covers a non-zero start
+    // index after the carousel re-initialises (e.g. when the image set changes).
     function handleSelect() {
       setCurrent(api?.selectedScrollSnap() ?? 0);
     }
 
     api.on("select", handleSelect);
+    api.on("reInit", handleSelect);
 
     return () => {
       api.off("select", handleSelect);
+      api.off("reInit", handleSelect);
     };
   }, [api]);
 
