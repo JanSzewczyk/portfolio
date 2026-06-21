@@ -3,6 +3,16 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.14.1](https://github.com/JanSzewczyk/portfolio/compare/v1.14.0...v1.14.1) (2026-06-21)
+
+### Bug Fixes
+
+* **error-handling:** replace logger with console.error for client-side error logging ([4ace802](https://github.com/JanSzewczyk/portfolio/commit/4ace80241a6fed46fc7de5c223e84151e4475aa0))
+
+### Build System
+
+* **deps:** sync deps ([8d3a19c](https://github.com/JanSzewczyk/portfolio/commit/8d3a19ca3cd418936b36aef218164d07cefb6889))
+
 ## [1.14.0](https://github.com/JanSzewczyk/portfolio/compare/v1.13.9...v1.14.0) (2026-06-21)
 
 ### Features
