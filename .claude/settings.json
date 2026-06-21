@@ -4,6 +4,7 @@
     "design@szum-tech": true,
     "nextjs@szum-tech": true,
     "performance@szum-tech": true,
+    "react@szum-tech": true,
     "sdd@spec-driven-development": true,
     "testing@szum-tech": false
   },
