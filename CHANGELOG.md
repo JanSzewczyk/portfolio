@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.14.2](https://github.com/JanSzewczyk/portfolio/compare/v1.14.1...v1.14.2) (2026-06-21)
+
+### Bug Fixes
+
+* **config:** update routes type import path for development environment ([e025891](https://github.com/JanSzewczyk/portfolio/commit/e02589135a1b66358ae5b1828d95927e2be3701c))
+
 ## [1.14.1](https://github.com/JanSzewczyk/portfolio/compare/v1.14.0...v1.14.1) (2026-06-21)
 
 ### Bug Fixes
