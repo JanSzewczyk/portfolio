@@ -82,9 +82,9 @@ test("project GitHub links open correctly", async ({ page, context }) => {
   await page.goto("/");
 
   // Per spec FR6, GitHub links moved into the project details dialog.
-  // Open the first card, then verify the GitHub link inside the dialog.
-  const firstCard = page.locator("#projects [data-testid='project-card']").first();
-  await firstCard.click();
+  // Open the first card via its user-facing "View details" affordance, then verify the
+  // GitHub link inside the dialog.
+  await page.locator("#projects").getByText("View details").first().click();
 
   const dialog = page.getByRole("dialog");
   await expect(dialog).toBeVisible();

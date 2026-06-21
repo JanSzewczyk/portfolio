@@ -1,9 +1,8 @@
 /**
- * Test Plan — Markdown component (T3.2 Contract-First Tests)
+ * Test Plan — Markdown component
  *
- * These tests are written against the SKELETON and MUST FAIL until T3.3 ships
- * react-markdown rendering. Each failure must be a meaningful assertion error
- * (element not found / text mismatch), NOT a module-not-found error.
+ * Tests assert against the rendered DOM via role/text queries and `canvasElement`
+ * (no `data-testid` — user-facing queries are preferred).
  *
  * Story: BlockMarkdown (default, no inline prop)
  *   1. Bold: content "**bold**" renders a <strong> containing "bold" — NOT the literal "**bold**" text.
@@ -46,18 +45,15 @@ export const BlockMarkdown = meta.story({
   name: "Block Markdown"
 });
 
-BlockMarkdown.test("Renders bold text as a <strong> element, not raw asterisks", async ({ canvas }) => {
-  // The skeleton renders raw text, so "**world**" appears as-is — this MUST FAIL until T3.3.
-  const container = canvas.getByTestId("markdown");
-  const strongEl = container.querySelector("strong");
+BlockMarkdown.test("Renders bold text as a <strong> element, not raw asterisks", async ({ canvasElement }) => {
+  const strongEl = canvasElement.querySelector("strong");
   await expect(strongEl).not.toBeNull();
   await expect(strongEl).toHaveTextContent("world");
 });
 
-BlockMarkdown.test("Does not render raw Markdown asterisks as literal text", async ({ canvas }) => {
+BlockMarkdown.test("Does not render raw Markdown asterisks as literal text", async ({ canvasElement }) => {
   // The full content is "Hello **world**". After rendering, the literal "**" chars must NOT appear.
-  const container = canvas.getByTestId("markdown");
-  await expect(container).not.toHaveTextContent("**");
+  await expect(canvasElement).not.toHaveTextContent("**");
 });
 
 // ---------------------------------------------------------------------------
@@ -71,16 +67,14 @@ export const BoldContent = meta.story({
   name: "Bold Content"
 });
 
-BoldContent.test("Bold syntax produces a <strong> element containing 'bold'", async ({ canvas }) => {
-  const container = canvas.getByTestId("markdown");
-  const strongEl = container.querySelector("strong");
+BoldContent.test("Bold syntax produces a <strong> element containing 'bold'", async ({ canvasElement }) => {
+  const strongEl = canvasElement.querySelector("strong");
   await expect(strongEl).not.toBeNull();
   await expect(strongEl).toHaveTextContent("bold");
 });
 
-BoldContent.test("Literal '**' asterisks are NOT present in the rendered output", async ({ canvas }) => {
-  const container = canvas.getByTestId("markdown");
-  await expect(container).not.toHaveTextContent("**");
+BoldContent.test("Literal '**' asterisks are NOT present in the rendered output", async ({ canvasElement }) => {
+  await expect(canvasElement).not.toHaveTextContent("**");
 });
 
 // ---------------------------------------------------------------------------
@@ -101,9 +95,8 @@ BulletedList.test("List items are rendered as <li> elements with text 'one' and 
   await expect(items[1]).toHaveTextContent("two");
 });
 
-BulletedList.test("A <ul> list element is present in the DOM", async ({ canvas }) => {
-  const container = canvas.getByTestId("markdown");
-  const ul = container.querySelector("ul");
+BulletedList.test("A <ul> list element is present in the DOM", async ({ canvasElement }) => {
+  const ul = canvasElement.querySelector("ul");
   await expect(ul).not.toBeNull();
 });
 
@@ -139,11 +132,9 @@ export const RawHtmlScript = meta.story({
   name: "Raw HTML — Script Tag"
 });
 
-RawHtmlScript.test("<script> tag in content is NOT inserted into the DOM as an element", async ({ canvas }) => {
-  const container = canvas.getByTestId("markdown");
-  const scriptEl = container.querySelector("script");
-  // Must be null — the skeleton renders raw text so the skeleton actually PASSES this one,
-  // but the full implementation must also keep it null (no rehype-raw).
+RawHtmlScript.test("<script> tag in content is NOT inserted into the DOM as an element", async ({ canvasElement }) => {
+  const scriptEl = canvasElement.querySelector("script");
+  // Must be null — there is no rehype-raw, so raw HTML is rendered inert (escaped) text.
   await expect(scriptEl).toBeNull();
 });
 
@@ -158,9 +149,8 @@ export const RawHtmlImg = meta.story({
   name: "Raw HTML — Img onerror"
 });
 
-RawHtmlImg.test("<img> with onerror is NOT inserted into the DOM", async ({ canvas }) => {
-  const container = canvas.getByTestId("markdown");
-  const imgEl = container.querySelector("img");
+RawHtmlImg.test("<img> with onerror is NOT inserted into the DOM", async ({ canvasElement }) => {
+  const imgEl = canvasElement.querySelector("img");
   // react-markdown without rehype-raw must not render the img element at all.
   await expect(imgEl).toBeNull();
 });
@@ -180,18 +170,16 @@ export const BlockParagraph = meta.story({
   name: "Block Paragraph"
 });
 
-BlockParagraph.test("Default (block) variant wraps text in a <p> element", async ({ canvas }) => {
-  const container = canvas.getByTestId("markdown");
-  const p = container.querySelector("p");
+BlockParagraph.test("Default (block) variant wraps text in a <p> element", async ({ canvasElement }) => {
+  const p = canvasElement.querySelector("p");
   await expect(p).not.toBeNull();
   await expect(p).toHaveTextContent("Hello paragraph");
 });
 
-BlockParagraph.test("Default variant does NOT render a <span> as the paragraph wrapper", async ({ canvas }) => {
-  const container = canvas.getByTestId("markdown");
+BlockParagraph.test("Default variant does NOT render a <span> as the paragraph wrapper", async ({ canvasElement }) => {
   // The outermost text wrapper should be <p>, not <span>.
   // We assert that there is no <span> wrapping the paragraph text directly.
-  const spanEl = container.querySelector("p > span");
+  const spanEl = canvasElement.querySelector("p > span");
   await expect(spanEl).toBeNull();
 });
 
@@ -210,23 +198,20 @@ export const InlineMarkdown = meta.story({
   name: "Inline Markdown"
 });
 
-InlineMarkdown.test("Inline variant renders text inside a <span>, not a block <p>", async ({ canvas }) => {
-  const container = canvas.getByTestId("markdown");
+InlineMarkdown.test("Inline variant renders text inside a <span>, not a block <p>", async ({ canvasElement }) => {
   // The inline variant must produce a <span> wrapper instead of a <p>.
-  const spanEl = container.querySelector("span");
+  const spanEl = canvasElement.querySelector("span");
   await expect(spanEl).not.toBeNull();
 });
 
-InlineMarkdown.test("Inline variant does NOT render a block <p> element", async ({ canvas }) => {
-  const container = canvas.getByTestId("markdown");
-  const pEl = container.querySelector("p");
+InlineMarkdown.test("Inline variant does NOT render a block <p> element", async ({ canvasElement }) => {
+  const pEl = canvasElement.querySelector("p");
   // Must be null — inline maps paragraph to <span>, not <p>.
   await expect(pEl).toBeNull();
 });
 
-InlineMarkdown.test("Inline bold produces a <strong> element inside the <span>", async ({ canvas }) => {
-  const container = canvas.getByTestId("markdown");
-  const strongEl = container.querySelector("span strong");
+InlineMarkdown.test("Inline bold produces a <strong> element inside the <span>", async ({ canvasElement }) => {
+  const strongEl = canvasElement.querySelector("span strong");
   await expect(strongEl).not.toBeNull();
   await expect(strongEl).toHaveTextContent("hi");
 });

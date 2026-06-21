@@ -226,8 +226,8 @@ export const OpensDialogOnActivate = meta.story({
 OpensDialogOnActivate.test(
   "Clicking the card opens a details dialog with the project title",
   async ({ canvas, userEvent }) => {
-    const card = canvas.getByTestId("project-card");
-    await userEvent.click(card);
+    // The whole card is the dialog trigger; click its user-facing "View details" affordance.
+    await userEvent.click(canvas.getByText("View details"));
 
     // Dialog renders in a portal — must query via screen.
     // waitFor accounts for the DS Dialog fade-in animation (starts at opacity 0).

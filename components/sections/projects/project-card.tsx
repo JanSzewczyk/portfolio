@@ -32,7 +32,6 @@ export function ProjectCard({ project, dataSanity }: ProjectCardProps) {
       <Card
         className="group flex h-full cursor-pointer flex-col transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
         data-sanity={dataSanity}
-        data-testid="project-card"
       >
         <CardHeader>
           <div className="mb-4 aspect-video overflow-hidden rounded bg-muted">
@@ -50,7 +49,7 @@ export function ProjectCard({ project, dataSanity }: ProjectCardProps) {
                 className={cn(
                   "flex h-full w-full items-center justify-center",
                   "bg-linear-to-br from-primary/10 to-primary/5",
-                  "font-bold text-4xl text-primary/20"
+                  "text-display-sm text-primary/20"
                 )}
               >
                 {project.title?.charAt(0)}
@@ -76,7 +75,7 @@ export function ProjectCard({ project, dataSanity }: ProjectCardProps) {
             renderOverflow={(count) => <Badge variant="secondary">+{count}</Badge>}
           />
 
-          <span className="flex items-center gap-1 font-medium text-primary">
+          <span className="flex items-center gap-1 font-semibold text-body-sm text-primary">
             View details
             <ArrowRightIcon className="size-4 transition-transform group-hover:translate-x-1" />
           </span>
