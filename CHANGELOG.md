@@ -3,6 +3,26 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.14.0](https://github.com/JanSzewczyk/portfolio/compare/v1.13.9...v1.14.0) (2026-06-21)
+
+### Features
+
+* add maskable purpose to web app manifest icons ([c295fef](https://github.com/JanSzewczyk/portfolio/commit/c295fefa268d1b8aec139f191160929fc73f1bfa))
+* add project capabilities and constitution documentation ([4c4326b](https://github.com/JanSzewczyk/portfolio/commit/4c4326baf9988fdd92344d2b77c786c04401e527))
+* enhance project schema with highlights and images fields, migrate existing thumbnails ([1548020](https://github.com/JanSzewczyk/portfolio/commit/15480209065b5424942a404f199c0e007185875a))
+* **projects-extended-details-dialog:** enhance Markdown component with className prop and update project details dialog styling ([252d0f9](https://github.com/JanSzewczyk/portfolio/commit/252d0f9d36be6258d98ad483b4d5c9fe7a00293f))
+* **projects-extended-details-dialog:** implement extended project details dialog ([f26b5a2](https://github.com/JanSzewczyk/portfolio/commit/f26b5a2e68821270b21c11733a4dd46beeace416))
+* **projects-extended-details-dialog:** synchronize current state with Embla callbacks for improved performance ([e807260](https://github.com/JanSzewczyk/portfolio/commit/e8072607c2fe0d3932a0c40ac9b18cbfd86cffaa))
+* **projects-extended-details-dialog:** update project card interaction and enhance code style guidelines ([09b9029](https://github.com/JanSzewczyk/portfolio/commit/09b9029c4c3dcf58f9840a04b0073f70b3751807))
+* **projects-extended-details-dialog:** update project details dialog layout and integrate Separator component ([0aaac47](https://github.com/JanSzewczyk/portfolio/commit/0aaac473c054d3f18d8d53751c8d0bd9111b3a6d))
+* remove maskable purpose from web app manifest icons ([6a7fd56](https://github.com/JanSzewczyk/portfolio/commit/6a7fd56bcd3ee36e239106b897b51700d03d821a))
+* update biome schema version to 2.5.0 and modify recommended settings ([a229a31](https://github.com/JanSzewczyk/portfolio/commit/a229a31a71c52fb81c1751880ee85fec68322582))
+
+### Documentation
+
+* implement extended project details dialog with enriched presentation ([f9474b8](https://github.com/JanSzewczyk/portfolio/commit/f9474b8ac829a0590b784d405d3ab33554417712))
+* update constitution with tech stack details and architectural guidelines ([7d6ebb8](https://github.com/JanSzewczyk/portfolio/commit/7d6ebb84c7011f656019793997717c5e9cf79166))
+
 ## [1.13.9](https://github.com/JanSzewczyk/portfolio/compare/v1.13.8...v1.13.9) (2026-06-19)
 
 ### Bug Fixes
