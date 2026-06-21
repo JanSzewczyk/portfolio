@@ -43,5 +43,4 @@ export default {
       { destination: "/api/health", source: "/ping" }
     ];
   }
-  // serverExternalPackages: ["pino", "pino-pretty"]
 } satisfies NextConfig;
