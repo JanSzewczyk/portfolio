@@ -23,7 +23,6 @@ import { CheckIcon, ExternalLinkIcon, XIcon } from "lucide-react";
 import Image from "next/image";
 import { stegaClean } from "next-sanity";
 import * as React from "react";
-import { Markdown } from "~/components/ui/markdown";
 import { type IconName, ReactIcon } from "~/components/ui/react-icon";
 import { urlFor } from "~/lib/sanity/image";
 import type { ProjectData } from "./project-card";
@@ -33,6 +32,13 @@ export type ProjectDetailsDialogProps = {
   project: ProjectData;
   /** The element that opens the dialog (rendered as the dialog trigger). */
   children: React.ReactNode;
+  /**
+   * Pre-rendered Markdown lead. Rendered on the server by the caller so `react-markdown` and its
+   * remark/micromark pipeline never ship to the client bundle (this dialog is a Client Component).
+   */
+  description?: React.ReactNode;
+  /** Pre-rendered Markdown highlights (server-rendered by the caller, keyed by `id`). */
+  highlights?: Array<{ id: string; content: React.ReactNode }>;
 };
 
 /**
@@ -42,10 +48,9 @@ export type ProjectDetailsDialogProps = {
  * the project title, a Markdown lead, a Highlights list, a Tech stack, and a Links section.
  * Purely client-side — no URL change. The same layout reflows responsively on mobile.
  */
-export function ProjectDetailsDialog({ project, children }: ProjectDetailsDialogProps) {
+export function ProjectDetailsDialog({ project, children, description, highlights = [] }: ProjectDetailsDialogProps) {
   const images = project.images ?? [];
   const technologies = project.technologies ?? [];
-  const highlights = project.highlights ?? [];
   const hasMultipleImages = images.length > 1;
 
   // Shared style for controls overlaid on the hero photos. Keeps a frosted fill visible on any
@@ -156,18 +161,18 @@ export function ProjectDetailsDialog({ project, children }: ProjectDetailsDialog
 
         <div className="min-h-0 flex-1 overflow-y-auto md:flex md:overflow-hidden">
           <div className="flex flex-1 flex-col gap-8 p-6 md:min-h-0 md:overflow-y-auto">
-            <Markdown className="text-body-default text-foreground" content={project.description ?? ""} />
+            {description}
 
             {highlights.length > 0 ? (
               <section className="flex flex-col gap-3">
                 <p className="font-semibold text-body-xs text-muted-foreground uppercase">Highlights</p>
                 <ul className="flex flex-col gap-3">
                   {highlights.map((highlight) => (
-                    <li className="flex items-start gap-3 text-body-sm" key={highlight}>
+                    <li className="flex items-start gap-3 text-body-sm" key={highlight.id}>
                       <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-primary/15">
                         <CheckIcon className="size-3 text-primary" />
                       </span>
-                      <Markdown content={highlight} inline />
+                      {highlight.content}
                     </li>
                   ))}
                 </ul>

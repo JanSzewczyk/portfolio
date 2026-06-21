@@ -2,21 +2,17 @@
 
 import { Button } from "@szum-tech/design-system/components/button";
 import { useEffect } from "react";
-import logger from "~/lib/logger";
 
 export default function GlobalError({ error, reset }: { error: Error & { digest?: string }; reset: () => void }) {
   useEffect(() => {
-    // Log the error to the console and logging service
-    logger.error(
-      {
-        error: {
-          digest: error.digest,
-          message: error.message,
-          stack: error.stack
-        }
-      },
-      "Global error occurred"
-    );
+    // Client error boundary — log to the browser console. The server-side Pino logger must NOT be
+    // imported here: it pulls Pino into the client bundle and does not run in the browser.
+    // biome-ignore lint/suspicious/noConsole: client error boundary logs to the browser console
+    console.error("Global error occurred", {
+      digest: error.digest,
+      message: error.message,
+      stack: error.stack
+    });
   }, [error]);
 
   return (
