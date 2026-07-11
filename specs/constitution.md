@@ -245,6 +245,9 @@ const ProjectCard = (props: { items: Project[] }) => (
   error boundary.
 - Log with the structured Pino logger at the layer where the error originates — don't re-log higher
   up. Always include `userId`, `operation`/route identifier, and `errorCode` on failures.
+- `lib/logger` (Pino) is server-only and carries no `import "server-only"` guard — never import it
+  in Client Components. Client-side error boundaries (`app/error.tsx`, `app/global-error.tsx`) must
+  log with `console.error` instead (see `biome-ignore lint/suspicious/noConsole`).
 
 ---
 
