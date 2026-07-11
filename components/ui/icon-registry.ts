@@ -8,6 +8,10 @@
 // add a new icon in the CMS, add the matching named import here, otherwise <ReactIcon> renders
 // nothing for it. Find icon names at https://react-icons.github.io/react-icons (Si = Simple
 // Icons, Tb = Tabler, Vsc = VS Code).
+//
+// "SiOpenai" is mapped to a Tabler icon, not a Simple Icons one: Simple Icons removed the
+// OpenAI logo in the react-icons 5.7.0 sync (brand takedown request), so the CMS-facing key
+// stays "SiOpenai" for existing content, but it now resolves to a generic AI stand-in icon.
 import type { IconType } from "react-icons";
 import {
   SiAppwrite,
@@ -32,7 +36,6 @@ import {
   SiNextdotjs,
   SiNodedotjs,
   SiNpm,
-  SiOpenai,
   SiOpencv,
   SiPrettier,
   SiPython,
@@ -73,6 +76,7 @@ import {
   TbDeviceMobile,
   TbHeartRateMonitor,
   TbHtml,
+  TbRobotFace,
   TbTestPipe,
   TbWaveSine
 } from "react-icons/tb";
@@ -101,7 +105,7 @@ export const ICONS = {
   SiNextdotjs,
   SiNodedotjs,
   SiNpm,
-  SiOpenai,
+  SiOpenai: TbRobotFace,
   SiOpencv,
   SiPrettier,
   SiPython,
