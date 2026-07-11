@@ -9,7 +9,7 @@
   "dependencies": {
     "@hookform/resolvers": "^5.4.0",
     "@react-email/components": "^1.0.12",
-    "@sanity/icons": "^3.7.4",
+    "@sanity/icons": "^5.0.0",
     "@sanity/image-url": "^2.0.3",
     "@sanity/vision": "^6.4.0",
     "@szum-tech/design-system": "^3.21.9",

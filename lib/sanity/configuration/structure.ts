@@ -1,12 +1,10 @@
-import {
-  CaseIcon,
-  CodeIcon,
-  ComponentIcon,
-  DocumentIcon,
-  FolderIcon,
-  MasterDetailIcon,
-  ProjectsIcon
-} from "@sanity/icons";
+import { CaseIcon } from "@sanity/icons/Case";
+import { CodeIcon } from "@sanity/icons/Code";
+import { ComponentIcon } from "@sanity/icons/Component";
+import { DocumentIcon } from "@sanity/icons/Document";
+import { FolderIcon } from "@sanity/icons/Folder";
+import { MasterDetailIcon } from "@sanity/icons/MasterDetail";
+import { ProjectsIcon } from "@sanity/icons/Projects";
 import type { StructureResolver } from "sanity/structure";
 
 export const structure: StructureResolver = (S) =>
