@@ -71,6 +71,9 @@
     "vitest": "^4.1.10"
   },
   "name": "portfolio",
+  "overrides": {
+    "smol-toml": "^1.7.0"
+  },
   "private": true,
   "scripts": {
     "analyze": "next experimental-analyze",
