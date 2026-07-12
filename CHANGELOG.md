@@ -3,6 +3,30 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.14.3](https://github.com/JanSzewczyk/portfolio/compare/v1.14.2...v1.14.3) (2026-07-12)
+
+### Bug Fixes
+
+* **deps:** override smol-toml to 1.7.0 to resolve DoS vulnerability ([2e987b8](https://github.com/JanSzewczyk/portfolio/commit/2e987b88ecd951096e9d6b3b73e50787cbfb7cf1))
+
+### Miscellaneous Chores
+
+* **deps:** update @sanity/icons to 5.0.0 and migrate icon imports ([5963069](https://github.com/JanSzewczyk/portfolio/commit/596306972bd64227b7d8921d55c1635cc95fc53a))
+* **deps:** update biome, semantic-release, styled-components and @types/node (patch) ([d1bd008](https://github.com/JanSzewczyk/portfolio/commit/d1bd008d0592589936ee9490277ccc0e22bee825))
+* **deps:** update next to 16.2.10 ([0f8957c](https://github.com/JanSzewczyk/portfolio/commit/0f8957c5e33e72e826a255b925742a5d0bc1b58e))
+* **deps:** update playwright to 1.61.1 ([dd240d4](https://github.com/JanSzewczyk/portfolio/commit/dd240d488f0476101a048d6334a251efdb7cbb27))
+* **deps:** update react-hook-form to 7.81.0 and resend to 6.17.2 ([e824584](https://github.com/JanSzewczyk/portfolio/commit/e82458453bbe53b64817907b73cb16a9994f3a36))
+* **deps:** update react-icons to 5.7.0 and replace removed OpenAI icon ([11002ff](https://github.com/JanSzewczyk/portfolio/commit/11002ff634d189d4768739a688f642aa7457ddaf))
+* **deps:** update sanity and @sanity/vision to 6.4.0 ([ce200d6](https://github.com/JanSzewczyk/portfolio/commit/ce200d62bd7aa3ed52fb453d0f040092b8e6f779))
+* **deps:** update sanity-plugin-markdown to 9.0.2 ([95eeda3](https://github.com/JanSzewczyk/portfolio/commit/95eeda3b96fa3d0ef81a17bbb896c6259efef785))
+* **deps:** update storybook to 10.5 and vitest to 4.1.10 ([e4eb1f4](https://github.com/JanSzewczyk/portfolio/commit/e4eb1f453d302c7e6f388157b2a58c6fc69511f9))
+* **deps:** update tailwindcss to 4.3.2 ([c08b99f](https://github.com/JanSzewczyk/portfolio/commit/c08b99fefde52a8c9c355bf82c4550a5148a0377))
+* **docs:** update constitution.md to clarify logging practices for client components ([f2d81c8](https://github.com/JanSzewczyk/portfolio/commit/f2d81c8a9ca2ae5b527733f5794ebc2c9c66165f))
+
+### Build System
+
+* **deps:** sync deps ([6030def](https://github.com/JanSzewczyk/portfolio/commit/6030def27e5a4cd8564ed94d542fa953d3223594))
+
 ## [1.14.2](https://github.com/JanSzewczyk/portfolio/compare/v1.14.1...v1.14.2) (2026-06-21)
 
 ### Bug Fixes

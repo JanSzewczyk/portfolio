@@ -108,5 +108,5 @@
     "type-check": "next typegen && tsc --noEmit"
   },
   "type": "module",
-  "version": "1.14.2"
+  "version": "1.14.3"
 }
