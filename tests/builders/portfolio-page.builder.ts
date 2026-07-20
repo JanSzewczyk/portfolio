@@ -1,6 +1,6 @@
 import { faker } from "@faker-js/faker";
 import { bool, build, int, oneOf } from "mimicry-js";
-import type { PortfolioPageQueryResult, SanityImageAssetReference, SanityImageDimensions } from "~/lib/sanity/types";
+import type { PortfolioPageQueryResult, SanityImageDimensions } from "~/lib/sanity/types";
 
 // Extracted types from query result for type-safe builders
 type PortfolioPage = NonNullable<PortfolioPageQueryResult>;
@@ -10,17 +10,6 @@ type PortfolioProject = NonNullable<NonNullable<PortfolioProjectGroup["projects"
 type PortfolioExperience = NonNullable<NonNullable<PortfolioPage["experience"]>["experiences"]>[number];
 type PortfolioEducation = NonNullable<NonNullable<PortfolioPage["education"]>["education"]>[number];
 type PortfolioTechnology = NonNullable<PortfolioTechnologyGroup["technologies"]>[number];
-
-/**
- * Helper function to build an image asset reference for SEO images.
- */
-const buildImageAssetReference = (): SanityImageAssetReference => {
-  const imageId = faker.string.alphanumeric(28);
-  return {
-    _ref: `image-${imageId}`,
-    _type: "reference"
-  };
-};
 
 /**
  * Helper function to build Sanity image dimensions.
@@ -507,88 +496,6 @@ export const portfolioPageContactBuilder = build<NonNullable<PortfolioPageQueryR
     quickChat: {
       description: () => faker.lorem.sentence(),
       title: () => faker.lorem.words(4)
-    }
-  }
-});
-
-/**
- * Builder for PortfolioPage SEO section test data.
- *
- * @example
- * const seo = portfolioPageSeoBuilder.one();
- *
- * @example
- * const withTwitter = portfolioPageSeoBuilder.one({ traits: ["withTwitter"] });
- */
-export const portfolioPageSeoBuilder = build<NonNullable<PortfolioPageQueryResult>["seo"]>({
-  fields: {
-    addressCountry: () => faker.location.countryCode("alpha-2"),
-    addressLocality: () => faker.location.city(),
-    alternateNames: () => Array.from({ length: int(0, 2) }, () => faker.person.fullName()),
-    alternateUrls: () =>
-      Array.from({ length: int(0, 2) }, () => ({
-        _key: faker.string.uuid(),
-        hreflang: faker.helpers.arrayElement(["en-US", "pl-PL", "de-DE"]),
-        url: faker.internet.url()
-      })),
-    canonicalUrl: undefined,
-    keywords: () => Array.from({ length: int(3, 8) }, () => faker.lorem.word()),
-    knowsAbout: () => Array.from({ length: int(3, 6) }, () => faker.lorem.words(2)),
-    metaDescription: () => faker.lorem.sentence(),
-    metaTitle: () => faker.lorem.words(5),
-    noarchive: false,
-    nofollow: false,
-    noindex: false,
-    ogDescription: () => faker.lorem.sentence(),
-    ogImage: () => ({
-      _type: "image",
-      alt: faker.lorem.words(5),
-      asset: buildImageAssetReference()
-    }),
-    ogTitle: () => faker.lorem.words(4),
-    organizationLogo: () => ({
-      _type: "image",
-      alt: faker.lorem.words(5),
-      asset: buildImageAssetReference()
-    }),
-    organizationName: () => faker.company.name(),
-    sameAsUrls: () => Array.from({ length: int(1, 3) }, () => faker.internet.url()),
-    twitterCardType: () => "summary_large_image",
-    twitterCreator: () => "@creator",
-    twitterImage: () => ({
-      _type: "image",
-      alt: faker.lorem.words(5),
-      asset: buildImageAssetReference()
-    }),
-    twitterSite: () => "@username"
-  },
-  traits: {
-    noOrg: {
-      overrides: {
-        alternateNames: [],
-        organizationLogo: undefined,
-        organizationName: undefined,
-        sameAsUrls: []
-      }
-    },
-    noSocial: {
-      overrides: {
-        sameAsUrls: [],
-        twitterCreator: undefined,
-        twitterImage: undefined,
-        twitterSite: undefined
-      }
-    },
-    withTwitter: {
-      overrides: {
-        twitterCreator: () => "@creator",
-        twitterImage: () => ({
-          _type: "image",
-          alt: faker.lorem.words(5),
-          asset: buildImageAssetReference()
-        }),
-        twitterSite: () => "@username"
-      }
     }
   }
 });
