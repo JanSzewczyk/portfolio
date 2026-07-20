@@ -2,11 +2,21 @@
 paths:
   - "app/**/*.tsx"
   - "app/**/*.ts"
+  - "src/app/**/*.tsx"
+  - "src/app/**/*.ts"
 ---
 
 # Next.js App Router — Page and Layout Patterns
 
 Rules for creating `page.tsx` and `layout.tsx` files using the App Router with React Server Components.
+
+Two stack assumptions in the examples below:
+- `auth()` returning `{ isAuthenticated, userId }` is a placeholder for whatever session/auth
+  check the project actually uses (Clerk, NextAuth, a custom wrapper, …) — swap it for the
+  real one, keeping the guard-then-redirect shape.
+- `PageProps<"/route/[id]">` / `LayoutProps<"/route">` are Next.js's generated typed-route
+  helpers, which require `typedRoutes` enabled in `next.config`. If a project doesn't have it
+  on, type params/searchParams manually instead (e.g. `{ params }: { params: Promise<{ id: string }> }`).
 
 ---
 
