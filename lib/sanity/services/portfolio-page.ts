@@ -37,7 +37,7 @@ export async function getPortfolioPageData(): Promise<[null, NonNullable<Portfol
 
     fnLogger.info("Successfully fetched portfolio page data from Sanity");
 
-    return [null, data];
+    return [null, data as NonNullable<PortfolioPageQueryResult>];
   } catch (error) {
     const apiError = error instanceof Error ? error : new Error("Unknown error fetching portfolio page data");
     fnLogger

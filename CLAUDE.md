@@ -1,10 +1,3 @@
-# Claude Code Loader
-
-> **Full project constitution:** [`specs/constitution.md`](specs/constitution.md)
-> Edit it with `/sdd:constitution`. This file is the lightweight operational loader Claude
-> reads each session. Keep it under 2,500 tokens — when in doubt, move detail to the
-> constitution instead of growing this file.
-
 ## Tech stack (one-liner)
 - Next.js 16 (App Router/RSC) + React 19 (React Compiler) · TypeScript 6 strict · Sanity 5 CMS · Tailwind 4 + `@szum-tech/design-system` · Vitest 4 + Playwright + Storybook 10 · Biome 2 · **npm** (not pnpm)
 
@@ -31,8 +24,3 @@ These are the operational anti-patterns Claude most often violates. The full cat
 - DO NOT call the Sanity client directly from components — go through `lib/sanity`
 - DO NOT use pnpm/yarn — this project uses **npm** (committed `package-lock.json`)
 - DO NOT commit without going through `/sdd:review`
-
-## SDD flow
-- Start any feature with `/sdd:doctor check`.
-- Per feature: `/sdd:spec` → `/sdd:clarify` → `/sdd:plan` → `/sdd:tasks` → `/sdd:implement <id>` → `/sdd:review`.
-- Specs live in `specs/<feature-slug>/`; the full project constitution is at [`specs/constitution.md`](specs/constitution.md).
