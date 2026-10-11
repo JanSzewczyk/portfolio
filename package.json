@@ -42,13 +42,6 @@
     "edge >= 111",
     "not dead"
   ],
-  "overrides": {
-    "@sanity/client": "$@sanity/client",
-    "@typeschema/valibot": {
-      "valibot": ">=0.39.0"
-    },
-    "smol-toml": "^1.7.0"
-  },
   "dependencies": {
     "@hookform/resolvers": "^5.9.1",
     "@loglayer/transport-log-file-rotation": "^3.3.0",
