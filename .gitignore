@@ -133,5 +133,5 @@ src/styles
 
 /.lighthouseci
 /lighthouserc.json
-
+# Development logs (loglayer file transport)
 /tmp

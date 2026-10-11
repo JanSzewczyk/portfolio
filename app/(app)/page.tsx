@@ -20,7 +20,9 @@ async function loadData() {
   const [error, portfolioPage] = await getPortfolioPageData();
 
   if (error) {
-    logger.error({ errorMessage: error.message, errorName: error.name }, "Failed to load portfolio page data");
+    logger
+      .withMetadata({ errorMessage: error.message, errorName: error.name })
+      .error("Failed to load portfolio page data");
 
     // Expected "no content" → 404; anything else is an unexpected server error → error boundary
     if (error.name === "PortfolioPageNotFoundError") {
@@ -32,7 +34,9 @@ async function loadData() {
 
   const topSkills = getTopSkills(portfolioPage);
 
-  logger.info({ portfolioPageId: portfolioPage._id, topSkillsCount: topSkills.length }, "Loaded portfolio page data");
+  logger
+    .withMetadata({ portfolioPageId: portfolioPage._id, topSkillsCount: topSkills.length })
+    .info("Loaded portfolio page data");
 
   return { portfolioPage, topSkills };
 }

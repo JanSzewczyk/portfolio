@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.5.0/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.5.15/schema.json",
   "assist": {
     "actions": {
       "source": {
@@ -159,6 +159,22 @@
     }
   },
   "overrides": [
+    {
+      "includes": [
+        "proxy.ts",
+        "app/(app)/page.tsx",
+        "app/api/**/route.ts",
+        "features/**/server/actions/*.action.ts",
+        "lib/sanity/services/*.ts"
+      ],
+      "linter": {
+        "rules": {
+          "nursery": {
+            "noFloatingPromises": "off"
+          }
+        }
+      }
+    },
     {
       "includes": ["**/__tests__/**/*", "**/*.test.*", "**/tests/**"],
       "linter": {

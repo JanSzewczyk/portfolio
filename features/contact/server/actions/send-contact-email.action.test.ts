@@ -14,14 +14,20 @@ vi.mock("resend", () => ({
   }
 }));
 
-vi.mock("~/lib/logger", () => ({
-  createLogger: vi.fn(() => ({
+vi.mock("~/lib/logger", () => {
+  const mockLogger = {
     debug: vi.fn(),
     error: vi.fn(),
     info: vi.fn(),
-    warn: vi.fn()
-  }))
-}));
+    warn: vi.fn(),
+    withError: vi.fn(),
+    withMetadata: vi.fn()
+  };
+  mockLogger.withError.mockReturnValue(mockLogger);
+  mockLogger.withMetadata.mockReturnValue(mockLogger);
+
+  return { createLogger: vi.fn(() => mockLogger) };
+});
 
 vi.mock("~/data/env/server", () => ({
   env: {

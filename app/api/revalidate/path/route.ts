@@ -19,7 +19,7 @@ export async function POST(req: NextRequest) {
 
     if (!isValidSignature) {
       const message = "Invalid signature";
-      revalidateLogger.warn({ body, isValidSignature }, "Invalid webhook signature");
+      revalidateLogger.withMetadata({ body, isValidSignature }).warn("Invalid webhook signature");
       return new Response(JSON.stringify({ body, isValidSignature, message }), {
         status: 401
       });
@@ -27,7 +27,7 @@ export async function POST(req: NextRequest) {
 
     if (!body?.path) {
       const message = "Bad Request";
-      revalidateLogger.warn({ body }, "Missing path in webhook payload");
+      revalidateLogger.withMetadata({ body }).warn("Missing path in webhook payload");
       return new Response(JSON.stringify({ body, message }), { status: 400 });
     }
 
@@ -36,10 +36,10 @@ export async function POST(req: NextRequest) {
     revalidatePath("/sitemap.xml");
 
     const message = `Updated route: ${body.path}`;
-    revalidateLogger.info({ path: body.path }, "Route revalidated successfully");
+    revalidateLogger.withMetadata({ path: body.path }).info("Route revalidated successfully");
     return NextResponse.json({ body, message });
   } catch (err) {
-    revalidateLogger.error({ err }, "Error during revalidation");
+    revalidateLogger.withError(err).error("Error during revalidation");
     return new Response((err as Error).message, { status: 500 });
   }
 }
