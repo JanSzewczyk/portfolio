@@ -21,12 +21,11 @@ export async function sendContactEmail(formData: ContactFormData): ActionRespons
     const validation = contactFormSchema.safeParse(formData);
 
     if (!validation.success) {
-      logger.warn(
-        {
+      logger
+        .withMetadata({
           issues: validation.error.issues.map((issue) => ({ message: issue.message, path: issue.path }))
-        },
-        "Rejected invalid contact form submission"
-      );
+        })
+        .warn("Rejected invalid contact form submission");
 
       return {
         error: "Invalid form data. Please check your input and try again.",
@@ -37,14 +36,13 @@ export async function sendContactEmail(formData: ContactFormData): ActionRespons
     const validatedData = validation.data;
 
     // Log the attempt
-    logger.info(
-      {
+    logger
+      .withMetadata({
         email: validatedData.email,
         messageLength: validatedData.message.length,
         name: validatedData.name
-      },
-      "Attempting to send contact email"
-    );
+      })
+      .info("Attempting to send contact email");
 
     // Send email via Resend
     const { data, error } = await resend.emails.send({
@@ -56,14 +54,13 @@ export async function sendContactEmail(formData: ContactFormData): ActionRespons
     });
 
     if (error) {
-      logger.error(
-        {
+      logger
+        .withMetadata({
           errorMessage: error.message,
           errorName: error.name,
           senderEmail: validatedData.email
-        },
-        "Failed to send contact email via Resend"
-      );
+        })
+        .error("Failed to send contact email via Resend");
 
       return {
         error: "Failed to send email. Please try again later or contact me directly via email.",
@@ -71,27 +68,25 @@ export async function sendContactEmail(formData: ContactFormData): ActionRespons
       };
     }
 
-    logger.info(
-      {
+    logger
+      .withMetadata({
         emailId: data?.id,
         senderEmail: validatedData.email,
         senderName: validatedData.name
-      },
-      "Contact email sent successfully"
-    );
+      })
+      .info("Contact email sent successfully");
 
     return {
       data,
       success: true
     };
   } catch (error) {
-    logger.error(
-      {
+    logger
+      .withMetadata({
         errorMessage: error instanceof Error ? error.message : "Unknown error",
         errorStack: error instanceof Error ? error.stack : undefined
-      },
-      "Unexpected error sending contact email"
-    );
+      })
+      .error("Unexpected error sending contact email");
 
     // Generic error message for unexpected failures
     return {

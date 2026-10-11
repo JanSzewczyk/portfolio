@@ -1,12 +1,12 @@
 import { type NextRequest, NextResponse } from "next/server";
-import logger from "~/lib/logger";
+import { createLogger } from "~/lib/logger";
 
 export function proxy(request: NextRequest) {
   const startTime = Date.now();
   const requestId = crypto.randomUUID();
 
   // Create a logger with request context
-  const requestLogger = logger.child({
+  const requestLogger = createLogger({
     method: request.method,
     requestId,
     url: request.url,
@@ -23,13 +23,12 @@ export function proxy(request: NextRequest) {
 
   // Log the response
   const duration = Date.now() - startTime;
-  requestLogger.info(
-    {
+  requestLogger
+    .withMetadata({
       duration,
       status: response.status
-    },
-    "Request completed"
-  );
+    })
+    .info("Request completed");
 
   return response;
 }

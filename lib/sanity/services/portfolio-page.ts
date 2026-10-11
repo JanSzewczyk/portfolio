@@ -17,7 +17,7 @@ const logger = createLogger({
  * @returns Tuple [error, data] - error is null on success, data is null on error
  */
 export async function getPortfolioPageData(): Promise<[null, NonNullable<PortfolioPageQueryResult>] | [Error, null]> {
-  const fnLogger = logger.child({ query: "portfolioPageQuery" });
+  const fnLogger = logger.child().withContext({ query: "portfolioPageQuery" });
   fnLogger.debug("Fetching portfolio page data from Sanity");
 
   try {
@@ -27,12 +27,11 @@ export async function getPortfolioPageData(): Promise<[null, NonNullable<Portfol
       const error = new Error("No portfolio page data returned from Sanity");
       // Distinct name lets callers map "no data" → notFound() and real failures → throw
       error.name = "PortfolioPageNotFoundError";
-      fnLogger.warn(
-        {
+      fnLogger
+        .withMetadata({
           reason: "noData"
-        },
-        error.message
-      );
+        })
+        .warn(error.message);
       return [error, null];
     }
 
@@ -41,12 +40,11 @@ export async function getPortfolioPageData(): Promise<[null, NonNullable<Portfol
     return [null, data];
   } catch (error) {
     const apiError = error instanceof Error ? error : new Error("Unknown error fetching portfolio page data");
-    fnLogger.error(
-      {
+    fnLogger
+      .withMetadata({
         error: { message: apiError.message, name: apiError.name }
-      },
-      "Failed to fetch portfolio page data from Sanity"
-    );
+      })
+      .error("Failed to fetch portfolio page data from Sanity");
 
     return [apiError, null];
   }
@@ -61,23 +59,22 @@ export async function getPortfolioPageData(): Promise<[null, NonNullable<Portfol
  * @returns The document's `_updatedAt` as a Date, or null on missing data / error.
  */
 export async function getPortfolioPageLastModified(): Promise<Date | null> {
-  const fnLogger = logger.child({ query: "portfolioPageLastModified" });
+  const fnLogger = logger.child().withContext({ query: "portfolioPageLastModified" });
 
   try {
     const updatedAt = await client.fetch<string | null>(`*[_type == "portfolioPage"][0]._updatedAt`);
 
     if (!updatedAt) {
-      fnLogger.warn({ reason: "noData" }, "No portfolio page _updatedAt returned from Sanity");
+      fnLogger.withMetadata({ reason: "noData" }).warn("No portfolio page _updatedAt returned from Sanity");
       return null;
     }
 
     return new Date(updatedAt);
   } catch (error) {
     const apiError = error instanceof Error ? error : new Error("Unknown error fetching portfolio _updatedAt");
-    fnLogger.error(
-      { error: { message: apiError.message, name: apiError.name } },
-      "Failed to fetch portfolio page _updatedAt from Sanity"
-    );
+    fnLogger
+      .withMetadata({ error: { message: apiError.message, name: apiError.name } })
+      .error("Failed to fetch portfolio page _updatedAt from Sanity");
     return null;
   }
 }
