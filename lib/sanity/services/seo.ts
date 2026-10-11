@@ -44,7 +44,7 @@ async function getSeoData(): Promise<[null, NonNullable<SeoQueryResult>] | [Erro
 
     fnLogger.withMetadata({ summary }).info("Successfully fetched SEO data from Sanity");
 
-    return [null, data];
+    return [null, data as NonNullable<SeoQueryResult>];
   } catch (error) {
     const apiError = error instanceof Error ? error : new Error("Unknown error fetching SEO data");
     fnLogger

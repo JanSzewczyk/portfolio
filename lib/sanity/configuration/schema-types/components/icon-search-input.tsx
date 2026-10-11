@@ -1,6 +1,7 @@
 "use client";
 
-import { Autocomplete, Box, Card, Flex, Text } from "@sanity/ui";
+import { Box, Card, Flex, Text } from "@sanity/ui";
+import { Autocomplete } from "@sanity/ui/autocomplete";
 import * as React from "react";
 import type { IconType } from "react-icons";
 import { type StringInputProps, set, unset } from "sanity";
