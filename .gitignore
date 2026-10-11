@@ -133,3 +133,5 @@ src/styles
 
 /.lighthouseci
 /lighthouserc.json
+
+/tmp
