@@ -38,10 +38,26 @@ export default defineMain({
     const here = path.dirname(url.fileURLToPath(import.meta.url));
     const nextImageMock = path.resolve(here, "mocks/next-image.tsx");
 
+    /**
+     * Next.js >= 16.4 reads `LayoutRouterContext.parentRenderTree.data.bfcacheId` in `useRouter()`, but
+     * `@storybook/nextjs-vite` (<= 10.6.1) only provides `parentTree`. Remove once Storybook ships support.
+     */
+    const layoutRouterCompat = {
+      enforce: "pre" as const,
+      name: "layout-router-parent-render-tree-compat",
+      transform(code: string, id: string) {
+        if (!id.includes("nextjs-vite") || !code.includes("parentTree: tree,")) {
+          return null;
+        }
+        return code.replace("parentTree: tree,", "parentTree: tree, parentRenderTree: { data: { bfcacheId: 0 } },");
+      }
+    };
+
     return mergeConfig(config, {
       optimizeDeps: {
         exclude: ["@sanity/visual-editing"]
       },
+      plugins: [layoutRouterCompat],
       resolve: {
         alias: [
           { find: /^next\/image$/, replacement: nextImageMock },
