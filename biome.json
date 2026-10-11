@@ -161,6 +161,16 @@
   },
   "overrides": [
     {
+      "assist": {
+        "actions": {
+          "source": {
+            "useSortedKeys": "off"
+          }
+        }
+      },
+      "includes": ["package.json"]
+    },
+    {
       "includes": [
         "proxy.ts",
         "app/(app)/page.tsx",
