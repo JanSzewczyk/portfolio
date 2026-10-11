@@ -7,7 +7,7 @@
     "not dead"
   ],
   "dependencies": {
-    "@hookform/resolvers": "^5.4.0",
+    "@hookform/resolvers": "^5.9.1",
     "@loglayer/transport-log-file-rotation": "^3.3.0",
     "@loglayer/transport-pino": "^3.3.0",
     "@react-email/components": "^1.0.12",
@@ -29,7 +29,7 @@
     "pino-pretty": "^13.2.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
-    "react-hook-form": "^7.85.0",
+    "react-hook-form": "^7.90.0",
     "react-icons": "^5.7.0",
     "react-markdown": "^10.1.0",
     "remark-gfm": "^4.0.1",
@@ -76,6 +76,9 @@
   "name": "portfolio",
   "overrides": {
     "@sanity/client": "$@sanity/client",
+    "@typeschema/valibot": {
+      "valibot": ">=0.39.0"
+    },
     "smol-toml": "^1.7.0"
   },
   "private": true,
