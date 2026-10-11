@@ -43,7 +43,8 @@
     "not dead"
   ],
   "overrides": {
-    "@sanity/client": "$@sanity/client"
+    "@sanity/client": "$@sanity/client",
+    "smol-toml": "^1.9.1"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.9.1",
