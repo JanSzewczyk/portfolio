@@ -42,6 +42,9 @@
     "edge >= 111",
     "not dead"
   ],
+  "overrides": {
+    "@sanity/client": "$@sanity/client"
+  },
   "dependencies": {
     "@hookform/resolvers": "^5.9.1",
     "@loglayer/transport-log-file-rotation": "^3.3.0",
