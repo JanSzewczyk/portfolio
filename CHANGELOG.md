@@ -3,6 +3,42 @@
 All notable changes to this project will be documented in this file. See
 [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.15.0](https://github.com/JanSzewczyk/portfolio/compare/v1.14.3...v1.15.0) (2026-10-12)
+
+### Features
+
+* **tooling:** add Knip dead code detection ([8508e48](https://github.com/JanSzewczyk/portfolio/commit/8508e48b9714b6c8ba462d2f88a4394fcdf8897e))
+
+### Bug Fixes
+
+* **ui:** apply design-system tokens to error boundaries and fix React import style ([a7ac420](https://github.com/JanSzewczyk/portfolio/commit/a7ac4204d40b492389a68cbdefe276e0fecd395d))
+* **ui:** use a type guard instead of an unsafe cast for currentTheme ([737d028](https://github.com/JanSzewczyk/portfolio/commit/737d0289c764840b85278ac026f3d3802ca04e1f))
+
+### Reverts
+
+* Revert "chore: drop explicit lucide-react, sonner and @sanity/ui dependencies" ([1364f9c](https://github.com/JanSzewczyk/portfolio/commit/1364f9ccf8437c89e885bfd916392a45a2d9d07a))
+
+### Miscellaneous Chores
+
+* **cleanup:** remove unused exports and types from portfolio page builder ([afed8ea](https://github.com/JanSzewczyk/portfolio/commit/afed8eacfaebcbbfff2b6a9904684f659c4e6af5))
+* **deps:** bump biome, semantic-release, react-hook-form, styled-components ([4356a80](https://github.com/JanSzewczyk/portfolio/commit/4356a80759f92754d3e8d0eb294b46914b5a1146))
+* **deps:** bump the github-dependencies group across 1 directory with 3 updates ([50bebf4](https://github.com/JanSzewczyk/portfolio/commit/50bebf40af00c9dc73a044dcf15fd8b228421a5b))
+* **deps:** catch up shared dependencies with the nextjs-szumplate template ([f5f3857](https://github.com/JanSzewczyk/portfolio/commit/f5f38575dedc6701a6295fb32c10a8d0473e0f11))
+* **deps:** update @types/node and undici-types to latest versions ([a6c0c9d](https://github.com/JanSzewczyk/portfolio/commit/a6c0c9d0b76267e299914250cc2fa220b6233925))
+* **deps:** update @types/node to 26.1.1 ([ce277e7](https://github.com/JanSzewczyk/portfolio/commit/ce277e757d2bdbc220aafc126c3fd7a6629e5dfa))
+* **deps:** update sanity and related packages ([d2cb278](https://github.com/JanSzewczyk/portfolio/commit/d2cb2784434d41532787a2994e76bfb499e89cf9))
+* **deps:** update storybook dependencies to 10.5.2 ([1dffa88](https://github.com/JanSzewczyk/portfolio/commit/1dffa889eb65052e9585a986fa5e692d941d4ea2))
+* **deps:** update tailwindcss and @tailwindcss/postcss to 4.3.3 ([8f2109f](https://github.com/JanSzewczyk/portfolio/commit/8f2109ffd2165c9304d979488ddc1a0020b5fb94))
+* **docs:** update documentation for code style and feature architecture ([1048304](https://github.com/JanSzewczyk/portfolio/commit/10483044d92a5c2d3d6506603622932d6966abe9))
+* drop explicit lucide-react, sonner and @sanity/ui dependencies ([234bc11](https://github.com/JanSzewczyk/portfolio/commit/234bc1165a64d5af1b26ab7b183ee8283bf7a36f))
+* drop unused sonner dependency ([6fd69a4](https://github.com/JanSzewczyk/portfolio/commit/6fd69a40461627c042bb02290ca0c7518950412e))
+* **knip:** remove ignoreExportsUsedInFile, de-export file-local helpers ([b183095](https://github.com/JanSzewczyk/portfolio/commit/b183095a4fe5b3fb92d04ef900a03fec2c4ea665))
+* **knip:** remove unused exported types, use design-system toast ([cfcd3f8](https://github.com/JanSzewczyk/portfolio/commit/cfcd3f8e1b9171aa7de8724bcdd7faa0deaa4489))
+* record template-sync anchor in .template-sync.json ([8874c9b](https://github.com/JanSzewczyk/portfolio/commit/8874c9bea06dd6a333be98ff85443b864a764a51))
+* remove template-sync marker and knip rules override ([e4a19bc](https://github.com/JanSzewczyk/portfolio/commit/e4a19bc65158332d9e4ef14483a4af8006c2ea74))
+* sync package-lock.json version to 1.14.3 ([b1dd17d](https://github.com/JanSzewczyk/portfolio/commit/b1dd17df794c8691460b8b1abf7b9adc219aa7ba))
+* sync project with latest nextjs-szumplate template ([#172](https://github.com/JanSzewczyk/portfolio/issues/172)) ([e5235ec](https://github.com/JanSzewczyk/portfolio/commit/e5235ecb22e7537c7a04654fb9231d1e38913636))
+
 ## [1.14.3](https://github.com/JanSzewczyk/portfolio/compare/v1.14.2...v1.14.3) (2026-07-12)
 
 ### Bug Fixes
