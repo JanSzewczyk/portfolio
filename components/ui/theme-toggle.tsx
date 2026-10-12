@@ -17,6 +17,10 @@ const THEME_LABELS: Record<Theme, string> = {
   system: "System theme"
 };
 
+function isTheme(value: string | undefined): value is Theme {
+  return value === "system" || value === "light" || value === "dark";
+}
+
 function ThemeIcon({ theme }: { theme: Theme }) {
   if (theme === "system") return <MonitorIcon aria-hidden="true" className="size-4" />;
   if (theme === "light") return <SunIcon aria-hidden="true" className="size-4" />;
@@ -47,7 +51,7 @@ export function ThemeToggle() {
     setMounted(true);
   }, []);
 
-  const currentTheme: Theme = (theme as Theme) ?? "system";
+  const currentTheme: Theme = isTheme(theme) ? theme : "system";
 
   const cycleTheme = React.useCallback(() => {
     const currentIndex = THEME_CYCLE.indexOf(currentTheme);
