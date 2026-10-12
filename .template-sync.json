@@ -1,0 +1,23 @@
+{
+  "last_synced_sha": "a309c600f9defa29b05d474b89a06ef252e7e2c7",
+  "ref": "origin/main",
+  "skipped": [
+    {
+      "change": "next.config.ts: productionBrowserSourceMaps true vs false",
+      "paths": ["next.config.ts"],
+      "reason": "Deliberate divergence since commit 4ace802 (client error logging rework) — pending user decision."
+    },
+    {
+      "change": "@axe-core/playwright + e2e accessibility test suite",
+      "paths": ["package.json", "tests/e2e"],
+      "reason": "New test coverage, not a template bump — pending user decision on scope."
+    },
+    {
+      "change": ".claude/rules/*.md sync (code-style, feature-architecture, nextjs-page-layout-patterns, ui-szum-tech-design-system, db-patterns)",
+      "paths": [".claude/rules"],
+      "reason": "Out of scope for template-sync — handled by the sync-rules skill."
+    }
+  ],
+  "synced_at": "2026-10-12",
+  "template": "JanSzewczyk/nextjs-szumplate"
+}
