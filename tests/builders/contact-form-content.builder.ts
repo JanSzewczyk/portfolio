@@ -7,7 +7,7 @@ import type { PortfolioPageQueryResult } from "~/lib/sanity/types";
  *
  * This is the exact type from the Sanity query result for contact.form
  */
-export type ContactFormContent = NonNullable<NonNullable<PortfolioPageQueryResult>["contact"]>["form"];
+type ContactFormContent = NonNullable<NonNullable<PortfolioPageQueryResult>["contact"]>["form"];
 
 /**
  * Builder for ContactFormContent test data.

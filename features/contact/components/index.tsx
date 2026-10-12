@@ -1,1 +1,1 @@
-export { ContactForm, type ContactFormProps } from "./contact-form";
+export { ContactForm } from "./contact-form";
