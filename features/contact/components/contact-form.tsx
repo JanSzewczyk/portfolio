@@ -6,16 +6,16 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@szum
 import { Field, FieldError, FieldGroup, FieldLabel } from "@szum-tech/design-system/components/field";
 import { Input } from "@szum-tech/design-system/components/input";
 import { Textarea } from "@szum-tech/design-system/components/textarea";
+import { toast } from "@szum-tech/design-system/components/toaster";
 import { MailboxIcon, SendIcon } from "lucide-react";
 import * as React from "react";
 import { useForm, useFormState } from "react-hook-form";
 import type { CreateEmailResponseSuccess } from "resend";
-import { toast } from "sonner";
 import { type ContactFormData, contactFormSchema } from "~/features/contact/schemas/contact.schema";
 import type { PortfolioPageQueryResult } from "~/lib/sanity/types";
 import type { ActionResponse } from "~/lib/server-action";
 
-export type ContactFormProps = {
+type ContactFormProps = {
   onSubmitAction(data: ContactFormData): ActionResponse<CreateEmailResponseSuccess>;
   contactFormContent: NonNullable<NonNullable<PortfolioPageQueryResult>["contact"]>["form"];
 };

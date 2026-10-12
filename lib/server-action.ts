@@ -39,21 +39,6 @@ export type ActionStateFailed = {
 export type ActionResponse<T = unknown> = Promise<ActionStateSuccess<T> | ActionStateFailed>;
 
 /**
- * Response type for actions that redirect on success
- * Uses `never` to indicate the function doesn't return on success
- *
- * @example
- * ```typescript
- * export async function createPost(data: FormData): RedirectAction {
- *   const [error, post] = await createPostInDb(data);
- *   if (error) return { success: false, error: error.message };
- *   redirect(`/posts/${post.id}`);
- * }
- * ```
- */
-export type RedirectAction = Promise<never | ActionStateFailed>;
-
-/**
  * Type guard for action success
  */
 export function isActionSuccess<T>(result: Awaited<ActionResponse<T>>): result is ActionStateSuccess<T> {
