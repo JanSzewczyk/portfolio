@@ -6,10 +6,6 @@
   "playwright": {
     "entry": ["tests/e2e/**/*.e2e.ts"]
   },
-  "rules": {
-    "exports": "warn",
-    "types": "warn"
-  },
   "storybook": {
     "entry": [".storybook/main.ts", ".storybook/manager.ts", ".storybook/preview.tsx", "**/*.stories.tsx"]
   }
