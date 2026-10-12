@@ -38,6 +38,6 @@ export function scrollToSection(section: Section, options: ScrollToSectionOption
     onAfterScroll?.();
   }
 }
-export function getSectionHref(section: Section): SectionHref {
+function getSectionHref(section: Section): SectionHref {
   return `#${section}`;
 }

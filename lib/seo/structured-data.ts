@@ -14,7 +14,7 @@ export function serializeJsonLd(data: unknown): string {
 /**
  * Build Person schema from Sanity data with fallback values
  */
-export function buildPersonSchema({ siteUrl, seoData }: { siteUrl: string; seoData: SeoQueryResult | null }): Person {
+function buildPersonSchema({ siteUrl, seoData }: { siteUrl: string; seoData: SeoQueryResult | null }): Person {
   // Get personal info from Sanity or fallback
   const name = seoData?.personalInfo?.name ?? undefined;
   const title = seoData?.personalInfo?.title ?? undefined;
@@ -83,7 +83,7 @@ export function buildPersonSchema({ siteUrl, seoData }: { siteUrl: string; seoDa
 /**
  * Build WebSite schema from Sanity data with fallback values
  */
-export function buildWebsiteSchema({ siteUrl, seoData }: { siteUrl: string; seoData: SeoQueryResult | null }): WebSite {
+function buildWebsiteSchema({ siteUrl, seoData }: { siteUrl: string; seoData: SeoQueryResult | null }): WebSite {
   const name = seoData?.personalInfo?.name ?? undefined;
   const title = seoData?.personalInfo?.title ?? undefined;
   const description = seoData?.seo?.metaDescription ?? undefined;
@@ -104,7 +104,7 @@ export function buildWebsiteSchema({ siteUrl, seoData }: { siteUrl: string; seoD
 /**
  * Build WebPage schema from Sanity data with fallback values
  */
-export function buildWebPageSchema({ siteUrl, seoData }: { siteUrl: string; seoData: SeoQueryResult | null }): WebPage {
+function buildWebPageSchema({ siteUrl, seoData }: { siteUrl: string; seoData: SeoQueryResult | null }): WebPage {
   const name = seoData?.personalInfo?.name ?? undefined;
   const title = seoData?.personalInfo?.title ?? undefined;
   const description = seoData?.seo?.metaDescription ?? undefined;
@@ -133,7 +133,7 @@ export function buildWebPageSchema({ siteUrl, seoData }: { siteUrl: string; seoD
 /**
  * Build ProfilePage schema from Sanity data with fallback values
  */
-export function buildProfilePageSchema({
+function buildProfilePageSchema({
   siteUrl,
   seoData
 }: {
@@ -158,7 +158,7 @@ export function buildProfilePageSchema({
 /**
  * Build Organization schema from Sanity data (optional)
  */
-export function buildOrganizationSchema({
+function buildOrganizationSchema({
   siteUrl,
   seoData
 }: {
@@ -187,7 +187,7 @@ export function buildOrganizationSchema({
 /**
  * Build BreadcrumbList schema (static)
  */
-export function buildBreadcrumbSchema({ siteUrl }: { siteUrl: string }): BreadcrumbList {
+function buildBreadcrumbSchema({ siteUrl }: { siteUrl: string }): BreadcrumbList {
   return {
     "@type": "BreadcrumbList",
     itemListElement: [

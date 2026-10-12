@@ -279,7 +279,7 @@ export const technologyGroupBuilder = build<PortfolioTechnologyGroup>({
  * @example
  * const skills = portfolioPageSkillsBuilder.one();
  */
-export const portfolioPageSkillsBuilder = build<NonNullable<PortfolioPageQueryResult>["skills"]>({
+const portfolioPageSkillsBuilder = build<NonNullable<PortfolioPageQueryResult>["skills"]>({
   fields: {
     decorativeBottomText: () => faker.lorem.words(2),
     heading: {
