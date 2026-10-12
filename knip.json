@@ -2,7 +2,6 @@
   "$schema": "https://unpkg.com/knip@6/schema.json",
   "ignore": [".storybook/mocks/next-image.tsx", "lib/sanity/types.ts", "scripts/migrations/**"],
   "ignoreDependencies": ["pino-pretty"],
-  "ignoreExportsUsedInFile": true,
   "playwright": {
     "entry": ["tests/e2e/**/*.e2e.ts"]
   },
