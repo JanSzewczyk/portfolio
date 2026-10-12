@@ -18,9 +18,9 @@ const THEME_LABELS: Record<Theme, string> = {
 };
 
 function ThemeIcon({ theme }: { theme: Theme }) {
-  if (theme === "system") return <MonitorIcon className="size-4" />;
-  if (theme === "light") return <SunIcon className="size-4" />;
-  return <MoonIcon className="size-4" />;
+  if (theme === "system") return <MonitorIcon aria-hidden="true" className="size-4" />;
+  if (theme === "light") return <SunIcon aria-hidden="true" className="size-4" />;
+  return <MoonIcon aria-hidden="true" className="size-4" />;
 }
 
 /**
