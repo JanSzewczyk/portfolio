@@ -1,5 +1,5 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.5.15/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.6.4/schema.json",
   "assist": {
     "actions": {
       "source": {
@@ -35,7 +35,8 @@
       "!**/public/**",
       "!**/*.min.{js,css}",
       "!**/next-env.d.ts",
-      "!**/lib/sanity/schema.json"
+      "!**/lib/sanity/schema.json",
+      "!**/*.md"
     ]
   },
   "formatter": {
@@ -114,13 +115,9 @@
       "nursery": {
         "noFloatingPromises": "error",
         "noMisusedPromises": "error",
-        "useSortedClasses": {
+        "useTailwindSortedClasses": {
           "fix": "safe",
-          "level": "warn",
-          "options": {
-            "attributes": ["class", "className", "ngClass"],
-            "functions": ["classNames", "clsx", "cn"]
-          }
+          "level": "warn"
         }
       },
       "preset": "none",
@@ -139,6 +136,13 @@
           }
         },
         "useConsistentBuiltinInstantiation": "error",
+        "useConsistentTestIt": {
+          "level": "warn",
+          "options": {
+            "function": "test",
+            "withinDescribe": "test"
+          }
+        },
         "useConst": "error",
         "useDefaultSwitchClause": "warn",
         "useImportType": "warn",
@@ -218,6 +222,10 @@
     }
   ],
   "root": true,
+  "tailwind": {
+    "attributes": ["class", "className", "ngClass"],
+    "mergeFunctions": ["classNames", "clsx", "cn"]
+  },
   "vcs": {
     "clientKind": "git",
     "enabled": true,
