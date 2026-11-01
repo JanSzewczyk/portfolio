@@ -36,7 +36,7 @@ export function AboutSection({ about, documentId, documentType }: AboutSectionPr
           <div className="flex flex-col gap-5" data-sanity={createSanityAttribute("about.bio")}>
             {about?.bioTagline ? (
               <div className="mb-1 flex items-center gap-2.5" data-sanity={createSanityAttribute("about.bioTagline")}>
-                <Terminal className="size-4 shrink-0 text-primary" />
+                <Terminal className="text-primary size-4 shrink-0" />
                 <span className="text-body-sm">{about.bioTagline}</span>
               </div>
             ) : null}
@@ -65,17 +65,17 @@ export function AboutSection({ about, documentId, documentType }: AboutSectionPr
         </div>
 
         {/* ── Bottom row: location + hobbies ── */}
-        <div className="grid gap-12 border-border border-t pt-12 sm:grid-cols-2">
+        <div className="border-border grid gap-12 border-t pt-12 sm:grid-cols-2">
           {/* Location */}
           {about?.location?.city ? (
             <div className="flex items-center gap-3.5" data-sanity={createSanityAttribute("about.location")}>
               <div className="relative shrink-0">
-                <MapPin className="size-5 text-primary" />
-                <span className="absolute -top-0.5 -right-0.5 size-2 animate-ping rounded-full bg-primary/60" />
-                <span className="absolute -top-0.5 -right-0.5 size-2 rounded-full bg-primary" />
+                <MapPin className="text-primary size-5" />
+                <span className="bg-primary/60 absolute -top-0.5 -right-0.5 size-2 animate-ping rounded-full" />
+                <span className="bg-primary absolute -top-0.5 -right-0.5 size-2 rounded-full" />
               </div>
               <div>
-                <p className="font-semibold text-body-sm">{about.location.city}</p>
+                <p className="text-body-sm font-semibold">{about.location.city}</p>
                 {about.location.remoteWorkLabel ? <p className="text-small">{about.location.remoteWorkLabel}</p> : null}
               </div>
             </div>
@@ -85,7 +85,7 @@ export function AboutSection({ about, documentId, documentType }: AboutSectionPr
           {about?.hobbies?.items && about.hobbies.items.length > 0 ? (
             <div data-sanity={createSanityAttribute("about.hobbies")}>
               {about.hobbies.sectionLabel ? (
-                <span className="mb-3 block text-small">{about.hobbies.sectionLabel}</span>
+                <span className="text-small mb-3 block">{about.hobbies.sectionLabel}</span>
               ) : null}
               <div className="-mx-3 flex flex-wrap gap-1">
                 {about.hobbies.items.map((hobby) => (

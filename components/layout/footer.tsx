@@ -12,7 +12,7 @@ export function Footer({ footer, personalInfo }: FooterProps) {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="border-t bg-muted/30">
+    <footer className="bg-muted/30 border-t">
       <div className="container py-12">
         <div className="flex flex-col items-center justify-between gap-6 md:flex-row">
           <div className="text-center md:text-left">
@@ -40,7 +40,7 @@ export function Footer({ footer, personalInfo }: FooterProps) {
           </div>
         </div>
 
-        <div className="mt-8 flex flex-col items-center justify-between gap-4 border-t pt-8 text-muted-foreground text-sm md:flex-row">
+        <div className="text-muted-foreground mt-8 flex flex-col items-center justify-between gap-4 border-t pt-8 text-sm md:flex-row">
           <p>{footer?.copyrightText ? `© ${currentYear} ${footer.copyrightText}` : null}</p>
           <p className="text-muted-foreground">v{env.NEXT_PUBLIC_APP_VERSION}</p>
         </div>

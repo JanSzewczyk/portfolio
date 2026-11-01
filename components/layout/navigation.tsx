@@ -22,7 +22,7 @@ export function Navigation({ personalInfo }: NavigationProps) {
     <>
       <Header>
         <div className="flex w-full items-center justify-between">
-          <Link className="text-heading-h3 transition-colors hover:text-primary" href="/">
+          <Link className="text-heading-h3 hover:text-primary transition-colors" href="/">
             {personalInfo?.name}
           </Link>
 
@@ -66,7 +66,7 @@ export function Navigation({ personalInfo }: NavigationProps) {
 
       {/* Mobile Menu */}
       {isMobileMenuOpen ? (
-        <div className="fixed top-16 right-0 left-0 z-40 border-b bg-background md:hidden">
+        <div className="bg-background fixed top-16 right-0 left-0 z-40 border-b md:hidden">
           <nav className="container flex flex-col gap-2 py-4">
             {NAV_ITEMS.map((item) => (
               <Button

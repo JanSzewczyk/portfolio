@@ -105,7 +105,7 @@ export function ProjectDetailsDialog({ project, children, description, highlight
             <CarouselContent>
               {images.map((image, index) => (
                 <CarouselItem className="pl-0" key={image.asset?._id ?? `${project._id}-image-${index}`}>
-                  <div className="relative aspect-video w-full overflow-hidden bg-muted">
+                  <div className="bg-muted relative aspect-video w-full overflow-hidden">
                     <Image
                       alt={stegaClean(image.alt) || "Project image"}
                       className="size-full object-cover"
@@ -126,7 +126,7 @@ export function ProjectDetailsDialog({ project, children, description, highlight
             ) : null}
           </Carousel>
 
-          <div className="pointer-events-none absolute inset-0 bg-linear-to-t from-background/90 via-background/10 to-transparent" />
+          <div className="from-background/90 via-background/10 pointer-events-none absolute inset-0 bg-linear-to-t to-transparent" />
 
           <div className="absolute right-0 bottom-0 left-0 flex items-end justify-between gap-4 p-6">
             <DialogTitle className="text-display-md text-foreground">{project.title}</DialogTitle>
@@ -148,7 +148,7 @@ export function ProjectDetailsDialog({ project, children, description, highlight
                       <span
                         className={cn(
                           "h-1 rounded-full transition-all duration-300",
-                          index === current ? "w-9 bg-primary" : "w-6 bg-muted-foreground/30"
+                          index === current ? "bg-primary w-9" : "bg-muted-foreground/30 w-6"
                         )}
                       />
                     </button>
@@ -165,12 +165,12 @@ export function ProjectDetailsDialog({ project, children, description, highlight
 
             {highlights.length > 0 ? (
               <section className="flex flex-col gap-3">
-                <p className="font-semibold text-body-xs text-muted-foreground uppercase">Highlights</p>
+                <p className="text-body-xs text-muted-foreground font-semibold uppercase">Highlights</p>
                 <ul className="flex flex-col gap-3">
                   {highlights.map((highlight) => (
-                    <li className="flex items-start gap-3 text-body-sm" key={highlight.id}>
-                      <span className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-primary/15">
-                        <CheckIcon className="size-3 text-primary" />
+                    <li className="text-body-sm flex items-start gap-3" key={highlight.id}>
+                      <span className="bg-primary/15 mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full">
+                        <CheckIcon className="text-primary size-3" />
                       </span>
                       {highlight.content}
                     </li>
@@ -181,7 +181,7 @@ export function ProjectDetailsDialog({ project, children, description, highlight
 
             {technologies.length > 0 ? (
               <section className="flex flex-col gap-3">
-                <p className="font-semibold text-body-xs text-muted-foreground uppercase">Tech stack</p>
+                <p className="text-body-xs text-muted-foreground font-semibold uppercase">Tech stack</p>
                 <div className="flex flex-wrap gap-2">
                   {technologies.map((tech) => (
                     <Badge className="font-code" key={`${project._id}-${tech._id}`} variant="secondary">
@@ -194,8 +194,8 @@ export function ProjectDetailsDialog({ project, children, description, highlight
             ) : null}
           </div>
 
-          <aside className="flex shrink-0 flex-col gap-3 border-border border-t bg-sidebar p-6 md:w-48 md:border-t-0 md:border-l">
-            <p className="font-semibold text-body-xs text-muted-foreground uppercase">Links</p>
+          <aside className="border-border bg-sidebar flex shrink-0 flex-col gap-3 border-t p-6 md:w-48 md:border-t-0 md:border-l">
+            <p className="text-body-xs text-muted-foreground font-semibold uppercase">Links</p>
             <div className="flex flex-col gap-2">
               {project.links?.live ? (
                 <Button asChild startIcon={<ExternalLinkIcon />}>
