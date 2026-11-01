@@ -1,5 +1,5 @@
 ## Tech stack (one-liner)
-- Next.js 16 (App Router/RSC) + React 19 (React Compiler) · TypeScript 6 strict · Sanity 5 CMS · Tailwind 4 + `@szum-tech/design-system` · Vitest 4 + Playwright + Storybook 10 · Biome 2 · **npm** (not pnpm)
+- Next.js 16 (App Router/RSC) + React 19 (React Compiler) · TypeScript 7 strict · Sanity 5 CMS · Tailwind 4 + `@szum-tech/design-system` · Vitest 5 + Playwright + Storybook 10 · Biome 2 · **npm** (not pnpm)
 
 ## Run/build commands
 - `dev`: `next dev`
