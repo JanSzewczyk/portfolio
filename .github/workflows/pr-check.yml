@@ -3,8 +3,12 @@ name: PR Checks ✅
 on:
   pull_request:
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 env:
-  NODE_VERSION: latest
+  NODE_VERSION: "26"
   SKIP_ENV_VALIDATION: false
   GITHUB_ACTIONS: "true"
   NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_SANITY_PROJECT_ID }}
@@ -19,7 +23,7 @@ env:
   RESEND_API_KEY: "Resend API Key"
 
 permissions:
-  pull-requests: write
+  contents: read
 
 jobs:
   build:
@@ -155,8 +159,7 @@ jobs:
         if: steps.playwright-cache.outputs.cache-hit == 'true'
         run: npx playwright install-deps chromium
       - name: Run Storybook Tests 📖🧪
-        run:
-          npx vitest run --project=storybook --reporter=blob --coverage
+        run: npx vitest run --project=storybook --reporter=blob --coverage
           --outputFile=.vitest-reports/blob-storybook.json
       - name: Upload blob report
         if: always()
@@ -171,7 +174,7 @@ jobs:
     name: Coverage Report 📊
     runs-on: ubuntu-latest
     needs: [test-unit, test-storybook]
-    if: always()
+    if: ${{ !cancelled() }}
     permissions:
       contents: read
       pull-requests: write
@@ -192,7 +195,7 @@ jobs:
           pattern: blob-*
           merge-multiple: true
       - name: Merge reports & generate coverage
-        run: npx vitest run --merge-reports=.vitest-reports --coverage
+        run: npx vitest run --merge-reports=.vitest-reports --reporter=default --coverage
       - name: Report coverage to PR
         uses: davelosert/vitest-coverage-report-action@v2
         with:
