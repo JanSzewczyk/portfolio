@@ -34,6 +34,7 @@
       "!**/.turbo/**",
       "!**/public/**",
       "!**/*.min.{js,css}",
+      "!**/*.md",
       "!**/next-env.d.ts",
       "!**/lib/sanity/schema.json",
       "!**/*.md"
