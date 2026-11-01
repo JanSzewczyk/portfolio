@@ -1,10 +1,10 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, test } from "vitest";
 
 import { contactFormSchema } from "./contact.schema";
 
 describe("contactFormSchema", () => {
   describe("valid data", () => {
-    it("accepts valid contact form data", () => {
+    test("accepts valid contact form data", () => {
       const result = contactFormSchema.safeParse({
         email: "john@example.com",
         message: "Hello, this is a test message!",
@@ -19,7 +19,7 @@ describe("contactFormSchema", () => {
       }
     });
 
-    it("trims whitespace from all fields", () => {
+    test("trims whitespace from all fields", () => {
       const result = contactFormSchema.safeParse({
         email: "  john@example.com  ",
         message: "  Hello, this is a test message!  ",
@@ -34,7 +34,7 @@ describe("contactFormSchema", () => {
       }
     });
 
-    it("converts email to lowercase", () => {
+    test("converts email to lowercase", () => {
       const result = contactFormSchema.safeParse({
         email: "JOHN@EXAMPLE.COM",
         message: "Hello, this is a test message!",
@@ -49,7 +49,7 @@ describe("contactFormSchema", () => {
   });
 
   describe("name validation", () => {
-    it("rejects name shorter than 2 characters", () => {
+    test("rejects name shorter than 2 characters", () => {
       const result = contactFormSchema.safeParse({
         email: "john@example.com",
         message: "Hello, this is a test message!",
@@ -62,7 +62,7 @@ describe("contactFormSchema", () => {
       }
     });
 
-    it("rejects name longer than 100 characters", () => {
+    test("rejects name longer than 100 characters", () => {
       const result = contactFormSchema.safeParse({
         email: "john@example.com",
         message: "Hello, this is a test message!",
@@ -77,7 +77,7 @@ describe("contactFormSchema", () => {
   });
 
   describe("email validation", () => {
-    it("rejects invalid email format", () => {
+    test("rejects invalid email format", () => {
       const result = contactFormSchema.safeParse({
         email: "not-an-email",
         message: "Hello, this is a test message!",
@@ -90,7 +90,7 @@ describe("contactFormSchema", () => {
       }
     });
 
-    it("rejects email without domain", () => {
+    test("rejects email without domain", () => {
       const result = contactFormSchema.safeParse({
         email: "john@",
         message: "Hello, this is a test message!",
@@ -100,7 +100,7 @@ describe("contactFormSchema", () => {
       expect(result.success).toBe(false);
     });
 
-    it("rejects email without @", () => {
+    test("rejects email without @", () => {
       const result = contactFormSchema.safeParse({
         email: "johnexample.com",
         message: "Hello, this is a test message!",
@@ -112,7 +112,7 @@ describe("contactFormSchema", () => {
   });
 
   describe("message validation", () => {
-    it("rejects message shorter than 10 characters", () => {
+    test("rejects message shorter than 10 characters", () => {
       const result = contactFormSchema.safeParse({
         email: "john@example.com",
         message: "Short",
@@ -125,7 +125,7 @@ describe("contactFormSchema", () => {
       }
     });
 
-    it("rejects message longer than 1000 characters", () => {
+    test("rejects message longer than 1000 characters", () => {
       const result = contactFormSchema.safeParse({
         email: "john@example.com",
         message: "A".repeat(1001),
@@ -138,7 +138,7 @@ describe("contactFormSchema", () => {
       }
     });
 
-    it("accepts message with exactly 10 characters", () => {
+    test("accepts message with exactly 10 characters", () => {
       const result = contactFormSchema.safeParse({
         email: "john@example.com",
         message: "1234567890",
@@ -148,7 +148,7 @@ describe("contactFormSchema", () => {
       expect(result.success).toBe(true);
     });
 
-    it("accepts message with exactly 1000 characters", () => {
+    test("accepts message with exactly 1000 characters", () => {
       const result = contactFormSchema.safeParse({
         email: "john@example.com",
         message: "A".repeat(1000),
@@ -160,7 +160,7 @@ describe("contactFormSchema", () => {
   });
 
   describe("edge cases", () => {
-    it("rejects empty name", () => {
+    test("rejects empty name", () => {
       const result = contactFormSchema.safeParse({
         email: "john@example.com",
         message: "Hello, this is a test message!",
@@ -170,7 +170,7 @@ describe("contactFormSchema", () => {
       expect(result.success).toBe(false);
     });
 
-    it("rejects empty email", () => {
+    test("rejects empty email", () => {
       const result = contactFormSchema.safeParse({
         email: "",
         message: "Hello, this is a test message!",
@@ -180,7 +180,7 @@ describe("contactFormSchema", () => {
       expect(result.success).toBe(false);
     });
 
-    it("rejects empty message", () => {
+    test("rejects empty message", () => {
       const result = contactFormSchema.safeParse({
         email: "john@example.com",
         message: "",
@@ -190,7 +190,7 @@ describe("contactFormSchema", () => {
       expect(result.success).toBe(false);
     });
 
-    it("rejects name with only whitespace", () => {
+    test("rejects name with only whitespace", () => {
       const result = contactFormSchema.safeParse({
         email: "john@example.com",
         message: "Hello, this is a test message!",

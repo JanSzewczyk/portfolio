@@ -35,8 +35,8 @@ export function ContactSection({ personalInfo, contact, sendContactAction }: Con
           <div className="space-y-6">
             <Card>
               <CardContent className="flex gap-4">
-                <div className="flex size-12 items-center justify-center rounded-full bg-primary/10">
-                  <Mail className="size-6 text-primary" />
+                <div className="bg-primary/10 flex size-12 items-center justify-center rounded-full">
+                  <Mail className="text-primary size-6" />
                 </div>
                 <div>
                   <p className="font-medium">Email</p>

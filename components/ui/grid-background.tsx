@@ -37,7 +37,7 @@ export function GridBackground({
           backgroundSize: "var(--grid-size) var(--grid-size)"
         }}
       />
-      {fade ? <div className="absolute inset-0 bg-linear-to-b from-background via-transparent to-background" /> : null}
+      {fade ? <div className="from-background to-background absolute inset-0 bg-linear-to-b via-transparent" /> : null}
     </div>
   );
 }

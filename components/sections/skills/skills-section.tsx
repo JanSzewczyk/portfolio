@@ -41,8 +41,8 @@ export function SkillsSection({ skills, topSkills, documentId, documentType }: S
             data-sanity={createSanityAttribute("skills.technologyGroups")}
           >
             <TechMarquee items={marqueeItems} />
-            <div className="pointer-events-none absolute inset-y-0 left-0 w-1/6 bg-linear-to-r from-background/95 to-transparent" />
-            <div className="pointer-events-none absolute inset-y-0 right-0 w-1/6 bg-linear-to-l from-background/95 to-transparent" />
+            <div className="from-background/95 pointer-events-none absolute inset-y-0 left-0 w-1/6 bg-linear-to-r to-transparent" />
+            <div className="from-background/95 pointer-events-none absolute inset-y-0 right-0 w-1/6 bg-linear-to-l to-transparent" />
           </div>
         ) : null}
 
@@ -67,12 +67,12 @@ export function SkillsSection({ skills, topSkills, documentId, documentType }: S
                   <div className="absolute top-0 right-4">
                     {isFeatured && (
                       <ArrowDownIcon
-                        className="text-muted-foreground transition-transform group-hover:-rotate-45 group-hover:text-foreground"
+                        className="text-muted-foreground group-hover:text-foreground transition-transform group-hover:-rotate-45"
                         size={20}
                       />
                     )}
                   </div>
-                  <div className="mb-2 flex size-10 items-center justify-center rounded bg-muted">
+                  <div className="bg-muted mb-2 flex size-10 items-center justify-center rounded">
                     {groupIcon ? <ReactIcon className="size-6" name={groupIcon} /> : null}
                   </div>
                   <CardTitle className="text-heading-h4">{group.label}</CardTitle>

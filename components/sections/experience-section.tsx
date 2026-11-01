@@ -160,7 +160,7 @@ export function ExperienceSection({ experience, documentId, documentType }: Expe
                               <AccordionTrigger>Key Responsibilities</AccordionTrigger>
                               <AccordionContent>
                                 <ul
-                                  className="ml-4 list-disc space-y-1 text-muted-foreground"
+                                  className="text-muted-foreground ml-4 list-disc space-y-1"
                                   data-sanity={createSanityAttribute(
                                     `experience.experiences[${index}].responsibilities`
                                   )}
@@ -178,7 +178,7 @@ export function ExperienceSection({ experience, documentId, documentType }: Expe
                               <AccordionTrigger>Key Achievements</AccordionTrigger>
                               <AccordionContent>
                                 <ul
-                                  className="ml-4 list-disc space-y-1 text-muted-foreground"
+                                  className="text-muted-foreground ml-4 list-disc space-y-1"
                                   data-sanity={createSanityAttribute(`experience.experiences[${index}].achievements`)}
                                 >
                                   {exp.achievements.map((achievement) => (

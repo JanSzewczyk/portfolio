@@ -64,7 +64,7 @@ export function HeroSection({ personalInfo, hero, documentId, documentType }: He
             </Status>
           </div>
 
-          <h1 className="mb-4 text-display-lg" data-sanity={createSanityAttribute("personalInfo.name")}>
+          <h1 className="text-display-lg mb-4" data-sanity={createSanityAttribute("personalInfo.name")}>
             {/* Static, server-rendered name for crawlers and screen readers — the strongest on-page
                 signal for name-based searches. The typing animation is decorative progressive
                 enhancement and is hidden from assistive tech / indexing to avoid duplicate text. */}
@@ -77,7 +77,7 @@ export function HeroSection({ personalInfo, hero, documentId, documentType }: He
           </h1>
 
           {hero?.alternativeTitles && hero.alternativeTitles.length > 0 ? (
-            <div className="mb-6 text-heading-h1 text-primary">
+            <div className="text-heading-h1 text-primary mb-6">
               {/* WordRotate renders only the active word on the client; expose the full list
                   statically so the roles are indexable and announced once. */}
               <span className="sr-only">{stegaClean(hero.alternativeTitles.join(", "))}</span>
@@ -87,7 +87,7 @@ export function HeroSection({ personalInfo, hero, documentId, documentType }: He
             </div>
           ) : null}
 
-          <p className="mb-8 max-w-2xl text-body-lg text-muted-foreground">{hero?.tagline}</p>
+          <p className="text-body-lg text-muted-foreground mb-8 max-w-2xl">{hero?.tagline}</p>
 
           <div className="flex flex-col gap-4 sm:flex-row">
             <ScrollButton size="lg" targetSection={Section.CONTACT}>
@@ -102,7 +102,7 @@ export function HeroSection({ personalInfo, hero, documentId, documentType }: He
 
       {/* Scroll indicator */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
-        <ArrowDownIcon className="size-6 text-muted-foreground" />
+        <ArrowDownIcon className="text-muted-foreground size-6" />
       </div>
     </section>
   );

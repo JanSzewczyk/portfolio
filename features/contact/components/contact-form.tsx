@@ -66,9 +66,9 @@ export function ContactForm({ onSubmitAction, contactFormContent }: ContactFormP
       <CardContent>
         {isSubmitted ? (
           <div className="flex flex-col items-center justify-center py-8 text-center">
-            <MailboxIcon className="size-24 text-input" />
-            <h3 className="mt-8 mb-2 text-foreground text-heading-h2">{contactFormContent?.successView?.title}</h3>
-            <p className="mb-8 max-w-md text-muted-foreground">{contactFormContent?.successView?.description}</p>
+            <MailboxIcon className="text-input size-24" />
+            <h3 className="text-foreground text-heading-h2 mt-8 mb-2">{contactFormContent?.successView?.title}</h3>
+            <p className="text-muted-foreground mb-8 max-w-md">{contactFormContent?.successView?.description}</p>
             <Button onClick={handleSendAnother} variant="secondary">
               {contactFormContent?.successView?.buttonText}
             </Button>

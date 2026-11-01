@@ -25,13 +25,13 @@ export function HobbyItem({ iconType, label }: HobbyItemProps) {
   const Icon = HOBBY_ICONS[iconType] ?? Leaf;
 
   return (
-    <div className="group flex items-center gap-2 rounded px-3 py-2 transition-colors hover:bg-accent">
+    <div className="group hover:bg-accent flex items-center gap-2 rounded px-3 py-2 transition-colors">
       <Icon
         aria-hidden
-        className="size-4 shrink-0 text-muted-foreground transition-colors group-hover:text-primary"
+        className="text-muted-foreground group-hover:text-primary size-4 shrink-0 transition-colors"
         focusable={false}
       />
-      <span className="text-body-sm text-muted-foreground transition-colors group-hover:text-foreground">{label}</span>
+      <span className="text-body-sm text-muted-foreground group-hover:text-foreground transition-colors">{label}</span>
     </div>
   );
 }

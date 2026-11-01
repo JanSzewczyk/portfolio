@@ -71,10 +71,10 @@ export function EducationCard({ education }: EducationCardProps) {
       </CardHeader>
       <CardContent className="space-y-4">
         {education.thesis ? (
-          <div className="rounded border bg-muted/50 p-4">
+          <div className="bg-muted/50 rounded border p-4">
             <h3 className="text-mute">Thesis</h3>
-            <p className="mb-2 text-heading-h3">{education.thesis.title}</p>
-            <p className="mb-3 text-body-sm text-muted-foreground">{education.thesis.description}</p>
+            <p className="text-heading-h3 mb-2">{education.thesis.title}</p>
+            <p className="text-body-sm text-muted-foreground mb-3">{education.thesis.description}</p>
             {thesisTechnologies.length > 0 && (
               <div className="mb-3 flex flex-wrap gap-1.5">
                 {thesisTechnologies.map((tech) => (
@@ -88,8 +88,8 @@ export function EducationCard({ education }: EducationCardProps) {
             {education.thesis.project ? (
               <div className="border-t pt-3">
                 <h4 className="text-mute">Related Project</h4>
-                <p className="mb-2 text-heading-h4">{education.thesis.project.title}</p>
-                <p className="mb-2 text-body-xs text-muted-foreground">{education.thesis.project.description}</p>
+                <p className="text-heading-h4 mb-2">{education.thesis.project.title}</p>
+                <p className="text-body-xs text-muted-foreground mb-2">{education.thesis.project.description}</p>
               </div>
             ) : null}
             {hasThesisActions ? (
@@ -155,7 +155,7 @@ export function EducationCard({ education }: EducationCardProps) {
             <AccordionItem value="achievements">
               <AccordionTrigger>Key Achievements</AccordionTrigger>
               <AccordionContent>
-                <ul className="ml-4 list-disc space-y-1 text-muted-foreground">
+                <ul className="text-muted-foreground ml-4 list-disc space-y-1">
                   {education.achievements.map((achievement) => (
                     <li key={achievement}>{achievement}</li>
                   ))}
@@ -168,7 +168,7 @@ export function EducationCard({ education }: EducationCardProps) {
             <AccordionItem value="coursework">
               <AccordionTrigger>Relevant Coursework</AccordionTrigger>
               <AccordionContent>
-                <ul className="ml-4 list-disc space-y-1 text-muted-foreground">
+                <ul className="text-muted-foreground ml-4 list-disc space-y-1">
                   {education.coursework.map((course) => (
                     <li key={course}>{course}</li>
                   ))}

@@ -184,7 +184,7 @@ describe("sendContactEmail", () => {
       });
     });
 
-    it("handles non-Error exceptions", async () => {
+    test("handles non-Error exceptions", async () => {
       // Arrange
       const formData: ContactFormData = {
         email: "unknown@example.com",

@@ -44,7 +44,7 @@ export function ProjectCard({ project, dataSanity }: ProjectCardProps) {
         tabIndex={0}
       >
         <CardHeader>
-          <div className="mb-4 aspect-video overflow-hidden rounded bg-muted">
+          <div className="bg-muted mb-4 aspect-video overflow-hidden rounded">
             {coverImage ? (
               <Image
                 alt={stegaClean(coverImage?.alt) || "Project thumbnail"}
@@ -58,7 +58,7 @@ export function ProjectCard({ project, dataSanity }: ProjectCardProps) {
               <div
                 className={cn(
                   "flex h-full w-full items-center justify-center",
-                  "bg-linear-to-br from-primary/10 to-primary/5",
+                  "from-primary/10 to-primary/5 bg-linear-to-br",
                   "text-display-sm text-primary/20"
                 )}
               >
@@ -67,7 +67,7 @@ export function ProjectCard({ project, dataSanity }: ProjectCardProps) {
             )}
           </div>
           <CardTitle className="text-heading-h4">{project.title}</CardTitle>
-          <div className="line-clamp-5 text-body-sm text-muted-foreground">
+          <div className="text-body-sm text-muted-foreground line-clamp-5">
             <Markdown content={project.description ?? ""} inline />
           </div>
         </CardHeader>
@@ -85,7 +85,7 @@ export function ProjectCard({ project, dataSanity }: ProjectCardProps) {
             renderOverflow={(count) => <Badge variant="secondary">+{count}</Badge>}
           />
 
-          <span className="flex items-center gap-1 font-semibold text-body-sm text-primary">
+          <span className="text-body-sm text-primary flex items-center gap-1 font-semibold">
             View details
             <ArrowRightIcon className="size-4 transition-transform group-hover:translate-x-1" />
           </span>

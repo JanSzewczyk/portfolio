@@ -28,7 +28,7 @@ export function SectionHeading({
       )}
       data-sanity={dataSanity}
     >
-      <span className="block text-heading-h4 text-primary uppercase">{title}</span>
+      <span className="text-heading-h4 text-primary block uppercase">{title}</span>
       {description ? <h2 className="text-display-sm">{description}</h2> : null}
       {children}
     </div>

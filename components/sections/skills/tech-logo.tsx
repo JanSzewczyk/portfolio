@@ -21,12 +21,12 @@ export function TechLogo({ tech, dataSanity }: TechLogoProps) {
     >
       {tech.icon ? (
         <ReactIcon
-          className="relative z-10 size-8 text-primary opacity-40 transition-opacity duration-300 group-hover:opacity-70"
+          className="text-primary relative z-10 size-8 opacity-40 transition-opacity duration-300 group-hover:opacity-70"
           name={tech.icon as IconName}
         />
       ) : null}
 
-      <span className="relative z-10 text-center font-code text-body-xs text-foreground">{tech.name}</span>
+      <span className="font-code text-body-xs text-foreground relative z-10 text-center">{tech.name}</span>
     </Card>
   );
 }
