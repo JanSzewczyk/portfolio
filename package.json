@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "analyze": "next experimental-analyze",
+    "analyze": "next analyze",
     "biome:check": "biome check .",
     "biome:ci": "biome ci --reporter=github",
     "biome:fix": "biome check --write .",
@@ -88,15 +88,15 @@
     "zod": "^4.6.7"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.5.15",
+    "@biomejs/biome": "^2.6.4",
     "@chromatic-com/storybook": "^5.4.0",
     "@faker-js/faker": "^10.6.0",
     "@playwright/test": "^1.64.0",
     "@storybook-community/storybook-dark-mode": "^7.1.4",
-    "@storybook/addon-a11y": "^10.6.2",
-    "@storybook/addon-docs": "^10.6.2",
-    "@storybook/addon-vitest": "^10.6.2",
-    "@storybook/nextjs-vite": "^10.6.2",
+    "@storybook/addon-a11y": "^10.6.5",
+    "@storybook/addon-docs": "^10.6.5",
+    "@storybook/addon-vitest": "^10.6.5",
+    "@storybook/nextjs-vite": "^10.6.5",
     "@szum-tech/semantic-release-config": "^2.3.7",
     "@testing-library/dom": "^10.4.2",
     "@testing-library/jest-dom": "^7.0.1",
@@ -114,10 +114,13 @@
     "schema-dts": "^2.1.0",
     "semantic-release": "^25.0.9",
     "serve": "^14.2.6",
-    "storybook": "^10.6.2",
+    "storybook": "^10.6.5",
     "storybook-addon-tag-badges": "^3.1.0",
     "tailwindcss": "^4.3.3",
     "typescript": "^7.0.2",
     "vitest": "^5.0.4"
+  },
+  "engines": {
+    "node": ">=26"
   }
 }
