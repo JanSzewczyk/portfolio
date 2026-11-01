@@ -52,7 +52,7 @@
     }
   },
   "dependencies": {
-    "@hookform/resolvers": "^5.9.2",
+    "@hookform/resolvers": "^7.0.1",
     "@loglayer/transport-log-file-rotation": "^3.3.0",
     "@loglayer/transport-pino": "^3.3.0",
     "@react-email/components": "^1.0.12",
